@@ -15,31 +15,31 @@ export function InspectionTabs() {
       <TabsList>
         <TabsTrigger value="inspections" className="flex items-center gap-2">
           <ClipboardList size={16} />
-          Inspektionen
+          Inspections | การตรวจสอบ
         </TabsTrigger>
         <TabsTrigger value="deliveries" className="flex items-center gap-2">
           <MapPin size={16} />
-          Lieferungen
+          Deliveries | การจัดส่ง
         </TabsTrigger>
         <TabsTrigger value="templates" className="flex items-center gap-2">
           <CheckSquare size={16} />
-          Checklisten-Vorlagen
+          Checklist Templates | แม่แบบรายการตรวจสอบ
         </TabsTrigger>
         <TabsTrigger value="maintenance" className="flex items-center gap-2">
           <Truck size={16} />
-          LKW-Wartung
+          Truck Maintenance | การบำรุงรักษารถบรรทุก
         </TabsTrigger>
         <TabsTrigger value="timeRestrictions" className="flex items-center gap-2">
           <Clock size={16} />
-          Fahrzeiten
+          Drive Times | เวลาขับรถ
         </TabsTrigger>
         <TabsTrigger value="drivers" className="flex items-center gap-2">
           <UserCog size={16} />
-          Fahrerqualifikationen
+          Driver Qualifications | คุณสมบัติผู้ขับขี่
         </TabsTrigger>
         <TabsTrigger value="emergency" className="flex items-center gap-2">
           <Phone size={16} />
-          Notfallkontakte
+          Emergency Contacts | ติดต่อฉุกเฉิน
         </TabsTrigger>
       </TabsList>
       <TabsContent value="inspections" className="mt-6">
