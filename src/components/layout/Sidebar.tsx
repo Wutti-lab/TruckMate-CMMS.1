@@ -49,37 +49,37 @@ export function Sidebar({ className }: SidebarProps) {
           <NavItem
             to="/"
             icon={<LayoutDashboard size={20} />}
-            label="Dashboard"
+            label="แดชบอร์ด"
             collapsed={collapsed}
           />
           <NavItem
             to="/vehicles"
             icon={<Car size={20} />}
-            label="Fahrzeuge"
+            label="ยานพาหนะ"
             collapsed={collapsed}
           />
           <NavItem
             to="/map"
             icon={<Map size={20} />}
-            label="Karte"
+            label="แผนที่"
             collapsed={collapsed}
           />
           <NavItem
             to="/inspections"
             icon={<ClipboardList size={20} />}
-            label="Inspektionen"
+            label="การตรวจสอบ"
             collapsed={collapsed}
           />
           <NavItem
             to="/drivers"
             icon={<Users size={20} />}
-            label="Fahrer"
+            label="คนขับรถ"
             collapsed={collapsed}
           />
           <NavItem
             to="/settings"
             icon={<Settings size={20} />}
-            label="Einstellungen"
+            label="การตั้งค่า"
             collapsed={collapsed}
           />
         </nav>
@@ -89,7 +89,7 @@ export function Sidebar({ className }: SidebarProps) {
         <NavItem
           to="/logout"
           icon={<LogOut size={20} />}
-          label="Abmelden"
+          label="ออกจากระบบ"
           collapsed={collapsed}
         />
       </div>

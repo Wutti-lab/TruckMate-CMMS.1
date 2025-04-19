@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Header } from "@/components/layout/Header";
 import { Button } from "@/components/ui/button";
@@ -16,12 +15,12 @@ export default function Map() {
       <Header />
       <main className="flex-1 p-6 relative overflow-hidden">
         <div className="mb-4 flex flex-wrap gap-4 items-center justify-between">
-          <h1 className="text-2xl font-bold">Kartenansicht</h1>
+          <h1 className="text-2xl font-bold">แผนที่</h1>
           <div className="flex items-center gap-2">
             <div className="relative">
               <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
               <Input
-                placeholder="Adresse oder Fahrzeug..."
+                placeholder="ค้นหาที่อยู่หรือยานพาหนะ..."
                 className="pl-8 w-[200px] md:w-[300px]"
               />
             </div>
@@ -33,9 +32,9 @@ export default function Map() {
 
         <Tabs defaultValue="map" className="h-[calc(100%-40px)]">
           <TabsList>
-            <TabsTrigger value="map">Karte</TabsTrigger>
-            <TabsTrigger value="satellite">Satellit</TabsTrigger>
-            <TabsTrigger value="traffic">Verkehr</TabsTrigger>
+            <TabsTrigger value="map">แผนที่</TabsTrigger>
+            <TabsTrigger value="satellite">ดาวเทียม</TabsTrigger>
+            <TabsTrigger value="traffic">การจราจร</TabsTrigger>
           </TabsList>
           <TabsContent value="map" className="h-full">
             <div className="relative rounded-md h-full border overflow-hidden">
@@ -66,15 +65,15 @@ export default function Map() {
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center gap-2 text-sm">
                       <div className="w-3 h-3 rounded-full bg-green-500" />
-                      <span>Aktiv</span>
+                      <span>ใช้งานอยู่</span>
                     </div>
                     <div className="flex items-center gap-2 text-sm">
                       <div className="w-3 h-3 rounded-full bg-yellow-500" />
-                      <span>Im Leerlauf</span>
+                      <span>ไม่ใช้งาน</span>
                     </div>
                     <div className="flex items-center gap-2 text-sm">
                       <div className="w-3 h-3 rounded-full bg-red-500" />
-                      <span>Störung</span>
+                      <span>ปัญหา</span>
                     </div>
                   </div>
                 </CardContent>
@@ -94,7 +93,7 @@ export default function Map() {
           
           {/* Hinweis zur Konfiguration */}
           <div className="mt-2 text-xs text-muted-foreground">
-            <p>Hinweis: Für eine funktionsfähige Karte wird ein Mapbox-Token benötigt. Bitte konfiguriere diesen in der MapComponent.tsx.</p>
+            <p>หมายเหตุ: ต้องการ Mapbox Token เพื่อให้แผนที่ทำงานได้ กรุณาตั้งค่าใน MapComponent.tsx</p>
           </div>
         </Tabs>
         
@@ -119,26 +118,26 @@ export default function Map() {
               <div className="mt-4 space-y-2">
                 <div className="flex items-center gap-2 text-sm">
                   <MapPin className="h-4 w-4 text-fleet-500" />
-                  <span>Berlin, Alexanderplatz</span>
+                  <span>กรุงเทพฯ, สาทร</span>
                 </div>
                 <div className="text-sm">
-                  <span className="font-medium">Fahrer:</span> Max Müller
+                  <span className="font-medium">คนขับ:</span> สมชาย ใจดี
                 </div>
                 <div className="text-sm">
-                  <span className="font-medium">Status:</span>{" "}
-                  <span className="text-green-600">In Fahrt</span>
+                  <span className="font-medium">สถานะ:</span>{" "}
+                  <span className="text-green-600">กำลังขับ</span>
                 </div>
                 <div className="text-sm">
-                  <span className="font-medium">Geschwindigkeit:</span> 42 km/h
+                  <span className="font-medium">ความเร็ว:</span> 42 กม./ชม.
                 </div>
                 <div className="text-sm">
-                  <span className="font-medium">Tanklevel:</span> 68%
+                  <span className="font-medium">ระดับน้ำมัน:</span> 68%
                 </div>
               </div>
               
               <div className="mt-4 flex justify-end gap-2">
-                <Button variant="outline" size="sm">Details</Button>
-                <Button size="sm" className="bg-fleet-500">Navigieren</Button>
+                <Button variant="outline" size="sm">รายละเอียด</Button>
+                <Button size="sm" className="bg-fleet-500">นำทาง</Button>
               </div>
             </CardContent>
           </Card>
