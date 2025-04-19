@@ -2,10 +2,11 @@
 import { Header } from "@/components/layout/Header";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { Plus, ClipboardList, CheckSquare } from "lucide-react";
+import { Plus, ClipboardList, CheckSquare, UserCog } from "lucide-react";
 import { VehicleInspectionList } from "@/components/inspections/VehicleInspectionList";
 import { ChecklistTemplates } from "@/components/inspections/ChecklistTemplates";
 import { InspectionKPIs } from "@/components/inspections/InspectionKPIs";
+import { DriverRequirements } from "@/components/inspections/DriverRequirements";
 
 export default function Inspections() {
   return (
@@ -34,12 +35,19 @@ export default function Inspections() {
               <CheckSquare size={16} />
               Checklisten-Vorlagen
             </TabsTrigger>
+            <TabsTrigger value="drivers" className="flex items-center gap-2">
+              <UserCog size={16} />
+              Fahrerqualifikationen
+            </TabsTrigger>
           </TabsList>
           <TabsContent value="inspections" className="mt-6">
             <VehicleInspectionList />
           </TabsContent>
           <TabsContent value="templates" className="mt-6">
             <ChecklistTemplates />
+          </TabsContent>
+          <TabsContent value="drivers" className="mt-6">
+            <DriverRequirements />
           </TabsContent>
         </Tabs>
       </main>
