@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Header } from "@/components/layout/Header";
 import { Button } from "@/components/ui/button";
@@ -17,12 +18,12 @@ export default function Map() {
       <Header />
       <main className="flex-1 p-6 relative overflow-hidden">
         <div className="mb-4 flex flex-wrap gap-4 items-center justify-between">
-          <h1 className="text-2xl font-bold">Karte</h1>
+          <h1 className="text-2xl font-bold">Map | แผนที่</h1>
           <div className="flex items-center gap-2">
             <div className="relative">
               <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
               <Input
-                placeholder="Adresse oder Fahrzeug suchen..."
+                placeholder="Search address or vehicle... | ค้นหาที่อยู่หรือยานพาหนะ..."
                 className="pl-8 w-[200px] md:w-[300px]"
               />
             </div>
@@ -42,9 +43,9 @@ export default function Map() {
 
         <Tabs defaultValue="map" className="h-[calc(100%-40px)]">
           <TabsList>
-            <TabsTrigger value="map">Karte</TabsTrigger>
-            <TabsTrigger value="satellite">Satellit</TabsTrigger>
-            <TabsTrigger value="traffic">Verkehr</TabsTrigger>
+            <TabsTrigger value="map">Map | แผนที่</TabsTrigger>
+            <TabsTrigger value="satellite">Satellite | ภาพดาวเทียม</TabsTrigger>
+            <TabsTrigger value="traffic">Traffic | การจราจร</TabsTrigger>
           </TabsList>
           <TabsContent value="map" className="h-full">
             <div className="relative rounded-md h-full border overflow-hidden">
@@ -73,15 +74,15 @@ export default function Map() {
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center gap-2 text-sm">
                       <div className="w-3 h-3 rounded-full bg-green-500" />
-                      <span>Im Einsatz</span>
+                      <span>Active | กำลังปฏิบัติงาน</span>
                     </div>
                     <div className="flex items-center gap-2 text-sm">
                       <div className="w-3 h-3 rounded-full bg-yellow-500" />
-                      <span>Inaktiv</span>
+                      <span>Inactive | ไม่ได้ปฏิบัติงาน</span>
                     </div>
                     <div className="flex items-center gap-2 text-sm">
                       <div className="w-3 h-3 rounded-full bg-red-500" />
-                      <span>Problem</span>
+                      <span>Problem | มีปัญหา</span>
                     </div>
                   </div>
                 </CardContent>
@@ -90,7 +91,7 @@ export default function Map() {
               {showEmergencyContacts && (
                 <div className="absolute left-4 top-4 w-[350px] max-h-[80vh] overflow-y-auto bg-white rounded-lg shadow-lg p-4">
                   <div className="flex justify-between items-center mb-4">
-                    <h2 className="text-lg font-semibold">รายชื่อติดต่อฉุกเฉิน</h2>
+                    <h2 className="text-lg font-semibold">Emergency Contacts | รายชื่อติดต่อฉุกเฉิน</h2>
                     <Button
                       variant="ghost"
                       size="sm"
@@ -168,3 +169,4 @@ export default function Map() {
     </div>
   );
 }
+
