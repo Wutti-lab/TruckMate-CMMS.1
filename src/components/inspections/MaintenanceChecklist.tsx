@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { Phone, Flashlight, Archive, FireExtinguisher } from "lucide-react";
+import { Phone, Flashlight, Archive, FireExtinguisher, GraduationCap } from "lucide-react";
 
 export function MaintenanceChecklist() {
   return (
@@ -109,12 +109,24 @@ export function MaintenanceChecklist() {
           <div className="space-y-2">
             <div className="flex items-center space-x-2">
               <Checkbox id="training" />
-              <Label htmlFor="training">Regelmäßiges Sicherheitstraining absolviert</Label>
+              <Label htmlFor="training" className="flex items-center gap-2">
+                <GraduationCap size={16} />
+                Regelmäßiges Sicherheitstraining absolviert
+              </Label>
             </div>
             <div className="flex items-center space-x-2">
               <Checkbox id="cleaning_supplies" />
               <Label htmlFor="cleaning_supplies">Autoreinigungsprodukte vorhanden</Label>
             </div>
+          </div>
+          <div className="p-4 bg-secondary rounded-lg text-sm space-y-2">
+            <p>• Theoretische Schulung zur Verkehrssicherheit</p>
+            <p>• Praktisches Fahrtraining unter Aufsicht</p>
+            <p>• Ladungssicherungsschulung</p>
+            <p>• Erste-Hilfe-Kurs absolviert</p>
+            <p>• Gefahrgutschulung (wenn erforderlich)</p>
+            <p>• Digitales Kontrollgerät Schulung</p>
+            <p>• Eco-Driving Training</p>
           </div>
         </div>
 
