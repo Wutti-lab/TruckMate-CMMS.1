@@ -4,16 +4,16 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
 export function EmergencyContacts() {
   const emergencyNumbers = [
-    { number: "191", title: "Allgemeiner Notfall", icon: Siren },
-    { number: "199", title: "Viele Arten von Notfällen", icon: AlertTriangle },
-    { number: "199", title: "Feuerwehr", icon: FireExtinguisher },
-    { number: "1193", title: "Autobahnpolizei", icon: Car },
-    { number: "1195", title: "Direktion", icon: Building2 },
-    { number: "1586", title: "Hotline", icon: Phone },
-    { number: "1197", title: "Straßenbauamt", icon: Map },
-    { number: "1543", title: "Kontrollzentrum und Befehl", icon: Building2 },
-    { number: "1192", title: "Fahrzeugverlust / Diebstahl", icon: MessageSquareWarning },
-    { number: "1669", title: "Medizinische Einheit", icon: Hospital },
+    { number: "191", title: "แจ้งเหตุฉุกเฉิน", icon: Siren },
+    { number: "199", title: "เหตุฉุกเฉินหลายประเภท", icon: AlertTriangle },
+    { number: "199", title: "ดับเพลิง", icon: FireExtinguisher },
+    { number: "1193", title: "ตำรวจทางหลวง", icon: Car },
+    { number: "1195", title: "สำนักงานอำนวยการ", icon: Building2 },
+    { number: "1586", title: "สายด่วน", icon: Phone },
+    { number: "1197", title: "กรมทางหลวง", icon: Map },
+    { number: "1543", title: "ศูนย์สั่งการและควบคุม", icon: Building2 },
+    { number: "1192", title: "แจ้งรถหาย/ถูกขโมย", icon: MessageSquareWarning },
+    { number: "1669", title: "หน่วยแพทย์ฉุกเฉิน", icon: Hospital },
   ];
 
   return (
