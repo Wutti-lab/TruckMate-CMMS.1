@@ -1,11 +1,11 @@
 
 import { Header } from "@/components/layout/Header";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Plus, ClipboardList, CheckSquare } from "lucide-react";
 import { VehicleInspectionList } from "@/components/inspections/VehicleInspectionList";
 import { ChecklistTemplates } from "@/components/inspections/ChecklistTemplates";
+import { InspectionKPIs } from "@/components/inspections/InspectionKPIs";
 
 export default function Inspections() {
   return (
@@ -18,6 +18,10 @@ export default function Inspections() {
             <Plus size={16} className="mr-2" />
             Neue Inspektion
           </Button>
+        </div>
+
+        <div className="mb-6">
+          <InspectionKPIs />
         </div>
 
         <Tabs defaultValue="inspections" className="w-full">
