@@ -6,46 +6,46 @@ export function TransportRegulations() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Transportvorschriften Bangkok</CardTitle>
+        <CardTitle>Transport Regulations Bangkok | กฎระเบียบการขนส่งกรุงเทพ</CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="space-y-4">
           <h3 className="font-semibold flex items-center gap-2">
             <Clock className="h-5 w-5" />
-            Fahrzeitbeschränkungen
+            Driving Time Restrictions | ข้อจำกัดเวลาขับขี่
           </h3>
           
           <div className="space-y-4">
             <div className="p-4 bg-secondary rounded-lg">
               <div className="flex items-center gap-2 mb-2">
                 <Truck className="h-5 w-5" />
-                <h4 className="font-medium">6-Rad-LKW</h4>
+                <h4 className="font-medium">6-Wheeler Truck | รถบรรทุก 6 ล้อ</h4>
               </div>
-              <p className="text-sm">Auf Schnellstraßen und ebenen Straßen verboten zwischen:</p>
+              <p className="text-sm">Prohibited on expressways and surface roads between: | ห้ามวิ่งบนทางด่วนและถนนระหว่าง:</p>
               <ul className="list-disc pl-5 mt-2 text-sm space-y-1">
-                <li>06:00 - 09:00 Uhr</li>
-                <li>16:00 - 20:00 Uhr</li>
+                <li>06:00 - 09:00</li>
+                <li>16:00 - 20:00</li>
               </ul>
             </div>
 
             <div className="p-4 bg-secondary rounded-lg">
               <div className="flex items-center gap-2 mb-2">
                 <Truck className="h-5 w-5" />
-                <h4 className="font-medium">LKW mit 10 Rädern oder mehr</h4>
+                <h4 className="font-medium">10-Wheeler Trucks or larger | รถบรรทุก 10 ล้อขึ้นไป</h4>
               </div>
               <div className="space-y-4">
                 <div>
-                  <p className="text-sm font-medium">Auf Schnellstraßen verboten zwischen:</p>
+                  <p className="text-sm font-medium">On expressways prohibited between: | บนทางด่วนห้ามวิ่งระหว่าง:</p>
                   <ul className="list-disc pl-5 mt-2 text-sm space-y-1">
-                    <li>06:00 - 09:00 Uhr</li>
-                    <li>15:00 - 21:00 Uhr</li>
+                    <li>06:00 - 09:00</li>
+                    <li>15:00 - 21:00</li>
                   </ul>
                 </div>
                 <div>
-                  <p className="text-sm font-medium">Auf ebenen Straßen verboten zwischen:</p>
+                  <p className="text-sm font-medium">On surface roads prohibited between: | บนถนนห้ามวิ่งระหว่าง:</p>
                   <ul className="list-disc pl-5 mt-2 text-sm space-y-1">
-                    <li>06:00 - 10:00 Uhr</li>
-                    <li>15:00 - 21:00 Uhr</li>
+                    <li>06:00 - 10:00</li>
+                    <li>15:00 - 21:00</li>
                   </ul>
                 </div>
               </div>
@@ -54,12 +54,12 @@ export function TransportRegulations() {
         </div>
 
         <div className="space-y-4">
-          <h3 className="font-semibold">Hinweise zur Transportzeit</h3>
+          <h3 className="font-semibold">Transport Time Notes | หมายเหตุเวลาขนส่ง</h3>
           <div className="p-4 bg-secondary rounded-lg text-sm space-y-2">
-            <p>• Die Transportzeit variiert je nach Entfernung und Verkehrslage</p>
-            <p>• Berücksichtigen Sie die Fahrzeitbeschränkungen bei der Routenplanung</p>
-            <p>• Planen Sie zusätzliche Zeit für Staus und unvorhergesehene Ereignisse ein</p>
-            <p>• Beachten Sie lokale Feiertage und Veranstaltungen</p>
+            <p>• Transport time varies by distance and traffic conditions | เวลาขนส่งแตกต่างกันตามระยะทางและสภาพการจราจร</p>
+            <p>• Consider driving time restrictions in route planning | พิจารณาข้อจำกัดเวลาขับขี่ในการวางแผนเส้นทาง</p>
+            <p>• Plan extra time for traffic jams and unforeseen events | วางแผนเวลาเพิ่มสำหรับรถติดและเหตุการณ์ที่ไม่คาดคิด</p>
+            <p>• Be aware of local holidays and events | ระวังวันหยุดและกิจกรรมในท้องถิ่น</p>
           </div>
         </div>
       </CardContent>

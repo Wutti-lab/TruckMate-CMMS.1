@@ -32,13 +32,13 @@ export function VehicleTable({ vehicles }: VehicleTableProps) {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>ทะเบียน</TableHead>
-              <TableHead>คนขับ</TableHead>
-              <TableHead>รุ่น</TableHead>
-              <TableHead>ตำแหน่ง</TableHead>
-              <TableHead>สถานะ</TableHead>
-              <TableHead>ระดับแบตเตอรี่</TableHead>
-              <TableHead>ซ่อมบำรุงครั้งต่อไป</TableHead>
+              <TableHead>License Plate | ทะเบียนรถ</TableHead>
+              <TableHead>Driver | คนขับ</TableHead>
+              <TableHead>Model | รุ่น</TableHead>
+              <TableHead>Location | ตำแหน่ง</TableHead>
+              <TableHead>Status | สถานะ</TableHead>
+              <TableHead>Battery Level | ระดับแบตเตอรี่</TableHead>
+              <TableHead>Next Service | การซ่อมบำรุงครั้งต่อไป</TableHead>
               <TableHead></TableHead>
             </TableRow>
           </TableHeader>
