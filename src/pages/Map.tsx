@@ -4,11 +4,13 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Car, Filter, MapPin, Search } from "lucide-react";
+import { Car, Filter, MapPin, Search, Phone } from "lucide-react";
 import { MapComponent } from "@/components/MapComponent";
+import { EmergencyContacts } from "@/components/inspections/EmergencyContacts";
 
 export default function Map() {
   const [selectedVehicle, setSelectedVehicle] = useState<string | null>(null);
+  const [showEmergencyContacts, setShowEmergencyContacts] = useState(false);
   
   return (
     <div className="flex flex-col h-full">
@@ -26,6 +28,14 @@ export default function Map() {
             </div>
             <Button variant="outline" size="icon">
               <Filter size={16} />
+            </Button>
+            <Button 
+              variant="outline" 
+              size="icon" 
+              onClick={() => setShowEmergencyContacts(!showEmergencyContacts)}
+              className={showEmergencyContacts ? "bg-red-100 text-red-600" : ""}
+            >
+              <Phone size={16} />
             </Button>
           </div>
         </div>
@@ -76,6 +86,22 @@ export default function Map() {
                   </div>
                 </CardContent>
               </Card>
+
+              {showEmergencyContacts && (
+                <div className="absolute left-4 top-4 w-[350px] max-h-[80vh] overflow-y-auto bg-white rounded-lg shadow-lg p-4">
+                  <div className="flex justify-between items-center mb-4">
+                    <h2 className="text-lg font-semibold">Notfallkontakte</h2>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setShowEmergencyContacts(false)}
+                    >
+                      ✕
+                    </Button>
+                  </div>
+                  <EmergencyContacts />
+                </div>
+              )}
             </div>
           </TabsContent>
           <TabsContent value="satellite" className="h-full">
