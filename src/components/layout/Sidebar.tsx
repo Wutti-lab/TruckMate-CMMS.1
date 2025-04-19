@@ -11,7 +11,8 @@ import {
   LogOut,
   Menu,
   Users,
-  ChevronLeft
+  ChevronLeft,
+  ClipboardList
 } from "lucide-react";
 
 interface SidebarProps {
@@ -61,6 +62,12 @@ export function Sidebar({ className }: SidebarProps) {
             to="/map"
             icon={<Map size={20} />}
             label="Karte"
+            collapsed={collapsed}
+          />
+          <NavItem
+            to="/inspections"
+            icon={<ClipboardList size={20} />}
+            label="Inspektionen"
             collapsed={collapsed}
           />
           <NavItem
