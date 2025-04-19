@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
@@ -16,8 +17,6 @@ import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { UserRole } from "@/types/user";
 
 const loginSchema = z.object({
   email: z.string().email({ message: "Gültige E-Mail-Adresse erforderlich" }),
@@ -30,7 +29,6 @@ const registerSchema = z.object({
   email: z.string().email({ message: "Gültige E-Mail-Adresse erforderlich" }),
   password: z.string().min(6, { message: "Passwort muss mindestens 6 Zeichen haben" }),
   confirmPassword: z.string().min(6, { message: "Passwort muss mindestens 6 Zeichen haben" }),
-  role: z.enum(["driver", "manager", "admin"] as const),
 }).refine(data => data.password === data.confirmPassword, {
   message: "Passwörter stimmen nicht überein",
   path: ["confirmPassword"],
@@ -56,7 +54,6 @@ export default function Login() {
       email: "",
       password: "",
       confirmPassword: "",
-      role: "driver",
     },
   });
 
@@ -67,7 +64,6 @@ export default function Login() {
 
   function onRegisterSubmit(values: z.infer<typeof registerSchema>) {
     console.log(values);
-    localStorage.setItem('userRole', values.role);
     navigate("/dashboard");
   }
 
@@ -212,28 +208,6 @@ export default function Login() {
                           <FormControl>
                             <Input type="password" {...field} />
                           </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={registerForm.control}
-                      name="role"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Rolle</FormLabel>
-                          <Select onValueChange={field.onChange} defaultValue={field.value}>
-                            <FormControl>
-                              <SelectTrigger>
-                                <SelectValue placeholder="Wählen Sie Ihre Rolle" />
-                              </SelectTrigger>
-                            </FormControl>
-                            <SelectContent>
-                              <SelectItem value="driver">Fahrer</SelectItem>
-                              <SelectItem value="manager">Manager</SelectItem>
-                              <SelectItem value="admin">Administrator</SelectItem>
-                            </SelectContent>
-                          </Select>
                           <FormMessage />
                         </FormItem>
                       )}
