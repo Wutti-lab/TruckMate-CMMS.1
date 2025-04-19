@@ -13,7 +13,7 @@ export default function Login() {
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-fleet-50 to-white p-4">
       <div className="max-w-md w-full">
         <div className="text-center mb-6">
-          <h1 className="text-3xl font-bold text-fleet-500">FleetBuddy</h1>
+          <h1 className="text-3xl font-bold text-fleet-500">TruckMate CMMS</h1>
           <p className="text-gray-600 mt-2">Flottenmanagement leicht gemacht</p>
         </div>
         

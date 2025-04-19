@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
@@ -32,7 +31,7 @@ export function Sidebar({ className }: SidebarProps) {
     >
       <div className="flex items-center justify-between p-4 border-b">
         {!collapsed && (
-          <div className="font-bold text-fleet-500 text-xl">FleetBuddy</div>
+          <div className="font-bold text-fleet-500 text-xl">TruckMate CMMS</div>
         )}
         <Button
           variant="ghost"
