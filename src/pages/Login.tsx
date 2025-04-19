@@ -19,16 +19,16 @@ export default function Login() {
         
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid w-full grid-cols-2 mb-4">
-            <TabsTrigger value="login">เข้าสู่ระบบ</TabsTrigger>
-            <TabsTrigger value="register">ลงทะเบียน</TabsTrigger>
+            <TabsTrigger value="login">Anmelden</TabsTrigger>
+            <TabsTrigger value="register">Registrieren</TabsTrigger>
           </TabsList>
           
           <TabsContent value="login">
             <Card>
               <CardHeader>
-                <CardTitle>เข้าสู่ระบบ</CardTitle>
+                <CardTitle>Anmelden</CardTitle>
                 <CardDescription>
-                  เข้าสู่ระบบด้วยข้อมูลของคุณ
+                  Melden Sie sich mit Ihren Zugangsdaten an
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -36,7 +36,7 @@ export default function Login() {
               </CardContent>
               <CardFooter className="flex justify-center">
                 <Button variant="link" size="sm" className="text-fleet-500">
-                  ลืมรหัสผ่าน?
+                  Passwort vergessen?
                 </Button>
               </CardFooter>
             </Card>
@@ -45,9 +45,9 @@ export default function Login() {
           <TabsContent value="register">
             <Card>
               <CardHeader>
-                <CardTitle>ลงทะเบียน</CardTitle>
+                <CardTitle>Registrieren</CardTitle>
                 <CardDescription>
-                  สร้างบัญชีใหม่
+                  Erstellen Sie ein neues Konto
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">

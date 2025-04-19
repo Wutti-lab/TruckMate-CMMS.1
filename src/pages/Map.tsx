@@ -15,12 +15,12 @@ export default function Map() {
       <Header />
       <main className="flex-1 p-6 relative overflow-hidden">
         <div className="mb-4 flex flex-wrap gap-4 items-center justify-between">
-          <h1 className="text-2xl font-bold">แผนที่</h1>
+          <h1 className="text-2xl font-bold">Karte</h1>
           <div className="flex items-center gap-2">
             <div className="relative">
               <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
               <Input
-                placeholder="ค้นหาที่อยู่หรือยานพาหนะ..."
+                placeholder="Adresse oder Fahrzeug suchen..."
                 className="pl-8 w-[200px] md:w-[300px]"
               />
             </div>
@@ -32,15 +32,14 @@ export default function Map() {
 
         <Tabs defaultValue="map" className="h-[calc(100%-40px)]">
           <TabsList>
-            <TabsTrigger value="map">แผนที่</TabsTrigger>
-            <TabsTrigger value="satellite">ดาวเทียม</TabsTrigger>
-            <TabsTrigger value="traffic">การจราจร</TabsTrigger>
+            <TabsTrigger value="map">Karte</TabsTrigger>
+            <TabsTrigger value="satellite">Satellit</TabsTrigger>
+            <TabsTrigger value="traffic">Verkehr</TabsTrigger>
           </TabsList>
           <TabsContent value="map" className="h-full">
             <div className="relative rounded-md h-full border overflow-hidden">
               <MapComponent />
               
-              {/* Vehicle markers */}
               {[
                 { id: "car1", position: { top: "20%", left: "30%" } },
                 { id: "car2", position: { top: "40%", left: "50%" } },
@@ -59,21 +58,20 @@ export default function Map() {
                 </Button>
               ))}
               
-              {/* Legend */}
               <Card className="absolute right-4 bottom-4 w-auto">
                 <CardContent className="p-3">
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center gap-2 text-sm">
                       <div className="w-3 h-3 rounded-full bg-green-500" />
-                      <span>ใช้งานอยู่</span>
+                      <span>Im Einsatz</span>
                     </div>
                     <div className="flex items-center gap-2 text-sm">
                       <div className="w-3 h-3 rounded-full bg-yellow-500" />
-                      <span>ไม่ใช้งาน</span>
+                      <span>Inaktiv</span>
                     </div>
                     <div className="flex items-center gap-2 text-sm">
                       <div className="w-3 h-3 rounded-full bg-red-500" />
-                      <span>ปัญหา</span>
+                      <span>Problem</span>
                     </div>
                   </div>
                 </CardContent>
@@ -91,13 +89,11 @@ export default function Map() {
             </div>
           </TabsContent>
           
-          {/* Hinweis zur Konfiguration */}
           <div className="mt-2 text-xs text-muted-foreground">
-            <p>หมายเหตุ: ต้องการ Mapbox Token เพื่อให้แผนที่ทำงานได้ กรุณาตั้งค่าใน MapComponent.tsx</p>
+            <p>Hinweis: Mapbox Token erforderlich für die Kartenfunktion. Bitte in MapComponent.tsx konfigurieren</p>
           </div>
         </Tabs>
         
-        {/* Info panel for selected vehicle */}
         {selectedVehicle && (
           <Card className="absolute left-6 top-28 w-[300px] shadow-lg">
             <CardContent className="p-4">
@@ -118,26 +114,26 @@ export default function Map() {
               <div className="mt-4 space-y-2">
                 <div className="flex items-center gap-2 text-sm">
                   <MapPin className="h-4 w-4 text-fleet-500" />
-                  <span>กรุงเทพฯ, สาทร</span>
+                  <span>Berlin, Mitte</span>
                 </div>
                 <div className="text-sm">
-                  <span className="font-medium">คนขับ:</span> สมชาย ใจดี
+                  <span className="font-medium">Fahrer:</span> Michael Schmidt
                 </div>
                 <div className="text-sm">
-                  <span className="font-medium">สถานะ:</span>{" "}
-                  <span className="text-green-600">กำลังขับ</span>
+                  <span className="font-medium">Status:</span>{" "}
+                  <span className="text-green-600">In Fahrt</span>
                 </div>
                 <div className="text-sm">
-                  <span className="font-medium">ความเร็ว:</span> 42 กม./ชม.
+                  <span className="font-medium">Geschwindigkeit:</span> 42 km/h
                 </div>
                 <div className="text-sm">
-                  <span className="font-medium">ระดับน้ำมัน:</span> 68%
+                  <span className="font-medium">Kraftstoff:</span> 68%
                 </div>
               </div>
               
               <div className="mt-4 flex justify-end gap-2">
-                <Button variant="outline" size="sm">รายละเอียด</Button>
-                <Button size="sm" className="bg-fleet-500">นำทาง</Button>
+                <Button variant="outline" size="sm">Details</Button>
+                <Button size="sm" className="bg-fleet-500">Navigation</Button>
               </div>
             </CardContent>
           </Card>
