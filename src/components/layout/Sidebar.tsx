@@ -1,8 +1,9 @@
 
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { UserRole } from "@/types/user";
 import {
   Car,
   LayoutDashboard,
@@ -12,15 +13,53 @@ import {
   Menu,
   Users,
   ChevronLeft,
-  ClipboardList
+  ClipboardList,
+  UserCircle
 } from "lucide-react";
 
 interface SidebarProps {
   className?: string;
 }
 
+const menuItems = {
+  driver: [
+    { to: "/", icon: <LayoutDashboard size={20} />, label: "Dashboard" },
+    { to: "/map", icon: <Map size={20} />, label: "Karte" },
+    { to: "/inspections", icon: <ClipboardList size={20} />, label: "Inspektionen" },
+  ],
+  manager: [
+    { to: "/", icon: <LayoutDashboard size={20} />, label: "Dashboard" },
+    { to: "/vehicles", icon: <Car size={20} />, label: "Fahrzeuge" },
+    { to: "/map", icon: <Map size={20} />, label: "Karte" },
+    { to: "/inspections", icon: <ClipboardList size={20} />, label: "Inspektionen" },
+    { to: "/drivers", icon: <Users size={20} />, label: "Fahrer" },
+  ],
+  admin: [
+    { to: "/", icon: <LayoutDashboard size={20} />, label: "Dashboard" },
+    { to: "/vehicles", icon: <Car size={20} />, label: "Fahrzeuge" },
+    { to: "/map", icon: <Map size={20} />, label: "Karte" },
+    { to: "/inspections", icon: <ClipboardList size={20} />, label: "Inspektionen" },
+    { to: "/drivers", icon: <Users size={20} />, label: "Fahrer" },
+    { to: "/settings", icon: <Settings size={20} />, label: "Einstellungen" },
+  ],
+};
+
 export function Sidebar({ className }: SidebarProps) {
   const [collapsed, setCollapsed] = useState(false);
+  const [userRole, setUserRole] = useState<UserRole>('driver');
+  const location = useLocation();
+
+  useEffect(() => {
+    const role = (localStorage.getItem('userRole') as UserRole) || 'driver';
+    setUserRole(role);
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('userRole');
+    window.location.href = '/login';
+  };
+
+  const currentMenuItems = menuItems[userRole] || menuItems.driver;
 
   return (
     <div
@@ -45,53 +84,41 @@ export function Sidebar({ className }: SidebarProps) {
       </div>
 
       <div className="flex-1 overflow-auto py-2">
+        <div className="px-2 py-2 mb-4">
+          <div className="flex items-center gap-2 px-3 py-2">
+            <UserCircle size={20} className="text-fleet-500" />
+            {!collapsed && (
+              <div className="text-sm font-medium">{userRole}</div>
+            )}
+          </div>
+        </div>
+        
         <nav className="grid gap-1 px-2">
-          <NavItem
-            to="/"
-            icon={<LayoutDashboard size={20} />}
-            label="Dashboard"
-            collapsed={collapsed}
-          />
-          <NavItem
-            to="/vehicles"
-            icon={<Car size={20} />}
-            label="Fahrzeuge"
-            collapsed={collapsed}
-          />
-          <NavItem
-            to="/map"
-            icon={<Map size={20} />}
-            label="Karte"
-            collapsed={collapsed}
-          />
-          <NavItem
-            to="/inspections"
-            icon={<ClipboardList size={20} />}
-            label="Inspektionen"
-            collapsed={collapsed}
-          />
-          <NavItem
-            to="/drivers"
-            icon={<Users size={20} />}
-            label="Fahrer"
-            collapsed={collapsed}
-          />
-          <NavItem
-            to="/settings"
-            icon={<Settings size={20} />}
-            label="Einstellungen"
-            collapsed={collapsed}
-          />
+          {currentMenuItems.map((item) => (
+            <NavItem
+              key={item.to}
+              to={item.to}
+              icon={item.icon}
+              label={item.label}
+              collapsed={collapsed}
+              active={location.pathname === item.to}
+            />
+          ))}
         </nav>
       </div>
 
       <div className="mt-auto border-t p-2">
-        <NavItem
-          to="/logout"
-          icon={<LogOut size={20} />}
-          label="Abmelden"
-          collapsed={collapsed}
-        />
+        <Button
+          variant="ghost"
+          className={cn(
+            "w-full justify-start font-normal hover:bg-fleet-50 hover:text-fleet-500",
+            collapsed ? "px-2" : "px-3"
+          )}
+          onClick={handleLogout}
+        >
+          <LogOut size={20} />
+          {!collapsed && <span className="ml-2">Abmelden</span>}
+        </Button>
       </div>
     </div>
   );
@@ -102,16 +129,18 @@ interface NavItemProps {
   icon: React.ReactNode;
   label: string;
   collapsed: boolean;
+  active?: boolean;
 }
 
-function NavItem({ to, icon, label, collapsed }: NavItemProps) {
+function NavItem({ to, icon, label, collapsed, active }: NavItemProps) {
   return (
     <Link to={to}>
       <Button
         variant="ghost"
         className={cn(
           "w-full justify-start font-normal hover:bg-fleet-50 hover:text-fleet-500",
-          collapsed ? "px-2" : "px-3"
+          collapsed ? "px-2" : "px-3",
+          active && "bg-fleet-50 text-fleet-500"
         )}
       >
         {icon}
