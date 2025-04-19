@@ -1,12 +1,13 @@
 
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { ClipboardList, CheckSquare, UserCog, Truck, Clock, MapPin } from "lucide-react";
+import { ClipboardList, CheckSquare, UserCog, Truck, Clock, MapPin, Phone } from "lucide-react";
 import { VehicleInspectionList } from "./VehicleInspectionList";
 import { ChecklistTemplates } from "./ChecklistTemplates";
 import { DriverRequirements } from "./DriverRequirements";
 import { MaintenanceChecklist } from "./MaintenanceChecklist";
 import { TransportRegulations } from "./TransportRegulations";
 import { DeliveryManagement } from "./DeliveryManagement";
+import { EmergencyContacts } from "./EmergencyContacts";
 
 export function InspectionTabs() {
   return (
@@ -36,6 +37,10 @@ export function InspectionTabs() {
           <UserCog size={16} />
           Fahrerqualifikationen
         </TabsTrigger>
+        <TabsTrigger value="emergency" className="flex items-center gap-2">
+          <Phone size={16} />
+          Notfallkontakte
+        </TabsTrigger>
       </TabsList>
       <TabsContent value="inspections" className="mt-6">
         <VehicleInspectionList />
@@ -54,6 +59,9 @@ export function InspectionTabs() {
       </TabsContent>
       <TabsContent value="drivers" className="mt-6">
         <DriverRequirements />
+      </TabsContent>
+      <TabsContent value="emergency" className="mt-6">
+        <EmergencyContacts />
       </TabsContent>
     </Tabs>
   );
