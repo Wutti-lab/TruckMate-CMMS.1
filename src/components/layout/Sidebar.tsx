@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
@@ -54,31 +55,31 @@ export function Sidebar({ className }: SidebarProps) {
           <NavItem
             to="/vehicles"
             icon={<Car size={20} />}
-            label="Fahrzeuge"
+            label="Vehicles"
             collapsed={collapsed}
           />
           <NavItem
             to="/map"
             icon={<Map size={20} />}
-            label="Karte"
+            label="Map"
             collapsed={collapsed}
           />
           <NavItem
             to="/inspections"
             icon={<ClipboardList size={20} />}
-            label="Inspektionen"
+            label="Inspections"
             collapsed={collapsed}
           />
           <NavItem
             to="/drivers"
             icon={<Users size={20} />}
-            label="Fahrer"
+            label="Drivers"
             collapsed={collapsed}
           />
           <NavItem
             to="/settings"
             icon={<Settings size={20} />}
-            label="Einstellungen"
+            label="Settings"
             collapsed={collapsed}
           />
         </nav>
@@ -88,7 +89,7 @@ export function Sidebar({ className }: SidebarProps) {
         <NavItem
           to="/logout"
           icon={<LogOut size={20} />}
-          label="Abmelden"
+          label="Logout"
           collapsed={collapsed}
         />
       </div>
