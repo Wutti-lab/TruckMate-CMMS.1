@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Header } from "@/components/layout/Header";
 import { Activity, AlertTriangle, Battery, Car, Clock, AreaChart, Fuel, MapPin, ThumbsUp, TrendingUp, Users, Wrench } from "lucide-react";
@@ -10,14 +9,14 @@ export default function Dashboard() {
       <Header />
       <main className="flex-1 p-6 overflow-auto">
         <div className="mb-8">
-          <h1 className="text-2xl font-bold tracking-tight">TruckMate CMMS Dashboard</h1>
-          <p className="text-muted-foreground">Willkommen zurück, hier ist ein Überblick über Ihre Flotte</p>
+          <h1 className="text-2xl font-bold tracking-tight">แดชบอร์ด TruckMate CMMS</h1>
+          <p className="text-muted-foreground">ยินดีต้อนรับกลับ นี่คือภาพรวมของกองยานพาหนะของคุณ</p>
         </div>
         
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium">Flottenstatus</CardTitle>
+              <CardTitle className="text-sm font-medium">สถานะกองยานพาหนะ</CardTitle>
               <Car className="h-4 w-4 text-fleet-500" />
             </CardHeader>
             <CardContent>
@@ -27,52 +26,52 @@ export default function Dashboard() {
                 <span className="text-xs text-muted-foreground">75%</span>
               </div>
               <p className="text-xs text-muted-foreground mt-2">
-                18 Fahrzeuge sind im Einsatz
+                รถ 18 คันกำลังให้บริการ
               </p>
             </CardContent>
           </Card>
           
           <Card>
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium">Kraftstoffeffizienz</CardTitle>
+              <CardTitle className="text-sm font-medium">ประสิทธิภาพการใช้เชื้อเพลิง</CardTitle>
               <Fuel className="h-4 w-4 text-fleet-500" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">8.2 L/100km</div>
+              <div className="text-2xl font-bold">8.2 ลิตร/100กม.</div>
               <div className="flex items-center text-xs text-green-500 mt-2">
                 <TrendingUp className="h-3 w-3 mr-1" />
-                <span>5% besser als letzten Monat</span>
+                <span>ดีขึ้น 5% จากเดือนที่แล้ว</span>
               </div>
             </CardContent>
           </Card>
           
           <Card>
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium">Fahrerstatus</CardTitle>
+              <CardTitle className="text-sm font-medium">สถานะคนขับ</CardTitle>
               <Users className="h-4 w-4 text-fleet-500" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">15/20</div>
               <p className="text-xs text-muted-foreground mt-2">
-                15 Fahrer sind im Dienst
+                คนขับ 15 คนกำลังปฏิบัติงาน
               </p>
               <div className="flex items-center gap-2 mt-2">
                 <div className="w-2 h-2 rounded-full bg-green-500" />
-                <span className="text-xs">75% Verfügbarkeit</span>
+                <span className="text-xs">ความพร้อม 75%</span>
               </div>
             </CardContent>
           </Card>
           
           <Card>
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium">Wartungsstatus</CardTitle>
+              <CardTitle className="text-sm font-medium">สถานะการบำรุงรักษา</CardTitle>
               <Wrench className="h-4 w-4 text-fleet-500" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">3</div>
               <div className="flex items-center text-orange-500 mt-2">
                 <AlertTriangle className="h-3 w-3 mr-1" />
-                <span className="text-xs">Wartung ausstehend</span>
+                <span className="text-xs">รอการบำรุงรักษา</span>
               </div>
             </CardContent>
           </Card>
@@ -81,8 +80,8 @@ export default function Dashboard() {
         <div className="grid gap-6 mt-6 md:grid-cols-12">
           <Card className="col-span-12 md:col-span-8">
             <CardHeader>
-              <CardTitle>Flottenübersicht</CardTitle>
-              <CardDescription>Aktuelle Fahrzeugstatus</CardDescription>
+              <CardTitle>ภาพรวมกองยานพาหนะ</CardTitle>
+              <CardDescription>สถานะรถปัจจุบัน</CardDescription>
             </CardHeader>
             <CardContent className="p-0">
               <div className="rounded-md border">
@@ -133,39 +132,39 @@ export default function Dashboard() {
           
           <Card className="col-span-12 md:col-span-4">
             <CardHeader>
-              <CardTitle>Letzte Aktivitäten</CardTitle>
-              <CardDescription>Echtzeit-Updates der Flotte</CardDescription>
+              <CardTitle>กิจกรรมล่าสุด</CardTitle>
+              <CardDescription>การอัปเดตกองยานพาหนะแบบเรียลไทม์</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
                 {[
                   {
-                    title: "Fahrzeug B-FR 323 am Ziel angekommen",
-                    time: "vor 5 Minuten",
+                    title: "รถทะเบียน B-FR 323 ถึงจุดหมายแล้ว",
+                    time: "5 นาทีที่แล้ว",
                     icon: MapPin,
                     color: "text-green-500",
                   },
                   {
-                    title: "Neue Wartungsanfrage für B-FR 423",
-                    time: "vor 35 Minuten",
+                    title: "คำขอบำรุงรักษาใหม่สำหรับ B-FR 423",
+                    time: "35 นาทีที่แล้ว",
                     icon: Wrench,
                     color: "text-orange-500",
                   },
                   {
-                    title: "Niedriger Kraftstoff in B-FR 123",
-                    time: "vor 1 Stunde",
+                    title: "น้ำมันเหลือน้อยใน B-FR 123",
+                    time: "1 ชั่วโมงที่แล้ว",
                     icon: Fuel,
                     color: "text-red-500",
                   },
                   {
-                    title: "Fahrer M. Schmidt beginnt Schicht",
-                    time: "vor 2 Stunden",
+                    title: "คนขับ M. Schmidt เริ่มกะ",
+                    time: "2 ชั่วโมงที่แล้ว",
                     icon: Users,
                     color: "text-fleet-500",
                   },
                   {
-                    title: "Route aktualisiert für B-FR 223",
-                    time: "vor 3 Stunden",
+                    title: "อัปเดตเส้นทางสำหรับ B-FR 223",
+                    time: "3 ชั่วโมงที่แล้ว",
                     icon: MapPin,
                     color: "text-blue-500",
                   },

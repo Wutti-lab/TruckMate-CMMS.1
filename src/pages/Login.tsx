@@ -14,21 +14,21 @@ export default function Login() {
       <div className="max-w-md w-full">
         <div className="text-center mb-6">
           <h1 className="text-3xl font-bold text-fleet-500">TruckMate CMMS</h1>
-          <p className="text-gray-600 mt-2">Flottenmanagement leicht gemacht</p>
+          <p className="text-gray-600 mt-2">ระบบจัดการยานพาหนะที่ง่ายดาย</p>
         </div>
         
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid w-full grid-cols-2 mb-4">
-            <TabsTrigger value="login">Anmelden</TabsTrigger>
-            <TabsTrigger value="register">Registrieren</TabsTrigger>
+            <TabsTrigger value="login">เข้าสู่ระบบ</TabsTrigger>
+            <TabsTrigger value="register">ลงทะเบียน</TabsTrigger>
           </TabsList>
           
           <TabsContent value="login">
             <Card>
               <CardHeader>
-                <CardTitle>Anmelden</CardTitle>
+                <CardTitle>เข้าสู่ระบบ</CardTitle>
                 <CardDescription>
-                  Melden Sie sich mit Ihren Zugangsdaten an
+                  เข้าสู่ระบบด้วยข้อมูลของคุณ
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -36,7 +36,7 @@ export default function Login() {
               </CardContent>
               <CardFooter className="flex justify-center">
                 <Button variant="link" size="sm" className="text-fleet-500">
-                  Passwort vergessen?
+                  ลืมรหัสผ่าน?
                 </Button>
               </CardFooter>
             </Card>
@@ -45,9 +45,9 @@ export default function Login() {
           <TabsContent value="register">
             <Card>
               <CardHeader>
-                <CardTitle>Registrieren</CardTitle>
+                <CardTitle>ลงทะเบียน</CardTitle>
                 <CardDescription>
-                  Erstellen Sie ein neues Konto
+                  สร้างบัญชีใหม่
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">

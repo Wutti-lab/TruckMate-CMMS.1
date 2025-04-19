@@ -129,12 +129,12 @@ export default function Vehicles() {
       <Header />
       <main className="flex-1 p-6 overflow-auto">
         <div className="mb-6 flex flex-wrap gap-4 items-center justify-between">
-          <h1 className="text-2xl font-bold">Fahrzeugflotte</h1>
+          <h1 className="text-2xl font-bold">กองยานพาหนะ</h1>
           <div className="flex items-center gap-2">
             <div className="relative">
               <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
               <Input
-                placeholder="Suche nach Kennzeichen, Fahrer..."
+                placeholder="ค้นหาตามทะเบียน, คนขับ..."
                 className="pl-8 w-[200px] md:w-[300px]"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -147,10 +147,10 @@ export default function Vehicles() {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="bg-white">
-                <DropdownMenuItem>Alle Fahrzeuge</DropdownMenuItem>
-                <DropdownMenuItem>Nur aktive</DropdownMenuItem>
-                <DropdownMenuItem>Nur inaktive</DropdownMenuItem>
-                <DropdownMenuItem>In Wartung</DropdownMenuItem>
+                <DropdownMenuItem>รถทั้งหมด</DropdownMenuItem>
+                <DropdownMenuItem>เฉพาะรถที่ใช้งาน</DropdownMenuItem>
+                <DropdownMenuItem>เฉพาะรถที่ไม่ได้ใช้งาน</DropdownMenuItem>
+                <DropdownMenuItem>อยู่ระหว่างการซ่อมบำรุง</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
             <DropdownMenu>
@@ -160,15 +160,15 @@ export default function Vehicles() {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="bg-white">
-                <DropdownMenuItem>Kennzeichen (A-Z)</DropdownMenuItem>
-                <DropdownMenuItem>Kennzeichen (Z-A)</DropdownMenuItem>
-                <DropdownMenuItem>Status</DropdownMenuItem>
-                <DropdownMenuItem>Standort</DropdownMenuItem>
+                <DropdownMenuItem>ทะเบียน (ก-ฮ)</DropdownMenuItem>
+                <DropdownMenuItem>ทะเบียน (ฮ-ก)</DropdownMenuItem>
+                <DropdownMenuItem>สถานะ</DropdownMenuItem>
+                <DropdownMenuItem>ตำแหน่ง</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
             <Button className="bg-fleet-500">
               <Plus size={16} className="mr-2" />
-              Neues Fahrzeug
+              เพิ่มรถใหม่
             </Button>
           </div>
         </div>
@@ -178,13 +178,13 @@ export default function Vehicles() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Kennzeichen</TableHead>
-                  <TableHead>Fahrer</TableHead>
-                  <TableHead>Modell</TableHead>
-                  <TableHead>Standort</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Ladezustand</TableHead>
-                  <TableHead>Nächste Wartung</TableHead>
+                  <TableHead>ทะเบียน</TableHead>
+                  <TableHead>คนขับ</TableHead>
+                  <TableHead>รุ่น</TableHead>
+                  <TableHead>ตำแหน่ง</TableHead>
+                  <TableHead>สถานะ</TableHead>
+                  <TableHead>ระดับแบตเตอรี่</TableHead>
+                  <TableHead>ซ่อมบำรุงครั้งต่อไป</TableHead>
                   <TableHead></TableHead>
                 </TableRow>
               </TableHeader>

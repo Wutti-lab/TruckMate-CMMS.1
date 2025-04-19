@@ -1,4 +1,3 @@
-
 import { Bell, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,14 +7,14 @@ interface HeaderProps {
   username?: string;
 }
 
-export function Header({ username = "Max Mustermann" }: HeaderProps) {
+export function Header({ username = "แม็กซ์ มุสเตอร์มันน์" }: HeaderProps) {
   return (
     <header className="flex items-center justify-between p-4 border-b bg-white">
       <div className="flex-1">
         <div className="relative max-w-md">
           <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input
-            placeholder="Fahrzeug oder Fahrer suchen..."
+            placeholder="ค้นหารถหรือคนขับ..."
             className="pl-8 bg-gray-50"
           />
         </div>
@@ -25,7 +24,7 @@ export function Header({ username = "Max Mustermann" }: HeaderProps) {
           variant="ghost"
           size="icon"
           className="relative"
-          aria-label="Benachrichtigungen"
+          aria-label="การแจ้งเตือน"
         >
           <Bell size={20} />
           <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full" />
