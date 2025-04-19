@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { Phone, Flashlight, Archive, FireExtinguisher, GraduationCap } from "lucide-react";
+import { Phone, Flashlight, Archive, FireExtinguisher, GraduationCap, Box } from "lucide-react";
 
 export function MaintenanceChecklist() {
   return (
@@ -139,6 +139,31 @@ export function MaintenanceChecklist() {
             <p>• Sofortige Meldung von Schäden oder Auffälligkeiten</p>
           </div>
         </div>
+
+      <div className="space-y-4">
+        <h3 className="font-semibold">Produkttransport</h3>
+        <div className="space-y-2">
+          <div className="flex items-center space-x-2">
+            <Checkbox id="product_types" />
+            <Label htmlFor="product_types" className="flex items-center gap-2">
+              <Box size={16} />
+              Produkttypen identifiziert und dokumentiert
+            </Label>
+          </div>
+          <div className="flex items-center space-x-2">
+            <Checkbox id="transport_conditions" />
+            <Label htmlFor="transport_conditions">Spezifische Transportbedingungen beachtet</Label>
+          </div>
+        </div>
+        <div className="p-4 bg-secondary rounded-lg text-sm space-y-2">
+          <p>• Lebensmittel: Temperaturkontrolle und Hygiene</p>
+          <p>• Chemikalien: Gefahrgutvorschriften einhalten</p>
+          <p>• Elektronische Geräte: Stoßgeschützt verpacken</p>
+          <p>• Medizinische Produkte: Sterile Bedingungen</p>
+          <p>• Empfindliche Waren: Vorsichtige Handhabung</p>
+          <p>• Verderbliche Güter: Kühlkette beachten</p>
+        </div>
+      </div>
       </CardContent>
     </Card>
   );
