@@ -1,5 +1,5 @@
 
-import { Phone, Siren, Hospital, FireExtinguisher, AlertTriangle, Car, Building2, Road, MessageSquareWarning } from "lucide-react";
+import { Phone, Siren, Hospital, FireExtinguisher, AlertTriangle, Car, Building2, Map, MessageSquareWarning } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
 export function EmergencyContacts() {
@@ -10,7 +10,7 @@ export function EmergencyContacts() {
     { number: "1193", title: "Autobahnpolizei", icon: Car },
     { number: "1195", title: "Direktion", icon: Building2 },
     { number: "1586", title: "Hotline", icon: Phone },
-    { number: "1197", title: "Straßenbauamt", icon: Road },
+    { number: "1197", title: "Straßenbauamt", icon: Map },
     { number: "1543", title: "Kontrollzentrum und Befehl", icon: Building2 },
     { number: "1192", title: "Fahrzeugverlust / Diebstahl", icon: MessageSquareWarning },
     { number: "1669", title: "Medizinische Einheit", icon: Hospital },
