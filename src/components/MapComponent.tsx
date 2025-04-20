@@ -1,10 +1,10 @@
+
 import { useEffect, useRef, useState } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { Locate } from "lucide-react";
 import { Button } from "./ui/button";
-
-const MAPBOX_TOKEN = "pk.eyJ1IjoiZXhhbXBsZSIsImEiOiJjbGVhcmx5LW5vdC1hLXJlYWwtdG9rZW4ifQ.clearly-not-a-real-token";
+import { Input } from "./ui/input";
 
 interface MapProps {
   className?: string;
@@ -16,41 +16,12 @@ export function MapComponent({ className }: MapProps) {
   const [mapLoaded, setMapLoaded] = useState(false);
   const [userLocation, setUserLocation] = useState<[number, number] | null>(null);
   const userMarker = useRef<mapboxgl.Marker | null>(null);
+  const [mapboxToken, setMapboxToken] = useState(localStorage.getItem('mapbox_token') || '');
 
-  const getUserLocation = () => {
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          setUserLocation([longitude, latitude]);
-
-          if (map.current) {
-            map.current.flyTo({
-              center: [longitude, latitude],
-              zoom: 15
-            });
-
-            // Update or create marker
-            if (!userMarker.current) {
-              userMarker.current = new mapboxgl.Marker({ color: '#FF0000' })
-                .setLngLat([longitude, latitude])
-                .addTo(map.current);
-            } else {
-              userMarker.current.setLngLat([longitude, latitude]);
-            }
-          }
-        },
-        (error) => {
-          console.error("Error getting location:", error);
-        }
-      );
-    }
-  };
-
-  useEffect(() => {
+  const initializeMap = (token: string) => {
     if (!mapContainer.current || map.current) return;
 
-    mapboxgl.accessToken = MAPBOX_TOKEN;
+    mapboxgl.accessToken = token;
     
     try {
       map.current = new mapboxgl.Map({
@@ -92,31 +63,94 @@ export function MapComponent({ className }: MapProps) {
     } catch (error) {
       console.error("Mapbox error:", error);
     }
-  }, []);
+  };
+
+  const getUserLocation = () => {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setUserLocation([longitude, latitude]);
+
+          if (map.current) {
+            map.current.flyTo({
+              center: [longitude, latitude],
+              zoom: 15
+            });
+
+            // Update or create marker
+            if (!userMarker.current) {
+              userMarker.current = new mapboxgl.Marker({ color: '#FF0000' })
+                .setLngLat([longitude, latitude])
+                .addTo(map.current);
+            } else {
+              userMarker.current.setLngLat([longitude, latitude]);
+            }
+          }
+        },
+        (error) => {
+          console.error("Error getting location:", error);
+        }
+      );
+    }
+  };
+
+  const handleTokenSubmit = () => {
+    if (mapboxToken) {
+      localStorage.setItem('mapbox_token', mapboxToken);
+      initializeMap(mapboxToken);
+    }
+  };
+
+  useEffect(() => {
+    if (mapboxToken) {
+      initializeMap(mapboxToken);
+    }
+  }, [mapboxToken]);
 
   return (
     <div className={`relative h-full w-full rounded-md overflow-hidden ${className}`}>
-      <div ref={mapContainer} className="h-full w-full" />
-      
-      {!mapLoaded && (
-        <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
-          <div className="text-center">
-            <p className="text-lg text-fleet-500 font-medium mb-2">Kartenansicht</p>
-            <p className="text-sm text-gray-500">
-              Bitte füge einen gültigen Mapbox-Token hinzu, um die Karte anzuzeigen
-            </p>
+      {!mapboxToken ? (
+        <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-100 p-4 z-20">
+          <p className="text-lg text-fleet-500 font-medium mb-4">Mapbox Token erforderlich</p>
+          <div className="flex gap-2 w-full max-w-md">
+            <Input 
+              placeholder="Geben Sie Ihren Mapbox Public Token ein" 
+              value={mapboxToken}
+              onChange={(e) => setMapboxToken(e.target.value)}
+              className="flex-grow"
+            />
+            <Button onClick={handleTokenSubmit}>
+              Speichern
+            </Button>
           </div>
+          <p className="mt-4 text-sm text-gray-600 text-center">
+            Sie können Ihren Mapbox Public Token unter mapbox.com finden
+          </p>
         </div>
-      )}
+      ) : (
+        <>
+          <div ref={mapContainer} className="h-full w-full" />
+          
+          {!mapLoaded && (
+            <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
+              <div className="text-center">
+                <p className="text-lg text-fleet-500 font-medium mb-2">Kartenansicht</p>
+                <p className="text-sm text-gray-500">Karte wird geladen...</p>
+              </div>
+            </div>
+          )}
 
-      <Button
-        variant="secondary"
-        size="icon"
-        className="absolute bottom-4 right-4 z-10 bg-white shadow-lg hover:bg-gray-100"
-        onClick={getUserLocation}
-      >
-        <Locate className="h-4 w-4" />
-      </Button>
+          <Button
+            variant="secondary"
+            size="icon"
+            className="absolute bottom-4 right-4 z-10 bg-white shadow-lg hover:bg-gray-100"
+            onClick={getUserLocation}
+          >
+            <Locate className="h-4 w-4" />
+          </Button>
+        </>
+      )}
     </div>
   );
 }
