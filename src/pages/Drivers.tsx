@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Header } from "@/components/layout/Header";
 import { Button } from "@/components/ui/button";
@@ -10,8 +9,8 @@ import { DriverStats } from "@/components/drivers/DriverStats";
 import { DriverRequirements } from "@/components/drivers/DriverRequirements";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
+import { AddDriverModal } from "@/components/drivers/AddDriverModal";
 
-// Mock driver data
 const drivers = [
   {
     id: "D-001",
@@ -74,7 +73,6 @@ export default function Drivers() {
   const [searchQuery, setSearchQuery] = useState("");
   const isMobile = useIsMobile();
   
-  // Filter drivers based on search query
   const filteredDrivers = drivers.filter((driver) => 
     driver.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
     driver.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -125,13 +123,7 @@ export default function Drivers() {
               <Button variant="outline" size="icon">
                 <Filter size={16} />
               </Button>
-              <Button className="bg-fleet-500 hidden md:flex">
-                <Plus size={16} className="mr-2" />
-                Add Driver | เพิ่มคนขับ
-              </Button>
-              <Button className="bg-fleet-500 md:hidden" size="icon">
-                <Plus size={16} />
-              </Button>
+              <AddDriverModal />
             </div>
           </div>
 
