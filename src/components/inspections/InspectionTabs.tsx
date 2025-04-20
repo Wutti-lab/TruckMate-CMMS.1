@@ -4,7 +4,6 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { 
   ClipboardList, 
   CheckSquare, 
-  UserCog, 
   Truck, 
   Clock, 
   MapPin, 
@@ -12,7 +11,6 @@ import {
 } from "lucide-react";
 import { VehicleInspectionList } from "./VehicleInspectionList";
 import { ChecklistTemplates } from "./ChecklistTemplates";
-import { DriverRequirements } from "./DriverRequirements";
 import { MaintenanceChecklist } from "./MaintenanceChecklist";
 import { TransportRegulations } from "./TransportRegulations";
 import { DeliveryManagement } from "./DeliveryManagement";
@@ -43,10 +41,6 @@ export function InspectionTabs() {
           <Clock size={16} />
           Drive Times | เวลาขับรถ
         </TabsTrigger>
-        <TabsTrigger value="drivers" className="flex items-center gap-2 py-2 px-3">
-          <UserCog size={16} />
-          Drivers | ผู้ขับขี่
-        </TabsTrigger>
         <TabsTrigger value="emergency" className="flex items-center gap-2 py-2 px-3">
           <Phone size={16} />
           Emergency | ฉุกเฉิน
@@ -70,9 +64,6 @@ export function InspectionTabs() {
             </TabsContent>
             <TabsContent value="timeRestrictions" className="mt-0">
               <TransportRegulations />
-            </TabsContent>
-            <TabsContent value="drivers" className="mt-0">
-              <DriverRequirements />
             </TabsContent>
             <TabsContent value="emergency" className="mt-0">
               <EmergencyContacts />

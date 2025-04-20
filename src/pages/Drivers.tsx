@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { DriverTable } from "@/components/drivers/DriverTable";
 import { DriverStats } from "@/components/drivers/DriverStats";
+import { DriverRequirements } from "@/components/drivers/DriverRequirements";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 
@@ -104,7 +105,7 @@ export default function Drivers() {
   return (
     <div className="flex flex-col h-full">
       <Header />
-      <main className="flex-1 p-4 md:p-6 overflow-auto">
+      <main className="flex-1 p-4 md:p-6 overflow-auto space-y-6">
         <div className="mb-6 space-y-4">
           <div className="flex items-center justify-between">
             <h1 className="text-xl md:text-2xl font-bold">Drivers | พนักงานขับรถ</h1>
@@ -155,11 +156,15 @@ export default function Drivers() {
           </div>
         </div>
 
-        <Card>
-          <CardContent className="p-0 sm:p-0">
-            <DriverTable drivers={filteredDrivers} />
-          </CardContent>
-        </Card>
+        <div className="grid gap-6">
+          <Card>
+            <CardContent className="p-0 sm:p-0">
+              <DriverTable drivers={filteredDrivers} />
+            </CardContent>
+          </Card>
+
+          <DriverRequirements />
+        </div>
       </main>
     </div>
   );
