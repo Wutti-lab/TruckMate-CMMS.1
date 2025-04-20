@@ -33,7 +33,8 @@ const App = () => (
             <Route path="map" element={<Map />} />
             <Route path="inspections" element={<Inspections />} />
             <Route path="drivers" element={<Drivers />} />
-            <Route path="settings" element={<Dashboard />} /> {/* Still a placeholder */}
+            <Route path="qr-scanner" element={<QRScanner />} />
+            <Route path="settings" element={<Dashboard />} />
           </Route>
 
           {/* Catch-all route */}
