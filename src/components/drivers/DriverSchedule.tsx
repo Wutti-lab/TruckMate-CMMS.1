@@ -1,9 +1,9 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Calendar } from "@/components/ui/calendar";
 import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
-import { Clock, Activity, MapPin } from "lucide-react";
+import { Clock, Activity, MapPin, Plus } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface DriverShift {
   driverId: string;
@@ -54,8 +54,12 @@ export function DriverSchedule() {
 
   return (
     <Card className="mt-6">
-      <CardHeader>
+      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
         <CardTitle>Schedule & Activities | ตารางกะและกิจกรรม</CardTitle>
+        <Button variant="outline" className="gap-2">
+          <Plus className="h-4 w-4" />
+          Add Activity | เพิ่มกิจกรรม
+        </Button>
       </CardHeader>
       <CardContent>
         <div className="grid gap-6 md:grid-cols-2">
