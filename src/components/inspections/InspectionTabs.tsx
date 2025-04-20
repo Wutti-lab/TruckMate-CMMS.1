@@ -18,11 +18,12 @@ import { TransportRegulations } from "./TransportRegulations";
 import { DeliveryManagement } from "./DeliveryManagement";
 import { EmergencyContacts } from "./EmergencyContacts";
 import { VehicleParts } from "./VehicleParts";
+import { Card, CardContent } from "@/components/ui/card";
 
 export function InspectionTabs() {
   return (
     <Tabs defaultValue="inspections" className="w-full">
-      <TabsList className="grid grid-cols-2 md:grid-cols-4 gap-4 p-3">
+      <TabsList className="grid grid-cols-2 md:grid-cols-4 gap-3 p-2 mb-6">
         <TabsTrigger value="inspections" className="flex items-center gap-2 py-2 px-3">
           <ClipboardList size={16} />
           Inspections | การตรวจสอบ
@@ -57,31 +58,35 @@ export function InspectionTabs() {
         </TabsTrigger>
       </TabsList>
       
-      <div className="mt-8">
-        <TabsContent value="inspections" className="p-1">
-          <VehicleInspectionList />
-        </TabsContent>
-        <TabsContent value="deliveries" className="p-1">
-          <DeliveryManagement />
-        </TabsContent>
-        <TabsContent value="templates" className="p-1">
-          <ChecklistTemplates />
-        </TabsContent>
-        <TabsContent value="maintenance" className="p-1">
-          <MaintenanceChecklist />
-        </TabsContent>
-        <TabsContent value="timeRestrictions" className="p-1">
-          <TransportRegulations />
-        </TabsContent>
-        <TabsContent value="drivers" className="p-1">
-          <DriverRequirements />
-        </TabsContent>
-        <TabsContent value="emergency" className="p-1">
-          <EmergencyContacts />
-        </TabsContent>
-        <TabsContent value="parts" className="p-1">
-          <VehicleParts />
-        </TabsContent>
+      <div className="mt-12">
+        <Card className="border shadow-sm">
+          <CardContent className="p-4">
+            <TabsContent value="inspections" className="mt-0">
+              <VehicleInspectionList />
+            </TabsContent>
+            <TabsContent value="deliveries" className="mt-0">
+              <DeliveryManagement />
+            </TabsContent>
+            <TabsContent value="templates" className="mt-0">
+              <ChecklistTemplates />
+            </TabsContent>
+            <TabsContent value="maintenance" className="mt-0">
+              <MaintenanceChecklist />
+            </TabsContent>
+            <TabsContent value="timeRestrictions" className="mt-0">
+              <TransportRegulations />
+            </TabsContent>
+            <TabsContent value="drivers" className="mt-0">
+              <DriverRequirements />
+            </TabsContent>
+            <TabsContent value="emergency" className="mt-0">
+              <EmergencyContacts />
+            </TabsContent>
+            <TabsContent value="parts" className="mt-0">
+              <VehicleParts />
+            </TabsContent>
+          </CardContent>
+        </Card>
       </div>
     </Tabs>
   );

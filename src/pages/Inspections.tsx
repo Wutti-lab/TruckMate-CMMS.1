@@ -13,7 +13,7 @@ export default function Inspections() {
         <div className="mb-8">
           <InspectionKPIs />
         </div>
-        <div className="bg-white rounded-lg shadow p-4">
+        <div className="bg-white rounded-lg shadow">
           <InspectionTabs />
         </div>
       </main>
