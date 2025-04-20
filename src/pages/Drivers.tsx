@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Header } from "@/components/layout/Header";
 import { Button } from "@/components/ui/button";
@@ -11,7 +12,19 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { AddDriverModal } from "@/components/drivers/AddDriverModal";
 
-const drivers = [
+// Define drivers with proper type annotation to ensure shift is recognized as "AM" | "PM"
+const drivers: {
+  id: string;
+  name: string;
+  licenseType: string;
+  phone: string;
+  status: string;
+  location: string;
+  vehicle: string;
+  lastTrip: string;
+  hoursThisWeek: number;
+  shift: "AM" | "PM";
+}[] = [
   {
     id: "D-001",
     name: "Somchai Jaidee",
@@ -22,7 +35,7 @@ const drivers = [
     vehicle: "B-FR-123",
     lastTrip: "23.04.2023",
     hoursThisWeek: 32,
-    shift: "AM"
+    shift: "AM" as const // Using 'as const' to ensure TypeScript treats this as a literal
   },
   {
     id: "D-002",
@@ -34,7 +47,7 @@ const drivers = [
     vehicle: "B-FR-456",
     lastTrip: "21.04.2023",
     hoursThisWeek: 40,
-    shift: "PM"
+    shift: "PM" as const
   },
   {
     id: "D-003",
@@ -46,7 +59,7 @@ const drivers = [
     vehicle: "B-FR-789",
     lastTrip: "22.04.2023",
     hoursThisWeek: 38,
-    shift: "AM"
+    shift: "AM" as const
   },
   {
     id: "D-004",
@@ -58,7 +71,7 @@ const drivers = [
     vehicle: "Unassigned",
     lastTrip: "15.04.2023",
     hoursThisWeek: 12,
-    shift: "PM"
+    shift: "PM" as const
   },
   {
     id: "D-005",
@@ -70,7 +83,7 @@ const drivers = [
     vehicle: "B-FR-234",
     lastTrip: "24.04.2023",
     hoursThisWeek: 36,
-    shift: "AM"
+    shift: "AM" as const
   }
 ];
 

@@ -1,4 +1,3 @@
-
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -20,7 +19,7 @@ interface Driver {
   vehicle: string;
   lastTrip: string;
   hoursThisWeek: number;
-  shift?: "AM" | "PM";  // Added shift property
+  shift?: "AM" | "PM";  // This is correctly defined as a union type
 }
 
 interface DriverTableProps {
