@@ -7,6 +7,8 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { DriverTable } from "@/components/drivers/DriverTable";
 import { DriverStats } from "@/components/drivers/DriverStats";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 
 // Mock driver data
 const drivers = [
@@ -69,6 +71,7 @@ const drivers = [
 
 export default function Drivers() {
   const [searchQuery, setSearchQuery] = useState("");
+  const isMobile = useIsMobile();
   
   // Filter drivers based on search query
   const filteredDrivers = drivers.filter((driver) => 
@@ -78,50 +81,78 @@ export default function Drivers() {
     driver.location.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  const MobileSearch = () => (
+    <Drawer>
+      <DrawerTrigger asChild>
+        <Button variant="outline" size="icon" className="lg:hidden">
+          <Search size={16} />
+        </Button>
+      </DrawerTrigger>
+      <DrawerContent>
+        <div className="p-4 space-y-4">
+          <Input
+            placeholder="Search drivers... | ค้นหาพนักงานขับรถ..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full"
+          />
+        </div>
+      </DrawerContent>
+    </Drawer>
+  );
+
   return (
     <div className="flex flex-col h-full">
       <Header />
-      <main className="flex-1 p-6 overflow-auto">
-        <div className="mb-6 flex flex-wrap gap-4 items-center justify-between">
-          <h1 className="text-2xl font-bold">Drivers | พนักงานขับรถ</h1>
-          <div className="flex items-center gap-2">
-            <div className="relative">
-              <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-              <Input
-                placeholder="Search drivers... | ค้นหาพนักงานขับรถ..."
-                className="pl-8 w-[200px] md:w-[300px]"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
+      <main className="flex-1 p-4 md:p-6 overflow-auto">
+        <div className="mb-6 space-y-4">
+          <div className="flex items-center justify-between">
+            <h1 className="text-xl md:text-2xl font-bold">Drivers | พนักงานขับรถ</h1>
+            <div className="flex items-center gap-2">
+              {!isMobile && (
+                <div className="relative hidden lg:block">
+                  <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    placeholder="Search drivers... | ค้นหาพนักงานขับรถ..."
+                    className="pl-8 w-[200px] md:w-[300px]"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
+                </div>
+              )}
+              <MobileSearch />
+              <Button variant="outline" size="icon">
+                <Filter size={16} />
+              </Button>
+              <Button className="bg-fleet-500 hidden md:flex">
+                <Plus size={16} className="mr-2" />
+                Add Driver | เพิ่มคนขับ
+              </Button>
+              <Button className="bg-fleet-500 md:hidden" size="icon">
+                <Plus size={16} />
+              </Button>
             </div>
-            <Button variant="outline" size="icon">
-              <Filter size={16} />
-            </Button>
-            <Button className="bg-fleet-500">
-              <Plus size={16} className="mr-2" />
-              Add Driver | เพิ่มคนขับ
-            </Button>
           </div>
-        </div>
 
-        <div className="grid gap-6 md:grid-cols-3 mb-6">
-          <DriverStats 
-            title="Total Drivers | พนักงานทั้งหมด"
-            value={drivers.length}
-            icon="users"
-          />
-          <DriverStats 
-            title="Active Drivers | พนักงานที่ทำงานอยู่"
-            value={drivers.filter(d => d.status === "Active").length}
-            icon="user-check"
-            variant="active"
-          />
-          <DriverStats 
-            title="Off-duty | ไม่ได้ปฏิบัติงาน"
-            value={drivers.filter(d => d.status !== "Active").length}
-            icon="user-x"
-            variant="inactive"
-          />
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            <DriverStats 
+              title="Total Drivers | พนักงานทั้งหมด"
+              value={drivers.length}
+              icon="users"
+            />
+            <DriverStats 
+              title="Active Drivers | พนักงานที่ทำงานอยู่"
+              value={drivers.filter(d => d.status === "Active").length}
+              icon="user-check"
+              variant="active"
+            />
+            <DriverStats 
+              title="Off-duty | ไม่ได้ปฏิบัติงาน"
+              value={drivers.filter(d => d.status !== "Active").length}
+              icon="user-x"
+              variant="inactive"
+            />
+          </div>
         </div>
 
         <Card>
