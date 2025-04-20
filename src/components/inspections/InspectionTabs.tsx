@@ -21,7 +21,7 @@ import { VehicleParts } from "./VehicleParts";
 export function InspectionTabs() {
   return (
     <Tabs defaultValue="inspections" className="w-full">
-      <TabsList>
+      <TabsList className="grid grid-cols-2 lg:grid-cols-4 gap-2">
         <TabsTrigger value="inspections" className="flex items-center gap-2">
           <ClipboardList size={16} />
           Inspections | การตรวจสอบ
@@ -32,11 +32,11 @@ export function InspectionTabs() {
         </TabsTrigger>
         <TabsTrigger value="templates" className="flex items-center gap-2">
           <CheckSquare size={16} />
-          Checklist Templates | แม่แบบรายการตรวจสอบ
+          Templates | แม่แบบ
         </TabsTrigger>
         <TabsTrigger value="maintenance" className="flex items-center gap-2">
           <Truck size={16} />
-          Truck Maintenance | การบำรุงรักษารถบรรทุก
+          Maintenance | บำรุงรักษา
         </TabsTrigger>
         <TabsTrigger value="timeRestrictions" className="flex items-center gap-2">
           <Clock size={16} />
@@ -44,15 +44,15 @@ export function InspectionTabs() {
         </TabsTrigger>
         <TabsTrigger value="drivers" className="flex items-center gap-2">
           <UserCog size={16} />
-          Driver Qualifications | คุณสมบัติผู้ขับขี่
+          Drivers | ผู้ขับขี่
         </TabsTrigger>
         <TabsTrigger value="emergency" className="flex items-center gap-2">
           <Phone size={16} />
-          Emergency Contacts | ติดต่อฉุกเฉิน
+          Emergency | ฉุกเฉิน
         </TabsTrigger>
         <TabsTrigger value="parts" className="flex items-center gap-2">
           <Package size={16} />
-          Vehicle Parts | อะไหล่รถ
+          Parts | อะไหล่
         </TabsTrigger>
       </TabsList>
       <TabsContent value="inspections" className="mt-6">
