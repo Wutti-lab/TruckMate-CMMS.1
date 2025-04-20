@@ -1,8 +1,7 @@
-
 import { useEffect, useRef, useState } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-import { locate } from "lucide-react";
+import { Locate } from "lucide-react";
 import { Button } from "./ui/button";
 
 const MAPBOX_TOKEN = "pk.eyJ1IjoiZXhhbXBsZSIsImEiOiJjbGVhcmx5LW5vdC1hLXJlYWwtdG9rZW4ifQ.clearly-not-a-real-token";
@@ -116,7 +115,7 @@ export function MapComponent({ className }: MapProps) {
         className="absolute bottom-4 right-4 z-10 bg-white shadow-lg hover:bg-gray-100"
         onClick={getUserLocation}
       >
-        <locate className="h-4 w-4" />
+        <Locate className="h-4 w-4" />
       </Button>
     </div>
   );
