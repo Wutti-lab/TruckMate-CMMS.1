@@ -21,7 +21,8 @@ const drivers = [
     location: "Bangkok",
     vehicle: "B-FR-123",
     lastTrip: "23.04.2023",
-    hoursThisWeek: 32
+    hoursThisWeek: 32,
+    shift: "AM"
   },
   {
     id: "D-002",
@@ -32,7 +33,8 @@ const drivers = [
     location: "Pattaya",
     vehicle: "B-FR-456",
     lastTrip: "21.04.2023",
-    hoursThisWeek: 40
+    hoursThisWeek: 40,
+    shift: "PM"
   },
   {
     id: "D-003",
@@ -43,7 +45,8 @@ const drivers = [
     location: "Chiang Mai",
     vehicle: "B-FR-789",
     lastTrip: "22.04.2023",
-    hoursThisWeek: 38
+    hoursThisWeek: 38,
+    shift: "AM"
   },
   {
     id: "D-004",
@@ -54,7 +57,8 @@ const drivers = [
     location: "Bangkok",
     vehicle: "Unassigned",
     lastTrip: "15.04.2023",
-    hoursThisWeek: 12
+    hoursThisWeek: 12,
+    shift: "PM"
   },
   {
     id: "D-005",
@@ -65,7 +69,8 @@ const drivers = [
     location: "Phuket",
     vehicle: "B-FR-234",
     lastTrip: "24.04.2023",
-    hoursThisWeek: 36
+    hoursThisWeek: 36,
+    shift: "AM"
   }
 ];
 

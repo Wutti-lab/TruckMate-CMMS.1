@@ -20,6 +20,7 @@ interface Driver {
   vehicle: string;
   lastTrip: string;
   hoursThisWeek: number;
+  shift?: "AM" | "PM";  // Added shift property
 }
 
 interface DriverTableProps {
@@ -35,6 +36,7 @@ export function DriverTable({ drivers }: DriverTableProps) {
             <TableHead>Driver ID | รหัสคนขับ</TableHead>
             <TableHead>Name | ชื่อ</TableHead>
             <TableHead>Status | สถานะ</TableHead>
+            <TableHead>Shift | กะ</TableHead>
             <TableHead>License | ใบอนุญาต</TableHead>
             <TableHead>Location | ตำแหน่ง</TableHead>
             <TableHead>Vehicle | ยานพาหนะ</TableHead>
@@ -45,7 +47,7 @@ export function DriverTable({ drivers }: DriverTableProps) {
         <TableBody>
           {drivers.length === 0 ? (
             <TableRow>
-              <TableCell colSpan={8} className="text-center py-8">
+              <TableCell colSpan={9} className="text-center py-8">
                 No drivers found | ไม่พบพนักงานขับรถ
               </TableCell>
             </TableRow>
@@ -72,6 +74,12 @@ export function DriverTable({ drivers }: DriverTableProps) {
                   >
                     {driver.status}
                   </Badge>
+                </TableCell>
+                <TableCell>
+                  <div className="flex items-center gap-2">
+                    <Clock size={14} className="text-muted-foreground" />
+                    {driver.shift || "-"}
+                  </div>
                 </TableCell>
                 <TableCell>{driver.licenseType}</TableCell>
                 <TableCell>
