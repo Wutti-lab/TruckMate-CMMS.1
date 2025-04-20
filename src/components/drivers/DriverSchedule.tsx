@@ -1,3 +1,4 @@
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Calendar } from "@/components/ui/calendar";
 import { useState } from "react";
@@ -54,7 +55,7 @@ export function DriverSchedule() {
   return (
     <Card className="mt-6">
       <CardHeader>
-        <CardTitle>Schedule & Activities | Schichtplan & Aktivitäten | ตารางกะและกิจกรรม</CardTitle>
+        <CardTitle>Schedule & Activities | ตารางกะและกิจกรรม</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="grid gap-6 md:grid-cols-2">
@@ -68,13 +69,13 @@ export function DriverSchedule() {
           </div>
           <div>
             <h3 className="font-semibold mb-4">
-              Shifts for | Schichten für | กะสำหรับ {date.toLocaleDateString()}
+              Shifts for | กะสำหรับ {date.toLocaleDateString()}
             </h3>
             <div className="space-y-4">
               <div>
                 <h4 className="text-sm font-medium mb-2 flex items-center gap-2">
                   <Clock className="h-4 w-4" />
-                  Morning Shift | Frühschicht (AM) | กะเช้า
+                  Morning Shift (AM) | กะเช้า
                 </h4>
                 <div className="space-y-2">
                   {shiftsForSelectedDate
@@ -107,7 +108,7 @@ export function DriverSchedule() {
               <div>
                 <h4 className="text-sm font-medium mb-2 flex items-center gap-2">
                   <Clock className="h-4 w-4" />
-                  Afternoon Shift | Spätschicht (PM) | กะบ่าย
+                  Afternoon Shift (PM) | กะบ่าย
                 </h4>
                 <div className="space-y-2">
                   {shiftsForSelectedDate
