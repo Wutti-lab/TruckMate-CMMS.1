@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { VehicleFilters } from "@/components/vehicles/VehicleFilters";
 import { VehicleTable } from "@/components/vehicles/VehicleTable";
+import { VehicleParts } from "@/components/inspections/VehicleParts";
+import { Card } from "@/components/ui/card";
 
 // Mock vehicle data
 const vehicles = [
@@ -115,7 +117,15 @@ export default function Vehicles() {
           </div>
         </div>
 
-        <VehicleTable vehicles={filteredVehicles} />
+        <div className="space-y-6">
+          <Card className="p-6">
+            <VehicleTable vehicles={filteredVehicles} />
+          </Card>
+
+          <Card className="p-6">
+            <VehicleParts />
+          </Card>
+        </div>
       </main>
     </div>
   );

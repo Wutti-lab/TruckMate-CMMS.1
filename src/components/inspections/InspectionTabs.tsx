@@ -8,8 +8,7 @@ import {
   Truck, 
   Clock, 
   MapPin, 
-  Phone,
-  Package 
+  Phone
 } from "lucide-react";
 import { VehicleInspectionList } from "./VehicleInspectionList";
 import { ChecklistTemplates } from "./ChecklistTemplates";
@@ -18,7 +17,6 @@ import { MaintenanceChecklist } from "./MaintenanceChecklist";
 import { TransportRegulations } from "./TransportRegulations";
 import { DeliveryManagement } from "./DeliveryManagement";
 import { EmergencyContacts } from "./EmergencyContacts";
-import { VehicleParts } from "./VehicleParts";
 import { Card, CardContent } from "@/components/ui/card";
 
 export function InspectionTabs() {
@@ -53,15 +51,11 @@ export function InspectionTabs() {
           <Phone size={16} />
           Emergency | ฉุกเฉิน
         </TabsTrigger>
-        <TabsTrigger value="parts" className="flex items-center gap-2 py-2 px-3">
-          <Package size={16} />
-          Parts | อะไหล่
-        </TabsTrigger>
       </TabsList>
       
-      <div className="mt-16"> {/* Increased top margin */}
+      <div className="mt-16">
         <Card className="border shadow-sm">
-          <CardContent className="p-6 space-y-8"> {/* Increased padding and added vertical spacing */}
+          <CardContent className="p-6 space-y-8">
             <TabsContent value="inspections" className="mt-0">
               <VehicleInspectionList />
             </TabsContent>
@@ -82,9 +76,6 @@ export function InspectionTabs() {
             </TabsContent>
             <TabsContent value="emergency" className="mt-0">
               <EmergencyContacts />
-            </TabsContent>
-            <TabsContent value="parts" className="mt-0">
-              <VehicleParts />
             </TabsContent>
           </CardContent>
         </Card>
