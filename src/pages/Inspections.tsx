@@ -10,10 +10,12 @@ export default function Inspections() {
       <Header />
       <main className="flex-1 p-6 overflow-auto">
         <InspectionHeader />
-        <div className="mb-6">
+        <div className="mb-8">
           <InspectionKPIs />
         </div>
-        <InspectionTabs />
+        <div className="bg-white rounded-lg shadow p-4">
+          <InspectionTabs />
+        </div>
       </main>
     </div>
   );
