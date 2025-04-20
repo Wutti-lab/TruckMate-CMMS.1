@@ -11,6 +11,7 @@ import Map from "./pages/Map";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 import Inspections from "./pages/Inspections";
+import Drivers from "./pages/Drivers";
 
 const queryClient = new QueryClient();
 
@@ -31,8 +32,8 @@ const App = () => (
             <Route path="vehicles" element={<Vehicles />} />
             <Route path="map" element={<Map />} />
             <Route path="inspections" element={<Inspections />} />
-            <Route path="drivers" element={<Dashboard />} /> {/* Placeholder */}
-            <Route path="settings" element={<Dashboard />} /> {/* Placeholder */}
+            <Route path="drivers" element={<Drivers />} />
+            <Route path="settings" element={<Dashboard />} /> {/* Still a placeholder */}
           </Route>
 
           {/* Catch-all route */}
