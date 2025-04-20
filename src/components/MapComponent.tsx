@@ -2,9 +2,9 @@
 import { useEffect, useRef, useState } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
+import { locate } from "lucide-react";
+import { Button } from "./ui/button";
 
-// Bitte hier deinen eigenen Mapbox-Token einsetzen
-// Dies ist ein Platzhalter und funktioniert nicht in der Produktion
 const MAPBOX_TOKEN = "pk.eyJ1IjoiZXhhbXBsZSIsImEiOiJjbGVhcmx5LW5vdC1hLXJlYWwtdG9rZW4ifQ.clearly-not-a-real-token";
 
 interface MapProps {
@@ -15,6 +15,38 @@ export function MapComponent({ className }: MapProps) {
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<mapboxgl.Map | null>(null);
   const [mapLoaded, setMapLoaded] = useState(false);
+  const [userLocation, setUserLocation] = useState<[number, number] | null>(null);
+  const userMarker = useRef<mapboxgl.Marker | null>(null);
+
+  const getUserLocation = () => {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setUserLocation([longitude, latitude]);
+
+          if (map.current) {
+            map.current.flyTo({
+              center: [longitude, latitude],
+              zoom: 15
+            });
+
+            // Update or create marker
+            if (!userMarker.current) {
+              userMarker.current = new mapboxgl.Marker({ color: '#FF0000' })
+                .setLngLat([longitude, latitude])
+                .addTo(map.current);
+            } else {
+              userMarker.current.setLngLat([longitude, latitude]);
+            }
+          }
+        },
+        (error) => {
+          console.error("Error getting location:", error);
+        }
+      );
+    }
+  };
 
   useEffect(() => {
     if (!mapContainer.current || map.current) return;
@@ -32,13 +64,35 @@ export function MapComponent({ className }: MapProps) {
       map.current.on('load', () => {
         setMapLoaded(true);
       });
+
+      // Add navigation controls
+      map.current.addControl(new mapboxgl.NavigationControl(), 'top-right');
+
+      // Get initial user location
+      getUserLocation();
+
+      // Watch user position
+      const watchId = navigator.geolocation.watchPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setUserLocation([longitude, latitude]);
+          
+          if (userMarker.current) {
+            userMarker.current.setLngLat([longitude, latitude]);
+          }
+        },
+        (error) => {
+          console.error("Error watching location:", error);
+        }
+      );
+
+      return () => {
+        navigator.geolocation.clearWatch(watchId);
+        map.current?.remove();
+      };
     } catch (error) {
       console.error("Mapbox error:", error);
     }
-
-    return () => {
-      map.current?.remove();
-    };
   }, []);
 
   return (
@@ -55,6 +109,15 @@ export function MapComponent({ className }: MapProps) {
           </div>
         </div>
       )}
+
+      <Button
+        variant="secondary"
+        size="icon"
+        className="absolute bottom-4 right-4 z-10 bg-white shadow-lg hover:bg-gray-100"
+        onClick={getUserLocation}
+      >
+        <locate className="h-4 w-4" />
+      </Button>
     </div>
   );
 }
