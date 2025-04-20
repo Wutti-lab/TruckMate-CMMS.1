@@ -1,3 +1,4 @@
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Header } from "@/components/layout/Header";
 import { Activity, AlertTriangle, Battery, Car, Clock, AreaChart, Fuel, MapPin, ThumbsUp, TrendingUp, Users, Wrench } from "lucide-react";
@@ -7,25 +8,25 @@ export default function Dashboard() {
   return (
     <div className="flex flex-col h-full">
       <Header />
-      <main className="flex-1 p-4 md:p-6 overflow-auto">
-        <div className="mb-6 md:mb-8">
-          <h1 className="text-xl md:text-2xl font-bold tracking-tight">แดชบอร์ด TruckMate CMMS</h1>
-          <p className="text-sm md:text-base text-muted-foreground">ยินดีต้อนรับกลับ นี่คือภาพรวมของกองยานพาหนะของคุณ</p>
+      <main className="flex-1 p-3 md:p-6 overflow-auto">
+        <div className="mb-4 md:mb-8">
+          <h1 className="text-lg md:text-2xl font-bold tracking-tight">แดชบอร์ด TruckMate CMMS</h1>
+          <p className="text-xs md:text-base text-muted-foreground">ยินดีต้อนรับกลับ นี่คือภาพรวมของกองยานพาหนะของคุณ</p>
         </div>
         
-        <div className="grid gap-4 md:gap-6 grid-cols-2 md:grid-cols-4">
+        <div className="grid gap-3 md:gap-6 grid-cols-2">
           <Card>
-            <CardHeader className="flex flex-row items-center justify-between p-3 md:pb-2">
+            <CardHeader className="flex flex-row items-center justify-between p-2 md:p-3 md:pb-2">
               <CardTitle className="text-xs md:text-sm font-medium">สถานะกองยานพาหนะ</CardTitle>
               <Car className="h-3 w-3 md:h-4 md:w-4 text-fleet-500" />
             </CardHeader>
-            <CardContent className="p-3">
-              <div className="text-lg md:text-2xl font-bold">18/24</div>
-              <div className="flex items-center gap-2 mt-2">
+            <CardContent className="p-2 md:p-3">
+              <div className="text-base md:text-2xl font-bold">18/24</div>
+              <div className="flex items-center gap-2 mt-1 md:mt-2">
                 <Progress value={75} className="h-1.5 md:h-2" />
-                <span className="text-xs text-muted-foreground">75%</span>
+                <span className="text-[10px] md:text-xs text-muted-foreground">75%</span>
               </div>
-              <p className="text-xs text-muted-foreground mt-2">
+              <p className="text-[10px] md:text-xs text-muted-foreground mt-1 md:mt-2">
                 รถ 18 คันกำลังให้บริการ
               </p>
             </CardContent>
@@ -77,25 +78,25 @@ export default function Dashboard() {
           </Card>
         </div>
 
-        <div className="grid gap-4 md:gap-6 mt-4 md:mt-6 md:grid-cols-12">
-          <Card className="col-span-12 md:col-span-8">
+        <div className="grid gap-3 md:gap-6 mt-3 md:mt-6 grid-cols-1 md:grid-cols-12">
+          <Card className="col-span-1 md:col-span-8">
             <CardHeader>
               <CardTitle className="text-sm md:text-base">ภาพรวมกองยานพาหนะ</CardTitle>
               <CardDescription className="text-xs md:text-sm">สถานะรถปัจจุบัน</CardDescription>
             </CardHeader>
             <CardContent className="p-0">
               <div className="rounded-md border">
-                <div className="grid gap-4 p-3 md:p-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+                <div className="grid gap-2 md:gap-4 p-2 md:p-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
                   {[1, 2, 3, 4].map((index) => (
-                    <div key={index} className="flex flex-col gap-2 p-3 rounded-lg bg-muted/5">
+                    <div key={index} className="flex flex-col gap-2 p-2 md:p-3 rounded-lg bg-muted/5">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
-                          <div className="rounded-md bg-fleet-100 p-1.5">
-                            <Car className="h-4 w-4 text-fleet-500" />
+                          <div className="rounded-md bg-fleet-100 p-1 md:p-1.5">
+                            <Car className="h-3 w-3 md:h-4 md:w-4 text-fleet-500" />
                           </div>
-                          <span className="font-medium">B-FR {index}23</span>
+                          <span className="text-xs md:text-sm font-medium">B-FR {index}23</span>
                         </div>
-                        <div className={`px-2 py-0.5 rounded-full text-xs ${
+                        <div className={`px-1.5 md:px-2 py-0.5 rounded-full text-[10px] md:text-xs ${
                           index === 3 
                             ? "bg-orange-100 text-orange-600" 
                             : "bg-green-100 text-green-600"
@@ -104,22 +105,22 @@ export default function Dashboard() {
                         </div>
                       </div>
                       
-                      <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                        <MapPin className="h-3 w-3" />
+                      <div className="flex items-center gap-1 md:gap-2 text-[10px] md:text-xs text-muted-foreground">
+                        <MapPin className="h-2.5 w-2.5 md:h-3 md:w-3" />
                         <span>Berlin{index === 4 ? ", Marzahn" : index === 3 ? ", Werkstatt" : ", Mitte"}</span>
                       </div>
                       
-                      <div className="grid grid-cols-3 gap-2 mt-1">
-                        <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                          <Fuel className="h-3 w-3" />
+                      <div className="grid grid-cols-3 gap-1 md:gap-2 mt-1">
+                        <div className="flex items-center gap-1 text-[10px] md:text-xs text-muted-foreground">
+                          <Fuel className="h-2.5 w-2.5 md:h-3 md:w-3" />
                           <span>{70 + index * 5}%</span>
                         </div>
-                        <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                          <Battery className="h-3 w-3" />
+                        <div className="flex items-center gap-1 text-[10px] md:text-xs text-muted-foreground">
+                          <Battery className="h-2.5 w-2.5 md:h-3 md:w-3" />
                           <span>{80 + index * 5}%</span>
                         </div>
-                        <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                          <Clock className="h-3 w-3" />
+                        <div className="flex items-center gap-1 text-[10px] md:text-xs text-muted-foreground">
+                          <Clock className="h-2.5 w-2.5 md:h-3 md:w-3" />
                           <span>{3 + index}.2 Std.</span>
                         </div>
                       </div>
@@ -130,13 +131,13 @@ export default function Dashboard() {
             </CardContent>
           </Card>
           
-          <Card className="col-span-12 md:col-span-4">
+          <Card className="col-span-1 md:col-span-4">
             <CardHeader>
               <CardTitle className="text-sm md:text-base">กิจกรรมล่าสุด</CardTitle>
               <CardDescription className="text-xs md:text-sm">การอัปเดตกองยานพาหนะแบบเรียลไทม์</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="space-y-4">
+              <div className="space-y-3 md:space-y-4">
                 {[
                   {
                     title: "รถทะเบียน B-FR 323 ถึงจุดหมายแล้ว",
@@ -169,13 +170,13 @@ export default function Dashboard() {
                     color: "text-blue-500",
                   },
                 ].map((activity, index) => (
-                  <div key={index} className="flex items-start gap-3">
-                    <div className={`rounded-full p-1.5 ${activity.color} bg-opacity-10`}>
-                      <activity.icon className={`h-3 w-3 ${activity.color}`} />
+                  <div key={index} className="flex items-start gap-2 md:gap-3">
+                    <div className={`rounded-full p-1 md:p-1.5 ${activity.color} bg-opacity-10`}>
+                      <activity.icon className={`h-2.5 w-2.5 md:h-3 md:w-3 ${activity.color}`} />
                     </div>
-                    <div className="flex-1 space-y-1">
-                      <p className="text-sm">{activity.title}</p>
-                      <p className="text-xs text-muted-foreground">{activity.time}</p>
+                    <div className="flex-1 space-y-0.5 md:space-y-1">
+                      <p className="text-xs md:text-sm">{activity.title}</p>
+                      <p className="text-[10px] md:text-xs text-muted-foreground">{activity.time}</p>
                     </div>
                   </div>
                 ))}
