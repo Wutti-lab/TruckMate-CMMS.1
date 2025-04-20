@@ -1,4 +1,5 @@
 
+import React from 'react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { 
   ClipboardList, 
@@ -58,9 +59,9 @@ export function InspectionTabs() {
         </TabsTrigger>
       </TabsList>
       
-      <div className="mt-12">
+      <div className="mt-16"> {/* Increased top margin */}
         <Card className="border shadow-sm">
-          <CardContent className="p-4">
+          <CardContent className="p-6 space-y-8"> {/* Increased padding and added vertical spacing */}
             <TabsContent value="inspections" className="mt-0">
               <VehicleInspectionList />
             </TabsContent>
