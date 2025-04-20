@@ -59,6 +59,8 @@ interface ActivityFormData {
   description: string;
   date: Date;
   time: string;
+  pickupLocation: string;
+  deliveryLocation: string;
 }
 
 export function DriverSchedule() {
@@ -174,6 +176,32 @@ export function DriverSchedule() {
                           ))}
                         </SelectContent>
                       </Select>
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="pickupLocation"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Pickup Location | สถานที่รับสินค้า</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Enter pickup location" {...field} />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="deliveryLocation"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Delivery Location | สถานที่ส่งสินค้า</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Enter delivery location" {...field} />
+                      </FormControl>
                     </FormItem>
                   )}
                 />
