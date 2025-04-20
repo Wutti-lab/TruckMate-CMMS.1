@@ -16,6 +16,8 @@ interface PartInfo {
   installedDate: string;
   supplier: string;
   warrantyEnd: string;
+  vehicleId: string;
+  vehicleModel: string;
 }
 
 const vehicleParts: PartInfo[] = [
@@ -25,6 +27,8 @@ const vehicleParts: PartInfo[] = [
     installedDate: "2024-03-15",
     supplier: "BrakeTech Co. | เบรคเทค จำกัด",
     warrantyEnd: "2025-03-15",
+    vehicleId: "B-FR-123",
+    vehicleModel: "Tesla Model Y"
   },
   {
     id: "P002",
@@ -32,6 +36,8 @@ const vehicleParts: PartInfo[] = [
     installedDate: "2024-02-20",
     supplier: "FilterPro | ฟิลเตอร์โปร",
     warrantyEnd: "2025-02-20",
+    vehicleId: "B-FR-234",
+    vehicleModel: "VW ID.4"
   },
   {
     id: "P003",
@@ -39,6 +45,8 @@ const vehicleParts: PartInfo[] = [
     installedDate: "2024-01-10",
     supplier: "PowerCell | พาวเวอร์เซลล์",
     warrantyEnd: "2026-01-10",
+    vehicleId: "B-FR-345",
+    vehicleModel: "Audi e-tron"
   },
 ];
 
@@ -57,6 +65,8 @@ export function VehicleParts() {
           <Table>
             <TableHeader>
               <TableRow>
+                <TableHead>Vehicle ID | รหัสรถ</TableHead>
+                <TableHead>Vehicle Model | รุ่นรถ</TableHead>
                 <TableHead>Part Name | ชื่อชิ้นส่วน</TableHead>
                 <TableHead>Installation Date | วันที่ติดตั้ง</TableHead>
                 <TableHead>Supplier | ผู้จัดจำหน่าย</TableHead>
@@ -66,6 +76,8 @@ export function VehicleParts() {
             <TableBody>
               {vehicleParts.map((part) => (
                 <TableRow key={part.id}>
+                  <TableCell>{part.vehicleId}</TableCell>
+                  <TableCell>{part.vehicleModel}</TableCell>
                   <TableCell>{part.name}</TableCell>
                   <TableCell>{part.installedDate}</TableCell>
                   <TableCell>{part.supplier}</TableCell>
