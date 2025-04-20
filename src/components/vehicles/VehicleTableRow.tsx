@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
@@ -16,6 +15,7 @@ import {
   MapPin, 
   MoreHorizontal 
 } from "lucide-react";
+import { VehicleQRModal } from "./VehicleQRModal";
 
 interface Vehicle {
   id: string;
@@ -100,22 +100,25 @@ export function VehicleTableRow({ vehicle }: VehicleTableRowProps) {
         </div>
       </TableCell>
       <TableCell>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon">
-              <MoreHorizontal size={16} />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="bg-white">
-            <DropdownMenuItem>Details anzeigen</DropdownMenuItem>
-            <DropdownMenuItem>Auf Karte zeigen</DropdownMenuItem>
-            <DropdownMenuItem>Wartung planen</DropdownMenuItem>
-            <DropdownMenuItem>Berichte</DropdownMenuItem>
-            <DropdownMenuItem className="text-red-600">
-              Entfernen
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <div className="flex items-center gap-1">
+          <VehicleQRModal vehicle={vehicle} />
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon">
+                <MoreHorizontal size={16} />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="bg-white">
+              <DropdownMenuItem>View Details | ดูรายละเอียด</DropdownMenuItem>
+              <DropdownMenuItem>Show on Map | แสดงบนแผนที่</DropdownMenuItem>
+              <DropdownMenuItem>Schedule Service | กำหนดการซ่อมบำรุง</DropdownMenuItem>
+              <DropdownMenuItem>Reports | รายงาน</DropdownMenuItem>
+              <DropdownMenuItem className="text-red-600">
+                Remove | ลบ
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </TableCell>
     </TableRow>
   );
