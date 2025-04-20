@@ -4,6 +4,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import { Locate } from "lucide-react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface MapProps {
   className?: string;
@@ -15,6 +16,7 @@ export function MapComponent({ className }: MapProps) {
   const [mapLoaded, setMapLoaded] = useState(false);
   const [userLocation, setUserLocation] = useState<[number, number] | null>(null);
   const userMarker = useRef<mapboxgl.Marker | null>(null);
+  const isMobile = useIsMobile();
   
   const [mapboxToken, setMapboxToken] = useState(
     localStorage.getItem('mapbox_token') || 
@@ -116,14 +118,17 @@ export function MapComponent({ className }: MapProps) {
       {!mapboxToken ? (
         <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-100 p-4 z-20">
           <p className="text-lg text-fleet-500 font-medium mb-4">Mapbox Token erforderlich</p>
-          <div className="flex gap-2 w-full max-w-md">
+          <div className="flex flex-col sm:flex-row gap-2 w-full max-w-md">
             <Input 
               placeholder="Geben Sie Ihren Mapbox Public Token ein" 
               value={mapboxToken}
               onChange={(e) => setMapboxToken(e.target.value)}
               className="flex-grow"
             />
-            <Button onClick={handleTokenSubmit}>
+            <Button 
+              onClick={handleTokenSubmit}
+              className="w-full sm:w-auto"
+            >
               Speichern
             </Button>
           </div>
@@ -137,7 +142,7 @@ export function MapComponent({ className }: MapProps) {
           
           {!mapLoaded && (
             <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
-              <div className="text-center">
+              <div className="text-center p-4">
                 <p className="text-lg text-fleet-500 font-medium mb-2">Kartenansicht</p>
                 <p className="text-sm text-gray-500">Karte wird geladen...</p>
               </div>
@@ -147,7 +152,7 @@ export function MapComponent({ className }: MapProps) {
           <Button
             variant="secondary"
             size="icon"
-            className="absolute bottom-4 right-4 z-10 bg-white shadow-lg hover:bg-gray-100"
+            className={`absolute ${isMobile ? 'bottom-20' : 'bottom-4'} right-4 z-10 bg-white shadow-lg hover:bg-gray-100`}
             onClick={getUserLocation}
           >
             <Locate className="h-4 w-4" />

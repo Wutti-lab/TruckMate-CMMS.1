@@ -7,22 +7,22 @@ export default function Dashboard() {
   return (
     <div className="flex flex-col h-full">
       <Header />
-      <main className="flex-1 p-6 overflow-auto">
-        <div className="mb-8">
-          <h1 className="text-2xl font-bold tracking-tight">แดชบอร์ด TruckMate CMMS</h1>
-          <p className="text-muted-foreground">ยินดีต้อนรับกลับ นี่คือภาพรวมของกองยานพาหนะของคุณ</p>
+      <main className="flex-1 p-4 md:p-6 overflow-auto">
+        <div className="mb-6 md:mb-8">
+          <h1 className="text-xl md:text-2xl font-bold tracking-tight">แดชบอร์ด TruckMate CMMS</h1>
+          <p className="text-sm md:text-base text-muted-foreground">ยินดีต้อนรับกลับ นี่คือภาพรวมของกองยานพาหนะของคุณ</p>
         </div>
         
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-4 md:gap-6 grid-cols-2 md:grid-cols-4">
           <Card>
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium">สถานะกองยานพาหนะ</CardTitle>
-              <Car className="h-4 w-4 text-fleet-500" />
+            <CardHeader className="flex flex-row items-center justify-between p-3 md:pb-2">
+              <CardTitle className="text-xs md:text-sm font-medium">สถานะกองยานพาหนะ</CardTitle>
+              <Car className="h-3 w-3 md:h-4 md:w-4 text-fleet-500" />
             </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">18/24</div>
+            <CardContent className="p-3">
+              <div className="text-lg md:text-2xl font-bold">18/24</div>
               <div className="flex items-center gap-2 mt-2">
-                <Progress value={75} className="h-2" />
+                <Progress value={75} className="h-1.5 md:h-2" />
                 <span className="text-xs text-muted-foreground">75%</span>
               </div>
               <p className="text-xs text-muted-foreground mt-2">
@@ -77,15 +77,15 @@ export default function Dashboard() {
           </Card>
         </div>
 
-        <div className="grid gap-6 mt-6 md:grid-cols-12">
+        <div className="grid gap-4 md:gap-6 mt-4 md:mt-6 md:grid-cols-12">
           <Card className="col-span-12 md:col-span-8">
             <CardHeader>
-              <CardTitle>ภาพรวมกองยานพาหนะ</CardTitle>
-              <CardDescription>สถานะรถปัจจุบัน</CardDescription>
+              <CardTitle className="text-sm md:text-base">ภาพรวมกองยานพาหนะ</CardTitle>
+              <CardDescription className="text-xs md:text-sm">สถานะรถปัจจุบัน</CardDescription>
             </CardHeader>
             <CardContent className="p-0">
               <div className="rounded-md border">
-                <div className="grid gap-6 p-4 md:grid-cols-2 lg:grid-cols-4">
+                <div className="grid gap-4 p-3 md:p-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
                   {[1, 2, 3, 4].map((index) => (
                     <div key={index} className="flex flex-col gap-2 p-3 rounded-lg bg-muted/5">
                       <div className="flex items-center justify-between">
@@ -132,8 +132,8 @@ export default function Dashboard() {
           
           <Card className="col-span-12 md:col-span-4">
             <CardHeader>
-              <CardTitle>กิจกรรมล่าสุด</CardTitle>
-              <CardDescription>การอัปเดตกองยานพาหนะแบบเรียลไทม์</CardDescription>
+              <CardTitle className="text-sm md:text-base">กิจกรรมล่าสุด</CardTitle>
+              <CardDescription className="text-xs md:text-sm">การอัปเดตกองยานพาหนะแบบเรียลไทม์</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
