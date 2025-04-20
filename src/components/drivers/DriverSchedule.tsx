@@ -1,3 +1,4 @@
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Calendar } from "@/components/ui/calendar";
 import { useState } from "react";
@@ -59,9 +60,33 @@ interface ActivityFormData {
   description: string;
   date: Date;
   time: string;
+  deliveryId: number;
   pickupLocation: string;
   deliveryLocation: string;
 }
+
+const deliveries = [
+  {
+    id: 1,
+    customerName: "Company ABC Ltd. | บริษัท ABC จำกัด",
+    contactPerson: "John Smith | จอห์น สมิธ",
+    phone: "+66 123 456789",
+    email: "j.smith@abc.com",
+    pickupLocation: "Industrial Street 1, Bangkok | ถนนอุตสาหกรรม 1 กรุงเทพ",
+    deliveryLocation: "Harbor Street 10, Pattaya | ถนนท่าเรือ 10 พัทยา",
+    status: "Active | ใช้งาน",
+  },
+  {
+    id: 2,
+    customerName: "Logistics XYZ | โลจิสติกส์ XYZ",
+    contactPerson: "Mary Johnson | แมรี่ จอห์นสัน",
+    phone: "+66 987 654321",
+    email: "m.johnson@xyz.com",
+    pickupLocation: "Main Street 25, Bangkok | ถนนเมน 25 กรุงเทพ",
+    deliveryLocation: "Station Street 5, Chonburi | ถนนสถานี 5 ชลบุรี",
+    status: "In Progress | กำลังดำเนินการ",
+  },
+];
 
 export function DriverSchedule() {
   const [date, setDate] = useState<Date>(new Date());
@@ -70,6 +95,14 @@ export function DriverSchedule() {
   const shiftsForSelectedDate = currentShifts.filter(
     shift => shift.date.toDateString() === date.toDateString()
   );
+
+  const handleDeliveryChange = (deliveryId: string) => {
+    const selectedDelivery = deliveries.find(d => d.id === Number(deliveryId));
+    if (selectedDelivery) {
+      form.setValue("pickupLocation", selectedDelivery.pickupLocation);
+      form.setValue("deliveryLocation", selectedDelivery.deliveryLocation);
+    }
+  };
 
   const handleSubmit = (data: ActivityFormData) => {
     console.log("New activity:", data);
@@ -182,12 +215,39 @@ export function DriverSchedule() {
 
                 <FormField
                   control={form.control}
+                  name="deliveryId"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Delivery | การจัดส่ง</FormLabel>
+                      <Select onValueChange={(value) => {
+                        field.onChange(value);
+                        handleDeliveryChange(value);
+                      }}>
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select delivery" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {deliveries.map((delivery) => (
+                            <SelectItem key={delivery.id} value={delivery.id.toString()}>
+                              {delivery.customerName}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
                   name="pickupLocation"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Pickup Location | สถานที่รับสินค้า</FormLabel>
                       <FormControl>
-                        <Input placeholder="Enter pickup location" {...field} />
+                        <Input placeholder="Enter pickup location" {...field} disabled />
                       </FormControl>
                     </FormItem>
                   )}
@@ -200,7 +260,7 @@ export function DriverSchedule() {
                     <FormItem>
                       <FormLabel>Delivery Location | สถานที่ส่งสินค้า</FormLabel>
                       <FormControl>
-                        <Input placeholder="Enter delivery location" {...field} />
+                        <Input placeholder="Enter delivery location" {...field} disabled />
                       </FormControl>
                     </FormItem>
                   )}
