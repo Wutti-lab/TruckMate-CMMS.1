@@ -54,6 +54,12 @@ export function Sidebar({ className }: SidebarProps) {
             collapsed={collapsed}
           />
           <NavItem
+            to="/qr-scanner"
+            icon={<ScanQrCode size={20} />}
+            label="QR Scanner"
+            collapsed={collapsed}
+          />
+          <NavItem
             to="/vehicles"
             icon={<Car size={20} />}
             label="Vehicles"
@@ -75,12 +81,6 @@ export function Sidebar({ className }: SidebarProps) {
             to="/drivers"
             icon={<Users size={20} />}
             label="Drivers"
-            collapsed={collapsed}
-          />
-          <NavItem
-            to="/qr-scanner"
-            icon={<ScanQrCode size={20} />}
-            label="QR Scanner"
             collapsed={collapsed}
           />
           <NavItem
