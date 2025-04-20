@@ -12,6 +12,7 @@ import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 import Inspections from "./pages/Inspections";
 import Drivers from "./pages/Drivers";
+import QRScanner from "./pages/QRScanner";
 
 const queryClient = new QueryClient();
 
