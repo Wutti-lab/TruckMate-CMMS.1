@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Header } from "@/components/layout/Header";
 import { Button } from "@/components/ui/button";
@@ -11,8 +10,8 @@ import { DriverRequirements } from "@/components/drivers/DriverRequirements";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { AddDriverModal } from "@/components/drivers/AddDriverModal";
+import { DriverSchedule } from "@/components/drivers/DriverSchedule";
 
-// Define drivers with proper type annotation to ensure shift is recognized as "AM" | "PM"
 const drivers: {
   id: string;
   name: string;
@@ -35,7 +34,7 @@ const drivers: {
     vehicle: "B-FR-123",
     lastTrip: "23.04.2023",
     hoursThisWeek: 32,
-    shift: "AM" as const // Using 'as const' to ensure TypeScript treats this as a literal
+    shift: "AM" as const
   },
   {
     id: "D-002",
@@ -172,6 +171,8 @@ export default function Drivers() {
               <DriverTable drivers={filteredDrivers} />
             </CardContent>
           </Card>
+
+          <DriverSchedule />
 
           <DriverRequirements />
         </div>
