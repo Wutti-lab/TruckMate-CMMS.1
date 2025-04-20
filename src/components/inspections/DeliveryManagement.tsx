@@ -1,8 +1,8 @@
-
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { MapPin, User, Phone, Mail, MoreHorizontal } from "lucide-react";
+import { Link } from "react-router-dom";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -35,6 +35,11 @@ const deliveries = [
 ];
 
 export function DeliveryManagement() {
+  const openGoogleMaps = (address: string) => {
+    const encodedAddress = encodeURIComponent(address);
+    window.open(`https://www.google.com/maps/search/?api=1&query=${encodedAddress}`, '_blank');
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
@@ -52,6 +57,7 @@ export function DeliveryManagement() {
             <TableHead>Pickup Location | สถานที่รับ</TableHead>
             <TableHead>Delivery Location | สถานที่ส่ง</TableHead>
             <TableHead>Status | สถานะ</TableHead>
+            <TableHead>Map | แผนที่</TableHead>
             <TableHead></TableHead>
           </TableRow>
         </TableHeader>
@@ -102,6 +108,25 @@ export function DeliveryManagement() {
                 >
                   {delivery.status}
                 </Badge>
+              </TableCell>
+              <TableCell>
+                <div className="flex gap-2">
+                  <Link to="/map">
+                    <Button variant="outline" size="sm" className="flex items-center gap-2">
+                      <MapPin size={14} className="text-fleet-500" />
+                      App Map | แผนที่แอป
+                    </Button>
+                  </Link>
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    className="flex items-center gap-2"
+                    onClick={() => openGoogleMaps(delivery.deliveryLocation)}
+                  >
+                    <MapPin size={14} className="text-red-500" />
+                    Google Maps
+                  </Button>
+                </div>
               </TableCell>
               <TableCell>
                 <DropdownMenu>
