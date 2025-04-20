@@ -14,23 +14,23 @@ import {
 const deliveries = [
   {
     id: 1,
-    customerName: "Firma ABC GmbH",
-    contactPerson: "Hans Mueller",
-    phone: "+49 123 456789",
-    email: "h.mueller@abc.de",
-    pickupLocation: "Industriestraße 1, Berlin",
-    deliveryLocation: "Hafenstraße 10, Hamburg",
-    status: "Aktiv",
+    customerName: "Company ABC Ltd. | บริษัท ABC จำกัด",
+    contactPerson: "John Smith | จอห์น สมิธ",
+    phone: "+66 123 456789",
+    email: "j.smith@abc.com",
+    pickupLocation: "Industrial Street 1, Bangkok | ถนนอุตสาหกรรม 1 กรุงเทพ",
+    deliveryLocation: "Harbor Street 10, Pattaya | ถนนท่าเรือ 10 พัทยา",
+    status: "Active | ใช้งาน",
   },
   {
     id: 2,
-    customerName: "Logistik XYZ",
-    contactPerson: "Maria Schmidt",
-    phone: "+49 987 654321",
-    email: "m.schmidt@xyz.de",
-    pickupLocation: "Hauptstraße 25, München",
-    deliveryLocation: "Bahnhofstraße 5, Frankfurt",
-    status: "In Bearbeitung",
+    customerName: "Logistics XYZ | โลจิสติกส์ XYZ",
+    contactPerson: "Mary Johnson | แมรี่ จอห์นสัน",
+    phone: "+66 987 654321",
+    email: "m.johnson@xyz.com",
+    pickupLocation: "Main Street 25, Bangkok | ถนนเมน 25 กรุงเทพ",
+    deliveryLocation: "Station Street 5, Chonburi | ถนนสถานี 5 ชลบุรี",
+    status: "In Progress | กำลังดำเนินการ",
   },
 ];
 
@@ -38,20 +38,20 @@ export function DeliveryManagement() {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-semibold">Lieferungen & Kunden</h2>
+        <h2 className="text-2xl font-semibold">Deliveries & Customers | การจัดส่งและลูกค้า</h2>
         <Button>
-          Neue Lieferung
+          New Delivery | การจัดส่งใหม่
         </Button>
       </div>
 
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Kunde</TableHead>
-            <TableHead>Kontakt</TableHead>
-            <TableHead>Abholort</TableHead>
-            <TableHead>Lieferort</TableHead>
-            <TableHead>Status</TableHead>
+            <TableHead>Customer | ลูกค้า</TableHead>
+            <TableHead>Contact | ติดต่อ</TableHead>
+            <TableHead>Pickup Location | สถานที่รับ</TableHead>
+            <TableHead>Delivery Location | สถานที่ส่ง</TableHead>
+            <TableHead>Status | สถานะ</TableHead>
             <TableHead></TableHead>
           </TableRow>
         </TableHeader>
@@ -95,7 +95,7 @@ export function DeliveryManagement() {
                 <Badge
                   variant="outline"
                   className={
-                    delivery.status === "Aktiv"
+                    delivery.status.includes("Active")
                       ? "border-green-200 bg-green-50 text-green-600"
                       : "border-orange-200 bg-orange-50 text-orange-600"
                   }
@@ -111,9 +111,9 @@ export function DeliveryManagement() {
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end" className="bg-white">
-                    <DropdownMenuItem>Details anzeigen</DropdownMenuItem>
-                    <DropdownMenuItem>Bearbeiten</DropdownMenuItem>
-                    <DropdownMenuItem className="text-red-600">Löschen</DropdownMenuItem>
+                    <DropdownMenuItem>View Details | ดูรายละเอียด</DropdownMenuItem>
+                    <DropdownMenuItem>Edit | แก้ไข</DropdownMenuItem>
+                    <DropdownMenuItem className="text-red-600">Delete | ลบ</DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </TableCell>

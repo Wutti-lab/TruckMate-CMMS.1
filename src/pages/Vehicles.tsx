@@ -102,7 +102,7 @@ export default function Vehicles() {
       <Header />
       <main className="flex-1 p-6 overflow-auto">
         <div className="mb-6 flex flex-wrap gap-4 items-center justify-between">
-          <h1 className="text-2xl font-bold">กองยานพาหนะ</h1>
+          <h1 className="text-2xl font-bold">Fleet | กองยานพาหนะ</h1>
           <div className="flex items-center gap-2">
             <VehicleFilters
               searchQuery={searchQuery}
@@ -110,7 +110,7 @@ export default function Vehicles() {
             />
             <Button className="bg-fleet-500">
               <Plus size={16} className="mr-2" />
-              เพิ่มรถใหม่
+              Add New Vehicle | เพิ่มยานพาหนะใหม่
             </Button>
           </div>
         </div>
