@@ -1,4 +1,3 @@
-
 import { useEffect, useRef, useState } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
@@ -16,7 +15,11 @@ export function MapComponent({ className }: MapProps) {
   const [mapLoaded, setMapLoaded] = useState(false);
   const [userLocation, setUserLocation] = useState<[number, number] | null>(null);
   const userMarker = useRef<mapboxgl.Marker | null>(null);
-  const [mapboxToken, setMapboxToken] = useState(localStorage.getItem('mapbox_token') || '');
+  
+  const [mapboxToken, setMapboxToken] = useState(
+    localStorage.getItem('mapbox_token') || 
+    'pk.eyJ1Ijoid3V0dGljIiwiYSI6ImNtOXBzNjF1cDE3ZnkyaXBxMWsyZjU1czUifQ.honrXxOPHxMySJUTb-syXyg'
+  );
 
   const initializeMap = (token: string) => {
     if (!mapContainer.current || map.current) return;
