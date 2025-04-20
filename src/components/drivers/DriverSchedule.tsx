@@ -4,6 +4,11 @@ import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Clock, Activity, MapPin, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useForm } from "react-hook-form";
 
 interface DriverShift {
   driverId: string;
@@ -45,21 +50,107 @@ const currentShifts: DriverShift[] = [
   }
 ];
 
+interface ActivityFormData {
+  driverId: string;
+  activityType: string;
+  description: string;
+  date: Date;
+}
+
 export function DriverSchedule() {
   const [date, setDate] = useState<Date>(new Date());
+  const form = useForm<ActivityFormData>();
 
   const shiftsForSelectedDate = currentShifts.filter(
     shift => shift.date.toDateString() === date.toDateString()
   );
 
+  const handleSubmit = (data: ActivityFormData) => {
+    console.log("New activity:", data);
+    // Here you would typically save the activity to your backend
+  };
+
   return (
     <Card className="mt-6">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
         <CardTitle>Schedule & Activities | ตารางกะและกิจกรรม</CardTitle>
-        <Button variant="outline" className="gap-2">
-          <Plus className="h-4 w-4" />
-          Add Activity | เพิ่มกิจกรรม
-        </Button>
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button variant="outline" className="gap-2">
+              <Plus className="h-4 w-4" />
+              Add Activity | เพิ่มกิจกรรม
+            </Button>
+          </SheetTrigger>
+          <SheetContent>
+            <SheetHeader>
+              <SheetTitle>Add New Activity | เพิ่มกิจกรรมใหม่</SheetTitle>
+            </SheetHeader>
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4 mt-4">
+                <FormField
+                  control={form.control}
+                  name="driverId"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Driver | พนักงานขับรถ</FormLabel>
+                      <Select onValueChange={field.onChange}>
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select driver" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {currentShifts.map((shift) => (
+                            <SelectItem key={shift.driverId} value={shift.driverId}>
+                              {shift.driverName}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="activityType"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Activity Type | ประเภทกิจกรรม</FormLabel>
+                      <Select onValueChange={field.onChange}>
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select type" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="training">Training | การฝึกอบรม</SelectItem>
+                          <SelectItem value="inspection">Vehicle Inspection | ตรวจสอบยานพาหนะ</SelectItem>
+                          <SelectItem value="meeting">Meeting | การประชุม</SelectItem>
+                          <SelectItem value="break">Break | พัก</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="description"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Description | รายละเอียด</FormLabel>
+                      <FormControl>
+                        <Input {...field} />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+                <Button type="submit" className="w-full">
+                  Add Activity | เพิ่มกิจกรรม
+                </Button>
+              </form>
+            </Form>
+          </SheetContent>
+        </Sheet>
       </CardHeader>
       <CardContent>
         <div className="grid gap-6 md:grid-cols-2">
