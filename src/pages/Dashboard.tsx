@@ -1,10 +1,15 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Header } from "@/components/layout/Header";
 import { Activity, AlertTriangle, Battery, Car, Clock, AreaChart, Fuel, MapPin, ThumbsUp, TrendingUp, Users, Wrench } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
+import { DollarSign } from "lucide-react";
 
 export default function Dashboard() {
+  const oilPricePerLiter = 1.25;
+  const avgOilConsumptionLiter = 10;
+  const vehicleCount = 24;
+  const totalOilCost = oilPricePerLiter * avgOilConsumptionLiter * vehicleCount;
+
   return (
     <div className="flex flex-col h-full">
       <Header />
@@ -14,7 +19,7 @@ export default function Dashboard() {
           <p className="text-xs md:text-base text-muted-foreground">ยินดีต้อนรับกลับ นี่คือภาพรวมของกองยานพาหนะของคุณ</p>
         </div>
         
-        <div className="grid gap-3 md:gap-6 grid-cols-2">
+        <div className="grid gap-3 md:gap-6 grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between p-2 md:p-3 md:pb-2">
               <CardTitle className="text-xs md:text-sm font-medium">สถานะกองยานพาหนะ</CardTitle>
@@ -74,6 +79,19 @@ export default function Dashboard() {
                 <AlertTriangle className="h-3 w-3 mr-1" />
                 <span className="text-xs">รอการบำรุงรักษา</span>
               </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <CardTitle className="text-sm font-medium">Ölpreis & Gesamtkosten</CardTitle>
+              <DollarSign className="h-4 w-4 text-fleet-500" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{oilPricePerLiter.toFixed(2)} € / Liter</div>
+              <div className="text-xs text-muted-foreground mt-2">ØVerbrauch: {avgOilConsumptionLiter} L / Fahrzeug</div>
+              <div className="text-xs text-muted-foreground">Fuhrpark: {vehicleCount} Fahrzeuge</div>
+              <div className="text-xs text-green-600 mt-2 font-semibold">Gesamtkosten: {totalOilCost.toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €</div>
             </CardContent>
           </Card>
         </div>
