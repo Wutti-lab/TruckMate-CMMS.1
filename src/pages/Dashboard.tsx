@@ -10,6 +10,7 @@ import {
   Legend,
   Tooltip as RechartsTooltip,
 } from "recharts";
+import { VehicleCosts } from "@/components/vehicles/VehicleCosts";
 
 export default function Dashboard() {
   const oilPricePerLiter = 1.25; // THB
@@ -141,6 +142,7 @@ export default function Dashboard() {
             </CardContent>
           </Card>
         </div>
+        
         {/* Main Fleet Pie Chart */}
         <div className="mt-6">
           <Card>
@@ -148,7 +150,7 @@ export default function Dashboard() {
               <div>
                 <CardTitle className="text-base md:text-lg flex items-center gap-2">
                   <ChartPie className="h-5 w-5 text-fleet-500" />
-                  Fleet Status | สถานะกองยาน (Fleet)
+                  Fleet Status | สถานะกองยาน
                 </CardTitle>
                 <p className="text-xs mt-1 text-muted-foreground">
                   Ratio of vehicles by status (Active / Maintenance / Idle) | สัดส่วนสถานะรถแต่ละประเภท
@@ -187,7 +189,7 @@ export default function Dashboard() {
             </CardContent>
           </Card>
         </div>
-        {/* NEW: Trains Dashboard (Pie Chart) */}
+        {/* Trains Dashboard Pie Chart */}
         <div className="mt-6">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between">
@@ -232,6 +234,10 @@ export default function Dashboard() {
               </div>
             </CardContent>
           </Card>
+        </div>
+        {/* Vehicle Costs Section */}
+        <div className="mt-6">
+          <VehicleCosts />
         </div>
         <div className="grid gap-3 md:gap-6 mt-3 md:mt-6 grid-cols-1 md:grid-cols-12">
           <Card className="col-span-1 md:col-span-8">
