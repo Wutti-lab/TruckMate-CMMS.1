@@ -44,24 +44,19 @@ export function VehicleCosts() {
       <CardHeader>
         <CardTitle>Vehicle Costs | ต้นทุนต่อยานพาหนะ</CardTitle>
         <CardDescription>
-          Cost overview for replacement parts, inspection reports, insurances & emergency contact (฿, Thai Baht)
+          Cost overview for replacement parts & inspection reports (฿, Thai Baht)
           <br />
-          ภาพรวมต้นทุนสำหรับอะไหล่ รายงานการตรวจสอบ ประกันภัย และเบอร์ติดต่อฉุกเฉิน (บาท)
+          ภาพรวมต้นทุนสำหรับอะไหล่ รายงานการตรวจสอบ (บาท)
         </CardDescription>
       </CardHeader>
       <CardContent className="p-0 overflow-x-auto">
+        {/* Hauptkosten-Tabelle */}
         <table className="min-w-full text-sm">
           <thead>
             <tr className="bg-muted/50 text-muted-foreground">
               <th className="font-semibold py-2 px-4 text-left">Vehicle ID | รหัสรถ</th>
               <th className="font-semibold py-2 px-4 text-left">Parts Cost | อะไหล่ (฿)</th>
               <th className="font-semibold py-2 px-4 text-left">Inspections | ตรวจสอบ (฿)</th>
-              <th className="font-semibold py-2 px-4 text-left flex items-center gap-1">
-                <ShieldCheck size={16} className="inline-block mr-1" /> Insurance | ประกัน
-              </th>
-              <th className="font-semibold py-2 px-4 text-left flex items-center gap-1">
-                <Phone size={16} className="inline-block mr-1" /> Emergency | โทรฉุกเฉิน
-              </th>
               <th className="font-semibold py-2 px-4 text-left">Total | รวม (฿)</th>
             </tr>
           </thead>
@@ -71,27 +66,53 @@ export function VehicleCosts() {
                 <td className="py-2 px-4">{row.vehicleId}</td>
                 <td className="py-2 px-4">{row.partsCost.toLocaleString('th-TH')}</td>
                 <td className="py-2 px-4">{row.inspectionsCost.toLocaleString('th-TH')}</td>
-                <td className="py-2 px-4">
-                  <div className="flex items-center gap-1">
-                    <ShieldCheck size={14} className="text-blue-500" />
-                    <span>{row.insurance}</span>
-                  </div>
-                </td>
-                <td className="py-2 px-4">
-                  <div className="flex items-center gap-1">
-                    <Phone size={14} className="text-green-600" />
-                    <a 
-                      href={`tel:${row.emergencyPhone.replace(/\s+/g, "")}`} 
-                      className="hover:underline">
-                      {row.emergencyPhone}
-                    </a>
-                  </div>
-                </td>
                 <td className="py-2 px-4 font-medium">{row.totalCost.toLocaleString('th-TH')}</td>
               </tr>
             ))}
           </tbody>
         </table>
+        {/* Versicherungsdaten-Tabelle */}
+        <div className="mt-6">
+          <div className="font-semibold text-base mb-2 flex items-center gap-2">
+            <ShieldCheck className="text-blue-500" size={18}/> Insurance Details | ข้อมูลประกันภัย
+          </div>
+          <table className="min-w-full text-sm">
+            <thead>
+              <tr className="bg-muted/50 text-muted-foreground">
+                <th className="font-semibold py-2 px-4 text-left">Vehicle ID | รหัสรถ</th>
+                <th className="font-semibold py-2 px-4 text-left flex items-center gap-1">
+                  <ShieldCheck size={16} className="inline-block mr-1" /> Insurance | ประกัน
+                </th>
+                <th className="font-semibold py-2 px-4 text-left flex items-center gap-1">
+                  <Phone size={16} className="inline-block mr-1" /> Emergency | โทรฉุกเฉิน
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {costs.map((row) => (
+                <tr key={row.vehicleId} className="border-t">
+                  <td className="py-2 px-4">{row.vehicleId}</td>
+                  <td className="py-2 px-4">
+                    <div className="flex items-center gap-1">
+                      <ShieldCheck size={14} className="text-blue-500" />
+                      <span>{row.insurance}</span>
+                    </div>
+                  </td>
+                  <td className="py-2 px-4">
+                    <div className="flex items-center gap-1">
+                      <Phone size={14} className="text-green-600" />
+                      <a 
+                        href={`tel:${row.emergencyPhone.replace(/\s+/g, "")}`} 
+                        className="hover:underline">
+                        {row.emergencyPhone}
+                      </a>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </CardContent>
     </Card>
   );
