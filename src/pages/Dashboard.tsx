@@ -5,10 +5,14 @@ import { Progress } from "@/components/ui/progress";
 import { DollarSign } from "lucide-react";
 
 export default function Dashboard() {
-  const oilPricePerLiter = 1.25;
+  const oilPricePerLiter = 1.25; // EUR
   const avgOilConsumptionLiter = 10;
   const vehicleCount = 24;
   const totalOilCost = oilPricePerLiter * avgOilConsumptionLiter * vehicleCount;
+
+  const eurToThb = 39; // Wechselkurs, 1 EUR = 39 Baht
+  const costPerVehicleEur = oilPricePerLiter * avgOilConsumptionLiter;
+  const costPerVehicleThb = costPerVehicleEur * eurToThb;
 
   return (
     <div className="flex flex-col h-full">
@@ -100,9 +104,31 @@ export default function Dashboard() {
                 <span className="block">Fleet: {vehicleCount} Vehicles</span>
                 <span className="block">กองรถ: {vehicleCount} คัน</span>
               </div>
-              <div className="text-xs text-green-600 mt-2 font-semibold">
-                <span className="block">Total Costs: {totalOilCost.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €</span>
-                <span className="block">ต้นทุนรวม: {totalOilCost.toLocaleString("th-TH", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €</span>
+              <div className="text-xs mt-2 font-semibold">
+                <span className="block text-green-600">
+                  Total Costs: {totalOilCost.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €
+                </span>
+                <span className="block text-green-600">
+                  ต้นทุนรวม: {totalOilCost.toLocaleString("th-TH", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €
+                </span>
+              </div>
+              <div className="border-t border-muted-foreground mt-3 pt-2 space-y-1">
+                <div className="flex items-center gap-2 text-xs">
+                  <span className="font-medium">Per Vehicle:</span>
+                  <span>{avgOilConsumptionLiter} L</span>
+                </div>
+                <div className="flex items-center gap-2 text-xs">
+                  <span className="font-medium">Kosten pro Fahrzeug:</span>
+                  <span>{costPerVehicleEur.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €</span>
+                  <span className="text-muted-foreground">|</span>
+                  <span>{costPerVehicleThb.toLocaleString("th-TH", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ฿</span>
+                </div>
+                <div className="flex items-center gap-2 text-xs">
+                  <span className="font-medium">ค่าใช้จ่าย/คัน :</span>
+                  <span>{costPerVehicleEur.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €</span>
+                  <span className="text-muted-foreground">|</span>
+                  <span>{costPerVehicleThb.toLocaleString("th-TH", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} บาท</span>
+                </div>
               </div>
             </CardContent>
           </Card>
