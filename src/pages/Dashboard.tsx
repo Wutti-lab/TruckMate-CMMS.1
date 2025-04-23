@@ -1,19 +1,16 @@
-
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Header } from "@/components/layout/Header";
 import { Car, Fuel, MapPin, AlertTriangle, Battery, Clock, TrendingUp, Users, Wrench } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
-import { DollarSign } from "lucide-react";
+import { Euro } from "lucide-react";
 
 export default function Dashboard() {
-  const oilPricePerLiter = 1.25; // EUR
+  const oilPricePerLiter = 1.25; // THB
   const avgOilConsumptionLiter = 10;
   const vehicleCount = 24;
   const totalOilCost = oilPricePerLiter * avgOilConsumptionLiter * vehicleCount;
 
-  const eurToThb = 39; // Wechselkurs, 1 EUR = 39 Baht
-  const costPerVehicleEur = oilPricePerLiter * avgOilConsumptionLiter;
-  const costPerVehicleThb = costPerVehicleEur * eurToThb;
+  const costPerVehicleThb = oilPricePerLiter * avgOilConsumptionLiter;
 
   return (
     <div className="flex flex-col h-full">
@@ -93,41 +90,28 @@ export default function Dashboard() {
                 <span className="block">Oil Price & Total Costs</span>
                 <span className="block text-xs text-muted-foreground">ราคาน้ำมันและต้นทุนรวม</span>
               </CardTitle>
-              <DollarSign className="h-4 w-4 text-fleet-500" />
+              <Euro className="h-4 w-4 text-fleet-500" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{oilPricePerLiter.toFixed(2)} € / Liter</div>
+              <div className="text-2xl font-bold">{oilPricePerLiter.toFixed(2)} บาท / ลิตร</div>
               <div className="text-[10px] md:text-xs text-muted-foreground mt-1">
-                <span className="block">Avg. Consumption: {avgOilConsumptionLiter} L / Vehicle</span>
                 <span className="block">การบริโภคเฉลี่ย: {avgOilConsumptionLiter} ลิตร / ยานพาหนะ</span>
               </div>
               <div className="text-[10px] md:text-xs text-muted-foreground">
-                <span className="block">Fleet: {vehicleCount} Vehicles</span>
                 <span className="block">กองรถ: {vehicleCount} คัน</span>
               </div>
               <div className="text-xs mt-2 font-semibold">
                 <span className="block text-green-600">
-                  Total Costs: {totalOilCost.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €
-                </span>
-                <span className="block text-green-600">
-                  ต้นทุนรวม: {totalOilCost.toLocaleString("th-TH", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €
+                  ต้นทุนรวม: {totalOilCost.toLocaleString("th-TH", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} บาท
                 </span>
               </div>
               <div className="border-t border-muted-foreground mt-3 pt-2 space-y-1">
                 <div className="flex items-center gap-2 text-xs">
-                  <span className="font-medium">Per Vehicle:</span>
-                  <span>{avgOilConsumptionLiter} L</span>
+                  <span className="font-medium">ต่อยานพาหนะ:</span>
+                  <span>{avgOilConsumptionLiter} ลิตร</span>
                 </div>
                 <div className="flex items-center gap-2 text-xs">
-                  <span className="font-medium">Kosten pro Fahrzeug:</span>
-                  <span>{costPerVehicleEur.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €</span>
-                  <span className="text-muted-foreground">|</span>
-                  <span>{costPerVehicleThb.toLocaleString("th-TH", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ฿</span>
-                </div>
-                <div className="flex items-center gap-2 text-xs">
-                  <span className="font-medium">ค่าใช้จ่าย/คัน :</span>
-                  <span>{costPerVehicleEur.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €</span>
-                  <span className="text-muted-foreground">|</span>
+                  <span className="font-medium">ค่าใช้จ่าย/คัน:</span>
                   <span>{costPerVehicleThb.toLocaleString("th-TH", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} บาท</span>
                 </div>
               </div>
