@@ -18,26 +18,36 @@ export default function Dashboard() {
   const totalOilCost = oilPricePerLiter * avgOilConsumptionLiter * vehicleCount;
   const costPerVehicleThb = oilPricePerLiter * avgOilConsumptionLiter;
 
-  // Grafik-Daten für Fahrzeugstatus
+  // Stats for Fleet Status (Vehicles)
   const vehiclesData = [
-    { name: "Aktiv", value: 18, color: "#5AC87A" },         // grün
-    { name: "Wartung", value: 3, color: "#FDBA5C" },        // orange
-    { name: "Abgestellt", value: 3, color: "#A0AEC0" },     // grau
+    { name: "Active | กำลังใช้งาน", value: 18, color: "#5AC87A" },       
+    { name: "Maintenance | อยู่ระหว่างซ่อมบำรุง", value: 3, color: "#FDBA5C" },      
+    { name: "Idle | จอดพัก", value: 3, color: "#A0AEC0" },     
   ];
+
+  // NEW: Chart Data for Trains
+  const trainsData = [
+    { name: "Running | วิ่ง", value: 6, color: "#4E96F5" },
+    { name: "Maintenance | ซ่อมบำรุง", value: 2, color: "#FDBA5C" },
+    { name: "Idle | จอด", value: 1, color: "#A0AEC0" },
+  ];
+  const trainCount = 9;
 
   return (
     <div className="flex flex-col h-full">
       <Header />
       <main className="flex-1 p-3 md:p-6 overflow-auto">
         <div className="mb-4 md:mb-8">
-          <h1 className="text-lg md:text-2xl font-bold tracking-tight">แดชบอร์ด TruckMate CMMS</h1>
-          <p className="text-xs md:text-base text-muted-foreground">ยินดีต้อนรับกลับ นี่คือภาพรวมของกองยานพาหนะของคุณ</p>
+          <h1 className="text-lg md:text-2xl font-bold tracking-tight">TruckMate CMMS Dashboard</h1>
+          <p className="text-xs md:text-base text-muted-foreground">Welcome back! | ยินดีต้อนรับกลับ นี่คือภาพรวมของกองยานพาหนะของคุณ</p>
         </div>
-        
         <div className="grid gap-3 md:gap-6 grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+          {/* Vehicle Fleet Status */}
           <Card>
             <CardHeader className="flex flex-row items-center justify-between p-2 md:p-3 md:pb-2">
-              <CardTitle className="text-xs md:text-sm font-medium">สถานะกองยานพาหนะ</CardTitle>
+              <CardTitle className="text-xs md:text-sm font-medium">
+                Fleet Status | สถานะกองยานพาหนะ
+              </CardTitle>
               <Car className="h-3 w-3 md:h-4 md:w-4 text-fleet-500" />
             </CardHeader>
             <CardContent className="p-2 md:p-3">
@@ -47,52 +57,52 @@ export default function Dashboard() {
                 <span className="text-[10px] md:text-xs text-muted-foreground">75%</span>
               </div>
               <p className="text-[10px] md:text-xs text-muted-foreground mt-1 md:mt-2">
-                รถ 18 คันกำลังให้บริการ
+                18 vehicles in service | รถ 18 คันกำลังให้บริการ
               </p>
             </CardContent>
           </Card>
           
           <Card>
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium">ประสิทธิภาพการใช้เชื้อเพลิง</CardTitle>
+              <CardTitle className="text-sm font-medium">Fuel Efficiency | ประสิทธิภาพการใช้เชื้อเพลิง</CardTitle>
               <Fuel className="h-4 w-4 text-fleet-500" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">8.2 ลิตร/100กม.</div>
+              <div className="text-2xl font-bold">8.2 L / 100 km</div>
               <div className="flex items-center text-xs text-green-500 mt-2">
                 <TrendingUp className="h-3 w-3 mr-1" />
-                <span>ดีขึ้น 5% จากเดือนที่แล้ว</span>
+                <span>5% better than last month | ดีขึ้น 5% จากเดือนที่แล้ว</span>
               </div>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium">สถานะคนขับ</CardTitle>
+              <CardTitle className="text-sm font-medium">Driver Status | สถานะคนขับ</CardTitle>
               <Users className="h-4 w-4 text-fleet-500" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">15/20</div>
               <p className="text-xs text-muted-foreground mt-2">
-                คนขับ 15 คนกำลังปฏิบัติงาน
+                15 drivers on duty | คนขับ 15 คนกำลังปฏิบัติงาน
               </p>
               <div className="flex items-center gap-2 mt-2">
                 <div className="w-2 h-2 rounded-full bg-green-500" />
-                <span className="text-xs">ความพร้อม 75%</span>
+                <span className="text-xs">75% available | ความพร้อม 75%</span>
               </div>
             </CardContent>
           </Card>
           
           <Card>
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium">สถานะการบำรุงรักษา</CardTitle>
+              <CardTitle className="text-sm font-medium">Maintenance | การบำรุงรักษา</CardTitle>
               <Wrench className="h-4 w-4 text-fleet-500" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">3</div>
               <div className="flex items-center text-orange-500 mt-2">
                 <AlertTriangle className="h-3 w-3 mr-1" />
-                <span className="text-xs">รอการบำรุงรักษา</span>
+                <span className="text-xs">Awaiting maintenance | รอการบำรุงรักษา</span>
               </div>
             </CardContent>
           </Card>
@@ -100,49 +110,49 @@ export default function Dashboard() {
           <Card>
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="text-sm font-medium">
-                <span className="block">น้ำมันและต้นทุน</span>
-                <span className="block text-xs text-muted-foreground">ราคาน้ำมันและต้นทุนรวม</span>
+                Oil Price & Costs | น้ำมันและต้นทุน
+                <span className="block text-xs text-muted-foreground">Current oil price and total cost | ราคาน้ำมันและต้นทุนรวม</span>
               </CardTitle>
               <ChartPie className="h-4 w-4 text-fleet-500" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{oilPricePerLiter.toFixed(2)} บาท / ลิตร</div>
+              <div className="text-2xl font-bold">{oilPricePerLiter.toFixed(2)} THB / L</div>
               <div className="text-[10px] md:text-xs text-muted-foreground mt-1">
-                <span className="block">การบริโภคเฉลี่ย: {avgOilConsumptionLiter} ลิตร / ยานพาหนะ</span>
+                <span className="block">Avg. consumption: {avgOilConsumptionLiter} L / vehicle | การบริโภคเฉลี่ย: {avgOilConsumptionLiter} ลิตร / ยานพาหนะ</span>
               </div>
               <div className="text-[10px] md:text-xs text-muted-foreground">
-                <span className="block">กองรถ: {vehicleCount} คัน</span>
+                <span className="block">Fleet: {vehicleCount} vehicles | กองรถ {vehicleCount} คัน</span>
               </div>
               <div className="text-xs mt-2 font-semibold">
                 <span className="block text-green-600">
-                  ต้นทุนรวม: {totalOilCost.toLocaleString("th-TH", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} บาท
+                  Total cost: {totalOilCost.toLocaleString("th-TH", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} THB | ต้นทุนรวม: {totalOilCost.toLocaleString("th-TH", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} บาท
                 </span>
               </div>
               <div className="border-t border-muted-foreground mt-3 pt-2 space-y-1">
                 <div className="flex items-center gap-2 text-xs">
-                  <span className="font-medium">ต่อยานพาหนะ:</span>
-                  <span>{avgOilConsumptionLiter} ลิตร</span>
+                  <span className="font-medium">Per vehicle:</span>
+                  <span>{avgOilConsumptionLiter} L</span>
                 </div>
                 <div className="flex items-center gap-2 text-xs">
-                  <span className="font-medium">ค่าใช้จ่าย/คัน:</span>
-                  <span>{costPerVehicleThb.toLocaleString("th-TH", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} บาท</span>
+                  <span className="font-medium">Cost/vehicle:</span>
+                  <span>{costPerVehicleThb.toLocaleString("th-TH", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} THB</span>
                 </div>
               </div>
             </CardContent>
           </Card>
         </div>
-
+        {/* Main Fleet Pie Chart */}
         <div className="mt-6">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between">
               <div>
                 <CardTitle className="text-base md:text-lg flex items-center gap-2">
                   <ChartPie className="h-5 w-5 text-fleet-500" />
-                  สถานะกองย��น (Fleet Status)
+                  Fleet Status | สถานะกองยาน (Fleet)
                 </CardTitle>
-                <CardDescription className="text-xs mt-1">
-                  Anteil der Fahrzeuge nach Status (Aktiv, Wartung, Abgestellt)
-                </CardDescription>
+                <p className="text-xs mt-1 text-muted-foreground">
+                  Ratio of vehicles by status (Active / Maintenance / Idle) | สัดส่วนสถานะรถแต่ละประเภท
+                </p>
               </div>
             </CardHeader>
             <CardContent>
@@ -168,7 +178,7 @@ export default function Dashboard() {
                     <Legend verticalAlign="bottom" height={24} wrapperStyle={{ fontSize: "12px" }} />
                     <RechartsTooltip
                       formatter={(value: number, name: string) =>
-                        [`${value} Fahrzeuge`, name]
+                        [`${value} vehicles | คัน`, name]
                       }
                     />
                   </PieChart>
@@ -177,7 +187,52 @@ export default function Dashboard() {
             </CardContent>
           </Card>
         </div>
-
+        {/* NEW: Trains Dashboard (Pie Chart) */}
+        <div className="mt-6">
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between">
+              <div>
+                <CardTitle className="text-base md:text-lg flex items-center gap-2">
+                  <ChartPie className="h-5 w-5 text-fleet-500" />
+                  Train Status | สถานะขบวนรถไฟ
+                </CardTitle>
+                <p className="text-xs mt-1 text-muted-foreground">
+                  Ratio of trains by status (Running / Maintenance / Idle) | สัดส่วนสถานะของขบวนรถไฟแต่ละประเภท
+                </p>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="h-64 w-full flex flex-col items-center justify-center">
+                <ResponsiveContainer width="99%" height={230}>
+                  <PieChart>
+                    <Pie
+                      data={trainsData}
+                      cx="50%"
+                      cy="50%"
+                      outerRadius={85}
+                      innerRadius={55}
+                      dataKey="value"
+                      nameKey="name"
+                      label={({ name, value }) =>
+                        `${name}: ${value} (${Math.round((value / trainCount) * 100)}%)`
+                      }
+                    >
+                      {trainsData.map((entry, idx) => (
+                        <Cell key={entry.name} fill={entry.color} />
+                      ))}
+                    </Pie>
+                    <Legend verticalAlign="bottom" height={24} wrapperStyle={{ fontSize: "12px" }} />
+                    <RechartsTooltip
+                      formatter={(value: number, name: string) =>
+                        [`${value} trains | ขบวน`, name]
+                      }
+                    />
+                  </PieChart>
+                </ResponsiveContainer>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
         <div className="grid gap-3 md:gap-6 mt-3 md:mt-6 grid-cols-1 md:grid-cols-12">
           <Card className="col-span-1 md:col-span-8">
             <CardHeader>
