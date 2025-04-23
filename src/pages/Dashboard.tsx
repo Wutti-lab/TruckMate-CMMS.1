@@ -1,16 +1,29 @@
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Header } from "@/components/layout/Header";
-import { Car, Fuel, MapPin, AlertTriangle, Battery, Clock, TrendingUp, Users, Wrench } from "lucide-react";
+import { Car, Fuel, MapPin, AlertTriangle, Battery, Clock, TrendingUp, Users, Wrench, ChartPie } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
-import { Euro } from "lucide-react";
+import {
+  PieChart,
+  Pie,
+  Cell,
+  ResponsiveContainer,
+  Legend,
+  Tooltip as RechartsTooltip,
+} from "recharts";
 
 export default function Dashboard() {
   const oilPricePerLiter = 1.25; // THB
   const avgOilConsumptionLiter = 10;
   const vehicleCount = 24;
   const totalOilCost = oilPricePerLiter * avgOilConsumptionLiter * vehicleCount;
-
   const costPerVehicleThb = oilPricePerLiter * avgOilConsumptionLiter;
+
+  // Grafik-Daten für Fahrzeugstatus
+  const vehiclesData = [
+    { name: "Aktiv", value: 18, color: "#5AC87A" },         // grün
+    { name: "Wartung", value: 3, color: "#FDBA5C" },        // orange
+    { name: "Abgestellt", value: 3, color: "#A0AEC0" },     // grau
+  ];
 
   return (
     <div className="flex flex-col h-full">
@@ -87,10 +100,10 @@ export default function Dashboard() {
           <Card>
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="text-sm font-medium">
-                <span className="block">Oil Price & Total Costs</span>
+                <span className="block">น้ำมันและต้นทุน</span>
                 <span className="block text-xs text-muted-foreground">ราคาน้ำมันและต้นทุนรวม</span>
               </CardTitle>
-              <Euro className="h-4 w-4 text-fleet-500" />
+              <ChartPie className="h-4 w-4 text-fleet-500" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{oilPricePerLiter.toFixed(2)} บาท / ลิตร</div>
@@ -114,6 +127,52 @@ export default function Dashboard() {
                   <span className="font-medium">ค่าใช้จ่าย/คัน:</span>
                   <span>{costPerVehicleThb.toLocaleString("th-TH", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} บาท</span>
                 </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        <div className="mt-6">
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between">
+              <div>
+                <CardTitle className="text-base md:text-lg flex items-center gap-2">
+                  <ChartPie className="h-5 w-5 text-fleet-500" />
+                  สถานะกองย��น (Fleet Status)
+                </CardTitle>
+                <CardDescription className="text-xs mt-1">
+                  Anteil der Fahrzeuge nach Status (Aktiv, Wartung, Abgestellt)
+                </CardDescription>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="h-64 w-full flex flex-col items-center justify-center">
+                <ResponsiveContainer width="99%" height={230}>
+                  <PieChart>
+                    <Pie
+                      data={vehiclesData}
+                      cx="50%"
+                      cy="50%"
+                      outerRadius={85}
+                      innerRadius={55}
+                      dataKey="value"
+                      nameKey="name"
+                      label={({ name, value }) =>
+                        `${name}: ${value} (${Math.round((value / vehicleCount) * 100)}%)`
+                      }
+                    >
+                      {vehiclesData.map((entry, idx) => (
+                        <Cell key={entry.name} fill={entry.color} />
+                      ))}
+                    </Pie>
+                    <Legend verticalAlign="bottom" height={24} wrapperStyle={{ fontSize: "12px" }} />
+                    <RechartsTooltip
+                      formatter={(value: number, name: string) =>
+                        [`${value} Fahrzeuge`, name]
+                      }
+                    />
+                  </PieChart>
+                </ResponsiveContainer>
               </div>
             </CardContent>
           </Card>
@@ -175,7 +234,7 @@ export default function Dashboard() {
           <Card className="col-span-1 md:col-span-4">
             <CardHeader>
               <CardTitle className="text-sm md:text-base">กิจกรรมล่าสุด</CardTitle>
-              <CardDescription className="text-xs md:text-sm">การอัปเดตกองยานพาหนะแบบเรียลไทม์</CardDescription>
+              <CardDescription className="text-xs md:text-sm">การอั��เดตกองยานพาหนะแบบเรียลไทม์</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-3 md:space-y-4">
