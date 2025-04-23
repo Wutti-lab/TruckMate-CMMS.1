@@ -14,8 +14,7 @@ import {
   Car,
   Fuel,
   MapPin,
-  MoreHorizontal,
-  Thermometer
+  MoreHorizontal
 } from "lucide-react";
 import { VehicleQRModal } from "./VehicleQRModal";
 
@@ -29,7 +28,6 @@ interface Vehicle {
   batteryLevel: number;
   lastService: string;
   nextService: string;
-  engineTemp: number;
 }
 
 interface VehicleTableRowProps {
@@ -94,21 +92,6 @@ export function VehicleTableRow({ vehicle }: VehicleTableRowProps) {
               }}
             ></div>
           </div>
-        </div>
-      </TableCell>
-      <TableCell>
-        <div className="flex items-center gap-1">
-          <Thermometer
-            size={16}
-            className={
-              vehicle.engineTemp > 90
-                ? "text-red-500"
-                : vehicle.engineTemp > 85
-                ? "text-yellow-500"
-                : "text-blue-500"
-            }
-          />
-          <span>{vehicle.engineTemp}°C</span>
         </div>
       </TableCell>
       <TableCell>

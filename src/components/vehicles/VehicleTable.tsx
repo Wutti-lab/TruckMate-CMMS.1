@@ -19,7 +19,6 @@ interface Vehicle {
   batteryLevel: number;
   lastService: string;
   nextService: string;
-  engineTemp: number;
 }
 
 interface VehicleTableProps {
@@ -39,11 +38,6 @@ export function VehicleTable({ vehicles }: VehicleTableProps) {
               <TableHead>Location | ตำแหน่ง</TableHead>
               <TableHead>Status | สถานะ</TableHead>
               <TableHead>Battery Level | ระดับแบตเตอรี่</TableHead>
-              <TableHead>
-                <span className="flex items-center gap-1">
-                  Motortemp.
-                </span>
-              </TableHead>
               <TableHead>Next Service | การซ่อมบำรุงครั้งต่อไป</TableHead>
               <TableHead></TableHead>
             </TableRow>
@@ -58,4 +52,3 @@ export function VehicleTable({ vehicles }: VehicleTableProps) {
     </Card>
   );
 }
-
