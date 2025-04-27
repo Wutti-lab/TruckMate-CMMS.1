@@ -1,21 +1,19 @@
-
 import { Button } from "@/components/ui/button";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger
+import { 
+  DropdownMenu, 
+  DropdownMenuContent, 
+  DropdownMenuItem, 
+  DropdownMenuTrigger 
 } from "@/components/ui/dropdown-menu";
-import {
-  Battery,
-  Calendar,
-  Car,
-  Fuel,
-  MapPin,
-  MoreHorizontal,
-  Thermometer
+import { 
+  Battery, 
+  Calendar, 
+  Car, 
+  Fuel, 
+  MapPin, 
+  MoreHorizontal 
 } from "lucide-react";
 import { VehicleQRModal } from "./VehicleQRModal";
 
@@ -29,7 +27,6 @@ interface Vehicle {
   batteryLevel: number;
   lastService: string;
   nextService: string;
-  engineTemp: number;
 }
 
 interface VehicleTableRowProps {
@@ -90,25 +87,10 @@ export function VehicleTableRow({ vehicle }: VehicleTableRowProps) {
                   : "bg-red-500"
               }`}
               style={{
-                width: `${vehicle.fuelLevel || vehicle.batteryLevel}%`,
+                width: `${(vehicle.fuelLevel || vehicle.batteryLevel)}%`,
               }}
             ></div>
           </div>
-        </div>
-      </TableCell>
-      <TableCell>
-        <div className="flex items-center gap-1">
-          <Thermometer
-            size={16}
-            className={
-              vehicle.engineTemp > 90
-                ? "text-red-500"
-                : vehicle.engineTemp > 85
-                ? "text-yellow-500"
-                : "text-blue-500"
-            }
-          />
-          <span>{vehicle.engineTemp}°C</span>
         </div>
       </TableCell>
       <TableCell>
@@ -141,4 +123,3 @@ export function VehicleTableRow({ vehicle }: VehicleTableRowProps) {
     </TableRow>
   );
 }
-
