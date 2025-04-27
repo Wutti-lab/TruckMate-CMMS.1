@@ -1,8 +1,9 @@
 
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { useClerk } from "@clerk/clerk-react";
 import {
   Car,
   LayoutDashboard,
@@ -22,6 +23,14 @@ interface SidebarProps {
 
 export function Sidebar({ className }: SidebarProps) {
   const [collapsed, setCollapsed] = useState(false);
+  const { signOut } = useClerk();
+  const navigate = useNavigate();
+
+  const handleSignOut = () => {
+    signOut().then(() => {
+      navigate("/login");
+    });
+  };
 
   return (
     <div
@@ -93,12 +102,17 @@ export function Sidebar({ className }: SidebarProps) {
       </div>
 
       <div className="mt-auto border-t p-2">
-        <NavItem
-          to="/logout"
-          icon={<LogOut size={20} />}
-          label="Logout"
-          collapsed={collapsed}
-        />
+        <Button
+          variant="ghost"
+          className={cn(
+            "w-full justify-start font-normal hover:bg-fleet-50 hover:text-fleet-500",
+            collapsed ? "px-2" : "px-3"
+          )}
+          onClick={handleSignOut}
+        >
+          <LogOut size={20} />
+          {!collapsed && <span className="ml-2">Abmelden</span>}
+        </Button>
       </div>
     </div>
   );

@@ -3,8 +3,8 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { AppLayout } from "./components/layout/AppLayout";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { AuthLayout } from "./components/layout/AuthLayout";
 import Dashboard from "./pages/Dashboard";
 import Vehicles from "./pages/Vehicles";
 import Map from "./pages/Map";
@@ -27,8 +27,8 @@ const App = () => (
           <Route path="/login" element={<Login />} />
           
           {/* Protected routes */}
-          <Route path="/" element={<AppLayout />}>
-            <Route index element={<Navigate to="/dashboard" replace />} />
+          <Route element={<AuthLayout />}>
+            <Route path="/" element={<Navigate to="/dashboard" replace />} />
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="vehicles" element={<Vehicles />} />
             <Route path="map" element={<Map />} />

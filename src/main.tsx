@@ -1,7 +1,17 @@
 
-import { createRoot } from 'react-dom/client'
-import App from './App.tsx'
-import './index.css'
+import { createRoot } from 'react-dom/client';
+import { ClerkProvider } from "@clerk/clerk-react";
+import App from './App.tsx';
+import './index.css';
 
-// Initialize the app
-createRoot(document.getElementById("root")!).render(<App />);
+const PUBLISHABLE_KEY = "pk_test_dG9sZXJhbnQtc3RhcmxpbmctNDguY2xlcmsuYWNjb3VudHMuZGV2JA";
+
+if (!PUBLISHABLE_KEY) {
+  throw new Error("Missing Clerk Publishable Key");
+}
+
+createRoot(document.getElementById("root")!).render(
+  <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
+    <App />
+  </ClerkProvider>
+);
