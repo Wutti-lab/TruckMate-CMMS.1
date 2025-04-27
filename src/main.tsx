@@ -11,14 +11,7 @@ if (!PUBLISHABLE_KEY) {
 }
 
 createRoot(document.getElementById("root")!).render(
-  <ClerkProvider 
-    publishableKey={PUBLISHABLE_KEY}
-    appearance={{
-      variables: {
-        colorPrimary: "#10B981" // Matching fleet-500 color
-      }
-    }}
-  >
+  <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
     <App />
   </ClerkProvider>
 );
