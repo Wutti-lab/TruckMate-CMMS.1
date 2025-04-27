@@ -19,6 +19,7 @@ const vehicles = [
     batteryLevel: 80,
     lastService: "15.03.2023",
     nextService: "15.09.2023",
+    engineTemp: 84,
   },
   {
     id: "B-FR-234",
@@ -30,6 +31,7 @@ const vehicles = [
     batteryLevel: 45,
     lastService: "22.02.2023",
     nextService: "22.08.2023",
+    engineTemp: 78,
   },
   {
     id: "B-FR-345",
@@ -41,6 +43,7 @@ const vehicles = [
     batteryLevel: 90,
     lastService: "05.04.2023",
     nextService: "05.10.2023",
+    engineTemp: 92,
   },
   {
     id: "B-FR-456",
@@ -52,6 +55,7 @@ const vehicles = [
     batteryLevel: 65,
     lastService: "10.01.2023",
     nextService: "10.07.2023",
+    engineTemp: 80,
   },
   {
     id: "B-FR-567",
@@ -63,6 +67,7 @@ const vehicles = [
     batteryLevel: 55,
     lastService: "28.02.2023",
     nextService: "28.08.2023",
+    engineTemp: 87,
   },
   {
     id: "B-FR-678",
@@ -74,6 +79,7 @@ const vehicles = [
     batteryLevel: 70,
     lastService: "12.03.2023",
     nextService: "12.09.2023",
+    engineTemp: 82,
   },
   {
     id: "B-FR-789",
@@ -85,6 +91,7 @@ const vehicles = [
     batteryLevel: 20,
     lastService: "08.02.2023",
     nextService: "08.08.2023",
+    engineTemp: 89,
   },
 ];
 
