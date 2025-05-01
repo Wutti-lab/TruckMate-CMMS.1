@@ -1,0 +1,107 @@
+
+import React, { createContext, useState, useContext, ReactNode } from 'react';
+import { User, UserRole } from '@/lib/types/user-roles';
+
+interface AuthContextType {
+  user: User | null;
+  login: (email: string, password: string) => Promise<void>;
+  logout: () => void;
+  isAuthenticated: boolean;
+  hasRole: (roles: UserRole | UserRole[]) => boolean;
+}
+
+// Beispielbenutzer für Testzwecke
+const mockUsers: User[] = [
+  {
+    id: "1",
+    name: "Admin User",
+    email: "admin@truckmate.com",
+    role: UserRole.ADMIN
+  },
+  {
+    id: "2",
+    name: "Fleet Manager",
+    email: "fleet@truckmate.com",
+    role: UserRole.FLEET_MANAGER
+  },
+  {
+    id: "3",
+    name: "Driver User",
+    email: "driver@truckmate.com",
+    role: UserRole.DRIVER
+  },
+  {
+    id: "4",
+    name: "Mechanic User",
+    email: "mechanic@truckmate.com",
+    role: UserRole.MECHANIC
+  },
+  {
+    id: "5",
+    name: "Dispatcher User",
+    email: "dispatcher@truckmate.com",
+    role: UserRole.DISPATCHER
+  }
+];
+
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
+export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  const [user, setUser] = useState<User | null>(null);
+
+  // Simulierte Login-Funktion
+  const login = async (email: string, password: string): Promise<void> => {
+    // Simuliert eine API-Anfrage
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        const foundUser = mockUsers.find(u => u.email === email);
+        
+        if (foundUser && password === '123456') { // Einfaches Passwort für alle Testbenutzer
+          setUser(foundUser);
+          localStorage.setItem('user', JSON.stringify(foundUser));
+          resolve();
+        } else {
+          reject(new Error('Invalid email or password'));
+        }
+      }, 500);
+    });
+  };
+
+  const logout = () => {
+    setUser(null);
+    localStorage.removeItem('user');
+  };
+
+  // Überprüfen, ob der Benutzer eine bestimmte Rolle hat
+  const hasRole = (roles: UserRole | UserRole[]): boolean => {
+    if (!user) return false;
+    
+    if (Array.isArray(roles)) {
+      return roles.includes(user.role);
+    }
+    
+    return user.role === roles;
+  };
+
+  return (
+    <AuthContext.Provider 
+      value={{ 
+        user, 
+        login, 
+        logout, 
+        isAuthenticated: !!user,
+        hasRole 
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (context === undefined) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  return context;
+};

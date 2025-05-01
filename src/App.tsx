@@ -1,49 +1,81 @@
 
+import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+
+import { AuthProvider } from "./contexts/AuthContext";
+import { ProtectedRoute } from "./components/auth/ProtectedRoute";
 import { AppLayout } from "./components/layout/AppLayout";
-import Dashboard from "./pages/Dashboard";
-import Vehicles from "./pages/Vehicles";
-import Map from "./pages/Map";
-import Login from "./pages/Login";
-import NotFound from "./pages/NotFound";
-import Inspections from "./pages/Inspections";
-import Drivers from "./pages/Drivers";
-import QRScanner from "./pages/QRScanner";
+import { UserRole } from "./lib/types/user-roles";
 
-const queryClient = new QueryClient();
+// Pages
+import Index from "@/pages/Index";
+import Login from "@/pages/Login";
+import Dashboard from "@/pages/Dashboard";
+import Vehicles from "@/pages/Vehicles";
+import QRScanner from "@/pages/QRScanner";
+import Map from "@/pages/Map";
+import Inspections from "@/pages/Inspections";
+import Drivers from "@/pages/Drivers";
+import NotFound from "@/pages/NotFound";
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
+function App() {
+  return (
+    <AuthProvider>
+      <Router>
         <Routes>
-          {/* Public routes */}
+          <Route path="/" element={<Index />} />
           <Route path="/login" element={<Login />} />
           
-          {/* Protected routes */}
-          <Route path="/" element={<AppLayout />}>
-            <Route index element={<Navigate to="/dashboard" replace />} />
-            <Route path="dashboard" element={<Dashboard />} />
-            <Route path="vehicles" element={<Vehicles />} />
-            <Route path="map" element={<Map />} />
-            <Route path="inspections" element={<Inspections />} />
-            <Route path="drivers" element={<Drivers />} />
-            <Route path="qr-scanner" element={<QRScanner />} />
-            <Route path="settings" element={<Dashboard />} />
+          {/* Protected Routes in AppLayout */}
+          <Route path="/" element={
+            <ProtectedRoute>
+              <AppLayout />
+            </ProtectedRoute>
+          }>
+            <Route path="/dashboard" element={<Dashboard />} />
+            
+            {/* Fleet Manager and Admin Routes */}
+            <Route path="/vehicles" element={
+              <ProtectedRoute requiredRoles={[UserRole.ADMIN, UserRole.FLEET_MANAGER]}>
+                <Vehicles />
+              </ProtectedRoute>
+            } />
+            
+            {/* Driver Routes */}
+            <Route path="/qr-scanner" element={
+              <ProtectedRoute requiredRoles={[UserRole.ADMIN, UserRole.DRIVER, UserRole.FLEET_MANAGER]}>
+                <QRScanner />
+              </ProtectedRoute>
+            } />
+            
+            {/* Dispatcher Routes */}
+            <Route path="/map" element={
+              <ProtectedRoute requiredRoles={[UserRole.ADMIN, UserRole.DISPATCHER, UserRole.FLEET_MANAGER]}>
+                <Map />
+              </ProtectedRoute>
+            } />
+            
+            {/* Mechanic Routes */}
+            <Route path="/inspections" element={
+              <ProtectedRoute requiredRoles={[UserRole.ADMIN, UserRole.MECHANIC, UserRole.FLEET_MANAGER]}>
+                <Inspections />
+              </ProtectedRoute>
+            } />
+            
+            {/* Admin Routes */}
+            <Route path="/drivers" element={
+              <ProtectedRoute requiredRoles={[UserRole.ADMIN, UserRole.FLEET_MANAGER]}>
+                <Drivers />
+              </ProtectedRoute>
+            } />
           </Route>
-
-          {/* Catch-all route */}
+          
           <Route path="*" element={<NotFound />} />
         </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+        <Toaster />
+      </Router>
+    </AuthProvider>
+  );
+}
 
 export default App;
