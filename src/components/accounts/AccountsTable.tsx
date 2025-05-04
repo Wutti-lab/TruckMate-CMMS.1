@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { 
   Table, 
   TableBody, 
@@ -42,13 +42,13 @@ export function AccountsTable({ searchQuery }: AccountsTableProps) {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   // Fetch and convert users to accounts on component mount
-  useState(() => {
+  useEffect(() => {
     const initialAccounts: Account[] = mockUsers.map(user => ({
       ...user,
       status: 'active' // Set a default status for all users
     }));
     setAccounts(initialAccounts);
-  });
+  }, [mockUsers]);
 
   // Filter accounts based on search query
   const filteredAccounts = accounts.filter(account => 
@@ -114,7 +114,7 @@ export function AccountsTable({ searchQuery }: AccountsTableProps) {
                 </TableCell>
                 <TableCell>
                   <Badge 
-                    variant={account.status === 'active' ? "success" : "destructive"}
+                    variant={account.status === 'active' ? "default" : "destructive"}
                     className="capitalize"
                   >
                     {account.status}
