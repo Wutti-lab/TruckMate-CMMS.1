@@ -19,7 +19,7 @@ export function MobileNavbar() {
       </Button>
       <div className="ml-4">
         <h2 className="text-lg font-bold text-sky-100">TruckMate CMMS</h2>
-        <p className="text-xs text-sky-200">ระบบจัดการยานพาหนะที่ง่ายดาย</p>
+        <p className="text-xs text-slate-300">ระบบจัดการยานพาหนะที่ง่ายดาย</p>
       </div>
     </div>
   );
