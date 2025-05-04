@@ -1,5 +1,5 @@
 
-import React, { createContext, useState, useContext, ReactNode } from 'react';
+import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
 import { User, UserRole } from '@/lib/types/user-roles';
 
 interface AuthContextType {
@@ -8,6 +8,16 @@ interface AuthContextType {
   logout: () => void;
   isAuthenticated: boolean;
   hasRole: (roles: UserRole | UserRole[]) => boolean;
+  loginActivities: LoginActivity[];
+}
+
+// New interface for login activities
+export interface LoginActivity {
+  id: string;
+  userId: string;
+  userName: string;
+  timestamp: Date;
+  userRole: UserRole;
 }
 
 // Beispielbenutzer für Testzwecke
@@ -48,6 +58,21 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [loginActivities, setLoginActivities] = useState<LoginActivity[]>([]);
+
+  // Load user from localStorage on mount
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    const storedActivities = localStorage.getItem('loginActivities');
+    
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+    
+    if (storedActivities) {
+      setLoginActivities(JSON.parse(storedActivities));
+    }
+  }, []);
 
   // Simulierte Login-Funktion
   const login = async (email: string, password: string): Promise<void> => {
@@ -59,6 +84,20 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         if (foundUser && password === '123456') { // Einfaches Passwort für alle Testbenutzer
           setUser(foundUser);
           localStorage.setItem('user', JSON.stringify(foundUser));
+          
+          // Add new login activity
+          const newActivity: LoginActivity = {
+            id: Date.now().toString(),
+            userId: foundUser.id,
+            userName: foundUser.name,
+            timestamp: new Date(),
+            userRole: foundUser.role
+          };
+          
+          const updatedActivities = [newActivity, ...loginActivities.slice(0, 9)]; // Keep only last 10
+          setLoginActivities(updatedActivities);
+          localStorage.setItem('loginActivities', JSON.stringify(updatedActivities));
+          
           resolve();
         } else {
           reject(new Error('Invalid email or password'));
@@ -90,7 +129,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         login, 
         logout, 
         isAuthenticated: !!user,
-        hasRole 
+        hasRole,
+        loginActivities 
       }}
     >
       {children}

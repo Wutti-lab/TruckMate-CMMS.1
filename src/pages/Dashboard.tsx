@@ -1,6 +1,7 @@
+
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Header } from "@/components/layout/Header";
-import { Car, Fuel, MapPin, AlertTriangle, Battery, Clock, TrendingUp, Users, Wrench, ChartPie, Plus } from "lucide-react";
+import { Car, Fuel, MapPin, AlertTriangle, Battery, Clock, TrendingUp, Users, Wrench, ChartPie, Plus, UserRound } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import {
   PieChart,
@@ -19,6 +20,11 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useForm } from "react-hook-form";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth, LoginActivity } from "@/contexts/AuthContext";
+import { format } from "date-fns";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
+import { UserRole } from "@/lib/types/user-roles";
 
 export default function Dashboard() {
   const oilPricePerLiter = 1.25; // THB
@@ -26,6 +32,7 @@ export default function Dashboard() {
   const vehicleCount = 24;
   const totalOilCost = oilPricePerLiter * avgOilConsumptionLiter * vehicleCount;
   const costPerVehicleThb = oilPricePerLiter * avgOilConsumptionLiter;
+  const { loginActivities } = useAuth();
 
   // Stats for Fleet Status (Vehicles)
   const vehiclesData = [
@@ -123,6 +130,38 @@ export default function Dashboard() {
       description: "The new activity has been added successfully | เพิ่มกิจกรรมใหม่สำเร็จแล้ว",
     });
     activityForm.reset();
+  };
+
+  // Helper function to get badge color by role
+  const getRoleBadgeColor = (role: UserRole): string => {
+    switch (role) {
+      case UserRole.ADMIN:
+        return "bg-red-100 text-red-800";
+      case UserRole.FLEET_MANAGER:
+        return "bg-blue-100 text-blue-800";
+      case UserRole.DRIVER:
+        return "bg-green-100 text-green-800";
+      case UserRole.MECHANIC:
+        return "bg-orange-100 text-orange-800";
+      case UserRole.DISPATCHER:
+        return "bg-purple-100 text-purple-800";
+      default:
+        return "bg-gray-100 text-gray-800";
+    }
+  };
+
+  // Helper function to format time since login
+  const formatTimeSince = (date: Date): string => {
+    const now = new Date();
+    const diffMs = now.getTime() - new Date(date).getTime();
+    const diffMins = Math.round(diffMs / 60000);
+    
+    if (diffMins < 60) {
+      return `${diffMins} ${diffMins === 1 ? 'minute' : 'minutes'} ago | เมื่อ ${diffMins} นาทีที่แล้ว`;
+    } else {
+      const diffHours = Math.floor(diffMins / 60);
+      return `${diffHours} ${diffHours === 1 ? 'hour' : 'hours'} ago | เมื่อ ${diffHours} ชั่วโมงที่แล้ว`;
+    }
   };
 
   return (
@@ -280,6 +319,7 @@ export default function Dashboard() {
             </CardContent>
           </Card>
         </div>
+
         {/* Trains Dashboard Pie Chart */}
         <div className="mt-6">
           <Card>
@@ -287,7 +327,7 @@ export default function Dashboard() {
               <div>
                 <CardTitle className="text-base md:text-lg flex items-center gap-2">
                   <ChartPie className="h-5 w-5 text-fleet-500" />
-                  Train Status | สถานะข��วนรถไฟ
+                  Train Status | สถานะขบวนรถไฟ
                 </CardTitle>
                 <p className="text-xs mt-1 text-muted-foreground">
                   Ratio of trains by status (Running / Maintenance / Idle) | สัดส่วนสถานะของขบวนรถไฟแต่ละประเภท
@@ -326,6 +366,56 @@ export default function Dashboard() {
             </CardContent>
           </Card>
         </div>
+
+        {/* Login Activities Section */}
+        <div className="mt-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-base md:text-lg flex items-center gap-2">
+                <UserRound className="h-5 w-5 text-fleet-500" />
+                Login Activities | กิจกรรมการเข้าสู่ระบบ
+              </CardTitle>
+              <CardDescription className="text-xs">
+                Recent user login activities | กิจกรรมการเข้าสู่ระบบล่าสุด
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              {loginActivities.length > 0 ? (
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="w-[180px]">User | ผู้ใช้</TableHead>
+                      <TableHead>Role | บทบาท</TableHead>
+                      <TableHead className="text-right">Time | เวลา</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {loginActivities.map((activity) => (
+                      <TableRow key={activity.id}>
+                        <TableCell className="font-medium">{activity.userName}</TableCell>
+                        <TableCell>
+                          <Badge variant="outline" className={getRoleBadgeColor(activity.userRole)}>
+                            {activity.userRole}
+                          </Badge>
+                        </TableCell>
+                        <TableCell className="text-right">
+                          {formatTimeSince(new Date(activity.timestamp))}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              ) : (
+                <div className="flex flex-col items-center justify-center py-6 text-center text-muted-foreground">
+                  <UserRound className="h-10 w-10 mb-2 opacity-20" />
+                  <p>No login activities yet | ยังไม่มีกิจกรรมการเข้าสู่ระบบ</p>
+                  <p className="text-xs mt-1">Log in to see activity records | เข้าสู่ระบบเพื่อดูบันทึกกิจกรรม</p>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </div>
+        
         {/* Vehicle Costs Section */}
         <div className="mt-6">
           <VehicleCosts />
