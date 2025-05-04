@@ -55,9 +55,9 @@ function App() {
               </ProtectedRoute>
             } />
             
-            {/* Mechanic Routes */}
+            {/* Mechanic and Driver Routes */}
             <Route path="/inspections" element={
-              <ProtectedRoute requiredRoles={[UserRole.ADMIN, UserRole.MECHANIC, UserRole.FLEET_MANAGER]}>
+              <ProtectedRoute requiredRoles={[UserRole.ADMIN, UserRole.MECHANIC, UserRole.FLEET_MANAGER, UserRole.DRIVER]}>
                 <Inspections />
               </ProtectedRoute>
             } />

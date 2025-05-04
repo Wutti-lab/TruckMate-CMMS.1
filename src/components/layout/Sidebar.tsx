@@ -59,7 +59,7 @@ export function Sidebar() {
       title: "Inspections | การตรวจสอบ",
       icon: <FileText size={20} />,
       href: "/inspections",
-      roles: [UserRole.ADMIN, UserRole.MECHANIC, UserRole.FLEET_MANAGER],
+      roles: [UserRole.ADMIN, UserRole.MECHANIC, UserRole.FLEET_MANAGER, UserRole.DRIVER],
     },
     {
       title: "Drivers | คนขับ",
