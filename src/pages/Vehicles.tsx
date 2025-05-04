@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Header } from "@/components/layout/Header";
 import { Button } from "@/components/ui/button";
@@ -6,9 +7,10 @@ import { VehicleFilters } from "@/components/vehicles/VehicleFilters";
 import { VehicleTable } from "@/components/vehicles/VehicleTable";
 import { VehicleParts } from "@/components/inspections/VehicleParts";
 import { Card } from "@/components/ui/card";
+import { AddVehicleDialog } from "@/components/vehicles/AddVehicleDialog";
 
 // Mock vehicle data
-const vehicles = [
+const initialVehicles = [
   {
     id: "B-FR-123",
     driver: "Max Müller",
@@ -97,6 +99,8 @@ const vehicles = [
 
 export default function Vehicles() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [isAddVehicleOpen, setIsAddVehicleOpen] = useState(false);
+  const [vehicles, setVehicles] = useState(initialVehicles);
   
   // Filter vehicles based on search query
   const filteredVehicles = vehicles.filter((vehicle) => 
@@ -105,6 +109,10 @@ export default function Vehicles() {
     vehicle.model.toLowerCase().includes(searchQuery.toLowerCase()) ||
     vehicle.location.toLowerCase().includes(searchQuery.toLowerCase())
   );
+  
+  const handleAddVehicle = (newVehicle: typeof vehicles[0]) => {
+    setVehicles([newVehicle, ...vehicles]);
+  };
 
   return (
     <div className="flex flex-col h-full">
@@ -117,7 +125,7 @@ export default function Vehicles() {
               searchQuery={searchQuery}
               onSearchChange={setSearchQuery}
             />
-            <Button className="bg-fleet-500">
+            <Button className="bg-fleet-500" onClick={() => setIsAddVehicleOpen(true)}>
               <Plus size={16} className="mr-2" />
               Add New Vehicle | เพิ่มยานพาหนะใหม่
             </Button>
@@ -134,6 +142,12 @@ export default function Vehicles() {
           </Card>
         </div>
       </main>
+      
+      <AddVehicleDialog 
+        open={isAddVehicleOpen} 
+        onOpenChange={setIsAddVehicleOpen}
+        onSubmit={handleAddVehicle}
+      />
     </div>
   );
 }
