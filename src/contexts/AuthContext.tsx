@@ -9,6 +9,7 @@ interface AuthContextType {
   isAuthenticated: boolean;
   hasRole: (roles: UserRole | UserRole[]) => boolean;
   loginActivities: LoginActivity[];
+  getFilteredLoginActivities: () => LoginActivity[];
 }
 
 // New interface for login activities
@@ -122,6 +123,33 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     return user.role === roles;
   };
 
+  // Get filtered login activities based on user role
+  const getFilteredLoginActivities = (): LoginActivity[] => {
+    if (!user) return [];
+
+    // Admin and Fleet Manager can see all login activities
+    if (user.role === UserRole.ADMIN || user.role === UserRole.FLEET_MANAGER) {
+      return loginActivities;
+    }
+    
+    // Drivers can only see their own logins and other drivers' logins
+    if (user.role === UserRole.DRIVER) {
+      return loginActivities.filter(activity => 
+        activity.userId === user.id || activity.userRole === UserRole.DRIVER
+      );
+    }
+    
+    // Mechanics can only see their own logins and other mechanics' logins
+    if (user.role === UserRole.MECHANIC) {
+      return loginActivities.filter(activity => 
+        activity.userId === user.id || activity.userRole === UserRole.MECHANIC
+      );
+    }
+    
+    // Default: only see own logins
+    return loginActivities.filter(activity => activity.userId === user.id);
+  };
+
   return (
     <AuthContext.Provider 
       value={{ 
@@ -130,7 +158,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         logout, 
         isAuthenticated: !!user,
         hasRole,
-        loginActivities 
+        loginActivities,
+        getFilteredLoginActivities
       }}
     >
       {children}

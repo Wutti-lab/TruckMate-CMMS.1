@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Header } from "@/components/layout/Header";
 import { Car, Fuel, MapPin, AlertTriangle, Battery, Clock, TrendingUp, Users, Wrench, ChartPie, Plus, UserRound } from "lucide-react";
@@ -131,6 +130,10 @@ export default function Dashboard() {
     });
     activityForm.reset();
   };
+
+  // Get filtered login activities based on user role
+  const { getFilteredLoginActivities, user } = useAuth();
+  const filteredLoginActivities = getFilteredLoginActivities();
 
   // Helper function to get badge color by role
   const getRoleBadgeColor = (role: UserRole): string => {
@@ -376,11 +379,17 @@ export default function Dashboard() {
                 Login Activities | กิจกรรมการเข้าสู่ระบบ
               </CardTitle>
               <CardDescription className="text-xs">
-                Recent user login activities | กิจกรรมการเข้าสู่ระบบล่าสุด
+                {user?.role === UserRole.ADMIN || user?.role === UserRole.FLEET_MANAGER 
+                  ? "All user login activities | กิจกรรมการเข้าสู่ระบบของผู้ใช้ทั้งหมด" 
+                  : user?.role === UserRole.DRIVER
+                    ? "Login activities for drivers | กิจกรรมการเข้าสู่ระบบของคนขับ"
+                    : user?.role === UserRole.MECHANIC
+                      ? "Login activities for mechanics | กิจกรรมการเข้าสู่ระบบของช่างซ่อม"
+                      : "Your login activities | กิจกรรมการเข้าสู่ระบบของคุณ"}
               </CardDescription>
             </CardHeader>
             <CardContent>
-              {loginActivities.length > 0 ? (
+              {filteredLoginActivities.length > 0 ? (
                 <Table>
                   <TableHeader>
                     <TableRow>
@@ -390,7 +399,7 @@ export default function Dashboard() {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {loginActivities.map((activity) => (
+                    {filteredLoginActivities.map((activity) => (
                       <TableRow key={activity.id}>
                         <TableCell className="font-medium">{activity.userName}</TableCell>
                         <TableCell>
