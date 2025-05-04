@@ -10,9 +10,14 @@ interface AuthContextType {
   hasRole: (roles: UserRole | UserRole[]) => boolean;
   loginActivities: LoginActivity[];
   getFilteredLoginActivities: () => LoginActivity[];
+  // New account management functions
+  mockUsers: User[];
+  createUser: (user: User & { password: string }) => void;
+  updateUserList: (user: User) => void;
+  deleteUser: (id: string) => void;
 }
 
-// New interface for login activities
+// Interface for login activities
 export interface LoginActivity {
   id: string;
   userId: string;
@@ -21,37 +26,46 @@ export interface LoginActivity {
   userRole: UserRole;
 }
 
-// Beispielbenutzer für Testzwecke
-const mockUsers: User[] = [
+interface UserWithPassword extends User {
+  password: string;
+}
+
+// Example users for testing purposes
+const initialMockUsers: UserWithPassword[] = [
   {
     id: "1",
     name: "Admin User",
     email: "admin@truckmate.com",
-    role: UserRole.ADMIN
+    role: UserRole.ADMIN,
+    password: "123456"
   },
   {
     id: "2",
     name: "Fleet Manager",
     email: "fleet@truckmate.com",
-    role: UserRole.FLEET_MANAGER
+    role: UserRole.FLEET_MANAGER,
+    password: "123456"
   },
   {
     id: "3",
     name: "Driver User",
     email: "driver@truckmate.com",
-    role: UserRole.DRIVER
+    role: UserRole.DRIVER,
+    password: "123456"
   },
   {
     id: "4",
     name: "Mechanic User",
     email: "mechanic@truckmate.com",
-    role: UserRole.MECHANIC
+    role: UserRole.MECHANIC,
+    password: "123456"
   },
   {
     id: "5",
     name: "Dispatcher User",
     email: "dispatcher@truckmate.com",
-    role: UserRole.DISPATCHER
+    role: UserRole.DISPATCHER,
+    password: "123456"
   }
 ];
 
@@ -60,11 +74,13 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loginActivities, setLoginActivities] = useState<LoginActivity[]>([]);
+  const [mockUsers, setMockUsers] = useState<UserWithPassword[]>([]);
 
-  // Load user from localStorage on mount
+  // Load user and data from localStorage on mount
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
     const storedActivities = localStorage.getItem('loginActivities');
+    const storedMockUsers = localStorage.getItem('mockUsers');
     
     if (storedUser) {
       setUser(JSON.parse(storedUser));
@@ -73,18 +89,26 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     if (storedActivities) {
       setLoginActivities(JSON.parse(storedActivities));
     }
+
+    if (storedMockUsers) {
+      setMockUsers(JSON.parse(storedMockUsers));
+    } else {
+      setMockUsers(initialMockUsers);
+      localStorage.setItem('mockUsers', JSON.stringify(initialMockUsers));
+    }
   }, []);
 
-  // Simulierte Login-Funktion
+  // Simulated login function
   const login = async (email: string, password: string): Promise<void> => {
-    // Simuliert eine API-Anfrage
+    // Simulates an API request
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        const foundUser = mockUsers.find(u => u.email === email);
+        const foundUser = mockUsers.find(u => u.email === email && u.password === password);
         
-        if (foundUser && password === '123456') { // Einfaches Passwort für alle Testbenutzer
-          setUser(foundUser);
-          localStorage.setItem('user', JSON.stringify(foundUser));
+        if (foundUser) {
+          const { password, ...userWithoutPassword } = foundUser;
+          setUser(userWithoutPassword);
+          localStorage.setItem('user', JSON.stringify(userWithoutPassword));
           
           // Add new login activity
           const newActivity: LoginActivity = {
@@ -112,7 +136,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     localStorage.removeItem('user');
   };
 
-  // Überprüfen, ob der Benutzer eine bestimmte Rolle hat
+  // Check if user has a specific role
   const hasRole = (roles: UserRole | UserRole[]): boolean => {
     if (!user) return false;
     
@@ -150,6 +174,40 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     return loginActivities.filter(activity => activity.userId === user.id);
   };
 
+  // Account management functions
+  const createUser = (newUser: UserWithPassword) => {
+    const updatedUsers = [...mockUsers, newUser];
+    setMockUsers(updatedUsers);
+    localStorage.setItem('mockUsers', JSON.stringify(updatedUsers));
+  };
+
+  const updateUserList = (updatedUser: User) => {
+    const updatedUsers = mockUsers.map(user => {
+      if (user.id === updatedUser.id) {
+        return {
+          ...user,
+          ...updatedUser
+        };
+      }
+      return user;
+    });
+    
+    setMockUsers(updatedUsers);
+    localStorage.setItem('mockUsers', JSON.stringify(updatedUsers));
+    
+    // If the updated user is the currently logged in user, update the session too
+    if (user && user.id === updatedUser.id) {
+      setUser(updatedUser);
+      localStorage.setItem('user', JSON.stringify(updatedUser));
+    }
+  };
+
+  const deleteUser = (id: string) => {
+    const updatedUsers = mockUsers.filter(user => user.id !== id);
+    setMockUsers(updatedUsers);
+    localStorage.setItem('mockUsers', JSON.stringify(updatedUsers));
+  };
+
   return (
     <AuthContext.Provider 
       value={{ 
@@ -159,7 +217,11 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         isAuthenticated: !!user,
         hasRole,
         loginActivities,
-        getFilteredLoginActivities
+        getFilteredLoginActivities,
+        mockUsers,
+        createUser,
+        updateUserList,
+        deleteUser
       }}
     >
       {children}

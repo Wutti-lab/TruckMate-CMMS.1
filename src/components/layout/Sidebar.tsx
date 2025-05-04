@@ -7,7 +7,8 @@ import {
   FileText, 
   Users, 
   QrCode, 
-  LogOut 
+  LogOut,
+  UserCog
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -66,6 +67,12 @@ export function Sidebar() {
       icon: <Users size={20} />,
       href: "/drivers",
       roles: [UserRole.ADMIN, UserRole.FLEET_MANAGER],
+    },
+    {
+      title: "Account Management | จัดการบัญชี",
+      icon: <UserCog size={20} />,
+      href: "/accounts",
+      roles: [UserRole.ADMIN],
     },
   ];
 

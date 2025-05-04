@@ -14,6 +14,7 @@ export function Header() {
           {window.location.pathname === "/inspections" && "Inspections | การตรวจสอบ"}
           {window.location.pathname === "/drivers" && "Drivers | คนขับ"}
           {window.location.pathname === "/qr-scanner" && "QR Scanner | เครื่องสแกน QR"}
+          {window.location.pathname === "/accounts" && "Account Management | การจัดการบัญชี"}
         </h1>
         <div className="flex items-center gap-2">
           <span className="text-sm text-gray-600">

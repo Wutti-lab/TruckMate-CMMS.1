@@ -16,6 +16,7 @@ import QRScanner from "@/pages/QRScanner";
 import Map from "@/pages/Map";
 import Inspections from "@/pages/Inspections";
 import Drivers from "@/pages/Drivers";
+import Accounts from "@/pages/Accounts";
 import NotFound from "@/pages/NotFound";
 
 function App() {
@@ -66,6 +67,13 @@ function App() {
             <Route path="/drivers" element={
               <ProtectedRoute requiredRoles={[UserRole.ADMIN, UserRole.FLEET_MANAGER]}>
                 <Drivers />
+              </ProtectedRoute>
+            } />
+
+            {/* Account Management - Only for Admin */}
+            <Route path="/accounts" element={
+              <ProtectedRoute requiredRoles={[UserRole.ADMIN]}>
+                <Accounts />
               </ProtectedRoute>
             } />
           </Route>
