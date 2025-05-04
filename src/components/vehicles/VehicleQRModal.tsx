@@ -93,7 +93,7 @@ export function VehicleQRModal({ vehicle }: VehicleQRModalProps) {
   // Get driver for this vehicle
   const driver = driversData.find(driver => driver.name === vehicle.driver);
 
-  // Create a more efficient data structure for the QR code
+  // Create a comprehensive data structure for the QR code that includes all necessary information
   const qrData = {
     type: "vehicle-data",
     version: "1.0",
@@ -107,7 +107,7 @@ export function VehicleQRModal({ vehicle }: VehicleQRModalProps) {
       fuelLevel: vehicle.fuelLevel,
       batteryLevel: vehicle.batteryLevel,
       lastService: vehicle.lastService,
-      engineTemp: vehicle.engineTemp
+      engineTemp: vehicle.engineTemp || null // Ensure engine temperature is included
     },
     driver: driver ? {
       id: driver.id,
@@ -150,7 +150,7 @@ export function VehicleQRModal({ vehicle }: VehicleQRModalProps) {
             viewBox="0 0 256 256"
           />
           <p className="text-sm text-muted-foreground text-center">
-            Scan to view vehicle, driver and parts details | สแกนเพื่อดูรายละเอียดยานพาหนะ คนขับและชิ้นส่วน
+            Scan to view complete vehicle, driver and parts details | สแกนเพื่อดูรายละเอียดทั้งหมดของยานพาหนะ คนขับและชิ้นส่วน
           </p>
         </div>
       </DialogContent>
