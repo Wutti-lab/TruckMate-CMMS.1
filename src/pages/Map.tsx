@@ -69,7 +69,7 @@ export default function Map() {
                 </Button>
               ))}
               
-              <Card className="absolute right-4 bottom-4 w-auto">
+              <Card className="absolute right-4 bottom-20 w-auto">
                 <CardContent className="p-3">
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center gap-2 text-sm">
@@ -89,7 +89,7 @@ export default function Map() {
               </Card>
 
               {showEmergencyContacts && (
-                <div className="absolute left-4 top-4 w-[350px] max-h-[80vh] overflow-y-auto bg-white rounded-lg shadow-lg p-4">
+                <div className="absolute left-4 top-4 w-[350px] max-h-[80vh] overflow-y-auto bg-white rounded-lg shadow-lg p-4 z-20">
                   <div className="flex justify-between items-center mb-4">
                     <h2 className="text-lg font-semibold">Emergency Contacts | รายชื่อติดต่อฉุกเฉิน</h2>
                     <Button
@@ -117,12 +117,12 @@ export default function Map() {
           </TabsContent>
           
           <div className="mt-2 text-xs text-muted-foreground">
-            <p>Hinweis: Mapbox Token erforderlich für die Kartenfunktion. Bitte in MapComponent.tsx konfigurieren</p>
+            <p>Note: Mapbox token required for map functionality | หมายเหตุ: จำเป็นต้องใช้ Mapbox token สำหรับฟังก์ชันแผนที่</p>
           </div>
         </Tabs>
         
         {selectedVehicle && (
-          <Card className="absolute left-6 top-28 w-[300px] shadow-lg">
+          <Card className="absolute left-6 top-28 w-[300px] shadow-lg z-10">
             <CardContent className="p-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
@@ -141,26 +141,26 @@ export default function Map() {
               <div className="mt-4 space-y-2">
                 <div className="flex items-center gap-2 text-sm">
                   <MapPin className="h-4 w-4 text-fleet-500" />
-                  <span>Berlin, Mitte</span>
+                  <span>Bangkok, Central | กรุงเทพ, เขตกลาง</span>
                 </div>
                 <div className="text-sm">
-                  <span className="font-medium">Fahrer:</span> Michael Schmidt
+                  <span className="font-medium">Driver | คนขับ:</span> Michael Schmidt
                 </div>
                 <div className="text-sm">
-                  <span className="font-medium">Status:</span>{" "}
-                  <span className="text-green-600">In Fahrt</span>
+                  <span className="font-medium">Status | สถานะ:</span>{" "}
+                  <span className="text-green-600">Driving | กำลังขับ</span>
                 </div>
                 <div className="text-sm">
-                  <span className="font-medium">Geschwindigkeit:</span> 42 km/h
+                  <span className="font-medium">Speed | ความเร็ว:</span> 42 km/h
                 </div>
                 <div className="text-sm">
-                  <span className="font-medium">Kraftstoff:</span> 68%
+                  <span className="font-medium">Fuel | เชื้อเพลิง:</span> 68%
                 </div>
               </div>
               
               <div className="mt-4 flex justify-end gap-2">
-                <Button variant="outline" size="sm">Details</Button>
-                <Button size="sm" className="bg-fleet-500">Navigation</Button>
+                <Button variant="outline" size="sm">Details | รายละเอียด</Button>
+                <Button size="sm" className="bg-fleet-500">Navigation | นำทาง</Button>
               </div>
             </CardContent>
           </Card>
@@ -169,4 +169,3 @@ export default function Map() {
     </div>
   );
 }
-
