@@ -5,20 +5,36 @@ import { FilePlus } from "lucide-react";
 
 interface FileUploadProps {
   onFilesSelected: (files: File[]) => void;
+  accept?: string;
+  icon?: React.ReactNode;
+  required?: boolean;
 }
 
-export function FileUpload({ onFilesSelected }: FileUploadProps) {
+export function FileUpload({ 
+  onFilesSelected, 
+  accept = ".pdf,.doc,.docx,.xls,.xlsx,.csv", 
+  icon,
+  required = false
+}: FileUploadProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [dragActive, setDragActive] = useState(false);
 
-  const allowedFileTypes = [
-    "application/pdf",
-    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-    "application/msword",
-    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-    "application/vnd.ms-excel",
-    "text/csv",
-  ];
+  const allowedFileTypes = accept.split(',').map(type => {
+    if (type.startsWith('.')) {
+      switch (type) {
+        case '.pdf': return 'application/pdf';
+        case '.jpg': case '.jpeg': return 'image/jpeg';
+        case '.png': return 'image/png';
+        case '.doc': return 'application/msword';
+        case '.docx': return 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+        case '.xls': return 'application/vnd.ms-excel';
+        case '.xlsx': return 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+        case '.csv': return 'text/csv';
+        default: return '';
+      }
+    }
+    return type;
+  }).filter(Boolean);
 
   const handleDrag = (e: React.DragEvent) => {
     e.preventDefault();
@@ -36,9 +52,18 @@ export function FileUpload({ onFilesSelected }: FileUploadProps) {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
-      const validFiles = Array.from(e.target.files).filter(file => 
-        allowedFileTypes.includes(file.type)
-      );
+      const validFiles = Array.from(e.target.files).filter(file => {
+        // If no explicit types are provided, accept all
+        if (allowedFileTypes.length === 0) return true;
+        
+        // Check file type against allowed types
+        for (const allowedType of allowedFileTypes) {
+          if (file.type.includes(allowedType) || allowedType.includes(file.type)) {
+            return true;
+          }
+        }
+        return false;
+      });
       
       if (validFiles.length !== e.target.files.length) {
         console.warn("Some files were filtered out because they are not supported.");
@@ -59,9 +84,18 @@ export function FileUpload({ onFilesSelected }: FileUploadProps) {
     setDragActive(false);
     
     if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-      const validFiles = Array.from(e.dataTransfer.files).filter(file => 
-        allowedFileTypes.includes(file.type)
-      );
+      const validFiles = Array.from(e.dataTransfer.files).filter(file => {
+        // If no explicit types are provided, accept all
+        if (allowedFileTypes.length === 0) return true;
+        
+        // Check file type against allowed types
+        for (const allowedType of allowedFileTypes) {
+          if (file.type.includes(allowedType) || allowedType.includes(file.type)) {
+            return true;
+          }
+        }
+        return false;
+      });
       
       if (validFiles.length !== e.dataTransfer.files.length) {
         console.warn("Some files were filtered out because they are not supported.");
@@ -75,7 +109,7 @@ export function FileUpload({ onFilesSelected }: FileUploadProps) {
 
   return (
     <div 
-      className={`border-2 border-dashed rounded-md p-6 text-center transition-colors ${
+      className={`border-2 border-dashed rounded-md p-4 text-center transition-colors ${
         dragActive ? "border-primary bg-primary/5" : "border-muted-foreground/20"
       }`}
       onDragEnter={handleDrag}
@@ -86,23 +120,20 @@ export function FileUpload({ onFilesSelected }: FileUploadProps) {
       <input
         ref={fileInputRef}
         type="file"
-        multiple
-        accept=".pdf,.doc,.docx,.xls,.xlsx,.csv"
+        accept={accept}
         onChange={handleChange}
         className="hidden"
+        required={required}
       />
-      <div className="flex flex-col items-center justify-center gap-2">
-        <FilePlus className="h-10 w-10 text-muted-foreground" />
+      <div className="flex flex-col items-center justify-center gap-1">
+        {icon || <FilePlus className="h-8 w-8 text-muted-foreground" />}
         <div className="space-y-1">
-          <p className="text-sm font-medium">
-            Drag & drop files or click to browse | ลากและวางไฟล์หรือคลิกเพื่อเรียกดู
-          </p>
-          <p className="text-xs text-muted-foreground">
-            Supports PDF, Word, Excel, CSV | รองรับ PDF, Word, Excel, CSV
+          <p className="text-xs font-medium">
+            {required ? '* ' : ''}Upload photo or PDF | อัปโหลดรูปภาพหรือ PDF
           </p>
         </div>
-        <Button type="button" variant="outline" onClick={handleClick} className="mt-2">
-          Select Files | เลือกไฟล์
+        <Button type="button" variant="outline" onClick={handleClick} className="mt-1 text-xs py-1 h-auto">
+          Select File | เลือกไฟล์
         </Button>
       </div>
     </div>
