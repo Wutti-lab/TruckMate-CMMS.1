@@ -3,13 +3,14 @@ import { useState } from "react";
 import { Header } from "@/components/layout/Header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ScanQrCode, StopCircle } from "lucide-react";
+import { ScanQrCode, StopCircle, SwitchCamera } from "lucide-react";
 import QrScanner from "react-qr-scanner";
 import { useToast } from "@/hooks/use-toast";
 
 export default function QRScanner() {
   const [scanning, setScanning] = useState(false);
   const [scannedData, setScannedData] = useState<any>(null);
+  const [cameraId, setCameraId] = useState<string>("environment");
   const { toast } = useToast();
 
   const handleScan = (data: any) => {
@@ -47,6 +48,16 @@ export default function QRScanner() {
     if (!scanning) {
       setScannedData(null);
     }
+  };
+
+  const switchCamera = () => {
+    setCameraId(cameraId === "environment" ? "user" : "environment");
+    toast({
+      title: "Camera Switched | สลับกล้องแล้ว",
+      description: cameraId === "environment" 
+        ? "Switched to front camera | สลับไปที่กล้องหน้า" 
+        : "Switched to back camera | สลับไปที่กล้องหลัง",
+    });
   };
 
   const renderMockScan = () => {
@@ -96,6 +107,8 @@ export default function QRScanner() {
                       onError={handleError}
                       onScan={handleScan}
                       style={{ width: "100%" }}
+                      facingMode={cameraId}
+                      key={cameraId}
                     />
                     <div className="absolute inset-0 pointer-events-none border-2 border-red-500 animate-pulse z-10"></div>
                   </div>
@@ -116,10 +129,16 @@ export default function QRScanner() {
               </div>
               
               {scanning && (
-                <Button onClick={toggleScanning} variant="destructive" className="gap-2">
-                  <StopCircle className="w-5 h-5" />
-                  Stop Scanning | หยุดสแกน
-                </Button>
+                <div className="flex gap-2">
+                  <Button onClick={toggleScanning} variant="destructive" className="gap-2">
+                    <StopCircle className="w-5 h-5" />
+                    Stop Scanning | หยุดสแกน
+                  </Button>
+                  <Button onClick={switchCamera} variant="outline" className="gap-2">
+                    <SwitchCamera className="w-5 h-5" />
+                    Switch Camera | สลับกล้อง
+                  </Button>
+                </div>
               )}
             </CardContent>
           </Card>
