@@ -14,6 +14,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { EditDriverForm } from "./EditDriverForm";
 
 interface Driver {
   id: string;
@@ -267,14 +268,16 @@ export function DriverTable({ drivers }: DriverTableProps) {
             <DialogTitle>Edit Driver | แก้ไขพนักงานขับรถ</DialogTitle>
           </DialogHeader>
           {selectedDriver && (
-            <div className="space-y-4">
-              <p className="text-center py-6">Edit driver feature will be implemented soon.</p>
-              <div className="flex justify-end">
-                <Button variant="outline" onClick={() => setEditDriverOpen(false)}>
-                  Close | ปิด
-                </Button>
-              </div>
-            </div>
+            <EditDriverForm 
+              driver={selectedDriver}
+              onSuccess={() => {
+                setEditDriverOpen(false);
+                toast({
+                  title: "Driver updated",
+                  description: `${selectedDriver.name} has been updated successfully.`
+                });
+              }}
+            />
           )}
         </DialogContent>
       </Dialog>
