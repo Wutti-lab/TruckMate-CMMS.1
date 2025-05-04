@@ -1,6 +1,6 @@
 
 import { QrCode } from "lucide-react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import QRCode from "react-qr-code";
 
@@ -14,6 +14,7 @@ interface Vehicle {
   batteryLevel: number;
   lastService: string;
   nextService: string;
+  engineTemp?: number;
 }
 
 interface VehicleQRModalProps {
@@ -92,8 +93,10 @@ export function VehicleQRModal({ vehicle }: VehicleQRModalProps) {
   // Get driver for this vehicle
   const driver = driversData.find(driver => driver.name === vehicle.driver);
 
-  // Create a URL-friendly string of vehicle, driver and parts data
-  const vehicleData = JSON.stringify({
+  // Create a more efficient data structure for the QR code
+  const qrData = {
+    type: "vehicle-data",
+    version: "1.0",
     vehicle: {
       id: vehicle.id,
       model: vehicle.model,
@@ -103,7 +106,8 @@ export function VehicleQRModal({ vehicle }: VehicleQRModalProps) {
       nextService: vehicle.nextService,
       fuelLevel: vehicle.fuelLevel,
       batteryLevel: vehicle.batteryLevel,
-      lastService: vehicle.lastService
+      lastService: vehicle.lastService,
+      engineTemp: vehicle.engineTemp
     },
     driver: driver ? {
       id: driver.id,
@@ -120,7 +124,9 @@ export function VehicleQRModal({ vehicle }: VehicleQRModalProps) {
       supplier: part.supplier,
       warrantyEnd: part.warrantyEnd
     }))
-  });
+  };
+
+  const serializedData = JSON.stringify(qrData);
 
   return (
     <Dialog>
@@ -132,10 +138,13 @@ export function VehicleQRModal({ vehicle }: VehicleQRModalProps) {
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>{vehicle.id} | QR Code</DialogTitle>
+          <DialogDescription>
+            Scan with TruckMate QR Scanner | สแกนด้วยเครื่องสแกนคิวอาร์โค้ด TruckMate
+          </DialogDescription>
         </DialogHeader>
         <div className="flex flex-col items-center justify-center p-6 space-y-4">
           <QRCode
-            value={vehicleData}
+            value={serializedData}
             size={256}
             style={{ height: "auto", maxWidth: "100%", width: "100%" }}
             viewBox="0 0 256 256"
