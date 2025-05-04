@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Header } from "@/components/layout/Header";
 import { Button } from "@/components/ui/button";
@@ -12,18 +13,7 @@ import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { AddDriverModal } from "@/components/drivers/AddDriverModal";
 import { DriverSchedule } from "@/components/drivers/DriverSchedule";
 
-const drivers: {
-  id: string;
-  name: string;
-  licenseType: string;
-  phone: string;
-  status: string;
-  location: string;
-  vehicle: string;
-  lastTrip: string;
-  hoursThisWeek: number;
-  shift: "AM" | "PM";
-}[] = [
+const initialDrivers = [
   {
     id: "D-001",
     name: "Somchai Jaidee",
@@ -88,6 +78,7 @@ const drivers: {
 
 export default function Drivers() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [drivers, setDrivers] = useState(initialDrivers);
   const isMobile = useIsMobile();
   
   const filteredDrivers = drivers.filter((driver) => 

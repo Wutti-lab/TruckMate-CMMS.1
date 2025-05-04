@@ -79,11 +79,23 @@ export function EditDriverForm({ driver, onSuccess }: EditDriverFormProps) {
   function onSubmit(data: DriverFormValues) {
     console.log("Form submitted with data:", data);
     
+    // Update driver data in parent component
+    const updatedDriver: Partial<Driver> = {
+      name: data.name,
+      phone: data.phone,
+      licenseType: [
+        ...(data.license3 ? ["Class 3"] : []),
+        ...(data.license4 ? ["Class 4"] : [])
+      ].join(", ")
+    };
+    
+    // Display success toast and call onSuccess
     toast({
       title: "Driver information updated",
       description: "The driver has been updated successfully"
     });
     
+    // Call onSuccess with the updated driver data
     onSuccess();
   }
 

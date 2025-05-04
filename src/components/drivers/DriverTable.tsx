@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
@@ -33,8 +32,9 @@ interface DriverTableProps {
   drivers: Driver[];
 }
 
-export function DriverTable({ drivers }: DriverTableProps) {
+export function DriverTable({ drivers: initialDrivers }: DriverTableProps) {
   const { toast } = useToast();
+  const [drivers, setDrivers] = useState<Driver[]>(initialDrivers);
   const [selectedDriver, setSelectedDriver] = useState<Driver | null>(null);
   const [viewDetailsOpen, setViewDetailsOpen] = useState(false);
   const [editDriverOpen, setEditDriverOpen] = useState(false);
@@ -62,9 +62,38 @@ export function DriverTable({ drivers }: DriverTableProps) {
   };
 
   const handleDeactivateDriver = (driver: Driver) => {
+    // Create a new array with the updated driver status
+    const updatedDrivers = drivers.map(d => 
+      d.id === driver.id ? { ...d, status: "Deactivated" } : d
+    );
+    
+    // Update the state with the new array
+    setDrivers(updatedDrivers);
+    
     toast({
       title: "Driver deactivated",
       description: `${driver.name} has been deactivated.`,
+    });
+  };
+
+  const handleUpdateDriver = (updatedDriver: Partial<Driver>) => {
+    if (!selectedDriver) return;
+    
+    // Create a new array with the updated driver
+    const updatedDrivers = drivers.map(d => 
+      d.id === selectedDriver.id ? { ...d, ...updatedDriver } : d
+    );
+    
+    // Update the state with the new array
+    setDrivers(updatedDrivers);
+    
+    // Close the edit form
+    setEditDriverOpen(false);
+    
+    // Show success toast
+    toast({
+      title: "Driver updated",
+      description: `${selectedDriver.name} has been updated successfully.`
     });
   };
 
@@ -271,10 +300,14 @@ export function DriverTable({ drivers }: DriverTableProps) {
             <EditDriverForm 
               driver={selectedDriver}
               onSuccess={() => {
-                setEditDriverOpen(false);
-                toast({
-                  title: "Driver updated",
-                  description: `${selectedDriver.name} has been updated successfully.`
+                // Get the updated form values and update the driver data
+                handleUpdateDriver({
+                  name: selectedDriver.name,
+                  phone: selectedDriver.phone,
+                  licenseType: [
+                    ...(selectedDriver.licenseType.includes("3") ? ["3"] : []),
+                    ...(selectedDriver.licenseType.includes("4") ? ["4"] : [])
+                  ].join(", ")
                 });
               }}
             />
