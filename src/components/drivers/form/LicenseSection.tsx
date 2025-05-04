@@ -9,7 +9,7 @@ import { FileUploadField } from "./FileUploadField";
 interface LicenseSectionProps {
   form: UseFormReturn<DriverFormValues>;
   uploadedFiles: Record<string, UploadFile[]>;
-  handleFileChange: (fieldName: keyof typeof uploadedFiles) => (files: File[]) => void;
+  handleFileChange: (fieldName: keyof Record<string, UploadFile[]>) => (files: File[]) => void;
 }
 
 export function LicenseSection({ form, uploadedFiles, handleFileChange }: LicenseSectionProps) {
