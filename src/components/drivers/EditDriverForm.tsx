@@ -9,6 +9,7 @@ import { DriverBasicInfo } from "./form/DriverBasicInfo";
 import { LicenseSection } from "./form/LicenseSection";
 import { MedicalExamSection } from "./form/MedicalExamSection";
 import { driverFormSchema, DriverFormValues, UploadFile } from "./AddDriverForm";
+import { Badge } from "@/components/ui/badge";
 
 interface Driver {
   id: string;
