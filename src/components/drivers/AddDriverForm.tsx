@@ -1,4 +1,3 @@
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -9,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { FileUpload } from "@/components/inspections/FileUpload";
 import { useToast } from "@/hooks/use-toast";
-import { FileImage, FilePdf, FileText, Camera, Eye, HearingTest, TestTube } from "lucide-react";
+import { FileImage, FileText, Camera, Eye, HearingTest, TestTube } from "lucide-react";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 const ACCEPTED_FILE_TYPES = [
@@ -127,7 +126,7 @@ export function AddDriverForm() {
     } else if (file.type.includes('pdf')) {
       return (
         <div className="p-2 bg-gray-50 rounded-md border flex items-center gap-2">
-          <FilePdf className="text-red-500" />
+          <FileText className="text-red-500" />
           <span className="text-sm truncate max-w-[200px]">{file.name}</span>
         </div>
       );
