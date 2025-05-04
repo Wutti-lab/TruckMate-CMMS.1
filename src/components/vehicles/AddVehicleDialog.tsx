@@ -40,7 +40,7 @@ export function AddVehicleDialog({ open, onOpenChange, onSubmit }: AddVehicleDia
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[600px] bg-white">
         <DialogHeader>
-          <DialogTitle>Neues Fahrzeug hinzufügen | Add New Vehicle</DialogTitle>
+          <DialogTitle>Add New Vehicle | เพิ่มยานพาหนะใหม่</DialogTitle>
         </DialogHeader>
         <AddVehicleForm onSubmit={handleSubmit} onCancel={handleCancel} />
       </DialogContent>
