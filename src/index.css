@@ -1,17 +1,18 @@
 
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    --background: 210 50% 98%; /* Light blue background instead of white */
     --foreground: 222.2 84% 4.9%;
 
-    --card: 0 0% 100%;
+    --card: 210 50% 98%; /* Light blue card background */
     --card-foreground: 222.2 84% 4.9%;
 
-    --popover: 0 0% 100%;
+    --popover: 210 50% 98%; /* Light blue popover background */
     --popover-foreground: 222.2 84% 4.9%;
 
     --primary: 217 69% 34%; /* Fleet blue */
@@ -37,39 +38,39 @@
 
     /* Updated sidebar colors */
     --sidebar-background: 217 69% 20%; /* Dark fleet blue */
-    --sidebar-foreground: 0 0% 95%; /* Light text for contrast */
+    --sidebar-foreground: 210 50% 95%; /* Light blue text for contrast */
     --sidebar-primary: 217 69% 50%; /* Brighter fleet blue for primary elements */
-    --sidebar-primary-foreground: 0 0% 100%; /* White text for primary elements */
+    --sidebar-primary-foreground: 210 50% 98%; /* Light blue text for primary elements */
     --sidebar-accent: 217 69% 25%; /* Slightly lighter than background for hover states */
-    --sidebar-accent-foreground: 0 0% 100%; /* White text for accent elements */
+    --sidebar-accent-foreground: 210 50% 98%; /* Light blue text for accent elements */
     --sidebar-border: 217 69% 30%; /* Border color */
     --sidebar-ring: 217 69% 60%; /* Ring color for focus states */
   }
 
   .dark {
     --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --foreground: 210 50% 98%; /* Light blue text in dark mode */
 
     --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card-foreground: 210 50% 98%; /* Light blue text in dark mode */
 
     --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover-foreground: 210 50% 98%; /* Light blue text in dark mode */
 
-    --primary: 210 40% 98%;
+    --primary: 210 50% 98%; /* Light blue primary in dark mode */
     --primary-foreground: 222.2 47.4% 11.2%;
 
     --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary-foreground: 210 50% 98%; /* Light blue text in dark mode */
 
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
 
     --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent-foreground: 210 50% 98%; /* Light blue text in dark mode */
 
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 210 50% 98%; /* Light blue text in dark mode */
 
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
@@ -77,11 +78,11 @@
 
     /* Dark mode sidebar colors */
     --sidebar-background: 217 69% 15%; /* Darker fleet blue */
-    --sidebar-foreground: 0 0% 95%; /* Light text for contrast */
+    --sidebar-foreground: 210 50% 98%; /* Light blue text for contrast */
     --sidebar-primary: 217 69% 50%; /* Brighter fleet blue for primary elements */
-    --sidebar-primary-foreground: 0 0% 100%; /* White text for primary elements */
+    --sidebar-primary-foreground: 210 50% 98%; /* Light blue text for primary elements */
     --sidebar-accent: 217 69% 20%; /* Slightly lighter than background for hover states */
-    --sidebar-accent-foreground: 0 0% 100%; /* White text for accent elements */
+    --sidebar-accent-foreground: 210 50% 98%; /* Light blue text for accent elements */
     --sidebar-border: 217 69% 25%; /* Border color */
     --sidebar-ring: 217 69% 60%; /* Ring color for focus states */
   }
@@ -96,3 +97,4 @@
     @apply bg-background text-foreground;
   }
 }
+

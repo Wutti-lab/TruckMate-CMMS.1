@@ -86,17 +86,17 @@ export function Sidebar() {
     >
       <SidebarHeader className="p-4 border-b border-sidebar-border">
         <div className="flex flex-col space-y-1">
-          <h2 className="text-xl font-bold text-white">TruckMate CMMS</h2>
-          <p className="text-sm text-slate-300">ระบบจัดการยานพาหนะที่ง่ายดาย</p>
+          <h2 className="text-xl font-bold text-sky-100">TruckMate CMMS</h2>
+          <p className="text-sm text-sky-200">ระบบจัดการยานพาหนะที่ง่ายดาย</p>
         </div>
 
         <div className="mt-4 flex items-center space-x-2">
           <div className="w-8 h-8 rounded-full bg-fleet-500 flex items-center justify-center">
-            <span className="font-bold text-white">{user?.name.charAt(0)}</span>
+            <span className="font-bold text-sky-100">{user?.name.charAt(0)}</span>
           </div>
           <div>
-            <p className="text-sm font-medium text-white">{user?.name}</p>
-            <p className="text-xs text-slate-300">{user?.role}</p>
+            <p className="text-sm font-medium text-sky-100">{user?.name}</p>
+            <p className="text-xs text-sky-200">{user?.role}</p>
           </div>
         </div>
       </SidebarHeader>
@@ -110,8 +110,8 @@ export function Sidebar() {
                 <SidebarMenuButton 
                   asChild
                   className={cn(
-                    "w-full text-slate-200 hover:bg-sidebar-accent hover:text-white rounded-md",
-                    window.location.pathname === item.href && "bg-sidebar-accent text-white"
+                    "w-full text-sky-100 hover:bg-sidebar-accent hover:text-sky-50 rounded-md",
+                    window.location.pathname === item.href && "bg-sidebar-accent text-sky-50"
                   )}
                 >
                   <Link to={item.href} onClick={handleNavigate}>
@@ -127,7 +127,7 @@ export function Sidebar() {
       <SidebarFooter className="p-4 border-t border-sidebar-border">
         <Button 
           variant="ghost" 
-          className="w-full justify-start text-slate-200 hover:text-white hover:bg-red-900/20"
+          className="w-full justify-start text-sky-100 hover:text-sky-50 hover:bg-red-900/20"
           onClick={handleLogout}
         >
           <LogOut size={20} className="mr-2" />
@@ -137,4 +137,3 @@ export function Sidebar() {
     </ShadcnSidebar>
   );
 }
-

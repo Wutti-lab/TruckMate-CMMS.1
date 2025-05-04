@@ -12,14 +12,14 @@ export function MobileNavbar() {
         variant="ghost" 
         size="icon" 
         onClick={toggleSidebar} 
-        className="text-slate-100"
+        className="text-sky-100"
       >
         <Menu size={24} />
         <span className="sr-only">Toggle menu</span>
       </Button>
       <div className="ml-4">
-        <h2 className="text-lg font-bold text-white">TruckMate CMMS</h2>
-        <p className="text-xs text-slate-400">ระบบจัดการยานพาหนะที่ง่ายดาย</p>
+        <h2 className="text-lg font-bold text-sky-100">TruckMate CMMS</h2>
+        <p className="text-xs text-sky-200">ระบบจัดการยานพาหนะที่ง่ายดาย</p>
       </div>
     </div>
   );
