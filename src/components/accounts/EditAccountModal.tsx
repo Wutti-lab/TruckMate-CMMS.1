@@ -54,6 +54,7 @@ const formSchema = z.object({
     UserRole.DISPATCHER
   ]),
   status: z.enum(['active', 'inactive']),
+  password: z.string().optional(),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -66,6 +67,7 @@ export function EditAccountModal({ account, open, onOpenChange, onSave }: EditAc
       email: account.email,
       role: account.role,
       status: account.status,
+      password: "",
     },
   });
 
@@ -76,6 +78,7 @@ export function EditAccountModal({ account, open, onOpenChange, onSave }: EditAc
       email: data.email,
       role: data.role,
       status: data.status,
+      password: data.password, // Include password in the saved data
     });
   };
 
@@ -114,6 +117,27 @@ export function EditAccountModal({ account, open, onOpenChange, onSave }: EditAc
                   <FormControl>
                     <Input type="email" {...field} />
                   </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Password | รหัสผ่าน</FormLabel>
+                  <FormControl>
+                    <Input 
+                      type="password" 
+                      placeholder="Enter new password" 
+                      {...field} 
+                    />
+                  </FormControl>
+                  <FormDescription>
+                    Leave blank to keep the current password
+                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}

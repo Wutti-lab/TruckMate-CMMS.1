@@ -1,4 +1,3 @@
-
 import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
 import { User, UserRole } from '@/lib/types/user-roles';
 
@@ -10,10 +9,10 @@ interface AuthContextType {
   hasRole: (roles: UserRole | UserRole[]) => boolean;
   loginActivities: LoginActivity[];
   getFilteredLoginActivities: () => LoginActivity[];
-  // New account management functions
+  // Account management functions
   mockUsers: User[];
   createUser: (user: User & { password: string }) => void;
-  updateUserList: (user: User) => void;
+  updateUserList: (user: User & { password?: string }) => void;
   deleteUser: (id: string) => void;
 }
 
@@ -181,13 +180,23 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     localStorage.setItem('mockUsers', JSON.stringify(updatedUsers));
   };
 
-  const updateUserList = (updatedUser: User) => {
+  const updateUserList = (updatedUser: User & { password?: string }) => {
     const updatedUsers = mockUsers.map(user => {
       if (user.id === updatedUser.id) {
-        return {
-          ...user,
-          ...updatedUser
-        };
+        // If a new password is provided, update it, otherwise keep the existing one
+        if (updatedUser.password && updatedUser.password.trim() !== "") {
+          return {
+            ...user,
+            ...updatedUser,
+            password: updatedUser.password
+          };
+        } else {
+          // Keep existing password if none provided
+          return {
+            ...user,
+            ...updatedUser
+          };
+        }
       }
       return user;
     });
@@ -197,8 +206,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     
     // If the updated user is the currently logged in user, update the session too
     if (user && user.id === updatedUser.id) {
-      setUser(updatedUser);
-      localStorage.setItem('user', JSON.stringify(updatedUser));
+      const { password, ...userWithoutPassword } = updatedUser;
+      setUser(userWithoutPassword);
+      localStorage.setItem('user', JSON.stringify(userWithoutPassword));
     }
   };
 

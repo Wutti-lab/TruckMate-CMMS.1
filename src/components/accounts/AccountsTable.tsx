@@ -28,6 +28,7 @@ export interface Account {
   email: string;
   role: UserRole;
   status: 'active' | 'inactive';
+  password?: string; // Optional password field for updates
 }
 
 interface AccountsTableProps {
