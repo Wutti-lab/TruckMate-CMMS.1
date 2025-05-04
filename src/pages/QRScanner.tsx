@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Header } from "@/components/layout/Header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -11,7 +11,59 @@ export default function QRScanner() {
   const [scanning, setScanning] = useState(false);
   const [scannedData, setScannedData] = useState<any>(null);
   const [cameraId, setCameraId] = useState<string>("environment");
+  const [availableCameras, setAvailableCameras] = useState<MediaDeviceInfo[]>([]);
+  const [currentCameraIndex, setCurrentCameraIndex] = useState(0);
   const { toast } = useToast();
+
+  useEffect(() => {
+    // Check for available cameras when component mounts
+    async function getCameras() {
+      try {
+        const devices = await navigator.mediaDevices.enumerateDevices();
+        const videoDevices = devices.filter(device => device.kind === 'videoinput');
+        
+        console.log('Available cameras:', videoDevices);
+        setAvailableCameras(videoDevices);
+        
+        // Set default camera to back camera if available
+        const backCamera = videoDevices.find(device => 
+          device.label.toLowerCase().includes('back') || 
+          device.label.toLowerCase().includes('rear'));
+        
+        if (backCamera) {
+          console.log('Back camera found:', backCamera.deviceId);
+          setCameraId(backCamera.deviceId);
+        } else if (videoDevices.length > 0) {
+          console.log('No back camera found, using first camera:', videoDevices[0].deviceId);
+          setCameraId(videoDevices[0].deviceId);
+        }
+      } catch (error) {
+        console.error('Error accessing camera list:', error);
+        toast({
+          title: "Camera Access Error | ข้อผิดพลาดการเข้าถึงกล้อง",
+          description: "Could not access camera list | ไม่สามารถเข้าถึงรายการกล้องได้",
+          variant: "destructive",
+        });
+      }
+    }
+
+    // Request camera permissions
+    if (scanning) {
+      navigator.mediaDevices.getUserMedia({ video: true })
+        .then(() => {
+          getCameras();
+        })
+        .catch(error => {
+          console.error('Error accessing camera:', error);
+          toast({
+            title: "Camera Permission Denied | การอนุญาตกล้องถูกปฏิเสธ",
+            description: "Please enable camera access to use the QR scanner | โปรดเปิดการเข้าถึงกล้องเพื่อใช้เครื่องสแกน QR",
+            variant: "destructive",
+          });
+          setScanning(false);
+        });
+    }
+  }, [scanning, toast]);
 
   const handleScan = (data: any) => {
     if (data) {
@@ -35,7 +87,7 @@ export default function QRScanner() {
   };
 
   const handleError = (err: any) => {
-    console.error(err);
+    console.error('QR Scanner error:', err);
     toast({
       title: "Camera Error | ข้อผิดพลาดของกล้อง",
       description: "Could not access camera | ไม่สามารถเข้าถึงกล้องได้",
@@ -51,11 +103,27 @@ export default function QRScanner() {
   };
 
   const switchCamera = () => {
-    setCameraId(cameraId === "environment" ? "user" : "environment");
+    if (availableCameras.length <= 1) {
+      toast({
+        title: "Camera Switch Failed | การสลับกล้องล้มเหลว",
+        description: "Only one camera is available | มีกล้องเพียงตัวเดียวที่ใช้ได้",
+      });
+      return;
+    }
+
+    // Switch to next camera in the list
+    const nextIndex = (currentCameraIndex + 1) % availableCameras.length;
+    setCurrentCameraIndex(nextIndex);
+    const nextCamera = availableCameras[nextIndex];
+    setCameraId(nextCamera.deviceId);
+    
+    // Determine if this is front or back camera for the message
+    const isFrontCamera = nextCamera.label.toLowerCase().includes('front');
+    
     toast({
       title: "Camera Switched | สลับกล้องแล้ว",
-      description: cameraId === "environment" 
-        ? "Switched to front camera | สลับไปที่กล้องหน้า" 
+      description: isFrontCamera
+        ? "Switched to front camera | สลับไปที่กล้องหน้า"
         : "Switched to back camera | สลับไปที่กล้องหลัง",
     });
   };
@@ -107,8 +175,16 @@ export default function QRScanner() {
                       onError={handleError}
                       onScan={handleScan}
                       style={{ width: "100%" }}
-                      facingMode={cameraId}
-                      key={cameraId}
+                      className="w-full h-full object-cover"
+                      constraints={{
+                        video: {
+                          deviceId: cameraId ? { exact: cameraId } : undefined,
+                          facingMode: !cameraId ? "environment" : undefined,
+                          width: { ideal: 1280 },
+                          height: { ideal: 720 }
+                        }
+                      }}
+                      key={cameraId} // Force re-render when camera changes
                     />
                     <div className="absolute inset-0 pointer-events-none border-2 border-red-500 animate-pulse z-10"></div>
                   </div>
@@ -134,9 +210,19 @@ export default function QRScanner() {
                     <StopCircle className="w-5 h-5" />
                     Stop Scanning | หยุดสแกน
                   </Button>
-                  <Button onClick={switchCamera} variant="outline" className="gap-2">
+                  <Button 
+                    onClick={switchCamera} 
+                    variant="outline" 
+                    className="gap-2"
+                    disabled={availableCameras.length <= 1}
+                  >
                     <SwitchCamera className="w-5 h-5" />
                     Switch Camera | สลับกล้อง
+                    {availableCameras.length > 0 && (
+                      <span className="text-xs ml-1">
+                        ({currentCameraIndex + 1}/{availableCameras.length})
+                      </span>
+                    )}
                   </Button>
                 </div>
               )}
