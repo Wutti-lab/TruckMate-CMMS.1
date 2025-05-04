@@ -84,10 +84,10 @@ export function Sidebar() {
       collapsible="offcanvas"
       variant="sidebar"
     >
-      <SidebarHeader className="p-4 border-b border-slate-800">
+      <SidebarHeader className="p-4 border-b border-sidebar-border">
         <div className="flex flex-col space-y-1">
           <h2 className="text-xl font-bold text-white">TruckMate CMMS</h2>
-          <p className="text-sm text-slate-400">ระบบจัดการยานพาหนะที่ง่ายดาย</p>
+          <p className="text-sm text-slate-300">ระบบจัดการยานพาหนะที่ง่ายดาย</p>
         </div>
 
         <div className="mt-4 flex items-center space-x-2">
@@ -96,7 +96,7 @@ export function Sidebar() {
           </div>
           <div>
             <p className="text-sm font-medium text-white">{user?.name}</p>
-            <p className="text-xs text-slate-400">{user?.role}</p>
+            <p className="text-xs text-slate-300">{user?.role}</p>
           </div>
         </div>
       </SidebarHeader>
@@ -110,8 +110,8 @@ export function Sidebar() {
                 <SidebarMenuButton 
                   asChild
                   className={cn(
-                    "w-full text-slate-300 hover:bg-slate-800 hover:text-white rounded-md",
-                    window.location.pathname === item.href && "bg-slate-800 text-white"
+                    "w-full text-slate-200 hover:bg-sidebar-accent hover:text-white rounded-md",
+                    window.location.pathname === item.href && "bg-sidebar-accent text-white"
                   )}
                 >
                   <Link to={item.href} onClick={handleNavigate}>
@@ -124,10 +124,10 @@ export function Sidebar() {
         </SidebarMenu>
       </SidebarContent>
 
-      <SidebarFooter className="p-4 border-t border-slate-800">
+      <SidebarFooter className="p-4 border-t border-sidebar-border">
         <Button 
           variant="ghost" 
-          className="w-full justify-start text-slate-300 hover:text-white hover:bg-red-900/20"
+          className="w-full justify-start text-slate-200 hover:text-white hover:bg-red-900/20"
           onClick={handleLogout}
         >
           <LogOut size={20} className="mr-2" />
@@ -137,3 +137,4 @@ export function Sidebar() {
     </ShadcnSidebar>
   );
 }
+
