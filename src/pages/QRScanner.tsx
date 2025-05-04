@@ -74,7 +74,7 @@ export default function QRScanner() {
         setScanning(false);
         toast({
           title: "QR Code Scanned | สแกน QR โค้ดแล้ว",
-          description: "Vehicle information loaded successfully | โหลดข้อมูลยานพาหนะสำเร็จ",
+          description: "Vehicle and driver information loaded successfully | โหลดข้อมูลยานพาหนะและคนขับสำเร็จ",
         });
       } catch (error) {
         toast({
@@ -131,12 +131,26 @@ export default function QRScanner() {
   const renderMockScan = () => {
     // Simulate a mock scan for testing purposes
     const mockScanData = {
-      id: "B-FR-123",
-      model: "Tesla Model Y",
-      driver: "Somchai Jaidee",
-      status: "Active",
-      location: "Bangkok",
-      nextService: "2024-05-15",
+      vehicle: {
+        id: "B-FR-123",
+        model: "Tesla Model Y",
+        driver: "Max Müller",
+        status: "Active",
+        location: "Bangkok, Silom",
+        nextService: "2024-05-15",
+        fuelLevel: 75,
+        batteryLevel: 80,
+        lastService: "2023-11-15"
+      },
+      driver: {
+        id: "D001",
+        name: "Max Müller",
+        licenseType: "Class 1",
+        phone: "+66 81 234 5678",
+        status: "Active",
+        hoursThisWeek: 32,
+        shift: "AM"
+      },
       replacementParts: [
         {
           name: "Brake Pads | ผ้าเบรก",
@@ -146,7 +160,7 @@ export default function QRScanner() {
         }
       ]
     };
-    setScannedData({ vehicle: mockScanData });
+    setScannedData(mockScanData);
     toast({
       title: "Test QR Code Scanned | ทดสอบการสแกน QR โค้ด",
       description: "Mock data loaded | โหลดข้อมูลจำลองแล้ว",
@@ -230,38 +244,67 @@ export default function QRScanner() {
           </Card>
 
           {scannedData && (
-            <Card>
-              <CardHeader>
-                <CardTitle>Scan Result | ผลการสแกน</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <div>
-                    <h3 className="font-semibold mb-2">Vehicle Information | ข้อมูลยานพาหนะ</h3>
-                    <div className="grid gap-2">
-                      <p><span className="font-medium">ID:</span> {scannedData.vehicle?.id || scannedData.id}</p>
-                      <p><span className="font-medium">Model:</span> {scannedData.vehicle?.model || scannedData.model}</p>
-                      <p><span className="font-medium">Driver:</span> {scannedData.vehicle?.driver || scannedData.driver}</p>
-                      <p><span className="font-medium">Status:</span> {scannedData.vehicle?.status || scannedData.status}</p>
-                      <p><span className="font-medium">Location:</span> {scannedData.vehicle?.location || scannedData.location}</p>
-                      <p><span className="font-medium">Next Service:</span> {scannedData.vehicle?.nextService || scannedData.nextService}</p>
-                    </div>
+            <div className="space-y-4">
+              {/* Vehicle Information Card */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Vehicle Information | ข้อมูลยานพาหนะ</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-2">
+                    <p><span className="font-medium">ID:</span> {scannedData.vehicle?.id || scannedData.id}</p>
+                    <p><span className="font-medium">Model:</span> {scannedData.vehicle?.model || scannedData.model}</p>
+                    <p><span className="font-medium">Status:</span> {scannedData.vehicle?.status || scannedData.status}</p>
+                    <p><span className="font-medium">Location:</span> {scannedData.vehicle?.location || scannedData.location}</p>
+                    <p><span className="font-medium">Next Service:</span> {scannedData.vehicle?.nextService || scannedData.nextService}</p>
+                    <p><span className="font-medium">Fuel Level:</span> {scannedData.vehicle?.fuelLevel || scannedData.fuelLevel || 'N/A'}%</p>
+                    <p><span className="font-medium">Battery Level:</span> {scannedData.vehicle?.batteryLevel || scannedData.batteryLevel || 'N/A'}%</p>
+                    <p><span className="font-medium">Last Service:</span> {scannedData.vehicle?.lastService || scannedData.lastService || 'N/A'}</p>
                   </div>
+                </CardContent>
+              </Card>
 
-                  <div>
-                    <h3 className="font-semibold mb-2">Replacement Parts | ชิ้นส่วนที่เปลี่ยน</h3>
-                    {(scannedData.vehicle?.replacementParts || scannedData.replacementParts || []).map((part: any, index: number) => (
+              {/* Driver Information Card */}
+              {(scannedData.driver || scannedData.vehicle?.driver) && (
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Driver Information | ข้อมูลคนขับ</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-2">
+                      <p><span className="font-medium">Name:</span> {scannedData.driver?.name || scannedData.vehicle?.driver}</p>
+                      {scannedData.driver?.id && <p><span className="font-medium">ID:</span> {scannedData.driver.id}</p>}
+                      {scannedData.driver?.licenseType && <p><span className="font-medium">License Type:</span> {scannedData.driver.licenseType}</p>}
+                      {scannedData.driver?.phone && <p><span className="font-medium">Phone:</span> {scannedData.driver.phone}</p>}
+                      {scannedData.driver?.status && <p><span className="font-medium">Status:</span> {scannedData.driver.status}</p>}
+                      {scannedData.driver?.hoursThisWeek && <p><span className="font-medium">Hours This Week:</span> {scannedData.driver.hoursThisWeek}h</p>}
+                      {scannedData.driver?.shift && <p><span className="font-medium">Shift:</span> {scannedData.driver.shift}</p>}
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+
+              {/* Parts Information Card */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Replacement Parts | ชิ้นส่วนที่เปลี่ยน</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  {(scannedData.replacementParts || scannedData.vehicle?.replacementParts || []).length > 0 ? (
+                    (scannedData.replacementParts || scannedData.vehicle?.replacementParts || []).map((part: any, index: number) => (
                       <div key={index} className="bg-gray-50 p-3 rounded-lg mb-2">
                         <p><span className="font-medium">Part:</span> {part.name}</p>
                         <p><span className="font-medium">Installed:</span> {part.installedDate}</p>
                         <p><span className="font-medium">Supplier:</span> {part.supplier}</p>
                         <p><span className="font-medium">Warranty Until:</span> {part.warrantyEnd}</p>
                       </div>
-                    ))}
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+                    ))
+                  ) : (
+                    <p className="text-muted-foreground">No replacement parts information available | ไม่มีข้อมูลชิ้นส่วนที่เปลี่ยน</p>
+                  )}
+                </CardContent>
+              </Card>
+            </div>
           )}
         </div>
       </main>

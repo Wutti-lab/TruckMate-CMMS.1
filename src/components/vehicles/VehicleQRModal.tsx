@@ -20,6 +20,40 @@ interface VehicleQRModalProps {
   vehicle: Vehicle;
 }
 
+// Mock driver data - in a real app this would come from your backend
+const driversData = [
+  {
+    id: "D001",
+    name: "Max Müller",
+    licenseType: "Class 1",
+    phone: "+66 81 234 5678",
+    status: "Active",
+    location: "Bangkok, Silom",
+    hoursThisWeek: 32,
+    shift: "AM"
+  },
+  {
+    id: "D002",
+    name: "Lisa Schmidt",
+    licenseType: "Class 2",
+    phone: "+66 89 876 5432",
+    status: "Off-duty",
+    location: "Bangkok, Sukhumvit",
+    hoursThisWeek: 28,
+    shift: "PM"
+  },
+  {
+    id: "D003",
+    name: "Jan Weber",
+    licenseType: "Class 1",
+    phone: "+66 85 555 4321",
+    status: "On Trip",
+    location: "Chiang Mai",
+    hoursThisWeek: 40,
+    shift: "AM"
+  },
+];
+
 // Mock parts data - in a real app this would come from your backend
 const vehicleParts = [
   {
@@ -54,15 +88,32 @@ const vehicleParts = [
 export function VehicleQRModal({ vehicle }: VehicleQRModalProps) {
   // Get parts for this specific vehicle
   const vehicleReplacementParts = vehicleParts.filter(part => part.vehicleId === vehicle.id);
+  
+  // Get driver for this vehicle
+  const driver = driversData.find(driver => driver.name === vehicle.driver);
 
-  // Create a URL-friendly string of vehicle and parts data
+  // Create a URL-friendly string of vehicle, driver and parts data
   const vehicleData = JSON.stringify({
-    id: vehicle.id,
-    model: vehicle.model,
-    driver: vehicle.driver,
-    status: vehicle.status,
-    location: vehicle.location,
-    nextService: vehicle.nextService,
+    vehicle: {
+      id: vehicle.id,
+      model: vehicle.model,
+      driver: vehicle.driver,
+      status: vehicle.status,
+      location: vehicle.location,
+      nextService: vehicle.nextService,
+      fuelLevel: vehicle.fuelLevel,
+      batteryLevel: vehicle.batteryLevel,
+      lastService: vehicle.lastService
+    },
+    driver: driver ? {
+      id: driver.id,
+      name: driver.name,
+      licenseType: driver.licenseType,
+      phone: driver.phone,
+      status: driver.status,
+      hoursThisWeek: driver.hoursThisWeek,
+      shift: driver.shift
+    } : null,
     replacementParts: vehicleReplacementParts.map(part => ({
       name: part.name,
       installedDate: part.installedDate,
@@ -90,7 +141,7 @@ export function VehicleQRModal({ vehicle }: VehicleQRModalProps) {
             viewBox="0 0 256 256"
           />
           <p className="text-sm text-muted-foreground text-center">
-            Scan to view vehicle and parts details | สแกนเพื่อดูรายละเอียดยานพาหนะและชิ้นส่วน
+            Scan to view vehicle, driver and parts details | สแกนเพื่อดูรายละเอียดยานพาหนะ คนขับและชิ้นส่วน
           </p>
         </div>
       </DialogContent>
