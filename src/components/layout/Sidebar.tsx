@@ -15,8 +15,20 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
 import { UserRole } from "@/lib/types/user-roles";
 
+import {
+  Sidebar as ShadcnSidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuButton,
+  useSidebar
+} from "@/components/ui/sidebar";
+
 export function Sidebar() {
   const { user, logout, hasRole } = useAuth();
+  const { openMobile, setOpenMobile } = useSidebar();
 
   const menuItems = [
     {
@@ -62,44 +74,57 @@ export function Sidebar() {
     window.location.href = '/login';
   };
 
-  return (
-    <div className="w-64 bg-slate-900 text-slate-100 h-screen flex flex-col">
-      <div className="p-4 border-b border-slate-800">
-        <h2 className="text-xl font-bold text-white">TruckMate CMMS</h2>
-        <p className="text-sm text-slate-400">ระบบจัดการยานพาหนะที่ง่ายดาย</p>
-      </div>
+  const handleNavigate = () => {
+    // Close the mobile sidebar when navigating
+    setOpenMobile(false);
+  };
 
-      <div className="p-4 border-b border-slate-800">
-        <div className="flex items-center space-x-2">
+  return (
+    <ShadcnSidebar 
+      collapsible="offcanvas"
+      variant="sidebar"
+    >
+      <SidebarHeader className="p-4 border-b border-slate-800">
+        <div className="flex flex-col space-y-1">
+          <h2 className="text-xl font-bold text-white">TruckMate CMMS</h2>
+          <p className="text-sm text-slate-400">ระบบจัดการยานพาหนะที่ง่ายดาย</p>
+        </div>
+
+        <div className="mt-4 flex items-center space-x-2">
           <div className="w-8 h-8 rounded-full bg-fleet-500 flex items-center justify-center">
             <span className="font-bold text-white">{user?.name.charAt(0)}</span>
           </div>
           <div>
-            <p className="text-sm font-medium">{user?.name}</p>
+            <p className="text-sm font-medium text-white">{user?.name}</p>
             <p className="text-xs text-slate-400">{user?.role}</p>
           </div>
         </div>
-      </div>
+      </SidebarHeader>
 
-      <div className="flex-1 overflow-auto py-2">
-        {menuItems
-          .filter(item => hasRole(item.roles))
-          .map((item) => (
-            <Link key={item.href} to={item.href}>
-              <div
-                className={cn(
-                  "flex items-center space-x-2 px-4 py-2 text-slate-300 hover:bg-slate-800 hover:text-white rounded-md mx-2 my-1",
-                  window.location.pathname === item.href && "bg-slate-800 text-white"
-                )}
-              >
-                {item.icon}
-                <span>{item.title}</span>
-              </div>
-            </Link>
-          ))}
-      </div>
+      <SidebarContent>
+        <SidebarMenu>
+          {menuItems
+            .filter(item => hasRole(item.roles))
+            .map((item) => (
+              <SidebarMenuItem key={item.href}>
+                <SidebarMenuButton 
+                  asChild
+                  className={cn(
+                    "w-full text-slate-300 hover:bg-slate-800 hover:text-white rounded-md",
+                    window.location.pathname === item.href && "bg-slate-800 text-white"
+                  )}
+                >
+                  <Link to={item.href} onClick={handleNavigate}>
+                    {item.icon}
+                    <span>{item.title}</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            ))}
+        </SidebarMenu>
+      </SidebarContent>
 
-      <div className="p-4 border-t border-slate-800">
+      <SidebarFooter className="p-4 border-t border-slate-800">
         <Button 
           variant="ghost" 
           className="w-full justify-start text-slate-300 hover:text-white hover:bg-red-900/20"
@@ -108,7 +133,7 @@ export function Sidebar() {
           <LogOut size={20} className="mr-2" />
           Logout | ออกจากระบบ
         </Button>
-      </div>
-    </div>
+      </SidebarFooter>
+    </ShadcnSidebar>
   );
 }
