@@ -67,9 +67,11 @@ export default function QRScanner() {
 
   const handleScan = (data: any) => {
     if (data) {
+      console.log("QR Code Scanned Data:", data);
       try {
         // Try to parse the QR code data as JSON
         const parsedData = JSON.parse(data.text);
+        console.log("Parsed QR data:", parsedData);
         setScannedData(parsedData);
         setScanning(false);
         toast({
@@ -77,6 +79,7 @@ export default function QRScanner() {
           description: "Vehicle and driver information loaded successfully | โหลดข้อมูลยานพาหนะและคนขับสำเร็จ",
         });
       } catch (error) {
+        console.error("Error parsing QR data:", error, data.text);
         toast({
           title: "Invalid QR Code | QR โค้ดไม่ถูกต้อง",
           description: "This QR code doesn't contain valid vehicle data | QR โค้ดนี้ไม่มีข้อมูลยานพาหนะที่ถูกต้อง",
@@ -131,6 +134,8 @@ export default function QRScanner() {
   const renderMockScan = () => {
     // Simulate a mock scan for testing purposes
     const mockScanData = {
+      type: "vehicle-data",
+      version: "1.0",
       vehicle: {
         id: "B-FR-123",
         model: "Tesla Model Y",
@@ -140,7 +145,8 @@ export default function QRScanner() {
         nextService: "2024-05-15",
         fuelLevel: 75,
         batteryLevel: 80,
-        lastService: "2023-11-15"
+        lastService: "2023-11-15",
+        engineTemp: 84
       },
       driver: {
         id: "D001",
@@ -260,6 +266,9 @@ export default function QRScanner() {
                     <p><span className="font-medium">Fuel Level:</span> {scannedData.vehicle?.fuelLevel || scannedData.fuelLevel || 'N/A'}%</p>
                     <p><span className="font-medium">Battery Level:</span> {scannedData.vehicle?.batteryLevel || scannedData.batteryLevel || 'N/A'}%</p>
                     <p><span className="font-medium">Last Service:</span> {scannedData.vehicle?.lastService || scannedData.lastService || 'N/A'}</p>
+                    {(scannedData.vehicle?.engineTemp || scannedData.engineTemp) && 
+                      <p><span className="font-medium">Engine Temperature:</span> {scannedData.vehicle?.engineTemp || scannedData.engineTemp}°C</p>
+                    }
                   </div>
                 </CardContent>
               </Card>
@@ -277,7 +286,9 @@ export default function QRScanner() {
                       {scannedData.driver?.licenseType && <p><span className="font-medium">License Type:</span> {scannedData.driver.licenseType}</p>}
                       {scannedData.driver?.phone && <p><span className="font-medium">Phone:</span> {scannedData.driver.phone}</p>}
                       {scannedData.driver?.status && <p><span className="font-medium">Status:</span> {scannedData.driver.status}</p>}
-                      {scannedData.driver?.hoursThisWeek && <p><span className="font-medium">Hours This Week:</span> {scannedData.driver.hoursThisWeek}h</p>}
+                      {scannedData.driver?.hoursThisWeek !== undefined && 
+                        <p><span className="font-medium">Hours This Week:</span> {scannedData.driver.hoursThisWeek}h</p>
+                      }
                       {scannedData.driver?.shift && <p><span className="font-medium">Shift:</span> {scannedData.driver.shift}</p>}
                     </div>
                   </CardContent>
