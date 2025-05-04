@@ -20,37 +20,37 @@ export function Sidebar() {
 
   const menuItems = [
     {
-      title: "Dashboard",
+      title: "Dashboard | แดชบอร์ด",
       icon: <LayoutDashboard size={20} />,
       href: "/dashboard",
       roles: [UserRole.ADMIN, UserRole.FLEET_MANAGER, UserRole.DRIVER, UserRole.MECHANIC, UserRole.DISPATCHER],
     },
     {
-      title: "QR Scanner",
+      title: "QR Scanner | เครื่องสแกน QR",
       icon: <QrCode size={20} />,
       href: "/qr-scanner",
       roles: [UserRole.ADMIN, UserRole.DRIVER, UserRole.FLEET_MANAGER],
     },
     {
-      title: "Vehicles",
+      title: "Vehicles | ยานพาหนะ",
       icon: <Truck size={20} />,
       href: "/vehicles",
       roles: [UserRole.ADMIN, UserRole.FLEET_MANAGER],
     },
     {
-      title: "Map",
+      title: "Map | แผนที่",
       icon: <Map size={20} />,
       href: "/map",
       roles: [UserRole.ADMIN, UserRole.DISPATCHER, UserRole.FLEET_MANAGER],
     },
     {
-      title: "Inspections",
+      title: "Inspections | การตรวจสอบ",
       icon: <FileText size={20} />,
       href: "/inspections",
       roles: [UserRole.ADMIN, UserRole.MECHANIC, UserRole.FLEET_MANAGER],
     },
     {
-      title: "Drivers",
+      title: "Drivers | คนขับ",
       icon: <Users size={20} />,
       href: "/drivers",
       roles: [UserRole.ADMIN, UserRole.FLEET_MANAGER],
@@ -106,7 +106,7 @@ export function Sidebar() {
           onClick={handleLogout}
         >
           <LogOut size={20} className="mr-2" />
-          Logout
+          Logout | ออกจากระบบ
         </Button>
       </div>
     </div>

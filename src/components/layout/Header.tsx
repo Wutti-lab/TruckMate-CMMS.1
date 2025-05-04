@@ -8,16 +8,16 @@ export function Header() {
     <header className="border-b bg-white p-4">
       <div className="flex items-center justify-between">
         <h1 className="font-semibold">
-          {window.location.pathname === "/dashboard" && "Dashboard"}
-          {window.location.pathname === "/vehicles" && "Fahrzeuge"}
-          {window.location.pathname === "/map" && "Karte"}
-          {window.location.pathname === "/inspections" && "Inspektionen"}
-          {window.location.pathname === "/drivers" && "Fahrer"}
-          {window.location.pathname === "/qr-scanner" && "QR Scanner"}
+          {window.location.pathname === "/dashboard" && "Dashboard | แดชบอร์ด"}
+          {window.location.pathname === "/vehicles" && "Vehicles | ยานพาหนะ"}
+          {window.location.pathname === "/map" && "Map | แผนที่"}
+          {window.location.pathname === "/inspections" && "Inspections | การตรวจสอบ"}
+          {window.location.pathname === "/drivers" && "Drivers | คนขับ"}
+          {window.location.pathname === "/qr-scanner" && "QR Scanner | เครื่องสแกน QR"}
         </h1>
         <div className="flex items-center gap-2">
           <span className="text-sm text-gray-600">
-            Angemeldet als: <strong>{user?.name}</strong> ({user?.role})
+            Logged in as: <strong>{user?.name}</strong> ({user?.role})
           </span>
         </div>
       </div>

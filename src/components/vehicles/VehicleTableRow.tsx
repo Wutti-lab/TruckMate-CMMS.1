@@ -57,9 +57,9 @@ export function VehicleTableRow({ vehicle }: VehicleTableRowProps) {
         <Badge
           variant="outline"
           className={
-            vehicle.status === "Aktiv"
+            vehicle.status === "Active"
               ? "border-green-200 bg-green-50 text-green-600"
-              : vehicle.status === "Inaktiv"
+              : vehicle.status === "Inactive"
               ? "border-gray-200 bg-gray-50 text-gray-600"
               : "border-orange-200 bg-orange-50 text-orange-600"
           }
@@ -141,4 +141,3 @@ export function VehicleTableRow({ vehicle }: VehicleTableRowProps) {
     </TableRow>
   );
 }
-
