@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Header } from "@/components/layout/Header";
-import { Car, Fuel, MapPin, AlertTriangle, Battery, Clock, TrendingUp, Users, Wrench, ChartPie } from "lucide-react";
+import { Car, Fuel, MapPin, AlertTriangle, Battery, Clock, TrendingUp, Users, Wrench, ChartPie, Plus } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import {
   PieChart,
@@ -11,6 +11,14 @@ import {
   Tooltip as RechartsTooltip,
 } from "recharts";
 import { VehicleCosts } from "@/components/vehicles/VehicleCosts";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useForm } from "react-hook-form";
+import { useToast } from "@/hooks/use-toast";
 
 export default function Dashboard() {
   const oilPricePerLiter = 1.25; // THB
@@ -33,6 +41,89 @@ export default function Dashboard() {
     { name: "Idle | จอด", value: 1, color: "#A0AEC0" },
   ];
   const trainCount = 9;
+
+  // New state for activities
+  const [activities, setActivities] = useState([
+    {
+      id: 1,
+      title: "รถทะเบียน B-FR 323 ถึงจุดหมายแล้ว",
+      time: "5 นาทีที่แล้ว",
+      icon: MapPin,
+      color: "text-green-500",
+    },
+    {
+      id: 2,
+      title: "คำขอบำรุงรักษาใหม่สำหรับ B-FR 423",
+      time: "35 นาทีที่แล้ว",
+      icon: Wrench,
+      color: "text-orange-500",
+    },
+    {
+      id: 3,
+      title: "น้ำมันเหลือน้อยใน B-FR 123",
+      time: "1 ชั่วโมงที่แล้ว",
+      icon: Fuel,
+      color: "text-red-500",
+    },
+    {
+      id: 4,
+      title: "คนขับ M. Schmidt เริ่มกะ",
+      time: "2 ชั่วโมงที่แล้ว",
+      icon: Users,
+      color: "text-fleet-500",
+    },
+    {
+      id: 5,
+      title: "อัปเดตเส้นทางสำหรับ B-FR 223",
+      time: "3 ชั่วโมงที่แล้ว",
+      icon: MapPin,
+      color: "text-blue-500",
+    },
+  ]);
+
+  // Activity form for new activities
+  const activityForm = useForm({
+    defaultValues: {
+      title: "",
+      type: ""
+    }
+  });
+  const { toast } = useToast();
+
+  const activityTypes = [
+    { value: "arrival", label: "Vehicle Arrival | การมาถึงของยานพาหนะ", icon: MapPin, color: "text-green-500" },
+    { value: "maintenance", label: "Maintenance Request | คำขอบำรุงรักษา", icon: Wrench, color: "text-orange-500" },
+    { value: "fuel", label: "Fuel Warning | คำเตือนน้ำมัน", icon: Fuel, color: "text-red-500" },
+    { value: "driver", label: "Driver Update | อัปเดตคนขับ", icon: Users, color: "text-fleet-500" },
+    { value: "route", label: "Route Update | อัปเดตเส้นทาง", icon: MapPin, color: "text-blue-500" },
+  ];
+
+  const getActivityIcon = (type: string) => {
+    const activityType = activityTypes.find(t => t.value === type);
+    return activityType?.icon || MapPin;
+  };
+
+  const getActivityColor = (type: string) => {
+    const activityType = activityTypes.find(t => t.value === type);
+    return activityType?.color || "text-blue-500";
+  };
+
+  const handleAddActivity = (data: { title: string, type: string }) => {
+    const newActivity = {
+      id: activities.length + 1,
+      title: data.title,
+      time: "เมื่อสักครู่",
+      icon: getActivityIcon(data.type),
+      color: getActivityColor(data.type),
+    };
+
+    setActivities([newActivity, ...activities.slice(0, 4)]);
+    toast({
+      title: "Activity Added | เพิ่มกิจกรรมแล้ว",
+      description: "The new activity has been added successfully | เพิ่มกิจกรรมใหม่สำเร็จแล้ว",
+    });
+    activityForm.reset();
+  };
 
   return (
     <div className="flex flex-col h-full">
@@ -196,7 +287,7 @@ export default function Dashboard() {
               <div>
                 <CardTitle className="text-base md:text-lg flex items-center gap-2">
                   <ChartPie className="h-5 w-5 text-fleet-500" />
-                  Train Status | สถานะขบวนรถไฟ
+                  Train Status | สถานะข��วนรถไฟ
                 </CardTitle>
                 <p className="text-xs mt-1 text-muted-foreground">
                   Ratio of trains by status (Running / Maintenance / Idle) | สัดส่วนสถานะของขบวนรถไฟแต่ละประเภท
@@ -293,45 +384,70 @@ export default function Dashboard() {
           </Card>
           
           <Card className="col-span-1 md:col-span-4">
-            <CardHeader>
-              <CardTitle className="text-sm md:text-base">กิจกรรมล่าสุด</CardTitle>
-              <CardDescription className="text-xs md:text-sm">การอั��เดตกองยานพาหนะแบบเรียลไทม์</CardDescription>
+            <CardHeader className="flex flex-row items-center justify-between">
+              <div>
+                <CardTitle className="text-sm md:text-base">กิจกรรมล่าสุด</CardTitle>
+                <CardDescription className="text-xs md:text-sm">การอัพเดตกองยานพาหนะแบบเรียลไทม์</CardDescription>
+              </div>
+              <Sheet>
+                <SheetTrigger asChild>
+                  <Button variant="outline" size="icon" className="h-8 w-8">
+                    <Plus className="h-4 w-4" />
+                  </Button>
+                </SheetTrigger>
+                <SheetContent>
+                  <SheetHeader>
+                    <SheetTitle>Add New Activity | เพิ่มกิจกรรมใหม่</SheetTitle>
+                  </SheetHeader>
+                  <Form {...activityForm}>
+                    <form onSubmit={activityForm.handleSubmit(handleAddActivity)} className="space-y-4 mt-4">
+                      <FormField
+                        control={activityForm.control}
+                        name="type"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Activity Type | ประเภทกิจกรรม</FormLabel>
+                            <Select onValueChange={field.onChange}>
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Select activity type" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                {activityTypes.map((type) => (
+                                  <SelectItem key={type.value} value={type.value}>
+                                    {type.label}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={activityForm.control}
+                        name="title"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Activity Description | รายละเอียดกิจกรรม</FormLabel>
+                            <FormControl>
+                              <Input placeholder="Enter activity description" {...field} />
+                            </FormControl>
+                          </FormItem>
+                        )}
+                      />
+                      <Button type="submit" className="w-full">
+                        Add Activity | เพิ่มกิจกรรม
+                      </Button>
+                    </form>
+                  </Form>
+                </SheetContent>
+              </Sheet>
             </CardHeader>
             <CardContent>
               <div className="space-y-3 md:space-y-4">
-                {[
-                  {
-                    title: "รถทะเบียน B-FR 323 ถึงจุดหมายแล้ว",
-                    time: "5 นาทีที่แล้ว",
-                    icon: MapPin,
-                    color: "text-green-500",
-                  },
-                  {
-                    title: "คำขอบำรุงรักษาใหม่สำหรับ B-FR 423",
-                    time: "35 นาทีที่แล้ว",
-                    icon: Wrench,
-                    color: "text-orange-500",
-                  },
-                  {
-                    title: "น้ำมันเหลือน้อยใน B-FR 123",
-                    time: "1 ชั่วโมงที่แล้ว",
-                    icon: Fuel,
-                    color: "text-red-500",
-                  },
-                  {
-                    title: "คนขับ M. Schmidt เริ่มกะ",
-                    time: "2 ชั่วโมงที่แล้ว",
-                    icon: Users,
-                    color: "text-fleet-500",
-                  },
-                  {
-                    title: "อัปเดตเส้นทางสำหรับ B-FR 223",
-                    time: "3 ชั่วโมงที่แล้ว",
-                    icon: MapPin,
-                    color: "text-blue-500",
-                  },
-                ].map((activity, index) => (
-                  <div key={index} className="flex items-start gap-2 md:gap-3">
+                {activities.map((activity) => (
+                  <div key={activity.id} className="flex items-start gap-2 md:gap-3">
                     <div className={`rounded-full p-1 md:p-1.5 ${activity.color} bg-opacity-10`}>
                       <activity.icon className={`h-2.5 w-2.5 md:h-3 md:w-3 ${activity.color}`} />
                     </div>
