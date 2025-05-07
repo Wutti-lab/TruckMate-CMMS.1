@@ -22,6 +22,7 @@ import { VehicleQRModal } from "./VehicleQRModal";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { useLocation } from "@/contexts/LocationContext";
 
 interface Vehicle {
   id: string;
@@ -48,6 +49,9 @@ interface VehicleTableRowProps {
 export function VehicleTableRow({ vehicle }: VehicleTableRowProps) {
   const [showLocation, setShowLocation] = useState(false);
   const { toast } = useToast();
+  const { startTrackingVehicle, trackedVehicles } = useLocation();
+  
+  const isTracked = trackedVehicles.includes(vehicle.id);
 
   const handleTrack = () => {
     if (!vehicle.coordinates) {
@@ -62,8 +66,17 @@ export function VehicleTableRow({ vehicle }: VehicleTableRowProps) {
     // Show coordinates directly in the row
     setShowLocation(!showLocation);
     
-    // You could also save the vehicle ID to localStorage so the Map page knows which vehicle to focus on
+    // Beginne das Tracking dieses Fahrzeugs
+    startTrackingVehicle(vehicle.id);
+    
+    // Speichere die ID für die Kartenansicht
     localStorage.setItem('trackVehicleId', vehicle.id);
+    
+    toast({
+      title: "GPS-Tracking aktiviert | GPS tracking enabled",
+      description: "Die Standortdaten werden jetzt aufgezeichnet | Location data is now being recorded",
+      variant: "default"
+    });
   };
 
   return (
@@ -162,10 +175,10 @@ export function VehicleTableRow({ vehicle }: VehicleTableRowProps) {
           <Button 
             variant="outline" 
             size="sm" 
-            className="flex items-center gap-1"
+            className={`flex items-center gap-1 ${isTracked ? "border-green-500" : ""}`}
             onClick={handleTrack}
           >
-            <Navigation size={14} className={vehicle.coordinates ? "text-fleet-500" : "text-gray-400"} />
+            <Navigation size={14} className={vehicle.coordinates ? (isTracked ? "text-green-500" : "text-fleet-500") : "text-gray-400"} />
             <span className="hidden sm:inline">GPS</span>
           </Button>
           
