@@ -2,16 +2,35 @@
 import { useState } from "react";
 import { Header } from "@/components/layout/Header";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Car, Filter, MapPin, Search, Phone } from "lucide-react";
+import { Car, Filter, MapPin, Search, Phone, Navigation } from "lucide-react";
 import { MapComponent } from "@/components/MapComponent";
 import { EmergencyContacts } from "@/components/inspections/EmergencyContacts";
+import { Switch } from "@/components/ui/switch";
+import { Badge } from "@/components/ui/badge";
 
 export default function Map() {
   const [selectedVehicle, setSelectedVehicle] = useState<string | null>(null);
   const [showEmergencyContacts, setShowEmergencyContacts] = useState(false);
+  const [trackingActive, setTrackingActive] = useState(false);
+  const [driverLocation, setDriverLocation] = useState<[number, number] | null>(null);
+  const [lastUpdateTime, setLastUpdateTime] = useState<string | null>(null);
+  
+  const toggleTracking = (value: boolean) => {
+    setTrackingActive(value);
+    if (value) {
+      // Update the last update time when tracking is enabled
+      setLastUpdateTime(new Date().toLocaleTimeString());
+    }
+  };
+
+  // This function would be triggered by MapComponent when location changes
+  const handleLocationUpdate = (coords: [number, number]) => {
+    setDriverLocation(coords);
+    setLastUpdateTime(new Date().toLocaleTimeString());
+  };
   
   return (
     <div className="flex flex-col h-full">
@@ -41,7 +60,57 @@ export default function Map() {
           </div>
         </div>
 
-        <Tabs defaultValue="map" className="h-[calc(100%-40px)]">
+        {/* Driver Location Tracking Card */}
+        <Card className="mb-4">
+          <CardHeader className="pb-2">
+            <div className="flex justify-between items-center">
+              <CardTitle className="text-md flex items-center gap-2">
+                <Navigation className="h-4 w-4 text-fleet-500" />
+                Driver Location | ตำแหน่งคนขับ
+              </CardTitle>
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-muted-foreground">Live Tracking | การติดตามแบบเรียลไทม์</span>
+                <Switch 
+                  checked={trackingActive} 
+                  onCheckedChange={toggleTracking}
+                />
+              </div>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="flex flex-wrap gap-4 justify-between items-center">
+              <div className="flex items-center gap-2">
+                <Badge variant="outline" className={trackingActive ? "bg-green-100 text-green-600" : "bg-gray-100"}>
+                  {trackingActive ? "Active | กำลังใช้งาน" : "Inactive | ไม่ได้ใช้งาน"}
+                </Badge>
+                {driverLocation && (
+                  <div className="text-sm font-mono">
+                    {driverLocation[1].toFixed(6)}°N, {driverLocation[0].toFixed(6)}°E
+                  </div>
+                )}
+                {lastUpdateTime && (
+                  <div className="text-xs text-muted-foreground">
+                    Last updated: {lastUpdateTime} | อัพเดทล่าสุด: {lastUpdateTime}
+                  </div>
+                )}
+              </div>
+              <div>
+                {!trackingActive && (
+                  <Button 
+                    onClick={() => setTrackingActive(true)} 
+                    size="sm" 
+                    variant="default" 
+                    className="bg-fleet-500"
+                  >
+                    Enable Tracking | เปิดใช้การติดตาม
+                  </Button>
+                )}
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Tabs defaultValue="map" className="h-[calc(100%-120px)]">
           <TabsList>
             <TabsTrigger value="map">Map | แผนที่</TabsTrigger>
             <TabsTrigger value="satellite">Satellite | ภาพดาวเทียม</TabsTrigger>
@@ -49,7 +118,7 @@ export default function Map() {
           </TabsList>
           <TabsContent value="map" className="h-full">
             <div className="relative rounded-md h-full border overflow-hidden">
-              <MapComponent />
+              <MapComponent onLocationUpdate={handleLocationUpdate} tracking={trackingActive} />
               
               {[
                 { id: "car1", position: { top: "20%", left: "30%" } },
@@ -107,12 +176,12 @@ export default function Map() {
           </TabsContent>
           <TabsContent value="satellite" className="h-full">
             <div className="relative rounded-md h-full border overflow-hidden">
-              <MapComponent />
+              <MapComponent onLocationUpdate={handleLocationUpdate} tracking={trackingActive} />
             </div>
           </TabsContent>
           <TabsContent value="traffic" className="h-full">
             <div className="relative rounded-md h-full border overflow-hidden">
-              <MapComponent />
+              <MapComponent onLocationUpdate={handleLocationUpdate} tracking={trackingActive} />
             </div>
           </TabsContent>
           

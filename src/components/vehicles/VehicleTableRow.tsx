@@ -18,6 +18,7 @@ import {
   Thermometer
 } from "lucide-react";
 import { VehicleQRModal } from "./VehicleQRModal";
+import { Link } from "react-router-dom";
 
 interface Vehicle {
   id: string;
@@ -118,8 +119,14 @@ export function VehicleTableRow({ vehicle }: VehicleTableRowProps) {
         </div>
       </TableCell>
       <TableCell>
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-2">
           <VehicleQRModal vehicle={vehicle} />
+          <Link to="/map">
+            <Button variant="outline" size="sm" className="flex items-center gap-1">
+              <MapPin size={14} className="text-fleet-500" />
+              <span className="hidden sm:inline">Track</span>
+            </Button>
+          </Link>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="icon">
