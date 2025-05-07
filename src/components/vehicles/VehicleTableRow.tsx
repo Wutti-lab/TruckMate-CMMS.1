@@ -15,10 +15,13 @@ import {
   Fuel,
   MapPin,
   MoreHorizontal,
-  Thermometer
+  Thermometer,
+  Navigation
 } from "lucide-react";
 import { VehicleQRModal } from "./VehicleQRModal";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 interface Vehicle {
   id: string;
@@ -31,6 +34,11 @@ interface Vehicle {
   lastService: string;
   nextService: string;
   engineTemp: number;
+  coordinates?: {
+    lat: number;
+    lng: number;
+  };
+  lastUpdated?: string;
 }
 
 interface VehicleTableRowProps {
@@ -38,6 +46,26 @@ interface VehicleTableRowProps {
 }
 
 export function VehicleTableRow({ vehicle }: VehicleTableRowProps) {
+  const [showLocation, setShowLocation] = useState(false);
+  const { toast } = useToast();
+
+  const handleTrack = () => {
+    if (!vehicle.coordinates) {
+      toast({
+        title: "No GPS data | Keine GPS-Daten",
+        description: "This vehicle doesn't have GPS tracking enabled | Dieses Fahrzeug hat kein GPS-Tracking aktiviert",
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    // Show coordinates directly in the row
+    setShowLocation(!showLocation);
+    
+    // You could also save the vehicle ID to localStorage so the Map page knows which vehicle to focus on
+    localStorage.setItem('trackVehicleId', vehicle.id);
+  };
+
   return (
     <TableRow>
       <TableCell className="font-medium">
@@ -49,9 +77,18 @@ export function VehicleTableRow({ vehicle }: VehicleTableRowProps) {
       <TableCell>{vehicle.driver}</TableCell>
       <TableCell>{vehicle.model}</TableCell>
       <TableCell>
-        <div className="flex items-center gap-1">
-          <MapPin size={14} className="text-muted-foreground" />
-          {vehicle.location}
+        <div className="flex flex-col gap-1">
+          <div className="flex items-center gap-1">
+            <MapPin size={14} className="text-muted-foreground" />
+            {vehicle.location}
+          </div>
+          
+          {showLocation && vehicle.coordinates && (
+            <div className="text-xs font-mono mt-1 text-muted-foreground">
+              GPS: {vehicle.coordinates.lat.toFixed(6)}°, {vehicle.coordinates.lng.toFixed(6)}°
+              {vehicle.lastUpdated && <div>Updated: {vehicle.lastUpdated}</div>}
+            </div>
+          )}
         </div>
       </TableCell>
       <TableCell>
@@ -121,12 +158,24 @@ export function VehicleTableRow({ vehicle }: VehicleTableRowProps) {
       <TableCell>
         <div className="flex items-center gap-2">
           <VehicleQRModal vehicle={vehicle} />
-          <Link to="/map">
+          
+          <Button 
+            variant="outline" 
+            size="sm" 
+            className="flex items-center gap-1"
+            onClick={handleTrack}
+          >
+            <Navigation size={14} className={vehicle.coordinates ? "text-fleet-500" : "text-gray-400"} />
+            <span className="hidden sm:inline">GPS</span>
+          </Button>
+          
+          <Link to={`/map?vehicle=${vehicle.id}`}>
             <Button variant="outline" size="sm" className="flex items-center gap-1">
               <MapPin size={14} className="text-fleet-500" />
               <span className="hidden sm:inline">Track</span>
             </Button>
           </Link>
+          
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="icon">
