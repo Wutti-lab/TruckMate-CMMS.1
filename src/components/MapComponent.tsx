@@ -14,6 +14,11 @@ interface MapProps {
   onLocationUpdate?: (coords: [number, number]) => void;
 }
 
+// Extend the Error interface to include the status property
+interface MapboxError extends Error {
+  status?: number;
+}
+
 export function MapComponent({ className, tracking = false, onLocationUpdate }: MapProps) {
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<mapboxgl.Map | null>(null);
@@ -66,7 +71,9 @@ export function MapComponent({ className, tracking = false, onLocationUpdate }: 
         console.error("Mapbox error:", e);
         
         // Check if the error is related to authentication
-        if (e.error && (e.error.status === 401 || e.error.message?.includes('access token'))) {
+        // Use type assertion to access potential status property
+        const mapboxError = e.error as MapboxError;
+        if (mapboxError && (mapboxError.status === 401 || mapboxError.message?.includes('access token'))) {
           setTokenError("Invalid Mapbox token. Please check your token and try again. | Mapbox token ไม่ถูกต้อง กรุณาตรวจสอบ token ของคุณและลองอีกครั้ง");
           localStorage.removeItem('mapbox_token');
           setIsSettingToken(true);
