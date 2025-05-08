@@ -5,12 +5,12 @@ import { UserRole } from "@/lib/types/user-roles";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
-  requiredRoles?: UserRole[];
+  allowedRoles?: UserRole[];
 }
 
 export const ProtectedRoute = ({ 
   children, 
-  requiredRoles = [] 
+  allowedRoles = [] 
 }: ProtectedRouteProps) => {
   const { isAuthenticated, hasRole } = useAuth();
   const location = useLocation();
@@ -21,7 +21,7 @@ export const ProtectedRoute = ({
   }
 
   // Authentifiziert, aber Prüfung, ob die Rolle ausreicht
-  if (requiredRoles.length > 0 && !hasRole(requiredRoles)) {
+  if (allowedRoles.length > 0 && !hasRole(allowedRoles)) {
     // Unzureichende Berechtigung, zur Dashboard-Seite umleiten
     return <Navigate to="/dashboard" replace />;
   }
