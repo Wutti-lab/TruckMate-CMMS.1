@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-import { Locate } from "lucide-react";
+import { Locate, AlertTriangle, Map } from "lucide-react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
-import { Alert, AlertDescription } from "./ui/alert";
+import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useToast } from "@/hooks/use-toast";
 
@@ -26,13 +26,21 @@ export function MapComponent({ className, tracking = false, onLocationUpdate }: 
   const { toast } = useToast();
   
   const [mapboxToken, setMapboxToken] = useState(
-    localStorage.getItem('mapbox_token') || 
-    'pk.eyJ1Ijoid3V0dGljIiwiYSI6ImNtOXBzNjF1cDE3ZnkyaXBxMWsyZjU1czUifQ.honrXxOPHxMySJUTb-syXyg'
+    localStorage.getItem('mapbox_token') || ''
   );
+  
+  const [tokenError, setTokenError] = useState<string | null>(null);
+  const [isSettingToken, setIsSettingToken] = useState(!localStorage.getItem('mapbox_token'));
 
   const initializeMap = (token: string) => {
     if (!mapContainer.current || map.current) return;
+    
+    if (!token.trim()) {
+      setTokenError("Please enter a valid Mapbox token | กรุณาใส่ Mapbox token ที่ถูกต้อง");
+      return;
+    }
 
+    setTokenError(null);
     mapboxgl.accessToken = token;
     
     try {
@@ -52,6 +60,22 @@ export function MapComponent({ className, tracking = false, onLocationUpdate }: 
         
         // Get initial user location after map is loaded
         getUserLocation();
+      });
+      
+      map.current.on('error', (e) => {
+        console.error("Mapbox error:", e);
+        
+        // Check if the error is related to authentication
+        if (e.error && (e.error.status === 401 || e.error.message?.includes('access token'))) {
+          setTokenError("Invalid Mapbox token. Please check your token and try again. | Mapbox token ไม่ถูกต้อง กรุณาตรวจสอบ token ของคุณและลองอีกครั้ง");
+          localStorage.removeItem('mapbox_token');
+          setIsSettingToken(true);
+          if (map.current) {
+            map.current.remove();
+            map.current = null;
+          }
+          setMapLoaded(false);
+        }
       });
 
       // Add navigation controls
@@ -220,21 +244,45 @@ export function MapComponent({ className, tracking = false, onLocationUpdate }: 
   };
 
   const handleTokenSubmit = () => {
-    if (mapboxToken) {
+    if (mapboxToken && mapboxToken.trim()) {
       localStorage.setItem('mapbox_token', mapboxToken);
+      setIsSettingToken(false);
+      setTokenError(null);
+      
+      // If we had a map already, clean it up
+      if (map.current) {
+        map.current.remove();
+        map.current = null;
+      }
+      
+      // Initialize with new token
       initializeMap(mapboxToken);
+    } else {
+      setTokenError("Please enter a valid Mapbox token | กรุณาใส่ Mapbox token ที่ถูกต้อง");
     }
+  };
+  
+  const resetToken = () => {
+    localStorage.removeItem('mapbox_token');
+    setMapboxToken('');
+    setIsSettingToken(true);
+    
+    if (map.current) {
+      map.current.remove();
+      map.current = null;
+    }
+    setMapLoaded(false);
   };
 
   useEffect(() => {
-    if (mapboxToken) {
+    if (mapboxToken && !isSettingToken) {
       initializeMap(mapboxToken);
     }
     
     return () => {
       stopLocationTracking();
     };
-  }, [mapboxToken]);
+  }, [isSettingToken]);
 
   // Effect to handle tracking state changes
   useEffect(() => {
@@ -258,26 +306,65 @@ export function MapComponent({ className, tracking = false, onLocationUpdate }: 
 
   return (
     <div className={`relative h-full w-full rounded-md overflow-hidden ${className}`}>
-      {!mapboxToken ? (
+      {isSettingToken ? (
         <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-100 p-4 z-20">
-          <p className="text-lg text-fleet-500 font-medium mb-4">Mapbox Token required | ต้องใช้ Mapbox Token</p>
-          <div className="flex flex-col sm:flex-row gap-2 w-full max-w-md">
-            <Input 
-              placeholder="Enter your Mapbox Public Token | ใส่ Mapbox Public Token ของคุณ" 
-              value={mapboxToken}
-              onChange={(e) => setMapboxToken(e.target.value)}
-              className="flex-grow"
-            />
-            <Button 
-              onClick={handleTokenSubmit}
-              className="w-full sm:w-auto"
-            >
-              Save | บันทึก
-            </Button>
+          <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+            <div className="flex items-center gap-2 mb-4">
+              <Map className="h-6 w-6 text-fleet-500" />
+              <h2 className="text-xl font-bold text-fleet-500">Mapbox Token Required</h2>
+            </div>
+            
+            {tokenError && (
+              <Alert variant="destructive" className="mb-4">
+                <AlertTriangle className="h-4 w-4" />
+                <AlertTitle>Error</AlertTitle>
+                <AlertDescription>{tokenError}</AlertDescription>
+              </Alert>
+            )}
+            
+            <p className="mb-4 text-gray-600">
+              To use the map functionality, you need to provide a valid Mapbox public access token.
+            </p>
+            
+            <div className="space-y-4">
+              <div>
+                <label htmlFor="mapbox-token" className="block text-sm font-medium text-gray-700 mb-1">
+                  Mapbox Public Token | Mapbox Public Token
+                </label>
+                <Input 
+                  id="mapbox-token"
+                  placeholder="Enter your Mapbox Public Token | ใส่ Mapbox Public Token ของคุณ" 
+                  value={mapboxToken}
+                  onChange={(e) => setMapboxToken(e.target.value)}
+                  className="flex-grow"
+                />
+              </div>
+              
+              <Button 
+                onClick={handleTokenSubmit}
+                className="w-full bg-fleet-500 hover:bg-fleet-600"
+              >
+                Save & Load Map | บันทึกและโหลดแผนที่
+              </Button>
+            </div>
+            
+            <div className="mt-6">
+              <p className="text-sm text-gray-500 text-center">
+                You can find your Mapbox public token at{" "}
+                <a 
+                  href="https://account.mapbox.com/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-fleet-500 hover:underline"
+                >
+                  account.mapbox.com
+                </a>
+              </p>
+              <p className="text-sm text-gray-500 text-center mt-1">
+                Go to "Access tokens" section in your Mapbox account.
+              </p>
+            </div>
           </div>
-          <p className="mt-4 text-sm text-gray-600 text-center">
-            You can find your Mapbox Public Token at mapbox.com | คุณสามารถหา Mapbox Public Token ของคุณได้ที่ mapbox.com
-          </p>
         </div>
       ) : (
         <>
@@ -292,7 +379,20 @@ export function MapComponent({ className, tracking = false, onLocationUpdate }: 
             </div>
           )}
 
-          {locationError && (
+          {tokenError && (
+            <div className="absolute top-4 left-4 right-4 z-10">
+              <Alert variant="destructive">
+                <AlertDescription className="flex justify-between items-center">
+                  <span>{tokenError}</span>
+                  <Button size="sm" variant="outline" onClick={resetToken}>
+                    Reset Token | รีเซ็ต Token
+                  </Button>
+                </AlertDescription>
+              </Alert>
+            </div>
+          )}
+
+          {locationError && !tokenError && (
             <div className="absolute top-4 left-4 right-4 z-10">
               <Alert variant="destructive">
                 <AlertDescription>{locationError}</AlertDescription>
@@ -308,6 +408,16 @@ export function MapComponent({ className, tracking = false, onLocationUpdate }: 
               onClick={getUserLocation}
             >
               <Locate className="h-4 w-4" />
+            </Button>
+            
+            <Button
+              variant="secondary"
+              size="icon"
+              className="bg-white shadow-lg hover:bg-gray-100"
+              onClick={resetToken}
+              title="Change Mapbox Token | เปลี่ยน Mapbox Token"
+            >
+              <Map className="h-4 w-4" />
             </Button>
           </div>
         </>
