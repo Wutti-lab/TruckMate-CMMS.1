@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -55,7 +54,11 @@ const inspectionTypes = [
   { id: "damage", name: "Damage Report | รายงานความเสียหาย" },
 ];
 
-export function NewInspectionForm() {
+interface NewInspectionFormProps {
+  onSubmitSuccess?: () => void;
+}
+
+export function NewInspectionForm({ onSubmitSuccess }: NewInspectionFormProps) {
   const [files, setFiles] = useState<File[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -85,6 +88,11 @@ export function NewInspectionForm() {
       // Reset form
       form.reset();
       setFiles([]);
+      
+      // Call onSubmitSuccess callback if provided
+      if (onSubmitSuccess) {
+        onSubmitSuccess();
+      }
     } catch (error) {
       console.error("Error creating inspection:", error);
       toast({

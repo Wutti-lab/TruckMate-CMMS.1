@@ -34,7 +34,7 @@ export default function Inspections() {
                 Cancel | ยกเลิก
               </Button>
             </div>
-            <NewInspectionForm />
+            <NewInspectionForm onSubmitSuccess={() => setShowNewInspection(false)} />
           </div>
         ) : (
           <div className="mb-8">
