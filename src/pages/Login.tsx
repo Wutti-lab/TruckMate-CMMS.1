@@ -55,7 +55,7 @@ export default function Login() {
             TruckMate CMMS
           </h1>
           <p className="mt-2 text-lg text-gray-600">
-            ระบบจัดการยานพาหนะที่ง่ายดาย
+            Easy vehicle management system | ระบบจัดการยานพาหนะที่ง่ายดาย
           </p>
         </div>
 
