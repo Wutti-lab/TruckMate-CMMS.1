@@ -1,28 +1,53 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Header } from "@/components/layout/Header";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Car, Filter, MapPin, Search, Phone, Navigation } from "lucide-react";
+import { Car, Filter, MapPin, Search, Phone, Navigation, Route, History, Bell } from "lucide-react";
 import { MapComponent } from "@/components/MapComponent";
 import { EmergencyContacts } from "@/components/inspections/EmergencyContacts";
 import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
+import { useToast } from "@/hooks/use-toast";
+import { useLocation } from "@/contexts/LocationContext";
 
 export default function Map() {
-  const [selectedVehicle, setSelectedVehicle] = useState<string | null>(null);
+  const [searchParams] = useSearchParams();
+  const vehicleId = searchParams.get('vehicle');
+  const [selectedVehicle, setSelectedVehicle] = useState<string | null>(vehicleId);
   const [showEmergencyContacts, setShowEmergencyContacts] = useState(false);
   const [trackingActive, setTrackingActive] = useState(false);
   const [driverLocation, setDriverLocation] = useState<[number, number] | null>(null);
   const [lastUpdateTime, setLastUpdateTime] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [showRouteHistory, setShowRouteHistory] = useState(false);
+  const [showNotifications, setShowNotifications] = useState(false);
+  
+  const { toast } = useToast();
+  const { 
+    updateVehicleLocation, 
+    vehicleLocations, 
+    startTrackingVehicle, 
+    trackedVehicles 
+  } = useLocation();
   
   const toggleTracking = (value: boolean) => {
     setTrackingActive(value);
     if (value) {
       // Update the last update time when tracking is enabled
       setLastUpdateTime(new Date().toLocaleTimeString());
+      
+      // If a vehicle is selected, start tracking it
+      if (selectedVehicle) {
+        startTrackingVehicle(selectedVehicle);
+        toast({
+          title: `Tracking ${selectedVehicle} | กำลังติดตาม ${selectedVehicle}`,
+          description: "Real-time location updates enabled | เปิดใช้งานการอัปเดตตำแหน่งแบบเรียลไทม์"
+        });
+      }
     }
   };
 
@@ -30,7 +55,57 @@ export default function Map() {
   const handleLocationUpdate = (coords: [number, number]) => {
     setDriverLocation(coords);
     setLastUpdateTime(new Date().toLocaleTimeString());
+    
+    // If we're tracking a vehicle, update its location in the context
+    if (trackingActive && selectedVehicle) {
+      updateVehicleLocation(selectedVehicle, {
+        vehicleId: selectedVehicle,
+        coordinates: { lat: coords[1], lng: coords[0] },
+        timestamp: new Date().toISOString(),
+        speed: Math.floor(Math.random() * 60), // Simulated speed
+        heading: Math.floor(Math.random() * 360), // Simulated heading
+      });
+    }
   };
+  
+  const toggleRouteHistory = () => {
+    setShowRouteHistory(!showRouteHistory);
+    if (!showRouteHistory) {
+      toast({
+        title: "Route History | ประวัติเส้นทาง",
+        description: "Showing the last 24 hours of route data | แสดงข้อมูลเส้นทางในช่วง 24 ชั่วโมงที่ผ่านมา"
+      });
+    }
+  };
+  
+  const toggleNotifications = () => {
+    setShowNotifications(!showNotifications);
+  };
+  
+  // Route history data (mock)
+  const routeHistory = [
+    { time: "09:15 AM", location: "Bangkok, Silom", status: "Driving" },
+    { time: "10:30 AM", location: "Bangkok, Sathorn", status: "Stopped" },
+    { time: "11:45 AM", location: "Bangkok, Sukhumvit", status: "Driving" },
+    { time: "01:30 PM", location: "Bangkok, Victory Monument", status: "Lunch Break" },
+    { time: "03:00 PM", location: "Bangkok, Lat Phrao", status: "Delivery" },
+    { time: "04:20 PM", location: "Bangkok, Ratchadaphisek", status: "Driving" }
+  ];
+  
+  // Notifications data (mock)
+  const notifications = [
+    { id: 1, message: "Maintenance due for B-FR-123", time: "10 minutes ago", type: "warning" },
+    { id: 2, message: "B-FR-234 arrived at destination", time: "45 minutes ago", type: "info" },
+    { id: 3, message: "B-FR-345 low on battery (15%)", time: "1 hour ago", type: "danger" },
+    { id: 4, message: "B-FR-456 exceeded speed limit", time: "2 hours ago", type: "danger" }
+  ];
+  
+  useEffect(() => {
+    // If a vehicle ID is provided in the URL, select it
+    if (vehicleId) {
+      setSelectedVehicle(vehicleId);
+    }
+  }, [vehicleId]);
   
   return (
     <div className="flex flex-col h-full">
@@ -44,6 +119,8 @@ export default function Map() {
               <Input
                 placeholder="Search address or vehicle... | ค้นหาที่อยู่หรือยานพาหนะ..."
                 className="pl-8 w-[200px] md:w-[300px]"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
             <Button variant="outline" size="icon">
@@ -56,6 +133,28 @@ export default function Map() {
               className={showEmergencyContacts ? "bg-red-100 text-red-600" : ""}
             >
               <Phone size={16} />
+            </Button>
+            <Button 
+              variant="outline" 
+              size="icon" 
+              onClick={toggleRouteHistory}
+              className={showRouteHistory ? "bg-blue-100 text-blue-600" : ""}
+            >
+              <History size={16} />
+            </Button>
+            <Button 
+              variant="outline" 
+              size="icon" 
+              onClick={toggleNotifications}
+              className={showNotifications ? "bg-amber-100 text-amber-600" : ""}
+              aria-label="Show notifications"
+            >
+              <div className="relative">
+                <Bell size={16} />
+                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
+                  {notifications.length}
+                </span>
+              </div>
             </Button>
           </div>
         </div>
@@ -118,25 +217,11 @@ export default function Map() {
           </TabsList>
           <TabsContent value="map" className="h-full">
             <div className="relative rounded-md h-full border overflow-hidden">
-              <MapComponent onLocationUpdate={handleLocationUpdate} tracking={trackingActive} />
-              
-              {[
-                { id: "car1", position: { top: "20%", left: "30%" } },
-                { id: "car2", position: { top: "40%", left: "50%" } },
-                { id: "car3", position: { top: "60%", left: "25%" } },
-                { id: "car4", position: { top: "35%", left: "70%" } },
-              ].map((vehicle) => (
-                <Button
-                  key={vehicle.id}
-                  variant="outline"
-                  size="icon"
-                  className="absolute w-8 h-8 rounded-full bg-fleet-500 text-white hover:bg-fleet-600 border-2 border-white shadow-md"
-                  style={{ top: vehicle.position.top, left: vehicle.position.left }}
-                  onClick={() => setSelectedVehicle(vehicle.id)}
-                >
-                  <Car size={14} />
-                </Button>
-              ))}
+              <MapComponent 
+                onLocationUpdate={handleLocationUpdate} 
+                tracking={trackingActive}
+                vehicleId={selectedVehicle} 
+              />
               
               <Card className="absolute right-4 bottom-20 w-auto">
                 <CardContent className="p-3">
@@ -172,16 +257,77 @@ export default function Map() {
                   <EmergencyContacts />
                 </div>
               )}
+              
+              {showRouteHistory && selectedVehicle && (
+                <div className="absolute left-4 top-4 w-[350px] max-h-[80vh] overflow-y-auto bg-white rounded-lg shadow-lg p-4 z-20">
+                  <div className="flex justify-between items-center mb-4">
+                    <h2 className="text-lg font-semibold">
+                      Route History | ประวัติเส้นทาง
+                      <Badge className="ml-2 bg-fleet-500">{selectedVehicle}</Badge>
+                    </h2>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setShowRouteHistory(false)}
+                    >
+                      ✕
+                    </Button>
+                  </div>
+                  <div className="space-y-3">
+                    {routeHistory.map((item, index) => (
+                      <div key={index} className="border-l-2 border-fleet-500 pl-3 pb-3">
+                        <p className="font-semibold text-sm">{item.time}</p>
+                        <p className="text-sm">{item.location}</p>
+                        <Badge variant="outline" className="mt-1">
+                          {item.status}
+                        </Badge>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+              
+              {showNotifications && (
+                <div className="absolute right-4 top-16 w-[350px] max-h-[80vh] overflow-y-auto bg-white rounded-lg shadow-lg p-4 z-20">
+                  <div className="flex justify-between items-center mb-4">
+                    <h2 className="text-lg font-semibold">
+                      Notifications | การแจ้งเตือน
+                    </h2>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setShowNotifications(false)}
+                    >
+                      ✕
+                    </Button>
+                  </div>
+                  <div className="space-y-3">
+                    {notifications.map((item) => (
+                      <div 
+                        key={item.id} 
+                        className={`border-l-2 pl-3 pb-3 ${
+                          item.type === 'warning' ? 'border-yellow-500' : 
+                          item.type === 'danger' ? 'border-red-500' : 
+                          'border-blue-500'
+                        }`}
+                      >
+                        <p className="font-semibold text-sm">{item.message}</p>
+                        <p className="text-xs text-gray-500">{item.time}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </TabsContent>
           <TabsContent value="satellite" className="h-full">
             <div className="relative rounded-md h-full border overflow-hidden">
-              <MapComponent onLocationUpdate={handleLocationUpdate} tracking={trackingActive} />
+              <MapComponent onLocationUpdate={handleLocationUpdate} tracking={trackingActive} vehicleId={selectedVehicle} />
             </div>
           </TabsContent>
           <TabsContent value="traffic" className="h-full">
             <div className="relative rounded-md h-full border overflow-hidden">
-              <MapComponent onLocationUpdate={handleLocationUpdate} tracking={trackingActive} />
+              <MapComponent onLocationUpdate={handleLocationUpdate} tracking={trackingActive} vehicleId={selectedVehicle} />
             </div>
           </TabsContent>
           
@@ -196,7 +342,7 @@ export default function Map() {
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <Car className="h-5 w-5 text-fleet-500" />
-                  <h3 className="font-medium">B-FR {selectedVehicle.slice(-1)}23</h3>
+                  <h3 className="font-medium">{selectedVehicle}</h3>
                 </div>
                 <Button
                   variant="ghost"
@@ -213,7 +359,12 @@ export default function Map() {
                   <span>Bangkok, Central | กรุงเทพ, เขตกลาง</span>
                 </div>
                 <div className="text-sm">
-                  <span className="font-medium">Driver | คนขับ:</span> Michael Schmidt
+                  <span className="font-medium">Driver | คนขับ:</span> {
+                    selectedVehicle === "B-FR-123" ? "Max Müller" :
+                    selectedVehicle === "B-FR-234" ? "Lisa Schmidt" :
+                    selectedVehicle === "B-FR-345" ? "Jan Weber" :
+                    selectedVehicle === "B-FR-456" ? "Anna Becker" : "Unknown"
+                  }
                 </div>
                 <div className="text-sm">
                   <span className="font-medium">Status | สถานะ:</span>{" "}
@@ -229,7 +380,27 @@ export default function Map() {
               
               <div className="mt-4 flex justify-end gap-2">
                 <Button variant="outline" size="sm">Details | รายละเอียด</Button>
-                <Button size="sm" className="bg-fleet-500">Navigation | นำทาง</Button>
+                <Button 
+                  size="sm" 
+                  className="bg-fleet-500"
+                  onClick={() => {
+                    if (trackingActive) {
+                      toast({
+                        title: "Already Tracking | กำลังติดตามอยู่แล้ว",
+                        description: "This vehicle is already being tracked | ยานพาหนะนี้กำลังถูกติดตามอยู่"
+                      });
+                    } else {
+                      setTrackingActive(true);
+                      startTrackingVehicle(selectedVehicle);
+                      toast({
+                        title: "Navigation Started | เริ่มการนำทาง",
+                        description: "Tracking vehicle location | กำลังติดตามตำแหน่งยานพาหนะ"
+                      });
+                    }
+                  }}
+                >
+                  Navigation | นำทาง
+                </Button>
               </div>
             </CardContent>
           </Card>

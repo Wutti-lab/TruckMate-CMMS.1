@@ -1,17 +1,21 @@
+
 import { useEffect, useRef, useState } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-import { Locate, AlertTriangle, Map } from "lucide-react";
+import { Locate, AlertTriangle, Map, Navigation, Route, Layers } from "lucide-react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useToast } from "@/hooks/use-toast";
+import { Toggle } from "./ui/toggle";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 
 interface MapProps {
   className?: string;
   tracking?: boolean;
   onLocationUpdate?: (coords: [number, number]) => void;
+  vehicleId?: string;
 }
 
 // Extend the Error interface to include the status property
@@ -19,13 +23,14 @@ interface MapboxError extends Error {
   status?: number;
 }
 
-export function MapComponent({ className, tracking = false, onLocationUpdate }: MapProps) {
+export function MapComponent({ className, tracking = false, onLocationUpdate, vehicleId }: MapProps) {
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<mapboxgl.Map | null>(null);
   const [mapLoaded, setMapLoaded] = useState(false);
   const [userLocation, setUserLocation] = useState<[number, number] | null>(null);
   const [locationError, setLocationError] = useState<string | null>(null);
   const userMarker = useRef<mapboxgl.Marker | null>(null);
+  const vehicleMarkers = useRef<Record<string, mapboxgl.Marker>>({});
   const watchPositionId = useRef<number | null>(null);
   const isMobile = useIsMobile();
   const { toast } = useToast();
@@ -36,6 +41,17 @@ export function MapComponent({ className, tracking = false, onLocationUpdate }: 
   
   const [tokenError, setTokenError] = useState<string | null>(null);
   const [isSettingToken, setIsSettingToken] = useState(!localStorage.getItem('mapbox_token'));
+  const [mapStyle, setMapStyle] = useState('streets-v11');
+  const [showTraffic, setShowTraffic] = useState(false);
+  const [showPOIs, setShowPOIs] = useState(true);
+
+  const mapStyles = {
+    'streets-v11': 'Streets',
+    'satellite-v9': 'Satellite',
+    'light-v10': 'Light',
+    'dark-v10': 'Dark',
+    'outdoors-v11': 'Outdoors',
+  };
 
   const initializeMap = (token: string) => {
     if (!mapContainer.current || map.current) return;
@@ -51,9 +67,10 @@ export function MapComponent({ className, tracking = false, onLocationUpdate }: 
     try {
       map.current = new mapboxgl.Map({
         container: mapContainer.current,
-        style: 'mapbox://styles/mapbox/streets-v11',
+        style: `mapbox://styles/mapbox/${mapStyle}`,
         center: [100.523186, 13.736717], // Bangkok as default
-        zoom: 11
+        zoom: 11,
+        attributionControl: false
       });
 
       map.current.on('load', () => {
@@ -62,6 +79,33 @@ export function MapComponent({ className, tracking = false, onLocationUpdate }: 
           title: "Map loaded | แผนที่โหลดแล้ว",
           description: "Map is now ready to use | แผนที่พร้อมใช้งานแล้ว"
         });
+        
+        // Add traffic layer if selected
+        if (showTraffic && map.current) {
+          map.current.addSource('traffic', {
+            'type': 'vector',
+            'url': 'mapbox://mapbox.mapbox-traffic-v1'
+          });
+          
+          map.current.addLayer({
+            'id': 'traffic-layer',
+            'type': 'line',
+            'source': 'traffic',
+            'source-layer': 'traffic',
+            'paint': {
+              'line-width': 2,
+              'line-color': [
+                'match',
+                ['get', 'congestion'],
+                'low', '#4BAE4F',
+                'moderate', '#FFAB00',
+                'heavy', '#F2594D',
+                'severe', '#9C1912',
+                '#4BAE4F'
+              ]
+            }
+          });
+        }
         
         // Get initial user location after map is loaded
         getUserLocation();
@@ -90,6 +134,11 @@ export function MapComponent({ className, tracking = false, onLocationUpdate }: 
       
       // Add scale
       map.current.addControl(new mapboxgl.ScaleControl(), 'bottom-left');
+      
+      // Add attribution
+      map.current.addControl(new mapboxgl.AttributionControl({
+        compact: true
+      }));
 
       return () => {
         stopLocationTracking();
@@ -98,6 +147,93 @@ export function MapComponent({ className, tracking = false, onLocationUpdate }: 
     } catch (error) {
       console.error("Mapbox error:", error);
       setLocationError("Failed to initialize map | ไม่สามารถเริ่มต้นแผนที่ได้");
+    }
+  };
+
+  const updateMapStyle = (style: string) => {
+    if (map.current) {
+      map.current.setStyle(`mapbox://styles/mapbox/${style}`);
+      setMapStyle(style);
+    }
+  };
+
+  const toggleTraffic = () => {
+    if (!map.current) return;
+    
+    const newShowTraffic = !showTraffic;
+    setShowTraffic(newShowTraffic);
+    
+    if (newShowTraffic) {
+      // Check if the source already exists to avoid errors
+      if (!map.current.getSource('traffic')) {
+        map.current.addSource('traffic', {
+          'type': 'vector',
+          'url': 'mapbox://mapbox.mapbox-traffic-v1'
+        });
+        
+        map.current.addLayer({
+          'id': 'traffic-layer',
+          'type': 'line',
+          'source': 'traffic',
+          'source-layer': 'traffic',
+          'paint': {
+            'line-width': 2,
+            'line-color': [
+              'match',
+              ['get', 'congestion'],
+              'low', '#4BAE4F',
+              'moderate', '#FFAB00',
+              'heavy', '#F2594D',
+              'severe', '#9C1912',
+              '#4BAE4F'
+            ]
+          }
+        });
+      } else if (!map.current.getLayer('traffic-layer')) {
+        map.current.addLayer({
+          'id': 'traffic-layer',
+          'type': 'line',
+          'source': 'traffic',
+          'source-layer': 'traffic',
+          'paint': {
+            'line-width': 2,
+            'line-color': [
+              'match',
+              ['get', 'congestion'],
+              'low', '#4BAE4F',
+              'moderate', '#FFAB00',
+              'heavy', '#F2594D',
+              'severe', '#9C1912',
+              '#4BAE4F'
+            ]
+          }
+        });
+      }
+    } else {
+      if (map.current.getLayer('traffic-layer')) {
+        map.current.removeLayer('traffic-layer');
+      }
+    }
+  };
+
+  const togglePOIs = () => {
+    if (!map.current) return;
+    
+    const newShowPOIs = !showPOIs;
+    setShowPOIs(newShowPOIs);
+    
+    // Update POI visibility
+    const layers = map.current.getStyle().layers;
+    if (layers) {
+      for (const layer of layers) {
+        if (layer.id.includes('poi') || layer.id.includes('label')) {
+          map.current.setLayoutProperty(
+            layer.id, 
+            'visibility', 
+            newShowPOIs ? 'visible' : 'none'
+          );
+        }
+      }
     }
   };
 
@@ -281,6 +417,76 @@ export function MapComponent({ className, tracking = false, onLocationUpdate }: 
     setMapLoaded(false);
   };
 
+  // Add a vehicle marker to the map
+  const addVehicleMarker = (id: string, position: [number, number], details: any) => {
+    if (!map.current) return;
+    
+    // Remove existing marker if it exists
+    if (vehicleMarkers.current[id]) {
+      vehicleMarkers.current[id].remove();
+    }
+    
+    // Create a custom element for the marker
+    const el = document.createElement('div');
+    el.className = 'vehicle-marker';
+    el.style.width = '30px';
+    el.style.height = '30px';
+    el.style.borderRadius = '50%';
+    el.style.backgroundColor = details.status === 'Active' ? '#10B981' : 
+                               details.status === 'Inactive' ? '#6B7280' : '#F59E0B';
+    el.style.border = '2px solid white';
+    el.style.display = 'flex';
+    el.style.justifyContent = 'center';
+    el.style.alignItems = 'center';
+    el.style.boxShadow = '0 2px 4px rgba(0,0,0,0.2)';
+    el.style.cursor = 'pointer';
+    el.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-truck" style="color: white;"><path d="M10 17h4V5H2v12h3"></path><path d="M20 17h2v-3.34a4 4 0 0 0-1.17-2.83L19 9h-5v8h1"></path><circle cx="7.5" cy="17.5" r="2.5"></circle><circle cx="17.5" cy="17.5" r="2.5"></circle></svg>`;
+    
+    // Create popup for the marker
+    const popup = new mapboxgl.Popup({ offset: 25 })
+      .setHTML(`
+        <div style="font-family: system-ui, sans-serif; padding: 10px;">
+          <h3 style="margin: 0 0 10px 0; font-weight: 600;">${id}</h3>
+          <p style="margin: 5px 0;"><strong>Driver:</strong> ${details.driver || 'N/A'}</p>
+          <p style="margin: 5px 0;"><strong>Status:</strong> ${details.status || 'N/A'}</p>
+          <p style="margin: 5px 0;"><strong>Speed:</strong> ${details.speed || '0'} km/h</p>
+        </div>
+      `);
+    
+    // Create the marker
+    const marker = new mapboxgl.Marker(el)
+      .setLngLat(position)
+      .setPopup(popup)
+      .addTo(map.current);
+    
+    vehicleMarkers.current[id] = marker;
+    
+    return marker;
+  };
+  
+  // Update a vehicle marker's position
+  const updateVehicleMarker = (id: string, position: [number, number], details?: any) => {
+    if (vehicleMarkers.current[id]) {
+      vehicleMarkers.current[id].setLngLat(position);
+      
+      if (details) {
+        // Update the popup content if details are provided
+        const popup = vehicleMarkers.current[id].getPopup();
+        popup.setHTML(`
+          <div style="font-family: system-ui, sans-serif; padding: 10px;">
+            <h3 style="margin: 0 0 10px 0; font-weight: 600;">${id}</h3>
+            <p style="margin: 5px 0;"><strong>Driver:</strong> ${details.driver || 'N/A'}</p>
+            <p style="margin: 5px 0;"><strong>Status:</strong> ${details.status || 'N/A'}</p>
+            <p style="margin: 5px 0;"><strong>Speed:</strong> ${details.speed || '0'} km/h</p>
+          </div>
+        `);
+      }
+    } else {
+      // Create new marker if it doesn't exist
+      addVehicleMarker(id, position, details || { status: 'Active' });
+    }
+  };
+
   useEffect(() => {
     if (mapboxToken && !isSettingToken) {
       initializeMap(mapboxToken);
@@ -310,6 +516,55 @@ export function MapComponent({ className, tracking = false, onLocationUpdate }: 
       stopLocationTracking();
     };
   }, [tracking]);
+
+  // Add sample vehicles for demo (remove in production)
+  useEffect(() => {
+    if (!mapLoaded || !map.current) return;
+    
+    const demoVehicles = [
+      { id: "B-FR-123", position: [100.513, 13.732], details: { driver: "Max Müller", status: "Active", speed: "45" } },
+      { id: "B-FR-234", position: [100.533, 13.746], details: { driver: "Lisa Schmidt", status: "Inactive", speed: "0" } },
+      { id: "B-FR-345", position: [100.523, 13.756], details: { driver: "Jan Weber", status: "Maintenance", speed: "0" } },
+      { id: "B-FR-456", position: [100.543, 13.726], details: { driver: "Anna Becker", status: "Active", speed: "32" } }
+    ];
+    
+    demoVehicles.forEach(vehicle => {
+      addVehicleMarker(vehicle.id, vehicle.position as [number, number], vehicle.details);
+    });
+    
+    // If a specific vehicle ID is provided, focus on that vehicle
+    if (vehicleId) {
+      const targetVehicle = demoVehicles.find(v => v.id === vehicleId);
+      if (targetVehicle && map.current) {
+        map.current.flyTo({
+          center: targetVehicle.position as [number, number],
+          zoom: 15,
+          essential: true
+        });
+        
+        // Open the popup for this vehicle
+        if (vehicleMarkers.current[vehicleId]) {
+          setTimeout(() => {
+            vehicleMarkers.current[vehicleId].togglePopup();
+          }, 1000);
+        }
+      }
+    }
+    
+    // Simulate vehicle movement for demo
+    const interval = setInterval(() => {
+      demoVehicles.forEach(vehicle => {
+        if (vehicle.details.status === "Active") {
+          const jitter = 0.001 * (Math.random() - 0.5);
+          vehicle.position[0] += jitter;
+          vehicle.position[1] += jitter;
+          updateVehicleMarker(vehicle.id, vehicle.position as [number, number], vehicle.details);
+        }
+      });
+    }, 3000);
+    
+    return () => clearInterval(interval);
+  }, [mapLoaded, vehicleId]);
 
   return (
     <div className={`relative h-full w-full rounded-md overflow-hidden ${className}`}>
@@ -407,12 +662,50 @@ export function MapComponent({ className, tracking = false, onLocationUpdate }: 
             </div>
           )}
           
+          <div className="absolute top-4 right-4 z-10 flex flex-col gap-2">
+            <Select value={mapStyle} onValueChange={updateMapStyle}>
+              <SelectTrigger className="w-36 bg-white">
+                <SelectValue placeholder="Map Style" />
+              </SelectTrigger>
+              <SelectContent>
+                {Object.entries(mapStyles).map(([value, label]) => (
+                  <SelectItem key={value} value={value}>
+                    {label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            
+            <div className="flex gap-1">
+              <Toggle
+                pressed={showTraffic}
+                onPressedChange={toggleTraffic}
+                className="flex-1 bg-white shadow-lg hover:bg-gray-100 data-[state=on]:bg-fleet-100 data-[state=on]:text-fleet-700"
+                title="Toggle Traffic"
+              >
+                <Route className="h-4 w-4 mr-1" />
+                Traffic
+              </Toggle>
+              
+              <Toggle
+                pressed={showPOIs}
+                onPressedChange={togglePOIs}
+                className="flex-1 bg-white shadow-lg hover:bg-gray-100 data-[state=on]:bg-fleet-100 data-[state=on]:text-fleet-700"
+                title="Toggle POIs"
+              >
+                <Layers className="h-4 w-4 mr-1" />
+                POIs
+              </Toggle>
+            </div>
+          </div>
+          
           <div className="absolute bottom-4 right-4 z-10 flex flex-col gap-2">
             <Button
               variant="secondary"
               size="icon"
               className="bg-white shadow-lg hover:bg-gray-100"
               onClick={getUserLocation}
+              title="Get Location | รับตำแหน่ง"
             >
               <Locate className="h-4 w-4" />
             </Button>
