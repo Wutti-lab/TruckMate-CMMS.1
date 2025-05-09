@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { 
   LayoutDashboard, 
@@ -8,7 +7,8 @@ import {
   Users, 
   QrCode, 
   LogOut,
-  UserCog
+  UserCog,
+  CreditCard
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -73,6 +73,12 @@ export function Sidebar() {
       icon: <UserCog size={20} />,
       href: "/accounts",
       roles: [UserRole.ADMIN],
+    },
+    {
+      title: "Pricing | ราคา",
+      icon: <CreditCard size={20} />,
+      href: "/pricing",
+      roles: [UserRole.ADMIN, UserRole.FLEET_MANAGER, UserRole.DRIVER, UserRole.MECHANIC, UserRole.DISPATCHER],
     },
   ];
 

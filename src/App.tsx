@@ -11,10 +11,11 @@ import Drivers from "./pages/Drivers";
 import Inspections from "./pages/Inspections";
 import Map from "./pages/Map";
 import Accounts from "./pages/Accounts";
+import Pricing from "./pages/Pricing"; // Neue Import-Anweisung
 import NotFound from "./pages/NotFound";
 import QRScanner from "./pages/QRScanner";
 import { AuthProvider } from "./contexts/AuthContext";
-import { LocationProvider } from "./contexts/LocationContext"; // Neue Import-Anweisung
+import { LocationProvider } from "./contexts/LocationContext";
 import { ProtectedRoute } from "./components/auth/ProtectedRoute";
 import { UserRole } from "./lib/types/user-roles";
 import { Toaster } from "./components/ui/toaster";
@@ -28,6 +29,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/pricing" element={<Pricing />} /> {/* Neue Route für die Pricing-Seite */}
             <Route
               path="/dashboard"
               element={

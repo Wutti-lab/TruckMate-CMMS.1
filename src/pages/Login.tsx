@@ -1,6 +1,6 @@
 
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -106,7 +106,7 @@ export default function Login() {
                 </div>
               </div>
             </CardContent>
-            <CardFooter>
+            <CardFooter className="flex-col space-y-4">
               <Button
                 type="submit"
                 className="w-full bg-fleet-600 hover:bg-fleet-700"
@@ -114,6 +114,15 @@ export default function Login() {
               >
                 {isLoading ? "Logging in..." : "Log in"}
               </Button>
+              
+              <div className="text-center w-full">
+                <Link 
+                  to="/pricing" 
+                  className="text-fleet-600 hover:underline text-sm font-medium"
+                >
+                  View pricing plans | ดูแผนราคา
+                </Link>
+              </div>
             </CardFooter>
           </form>
         </Card>
