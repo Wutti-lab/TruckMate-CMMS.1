@@ -1,3 +1,4 @@
+
 import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
 import { User, UserRole } from '@/lib/types/user-roles';
 
@@ -11,9 +12,14 @@ interface AuthContextType {
   getFilteredLoginActivities: () => LoginActivity[];
   // Account management functions
   mockUsers: User[];
+  pendingUsers: PendingUser[];
   createUser: (user: User & { password: string }) => void;
+  createPendingUser: (user: PendingUser) => void;
   updateUserList: (user: User & { password?: string }) => void;
   deleteUser: (id: string) => void;
+  approvePendingUser: (id: string) => void;
+  rejectPendingUser: (id: string) => void;
+  getPendingUsersCount: () => number;
 }
 
 // Interface for login activities
@@ -23,6 +29,17 @@ export interface LoginActivity {
   userName: string;
   timestamp: Date;
   userRole: UserRole;
+}
+
+export interface PendingUser {
+  id: string;
+  name: string;
+  email: string;
+  role: UserRole;
+  password: string;
+  paymentStatus: 'paid' | 'unpaid';
+  approvalStatus: 'pending' | 'approved' | 'rejected';
+  createdAt: string;
 }
 
 interface UserWithPassword extends User {
@@ -68,18 +85,33 @@ const initialMockUsers: UserWithPassword[] = [
   }
 ];
 
+const initialPendingUsers: PendingUser[] = [
+  {
+    id: "101",
+    name: "Pending User",
+    email: "pending@truckmate.com",
+    role: UserRole.DRIVER,
+    password: "123456",
+    paymentStatus: "paid",
+    approvalStatus: "pending",
+    createdAt: "2025-05-09T10:00:00.000Z"
+  }
+];
+
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loginActivities, setLoginActivities] = useState<LoginActivity[]>([]);
   const [mockUsers, setMockUsers] = useState<UserWithPassword[]>([]);
+  const [pendingUsers, setPendingUsers] = useState<PendingUser[]>([]);
 
   // Load user and data from localStorage on mount
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
     const storedActivities = localStorage.getItem('loginActivities');
     const storedMockUsers = localStorage.getItem('mockUsers');
+    const storedPendingUsers = localStorage.getItem('pendingUsers');
     
     if (storedUser) {
       setUser(JSON.parse(storedUser));
@@ -94,6 +126,13 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     } else {
       setMockUsers(initialMockUsers);
       localStorage.setItem('mockUsers', JSON.stringify(initialMockUsers));
+    }
+    
+    if (storedPendingUsers) {
+      setPendingUsers(JSON.parse(storedPendingUsers));
+    } else {
+      setPendingUsers(initialPendingUsers);
+      localStorage.setItem('pendingUsers', JSON.stringify(initialPendingUsers));
     }
   }, []);
 
@@ -179,6 +218,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setMockUsers(updatedUsers);
     localStorage.setItem('mockUsers', JSON.stringify(updatedUsers));
   };
+  
+  const createPendingUser = (newPendingUser: PendingUser) => {
+    const updatedPendingUsers = [...pendingUsers, newPendingUser];
+    setPendingUsers(updatedPendingUsers);
+    localStorage.setItem('pendingUsers', JSON.stringify(updatedPendingUsers));
+  };
 
   const updateUserList = (updatedUser: User & { password?: string }) => {
     const updatedUsers = mockUsers.map(user => {
@@ -217,6 +262,42 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setMockUsers(updatedUsers);
     localStorage.setItem('mockUsers', JSON.stringify(updatedUsers));
   };
+  
+  const approvePendingUser = (id: string) => {
+    const pendingUser = pendingUsers.find(pu => pu.id === id);
+    
+    if (pendingUser) {
+      // Add to regular users
+      const newUser: UserWithPassword = {
+        id: pendingUser.id,
+        name: pendingUser.name,
+        email: pendingUser.email,
+        role: pendingUser.role,
+        password: pendingUser.password
+      };
+      
+      const updatedUsers = [...mockUsers, newUser];
+      setMockUsers(updatedUsers);
+      localStorage.setItem('mockUsers', JSON.stringify(updatedUsers));
+      
+      // Remove from pending users
+      const updatedPendingUsers = pendingUsers.filter(pu => pu.id !== id);
+      setPendingUsers(updatedPendingUsers);
+      localStorage.setItem('pendingUsers', JSON.stringify(updatedPendingUsers));
+    }
+  };
+  
+  const rejectPendingUser = (id: string) => {
+    const updatedPendingUsers = pendingUsers.map(pu => 
+      pu.id === id ? { ...pu, approvalStatus: 'rejected' as const } : pu
+    );
+    setPendingUsers(updatedPendingUsers);
+    localStorage.setItem('pendingUsers', JSON.stringify(updatedPendingUsers));
+  };
+  
+  const getPendingUsersCount = () => {
+    return pendingUsers.filter(pu => pu.approvalStatus === 'pending').length;
+  };
 
   return (
     <AuthContext.Provider 
@@ -229,9 +310,14 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         loginActivities,
         getFilteredLoginActivities,
         mockUsers,
+        pendingUsers,
         createUser,
+        createPendingUser,
         updateUserList,
-        deleteUser
+        deleteUser,
+        approvePendingUser,
+        rejectPendingUser,
+        getPendingUsersCount
       }}
     >
       {children}
