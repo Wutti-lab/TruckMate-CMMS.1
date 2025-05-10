@@ -41,7 +41,9 @@ export default function Customers() {
         <Card>
           <CardHeader>
             <CardTitle>
-              {language === 'de' ? 'Softwarekunden' : 'Software Customers'}
+              {language === 'de' ? 'Softwarekunden' : 
+              language === 'th' ? 'ลูกค้าซอฟต์แวร์' : 
+              'Software Customers'}
             </CardTitle>
           </CardHeader>
           <CardContent className="p-0">

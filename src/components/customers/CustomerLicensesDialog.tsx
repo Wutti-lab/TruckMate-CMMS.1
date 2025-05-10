@@ -36,12 +36,16 @@ export function CustomerLicensesDialog({
           <DialogTitle>
             {language === 'de' 
               ? `Lizenzen für ${customer.name}`
+              : language === 'th'
+              ? `ใบอนุญาตสำหรับ ${customer.name}`
               : `Licenses for ${customer.name}`
             }
           </DialogTitle>
           <DialogDescription>
             {language === 'de'
               ? `Alle Software-Lizenzen von ${customer.company}`
+              : language === 'th'
+              ? `ใบอนุญาตซอฟต์แวร์ทั้งหมดสำหรับ ${customer.company}`
               : `All software licenses for ${customer.company}`
             }
           </DialogDescription>
@@ -56,7 +60,9 @@ export function CustomerLicensesDialog({
             variant="secondary"
             onClick={() => onOpenChange(false)}
           >
-            {language === 'de' ? 'Schließen' : 'Close'}
+            {language === 'de' ? 'Schließen' : 
+             language === 'th' ? 'ปิด' : 
+             'Close'}
           </Button>
           
           {onAddLicense && (
@@ -67,7 +73,9 @@ export function CustomerLicensesDialog({
               }}
               className="bg-fleet-600 hover:bg-fleet-700"
             >
-              {language === 'de' ? 'Neue Lizenz hinzufügen' : 'Add New License'}
+              {language === 'de' ? 'Neue Lizenz hinzufügen' : 
+               language === 'th' ? 'เพิ่มใบอนุญาตใหม่' : 
+               'Add New License'}
             </Button>
           )}
         </DialogFooter>

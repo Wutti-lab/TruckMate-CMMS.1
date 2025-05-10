@@ -15,18 +15,24 @@ export function CustomersHeader({
   onSearchChange, 
   onAddNewCustomer 
 }: CustomersHeaderProps) {
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
 
   return (
     <div className="mb-6 flex flex-wrap gap-4 items-center justify-between">
       <h1 className="text-2xl font-bold">
-        {language === 'de' ? 'Kundenverwaltung' : 'Customer Management'}
+        {language === 'de' ? 'Kundenverwaltung' : 
+         language === 'th' ? 'การจัดการลูกค้า' : 
+         'Customer Management'}
       </h1>
       <div className="flex items-center gap-2">
         <div className="relative hidden lg:block">
           <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input
-            placeholder={language === 'de' ? 'Kunden suchen...' : 'Search customers...'}
+            placeholder={
+              language === 'de' ? 'Kunden suchen...' : 
+              language === 'th' ? 'ค้นหาลูกค้า...' : 
+              'Search customers...'
+            }
             className="pl-8 w-[300px]"
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
@@ -40,7 +46,9 @@ export function CustomersHeader({
           className="bg-fleet-500"
         >
           <Plus size={16} className="mr-2" />
-          {language === 'de' ? 'Neuer Kunde' : 'New Customer'}
+          {language === 'de' ? 'Neuer Kunde' : 
+           language === 'th' ? 'ลูกค้าใหม่' : 
+           'New Customer'}
         </Button>
       </div>
     </div>

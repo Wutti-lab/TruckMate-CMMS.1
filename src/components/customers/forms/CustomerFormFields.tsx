@@ -16,11 +16,21 @@ export function CustomerFormFields() {
   const form = useFormContext();
 
   const translations = {
-    name: language === 'de' ? 'Name' : 'Name',
-    company: language === 'de' ? 'Firma' : 'Company',
-    email: language === 'de' ? 'E-Mail' : 'Email',
-    phone: language === 'de' ? 'Telefon' : 'Phone',
-    country: language === 'de' ? 'Land' : 'Country',
+    name: language === 'de' ? 'Name' : 
+          language === 'th' ? 'ชื่อ' : 
+          'Name',
+    company: language === 'de' ? 'Firma' : 
+             language === 'th' ? 'บริษัท' : 
+             'Company',
+    email: language === 'de' ? 'E-Mail' : 
+           language === 'th' ? 'อีเมล' : 
+           'Email',
+    phone: language === 'de' ? 'Telefon' : 
+           language === 'th' ? 'โทรศัพท์' : 
+           'Phone',
+    country: language === 'de' ? 'Land' : 
+             language === 'th' ? 'ประเทศ' : 
+             'Country',
   };
 
   return (

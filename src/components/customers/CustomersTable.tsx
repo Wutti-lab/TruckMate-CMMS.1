@@ -56,8 +56,12 @@ export function CustomersTable({
 
   const handleSendEmail = (email: string) => {
     toast({
-      title: "Email function",
-      description: `Email feature will be implemented to send to: ${email}`,
+      title: language === 'de' ? 'Email function' : 
+            language === 'th' ? 'ฟังก์ชันอีเมล' :
+            'Email function',
+      description: language === 'de' ? `Email feature will be implemented to send to: ${email}` :
+                   language === 'th' ? `คุณสมบัติอีเมลจะถูกใช้เพื่อส่งไปที่: ${email}` :
+                   `Email feature will be implemented to send to: ${email}`,
     });
   };
 
@@ -65,11 +69,31 @@ export function CustomersTable({
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead>{language === 'de' ? 'Kunde/Firma' : 'Customer/Company'}</TableHead>
-          <TableHead>{language === 'de' ? 'Kontakt' : 'Contact'}</TableHead>
-          <TableHead>{language === 'de' ? 'Lizenzen' : 'Licenses'}</TableHead>
-          <TableHead>{language === 'de' ? 'Ausgaben (฿)' : 'Total Spent (฿)'}</TableHead>
-          <TableHead>{language === 'de' ? 'Status' : 'Status'}</TableHead>
+          <TableHead>
+            {language === 'de' ? 'Kunde/Firma' : 
+             language === 'th' ? 'ลูกค้า/บริษัท' : 
+             'Customer/Company'}
+          </TableHead>
+          <TableHead>
+            {language === 'de' ? 'Kontakt' : 
+             language === 'th' ? 'ติดต่อ' : 
+             'Contact'}
+          </TableHead>
+          <TableHead>
+            {language === 'de' ? 'Lizenzen' : 
+             language === 'th' ? 'ใบอนุญาต' : 
+             'Licenses'}
+          </TableHead>
+          <TableHead>
+            {language === 'de' ? 'Ausgaben (฿)' : 
+             language === 'th' ? 'จำนวนเงินที่ใช้ทั้งหมด (฿)' : 
+             'Total Spent (฿)'}
+          </TableHead>
+          <TableHead>
+            {language === 'de' ? 'Status' : 
+             language === 'th' ? 'สถานะ' : 
+             'Status'}
+          </TableHead>
           <TableHead className="w-[80px]"></TableHead>
         </TableRow>
       </TableHeader>
@@ -95,7 +119,11 @@ export function CustomersTable({
                   size="sm" 
                   onClick={() => onViewLicenses(customer)}
                 >
-                  {customer.licenses.length} {language === 'de' ? 'Lizenzen' : 'licenses'}
+                  {customer.licenses.length} {
+                    language === 'de' ? 'Lizenzen' : 
+                    language === 'th' ? 'ใบอนุญาต' : 
+                    'licenses'
+                  }
                 </Button>
               </TableCell>
               <TableCell>
@@ -124,28 +152,36 @@ export function CustomersTable({
                       onClick={() => onEditCustomer(customer)}
                     >
                       <Pencil className="mr-2 h-4 w-4" />
-                      {language === 'de' ? 'Bearbeiten' : 'Edit'}
+                      {language === 'de' ? 'Bearbeiten' : 
+                       language === 'th' ? 'แก้ไข' : 
+                       'Edit'}
                     </DropdownMenuItem>
                     <DropdownMenuItem 
                       className="cursor-pointer"
                       onClick={() => handleSendEmail(customer.email)}
                     >
                       <Mail className="mr-2 h-4 w-4" />
-                      {language === 'de' ? 'Email senden' : 'Send Email'}
+                      {language === 'de' ? 'Email senden' : 
+                       language === 'th' ? 'ส่งอีเมล' : 
+                       'Send Email'}
                     </DropdownMenuItem>
                     <DropdownMenuItem 
                       className="cursor-pointer"
                       onClick={() => onViewLicenses(customer)}
                     >
                       <CreditCard className="mr-2 h-4 w-4" />
-                      {language === 'de' ? 'Lizenzen verwalten' : 'Manage Licenses'}
+                      {language === 'de' ? 'Lizenzen verwalten' : 
+                       language === 'th' ? 'จัดการใบอนุญาต' : 
+                       'Manage Licenses'}
                     </DropdownMenuItem>
                     <DropdownMenuItem 
                       className="cursor-pointer text-red-600"
                       onClick={() => onDeleteCustomer(customer.id)}
                     >
                       <Trash2 className="mr-2 h-4 w-4" />
-                      {language === 'de' ? 'Löschen' : 'Delete'}
+                      {language === 'de' ? 'Löschen' : 
+                       language === 'th' ? 'ลบ' : 
+                       'Delete'}
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
@@ -155,7 +191,9 @@ export function CustomersTable({
         ) : (
           <TableRow>
             <TableCell colSpan={6} className="text-center py-6 text-muted-foreground">
-              {language === 'de' ? 'Keine Kunden gefunden' : 'No customers found'}
+              {language === 'de' ? 'Keine Kunden gefunden' : 
+               language === 'th' ? 'ไม่พบลูกค้า' : 
+               'No customers found'}
             </TableCell>
           </TableRow>
         )}

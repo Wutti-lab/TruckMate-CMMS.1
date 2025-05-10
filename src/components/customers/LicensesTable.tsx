@@ -51,9 +51,13 @@ export function LicensesTable({ licenses }: LicensesTableProps) {
     // Copy to clipboard
     navigator.clipboard.writeText(newKey).then(() => {
       toast({
-        title: language === 'de' ? 'Lizenzschlüssel generiert' : 'License key generated',
+        title: language === 'de' ? 'Lizenzschlüssel generiert' : 
+               language === 'th' ? 'สร้างรหัสใบอนุญาตแล้ว' :
+               'License key generated',
         description: language === 'de' 
           ? `Der neue Schlüssel "${newKey}" wurde in die Zwischenablage kopiert` 
+          : language === 'th'
+          ? `รหัสใหม่ "${newKey}" ถูกคัดลอกไปยังคลิปบอร์ดแล้ว`
           : `New key "${newKey}" copied to clipboard`,
       });
     });
@@ -67,18 +71,44 @@ export function LicensesTable({ licenses }: LicensesTableProps) {
           className="bg-fleet-600 hover:bg-fleet-700"
         >
           <Key className="mr-2 h-4 w-4" />
-          {language === 'de' ? 'Neuen Lizenzschlüssel generieren' : 'Generate New License Key'}
+          {language === 'de' ? 'Neuen Lizenzschlüssel generieren' : 
+           language === 'th' ? 'สร้างรหัสใบอนุญาตใหม่' :
+           'Generate New License Key'}
         </Button>
       </div>
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>{language === 'de' ? 'Produkt' : 'Product'}</TableHead>
-            <TableHead>{language === 'de' ? 'Lizenzschlüssel' : 'License Key'}</TableHead>
-            <TableHead>{language === 'de' ? 'Gekauft am' : 'Purchase Date'}</TableHead>
-            <TableHead>{language === 'de' ? 'Ablaufdatum' : 'Expiry Date'}</TableHead>
-            <TableHead>{language === 'de' ? 'Preis (฿)' : 'Price (฿)'}</TableHead>
-            <TableHead>{language === 'de' ? 'Status' : 'Status'}</TableHead>
+            <TableHead>
+              {language === 'de' ? 'Produkt' : 
+               language === 'th' ? 'สินค้า' : 
+               'Product'}
+            </TableHead>
+            <TableHead>
+              {language === 'de' ? 'Lizenzschlüssel' : 
+               language === 'th' ? 'รหัสใบอนุญาต' : 
+               'License Key'}
+            </TableHead>
+            <TableHead>
+              {language === 'de' ? 'Gekauft am' : 
+               language === 'th' ? 'วันที่ซื้อ' : 
+               'Purchase Date'}
+            </TableHead>
+            <TableHead>
+              {language === 'de' ? 'Ablaufdatum' : 
+               language === 'th' ? 'วันหมดอายุ' : 
+               'Expiry Date'}
+            </TableHead>
+            <TableHead>
+              {language === 'de' ? 'Preis (฿)' : 
+               language === 'th' ? 'ราคา (฿)' : 
+               'Price (฿)'}
+            </TableHead>
+            <TableHead>
+              {language === 'de' ? 'Status' : 
+               language === 'th' ? 'สถานะ' : 
+               'Status'}
+            </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -103,7 +133,9 @@ export function LicensesTable({ licenses }: LicensesTableProps) {
           ) : (
             <TableRow>
               <TableCell colSpan={6} className="text-center py-6 text-muted-foreground">
-                {language === 'de' ? 'Keine Lizenzen gefunden' : 'No licenses found'}
+                {language === 'de' ? 'Keine Lizenzen gefunden' : 
+                 language === 'th' ? 'ไม่พบใบอนุญาต' : 
+                 'No licenses found'}
               </TableCell>
             </TableRow>
           )}

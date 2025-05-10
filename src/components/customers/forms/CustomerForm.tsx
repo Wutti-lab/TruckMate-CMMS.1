@@ -51,8 +51,12 @@ export function CustomerForm({ customer, onSubmit, onCancel }: CustomerFormProps
   });
 
   const translations = {
-    cancel: language === 'de' ? 'Abbrechen' : 'Cancel',
-    save: language === 'de' ? 'Speichern' : 'Save'
+    cancel: language === 'de' ? 'Abbrechen' : 
+            language === 'th' ? 'ยกเลิก' : 
+            'Cancel',
+    save: language === 'de' ? 'Speichern' : 
+          language === 'th' ? 'บันทึก' : 
+          'Save'
   };
 
   return (

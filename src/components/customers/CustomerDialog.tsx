@@ -29,14 +29,22 @@ export function CustomerDialog({
 
   const translations = {
     title: isEditing 
-      ? language === 'de' ? 'Kunde bearbeiten' : 'Edit Customer'
-      : language === 'de' ? 'Neuen Kunden hinzufügen' : 'Add New Customer',
+      ? language === 'de' ? 'Kunde bearbeiten' : 
+        language === 'th' ? 'แก้ไขข้อมูลลูกค้า' :
+        'Edit Customer'
+      : language === 'de' ? 'Neuen Kunden hinzufügen' : 
+        language === 'th' ? 'เพิ่มลูกค้าใหม่' :
+        'Add New Customer',
     description: isEditing
       ? language === 'de' 
         ? 'Bearbeiten Sie die Kundeninformationen unten'
+        : language === 'th'
+        ? 'แก้ไขข้อมูลลูกค้าด้านล่าง'
         : 'Edit customer information below'
       : language === 'de'
         ? 'Fügen Sie die Kundeninformationen hinzu'
+        : language === 'th'
+        ? 'เพิ่มข้อมูลลูกค้าด้านล่าง'
         : 'Add customer information below',
   };
 
