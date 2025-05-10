@@ -16,6 +16,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { useAuth } from "@/contexts/AuthContext";
+import { generateLicenseKey } from "@/lib/utils/customerUtils";
+import { useToast } from "@/hooks/use-toast";
 
 // Extended registration schema with additional fields
 const registerSchema = z.object({
@@ -34,6 +37,8 @@ const registerSchema = z.object({
 export function RegisterForm() {
   const navigate = useNavigate();
   const { t } = useLanguage();
+  const { createPendingUser } = useAuth();
+  const { toast } = useToast();
   
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
@@ -50,7 +55,32 @@ export function RegisterForm() {
 
   function onSubmit(values: z.infer<typeof registerSchema>) {
     console.log(values);
-    // TODO: Implement actual registration logic
+    
+    // Create a pending user with payment status set to 'paid' so they appear as a customer
+    const newUser = {
+      id: `user-${Date.now()}`,
+      name: values.name,
+      email: values.email,
+      password: values.password,
+      role: 'customer',
+      createdAt: new Date().toISOString(),
+      approvalStatus: 'approved',
+      paymentStatus: 'paid',
+      paymentReference: generateLicenseKey().substring(0, 8),
+      company: values.company || values.name + " GmbH", // Default company name if not provided
+      phoneNumber: values.phoneNumber,
+      jobTitle: values.jobTitle || ''
+    };
+    
+    // Create the pending user (which will be converted to a customer)
+    createPendingUser(newUser);
+    
+    toast({
+      title: t("registrationSuccessful") || "Registration Successful",
+      description: t("accountCreatedAndActive") || "Your account has been created and is now active"
+    });
+    
+    // Navigate to the login page after successful registration
     navigate("/login");
   }
 

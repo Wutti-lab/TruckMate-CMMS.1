@@ -8,6 +8,9 @@ interface PendingUser {
   createdAt: string;
   paymentStatus: string;
   approvalStatus: string;
+  company?: string;
+  phoneNumber?: string;
+  jobTitle?: string;
 }
 
 /**
@@ -22,16 +25,17 @@ export function convertPendingUserToCustomer(user: PendingUser): Customer {
     purchaseDate: user.createdAt.split('T')[0],
     expiryDate: getExpiryDate(),
     status: "active",
-    price: 2000.00 // User Plan price (2,000 ฿)
+    price: 2000.00, // User Plan price (2,000 ฿)
+    role: "standard" // Default role for new users
   };
 
   // Create the customer with the default license
   const customer: Customer = {
     id: user.id,
     name: user.name,
-    company: user.name + " GmbH", // Default company name
+    company: user.company || user.name + " GmbH", // Use provided company or default
     email: user.email,
-    phone: "", // Empty as default
+    phone: user.phoneNumber || "", // Use provided phone or empty
     country: "Deutschland", // Default country
     registrationDate: user.createdAt.split('T')[0],
     licenses: [defaultLicense],

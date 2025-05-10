@@ -30,6 +30,8 @@ export const authTranslations = {
   "confirmPassword": "ยืนยันรหัสผ่าน",
   "createAccountButton": "สร้างบัญชี",
   "alreadyHaveAccount": "มีบัญชีอยู่แล้ว?",
+  "registrationSuccessful": "การลงทะเบียนสำเร็จ",
+  "accountCreatedAndActive": "บัญชีของคุณได้ถูกสร้างและเปิดใช้งานแล้ว",
 
   // Account status
   "accountPendingTitle": "บัญชีอยู่ระหว่างการตรวจสอบ",
