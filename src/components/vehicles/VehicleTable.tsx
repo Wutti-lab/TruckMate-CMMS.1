@@ -7,21 +7,9 @@ import {
   TableRow
 } from "@/components/ui/table";
 import { Card, CardContent } from "@/components/ui/card";
-import { VehicleTableRow } from "./VehicleTableRow";
+import { VehicleRow } from "./table/VehicleRow";
 import { useLanguage } from "@/contexts/LanguageContext";
-
-interface Vehicle {
-  id: string;
-  driver: string;
-  model: string;
-  location: string;
-  status: string;
-  fuelLevel: number;
-  batteryLevel: number;
-  lastService: string;
-  nextService: string;
-  engineTemp: number;
-}
+import { Vehicle } from "./types/Vehicle";
 
 interface VehicleTableProps {
   vehicles: Vehicle[];
@@ -58,7 +46,7 @@ export function VehicleTable({ vehicles }: VehicleTableProps) {
           </TableHeader>
           <TableBody>
             {vehicles.map((vehicle) => (
-              <VehicleTableRow key={vehicle.id} vehicle={vehicle} />
+              <VehicleRow key={vehicle.id} vehicle={vehicle} />
             ))}
           </TableBody>
         </Table>
