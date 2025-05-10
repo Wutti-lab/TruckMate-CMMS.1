@@ -17,6 +17,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
 import { UserRole } from "@/lib/types/user-roles";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 import {
   Sidebar as ShadcnSidebar,
@@ -32,58 +33,59 @@ import {
 export function Sidebar() {
   const { user, logout, hasRole } = useAuth();
   const { openMobile, setOpenMobile } = useSidebar();
+  const { t } = useLanguage();
 
   const menuItems = [
     {
-      title: "Dashboard | แดชบอร์ด",
+      title: t("dashboard"),
       icon: <LayoutDashboard size={20} />,
       href: "/dashboard",
       roles: [UserRole.ADMIN, UserRole.FLEET_MANAGER, UserRole.DRIVER, UserRole.MECHANIC, UserRole.DISPATCHER],
     },
     {
-      title: "QR Scanner | เครื่องสแกน QR",
+      title: t("qrScanner"),
       icon: <QrCode size={20} />,
       href: "/qr-scanner",
       roles: [UserRole.ADMIN, UserRole.DRIVER, UserRole.FLEET_MANAGER],
     },
     {
-      title: "Vehicles | ยานพาหนะ",
+      title: t("vehicles"),
       icon: <Truck size={20} />,
       href: "/vehicles",
       roles: [UserRole.ADMIN, UserRole.FLEET_MANAGER],
     },
     {
-      title: "Map | แผนที่",
+      title: t("map"),
       icon: <Map size={20} />,
       href: "/map",
       roles: [UserRole.ADMIN, UserRole.DISPATCHER, UserRole.FLEET_MANAGER],
     },
     {
-      title: "Inspections | การตรวจสอบ",
+      title: t("inspections"),
       icon: <FileText size={20} />,
       href: "/inspections",
       roles: [UserRole.ADMIN, UserRole.MECHANIC, UserRole.FLEET_MANAGER, UserRole.DRIVER],
     },
     {
-      title: "Drivers | คนขับ",
+      title: t("drivers"),
       icon: <Users size={20} />,
       href: "/drivers",
       roles: [UserRole.ADMIN, UserRole.FLEET_MANAGER],
     },
     {
-      title: "Account Management | จัดการบัญชี",
+      title: t("accountManagement"),
       icon: <UserCog size={20} />,
       href: "/accounts",
       roles: [UserRole.ADMIN],
     },
     {
-      title: "Advertisement Manager | จัดการโฆษณา",
+      title: t("advertisements"),
       icon: <Image size={20} />,
       href: "/advertisements",
       roles: [UserRole.ADMIN],
     },
     {
-      title: "Pricing | ราคา",
+      title: t("pricing"),
       icon: <CreditCard size={20} />,
       href: "/pricing",
       roles: [UserRole.ADMIN, UserRole.FLEET_MANAGER, UserRole.DRIVER, UserRole.MECHANIC, UserRole.DISPATCHER],
@@ -115,7 +117,7 @@ export function Sidebar() {
             />
             <h2 className="text-xl font-bold text-sky-100">TruckMate CMMS</h2>
           </div>
-          <p className="text-sm text-sky-200">ระบบจัดการยานพาหนะที่ง่ายดาย</p>
+          <p className="text-sm text-sky-200">{t("easyVehicleManagement")}</p>
         </div>
 
         <div className="mt-4 flex items-center space-x-2">
@@ -159,7 +161,7 @@ export function Sidebar() {
           onClick={handleLogout}
         >
           <LogOut size={20} className="mr-2" />
-          Logout | ออกจากระบบ
+          {t("logout")}
         </Button>
       </SidebarFooter>
     </ShadcnSidebar>
