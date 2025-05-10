@@ -14,6 +14,7 @@ export const customerTranslations = {
   "licenses": "ใบอนุญาต",
   "totalSpent": "จำนวนเงินที่ใช้ทั้งหมด (฿)",
   "status": "สถานะ",
+  "role": "บทบาท", // Added role translation
   
   // Customer form fields
   "editCustomer": "แก้ไขข้อมูลลูกค้า",

@@ -7,6 +7,7 @@ export interface SoftwareLicense {
   expiryDate: string;
   status: 'active' | 'expired' | 'revoked';
   price: number;
+  role?: string; // Added role field
 }
 
 export interface Customer {

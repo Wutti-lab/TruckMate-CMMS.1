@@ -90,6 +90,11 @@ export function LicensesTable({ licenses }: LicensesTableProps) {
                'License Key'}
             </TableHead>
             <TableHead>
+              {language === 'de' ? 'Rolle' : 
+               language === 'th' ? 'บทบาท' : 
+               'Role'}
+            </TableHead>
+            <TableHead>
               {language === 'de' ? 'Gekauft am' : 
                language === 'th' ? 'วันที่ซื้อ' : 
                'Purchase Date'}
@@ -117,6 +122,7 @@ export function LicensesTable({ licenses }: LicensesTableProps) {
               <TableRow key={license.id}>
                 <TableCell className="font-medium">{license.productName}</TableCell>
                 <TableCell className="font-mono text-xs">{license.licenseKey}</TableCell>
+                <TableCell>{license.role || '-'}</TableCell>
                 <TableCell>{formatDate(license.purchaseDate)}</TableCell>
                 <TableCell>{formatDate(license.expiryDate)}</TableCell>
                 <TableCell>{formatCurrency(license.price)}</TableCell>
@@ -132,7 +138,7 @@ export function LicensesTable({ licenses }: LicensesTableProps) {
             ))
           ) : (
             <TableRow>
-              <TableCell colSpan={6} className="text-center py-6 text-muted-foreground">
+              <TableCell colSpan={7} className="text-center py-6 text-muted-foreground">
                 {language === 'de' ? 'Keine Lizenzen gefunden' : 
                  language === 'th' ? 'ไม่พบใบอนุญาต' : 
                  'No licenses found'}
