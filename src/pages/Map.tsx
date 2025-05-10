@@ -14,6 +14,7 @@ import { RouteHistoryOverlay } from "@/components/map/RouteHistoryOverlay";
 import { NotificationsOverlay } from "@/components/map/NotificationsOverlay";
 import { MapLegend } from "@/components/map/MapLegend";
 import { VehicleInfoCard } from "@/components/map/VehicleInfoCard";
+import { AdBanner } from "@/components/ads/AdBanner";
 
 export default function Map() {
   const [searchParams] = useSearchParams();
@@ -98,6 +99,7 @@ export default function Map() {
   return (
     <div className="flex flex-col h-full">
       <Header />
+      <AdBanner position="top" />
       <main className="flex-1 p-6 relative overflow-hidden">
         <div className="mb-4 flex flex-wrap gap-4 items-center justify-between">
           <h1 className="text-2xl font-bold">{extractLanguageText("Map | แผนที่ | Karte", language)}</h1>
@@ -182,6 +184,7 @@ export default function Map() {
           startTrackingVehicle={startTrackingVehicle}
         />
       </main>
+      <AdBanner position="bottom" />
     </div>
   );
 }
