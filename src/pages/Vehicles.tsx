@@ -8,6 +8,7 @@ import { VehicleTable } from "@/components/vehicles/VehicleTable";
 import { VehicleParts } from "@/components/inspections/VehicleParts";
 import { Card } from "@/components/ui/card";
 import { AddVehicleDialog } from "@/components/vehicles/AddVehicleDialog";
+import { useLanguage, extractLanguageText } from "@/contexts/LanguageContext";
 
 // Mock vehicle data
 const initialVehicles = [
@@ -101,6 +102,7 @@ export default function Vehicles() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isAddVehicleOpen, setIsAddVehicleOpen] = useState(false);
   const [vehicles, setVehicles] = useState(initialVehicles);
+  const { language } = useLanguage();
   
   // Filter vehicles based on search query
   const filteredVehicles = vehicles.filter((vehicle) => 
@@ -119,7 +121,7 @@ export default function Vehicles() {
       <Header />
       <main className="flex-1 p-6 overflow-auto">
         <div className="mb-6 flex flex-wrap gap-4 items-center justify-between">
-          <h1 className="text-2xl font-bold">Fleet | กองยานพาหนะ</h1>
+          <h1 className="text-2xl font-bold">{extractLanguageText("Fleet | กองยานพาหนะ | Fahrzeugflotte", language)}</h1>
           <div className="flex items-center gap-2">
             <VehicleFilters
               searchQuery={searchQuery}
@@ -127,7 +129,7 @@ export default function Vehicles() {
             />
             <Button className="bg-fleet-500" onClick={() => setIsAddVehicleOpen(true)}>
               <Plus size={16} className="mr-2" />
-              Add New Vehicle | เพิ่มยานพาหนะใหม่
+              {extractLanguageText("Add New Vehicle | เพิ่มยานพาหนะใหม่ | Neues Fahrzeug hinzufügen", language)}
             </Button>
           </div>
         </div>

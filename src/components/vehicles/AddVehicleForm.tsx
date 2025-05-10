@@ -19,7 +19,7 @@ interface AddVehicleFormProps {
 export function AddVehicleForm({ onSubmit, onCancel }: AddVehicleFormProps) {
   const { toast } = useToast();
   const { language } = useLanguage();
-  const [vehicleType, setVehicleType] = useState<"electric" | "fuel">("electric");
+  const [vehicleType, setVehicleType] = useState<"electric" | "fuel" | "hybrid">("electric");
 
   const form = useForm<VehicleFormValues>({
     resolver: zodResolver(vehicleSchema),
@@ -27,10 +27,10 @@ export function AddVehicleForm({ onSubmit, onCancel }: AddVehicleFormProps) {
       id: "",
       driver: "",
       model: "",
-      location: "Bangkok",
+      location: language === 'de' ? "Berlin" : "Bangkok",
       status: "Active",
-      batteryLevel: vehicleType === "electric" ? 100 : 0,
-      fuelLevel: vehicleType === "fuel" ? 100 : 0,
+      batteryLevel: vehicleType === "electric" || vehicleType === "hybrid" ? 100 : 0,
+      fuelLevel: vehicleType === "fuel" || vehicleType === "hybrid" ? 100 : 0,
       engineTemp: 80,
       lastService: new Date().toLocaleDateString(),
       nextService: new Date(new Date().setMonth(new Date().getMonth() + 6)).toLocaleDateString(),
@@ -42,6 +42,10 @@ export function AddVehicleForm({ onSubmit, onCancel }: AddVehicleFormProps) {
       setVehicleType("electric");
       form.setValue("batteryLevel", 100);
       form.setValue("fuelLevel", 0);
+    } else if (value === "hybrid") {
+      setVehicleType("hybrid");
+      form.setValue("batteryLevel", 100);
+      form.setValue("fuelLevel", 100);
     } else {
       setVehicleType("fuel");
       form.setValue("batteryLevel", 0);

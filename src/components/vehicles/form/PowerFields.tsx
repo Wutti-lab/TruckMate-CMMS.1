@@ -7,7 +7,7 @@ import { VehicleFormValues } from "./BasicVehicleFields";
 
 interface PowerFieldsProps {
   form: UseFormReturn<VehicleFormValues>;
-  vehicleType: "electric" | "fuel";
+  vehicleType: "electric" | "fuel" | "hybrid";
 }
 
 export function PowerFields({ form, vehicleType }: PowerFieldsProps) {
@@ -15,7 +15,7 @@ export function PowerFields({ form, vehicleType }: PowerFieldsProps) {
   
   return (
     <>
-      {vehicleType === "electric" ? (
+      {(vehicleType === "electric" || vehicleType === "hybrid") && (
         <FormField
           control={form.control}
           name="batteryLevel"
@@ -29,7 +29,8 @@ export function PowerFields({ form, vehicleType }: PowerFieldsProps) {
             </FormItem>
           )}
         />
-      ) : (
+      )}
+      {(vehicleType === "fuel" || vehicleType === "hybrid") && (
         <FormField
           control={form.control}
           name="fuelLevel"

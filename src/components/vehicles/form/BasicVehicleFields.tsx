@@ -37,7 +37,7 @@ export function BasicVehicleFields({ form }: BasicVehicleFieldsProps) {
           <FormItem>
             <FormLabel>{extractLanguageText("License Plate | ป้ายทะเบียน | Kennzeichen", language)}</FormLabel>
             <FormControl>
-              <Input placeholder={extractLanguageText("e.g. BKK-123 | เช่น BKK-123 | z.B. BKK-123", language)} {...field} />
+              <Input placeholder={extractLanguageText("e.g. BKK-123 | เช่น BKK-123 | z.B. B-FR-123", language)} {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -76,7 +76,7 @@ export function BasicVehicleFields({ form }: BasicVehicleFieldsProps) {
           <FormItem>
             <FormLabel>{extractLanguageText("Location | สถานที่ | Standort", language)}</FormLabel>
             <FormControl>
-              <Input placeholder={extractLanguageText("e.g. Bangkok | เช่น กรุงเทพฯ | z.B. Bangkok", language)} {...field} />
+              <Input placeholder={extractLanguageText("e.g. Bangkok | เช่น กรุงเทพฯ | z.B. Berlin", language)} {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>

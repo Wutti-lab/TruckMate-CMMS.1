@@ -21,7 +21,7 @@ export function ServiceFields({ form }: ServiceFieldsProps) {
           <FormItem>
             <FormLabel>{extractLanguageText("Last Service | บริการล่าสุด | Letzte Wartung", language)}</FormLabel>
             <FormControl>
-              <Input placeholder="MM/DD/YYYY" {...field} />
+              <Input placeholder={language === 'de' ? "TT.MM.JJJJ" : "MM/DD/YYYY"} {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -34,7 +34,7 @@ export function ServiceFields({ form }: ServiceFieldsProps) {
           <FormItem>
             <FormLabel>{extractLanguageText("Next Service | บริการถัดไป | Nächste Wartung", language)}</FormLabel>
             <FormControl>
-              <Input placeholder="MM/DD/YYYY" {...field} />
+              <Input placeholder={language === 'de' ? "TT.MM.JJJJ" : "MM/DD/YYYY"} {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
