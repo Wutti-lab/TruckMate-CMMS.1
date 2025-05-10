@@ -1,3 +1,4 @@
+
 // Pricing page related translations
 export const pricingTranslations = {
   "choosePlan": "เลือกแผนที่เหมาะกับความต้องการของคุณ",

@@ -1,4 +1,3 @@
-
 export const enTranslations = {
   // Login Page
   "login": "Login",
@@ -129,7 +128,16 @@ export const enTranslations = {
   "needCustomOffer": "Need a custom offer",
   "contactUsForTailoredSolutions": "Contact our sales team for tailored solutions that fit your specific fleet requirements.",
   "contact": "Contact Sales",
-
+  "paymentDetails": "Payment Details",
+  "scanQrToTransfer": "Scan QR to transfer to account",
+  "promptPay": "PromptPay",
+  "phoneNumber": "Phone: 080-929-9965",
+  "afterTransferring": "After transferring, please send proof of payment to this email: truckmatecmms@gmail.com",
+  "confirmPayment": "Confirm Payment",
+  "sendPaymentVerification": "Send payment verification:",
+  "paymentEmail": "truckmatecmms@gmail.com",
+  "pleaseVerifyPayment": "Please send payment verification to this email: truckmatecmms@gmail.com",
+  
   // Advertisements Page
   "adManager": "Advertisement Manager",
   "createNewAd": "Create New Advertisement",
@@ -231,4 +239,3 @@ export const enTranslations = {
   // New Inspection
   "newInspection": "New Inspection"
 };
-

@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Truck, User, Check, ArrowLeft, QrCode } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
-import { useLanguage, extractLanguageText } from "@/contexts/LanguageContext";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 export default function Pricing() {
@@ -21,7 +21,7 @@ export default function Pricing() {
   const navigate = useNavigate();
   const [isProcessing, setIsProcessing] = useState(false);
   const [showQrCode, setShowQrCode] = useState(false);
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
 
   const handlePayment = (plan: string) => {
     setIsProcessing(true);
@@ -180,9 +180,7 @@ export default function Pricing() {
             <DialogContent className="sm:max-w-md">
               <DialogHeader>
                 <DialogTitle className="text-center">
-                  {language === 'th' ? 'สแกน QR เพื่อโอนเข้าบัญชี' : 
-                   language === 'de' ? 'QR-Code scannen, um auf das Konto zu überweisen' : 
-                   'Scan QR to transfer to account'}
+                  {t("scanQrToTransfer")}
                 </DialogTitle>
               </DialogHeader>
               <div className="flex flex-col items-center justify-center space-y-4">
@@ -196,22 +194,16 @@ export default function Pricing() {
                 
                 <div className="text-center space-y-2">
                   <p className="font-bold">
-                    {language === 'th' ? 'พร้อมเพย์' : 
-                     language === 'de' ? 'PromptPay' : 
-                     'PromptPay'}
+                    {t("promptPay")}
                   </p>
                   <p>
-                    {language === 'th' ? 'เบอร์โทร: 080-929-9965' : 
-                     language === 'de' ? 'Telefon: 080-929-9965' : 
-                     'Phone: 080-929-9965'}
+                    {t("phoneNumber")}
                   </p>
                 </div>
                 
                 <div className="border-t w-full pt-4 mt-4">
                   <p className="text-sm text-center text-gray-500">
-                    {language === 'th' ? 'หลังจากโอนเงิน กรุณาส่งหลักฐานการโอนเงินไปที่เบอร์โทรนี้' : 
-                     language === 'de' ? 'Nach der Überweisung senden Sie bitte den Zahlungsnachweis an diese Telefonnummer' : 
-                     'After transferring, please send proof of payment to this phone number'}
+                    {t("afterTransferring")}
                   </p>
                 </div>
                 
@@ -219,9 +211,7 @@ export default function Pricing() {
                   onClick={() => handlePaymentComplete("Vehicle")}
                   className="w-full mt-4"
                 >
-                  {language === 'th' ? 'ยืนยันการชำระเงิน' : 
-                   language === 'de' ? 'Zahlung bestätigen' : 
-                   'Confirm Payment'}
+                  {t("confirmPayment")}
                 </Button>
               </div>
             </DialogContent>

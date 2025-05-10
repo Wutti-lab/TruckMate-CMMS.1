@@ -13,7 +13,7 @@ interface PaymentConfirmationProps {
 
 export function PaymentConfirmation({ userEmail, onBack, onSubmit }: PaymentConfirmationProps) {
   const [paymentConfirmed, setPaymentConfirmed] = useState(false);
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
   
   return (
     <div className="space-y-4 py-4">
@@ -41,14 +41,10 @@ export function PaymentConfirmation({ userEmail, onBack, onSubmit }: PaymentConf
           
           <div className="text-center">
             <p className="font-medium">
-              {language === 'th' ? 'พร้อมเพย์' : 
-               language === 'de' ? 'PromptPay' : 
-               'PromptPay'}
+              {t("promptPay")}
             </p>
             <p className="text-sm">
-              {language === 'th' ? 'เบอร์โทร: 080-929-9965' : 
-               language === 'de' ? 'Telefon: 080-929-9965' : 
-               'Phone: 080-929-9965'}
+              {t("phoneNumber")}
             </p>
             <p className="text-sm mt-2">
               {language === 'th' ? 'อ้างอิง: ' : 
@@ -60,17 +56,13 @@ export function PaymentConfirmation({ userEmail, onBack, onSubmit }: PaymentConf
         
         <div className="mt-4 text-center border-t pt-3">
           <p className="font-medium mb-1">
-            {language === 'th' ? 'ส่งหลักฐานการชำระเงิน:' : 
-             language === 'de' ? 'Zahlungsnachweis senden:' : 
-             'Send payment verification:'}
+            {t("sendPaymentVerification")}
           </p>
           <p className="text-sm font-medium text-blue-600">
-            truckmatecmms@gmail.com
+            {t("paymentEmail")}
           </p>
           <p className="text-xs mt-1 text-gray-600">
-            {language === 'th' ? 'กรุณาส่งหลักฐานการชำระเงินไปที่อีเมลนี้' : 
-             language === 'de' ? 'Bitte senden Sie die Nachweise auch hier her' : 
-             'Please send payment verification to this email'}
+            {t("pleaseVerifyPayment")}
           </p>
         </div>
       </div>

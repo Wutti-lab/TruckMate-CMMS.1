@@ -1,4 +1,3 @@
-
 export const deTranslations = {
   // Login Page
   "login": "Anmelden",
@@ -129,6 +128,15 @@ export const deTranslations = {
   "needCustomOffer": "Benötigen Sie ein individuelles Angebot",
   "contactUsForTailoredSolutions": "Kontaktieren Sie unser Vertriebsteam für maßgeschneiderte Lösungen, die Ihren spezifischen Flottenanforderungen entsprechen.",
   "contact": "Vertrieb kontaktieren",
+  "paymentDetails": "Zahlungsdetails",
+  "scanQrToTransfer": "QR-Code scannen, um auf das Konto zu überweisen",
+  "promptPay": "PromptPay",
+  "phoneNumber": "Telefon: 080-929-9965",
+  "afterTransferring": "Nach der Überweisung senden Sie bitte den Zahlungsnachweis an diese E-Mail: truckmatecmms@gmail.com",
+  "confirmPayment": "Zahlung bestätigen",
+  "sendPaymentVerification": "Zahlungsnachweis senden:",
+  "paymentEmail": "truckmatecmms@gmail.com",
+  "pleaseVerifyPayment": "Bitte senden Sie den Zahlungsnachweis an diese E-Mail: truckmatecmms@gmail.com",
 
   // Advertisements Page
   "adManager": "Werbeanzeigen-Manager",
@@ -231,4 +239,3 @@ export const deTranslations = {
   // New Inspection
   "newInspection": "Neue Inspektion"
 };
-
