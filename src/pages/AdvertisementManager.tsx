@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -8,6 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { toast } from "@/hooks/use-toast";
+import { X } from 'lucide-react';
 
 interface Advertisement {
   id: string;
@@ -16,6 +17,7 @@ interface Advertisement {
   bgColor: string;
   link: string;
   active: boolean;
+  image?: string;
 }
 
 export default function AdvertisementManager() {
@@ -50,8 +52,11 @@ export default function AdvertisementManager() {
     title: "",
     description: "",
     bgColor: "bg-gradient-to-r from-sky-400 to-blue-500",
-    link: ""
+    link: "",
+    image: ""
   });
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
   
   const colorOptions = [
     { value: "bg-gradient-to-r from-sky-400 to-blue-500", label: "Blau" },
@@ -82,7 +87,8 @@ export default function AdvertisementManager() {
       title: "",
       description: "",
       bgColor: "bg-gradient-to-r from-sky-400 to-blue-500",
-      link: ""
+      link: "",
+      image: ""
     });
     
     toast({
@@ -103,6 +109,49 @@ export default function AdvertisementManager() {
       title: "Werbung gelöscht",
       description: "Die Werbeanzeige wurde erfolgreich gelöscht."
     });
+  };
+  
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    
+    // Überprüfen der Dateigröße (max 2MB)
+    if (file.size > 2 * 1024 * 1024) {
+      toast({
+        title: "Bild zu groß",
+        description: "Die Bildgröße sollte maximal 2MB betragen.",
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      if (event.target?.result) {
+        // Bildvorschau erstellen und Größe überprüfen
+        const img = new Image();
+        img.onload = () => {
+          if (img.width > 1200 || img.height > 800) {
+            toast({
+              title: "Bildabmessungen zu groß",
+              description: "Empfohlene maximale Abmessungen: 1200x800 Pixel",
+              variant: "destructive"
+            });
+          }
+          
+          setNewAd({...newAd, image: event.target?.result as string});
+        };
+        img.src = event.target?.result as string;
+      }
+    };
+    reader.readAsDataURL(file);
+  };
+  
+  const removeImage = () => {
+    setNewAd({...newAd, image: ""});
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
   };
   
   return (
@@ -150,6 +199,40 @@ export default function AdvertisementManager() {
             </div>
             
             <div className="space-y-2">
+              <Label htmlFor="image">Bild (optional)</Label>
+              <div className="flex flex-col gap-2">
+                <Input
+                  ref={fileInputRef}
+                  id="image"
+                  type="file"
+                  accept="image/jpeg, image/png, image/gif, image/webp"
+                  onChange={handleImageUpload}
+                  className="cursor-pointer"
+                />
+                <div className="text-xs text-gray-500">
+                  Empfohlene Größe: max. 1200x800 Pixel, max. 2MB, Formate: JPG, PNG, GIF, WebP
+                </div>
+                
+                {newAd.image && (
+                  <div className="relative mt-2 border rounded p-2">
+                    <button 
+                      onClick={removeImage}
+                      className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1"
+                      type="button"
+                    >
+                      <X size={14} />
+                    </button>
+                    <img 
+                      src={newAd.image} 
+                      alt="Vorschau" 
+                      className="h-32 w-auto object-contain mx-auto"
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
+            
+            <div className="space-y-2">
               <Label htmlFor="color">Hintergrundfarbe</Label>
               <Select 
                 value={newAd.bgColor} 
@@ -188,6 +271,15 @@ export default function AdvertisementManager() {
           <CardContent>
             <div className={`${newAd.bgColor} w-full text-white p-3 rounded-md shadow-md`}>
               <div className="flex flex-col items-center text-center px-6 py-2">
+                {newAd.image && (
+                  <div className="mb-2">
+                    <img 
+                      src={newAd.image} 
+                      alt={newAd.title || "Werbebild"} 
+                      className="h-12 w-auto object-contain rounded"
+                    />
+                  </div>
+                )}
                 <h3 className="font-bold text-sm">{newAd.title || "Werbetitel"}</h3>
                 <p className="text-xs mt-1">{newAd.description || "Werbebeschreibung"}</p>
                 <a 
@@ -213,6 +305,7 @@ export default function AdvertisementManager() {
               <TableRow>
                 <TableHead>Titel</TableHead>
                 <TableHead>Beschreibung</TableHead>
+                <TableHead>Bild</TableHead>
                 <TableHead>Status</TableHead>
                 <TableHead className="text-right">Aktionen</TableHead>
               </TableRow>
@@ -222,6 +315,17 @@ export default function AdvertisementManager() {
                 <TableRow key={ad.id}>
                   <TableCell className="font-medium">{ad.title}</TableCell>
                   <TableCell>{ad.description}</TableCell>
+                  <TableCell>
+                    {ad.image ? (
+                      <img 
+                        src={ad.image} 
+                        alt={ad.title} 
+                        className="h-8 w-auto object-contain"
+                      />
+                    ) : (
+                      <span className="text-gray-400">-</span>
+                    )}
+                  </TableCell>
                   <TableCell>
                     <span className={`px-2 py-1 rounded-full text-xs ${ad.active ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}`}>
                       {ad.active ? 'Aktiv' : 'Inaktiv'}
