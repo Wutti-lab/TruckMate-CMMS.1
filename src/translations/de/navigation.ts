@@ -9,6 +9,7 @@ export const navigationTranslations = {
   "inspections": "Inspektionen",
   "qrScanner": "QR-Scanner",
   "accountManagement": "Kontoverwaltung",
+  "customers": "Kunden",
   "logout": "Abmelden",
   "pricing": "Preise",
   "advertisements": "Werbeanzeigen",

@@ -10,6 +10,7 @@ import Map from "@/pages/Map";
 import QRScanner from "@/pages/QRScanner";
 import Inspections from "@/pages/Inspections";
 import Accounts from "@/pages/Accounts";
+import Customers from "@/pages/Customers";
 import NotFound from "@/pages/NotFound";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import { AppLayout } from "@/components/layout/AppLayout";
@@ -108,6 +109,17 @@ function App() {
                     <ProtectedRoute allowedRoles={[UserRole.ADMIN]}>
                       <AppLayout>
                         <Accounts />
+                      </AppLayout>
+                    </ProtectedRoute>
+                  }
+                />
+                
+                <Route
+                  path="/customers"
+                  element={
+                    <ProtectedRoute allowedRoles={[UserRole.ADMIN, UserRole.FLEET_MANAGER]}>
+                      <AppLayout>
+                        <Customers />
                       </AppLayout>
                     </ProtectedRoute>
                   }
