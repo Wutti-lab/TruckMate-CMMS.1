@@ -1,7 +1,7 @@
 
 import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useLanguage, extractLanguageText } from "@/contexts/LanguageContext";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { UseFormReturn } from "react-hook-form";
 import { VehicleFormValues } from "./BasicVehicleFields";
 
@@ -10,7 +10,7 @@ interface ServiceFieldsProps {
 }
 
 export function ServiceFields({ form }: ServiceFieldsProps) {
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
   
   return (
     <>
@@ -19,7 +19,7 @@ export function ServiceFields({ form }: ServiceFieldsProps) {
         name="lastService"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>{extractLanguageText("Last Service | บริการล่าสุด | Letzte Wartung", language)}</FormLabel>
+            <FormLabel>{language === 'de' ? 'Letzte Wartung' : 'Last Service'}</FormLabel>
             <FormControl>
               <Input placeholder={language === 'de' ? "TT.MM.JJJJ" : "MM/DD/YYYY"} {...field} />
             </FormControl>
@@ -32,7 +32,7 @@ export function ServiceFields({ form }: ServiceFieldsProps) {
         name="nextService"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>{extractLanguageText("Next Service | บริการถัดไป | Nächste Wartung", language)}</FormLabel>
+            <FormLabel>{language === 'de' ? 'Nächste Wartung' : 'Next Service'}</FormLabel>
             <FormControl>
               <Input placeholder={language === 'de' ? "TT.MM.JJJJ" : "MM/DD/YYYY"} {...field} />
             </FormControl>

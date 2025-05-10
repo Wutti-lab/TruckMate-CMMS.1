@@ -1,6 +1,7 @@
 
 import { TableCell } from "@/components/ui/table";
 import { Calendar } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface VehicleServiceProps {
   nextService: string;
