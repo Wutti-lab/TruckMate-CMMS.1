@@ -29,7 +29,7 @@ export function useCustomerData() {
             purchaseDate: "2024-01-15",
             expiryDate: "2025-01-15",
             status: "active",
-            price: 2499.99
+            price: 5000.00 // Vehicle Plan price (5,000 ฿)
           },
           {
             id: "l2",
@@ -38,10 +38,10 @@ export function useCustomerData() {
             purchaseDate: "2023-11-20",
             expiryDate: "2024-11-20",
             status: "active",
-            price: 1299.50
+            price: 2000.00 // User Plan price (2,000 ฿)
           }
         ],
-        totalSpent: 3799.49,
+        totalSpent: 7000.00, // Updated total to match new prices
         status: "active"
       },
       {
@@ -60,10 +60,10 @@ export function useCustomerData() {
             purchaseDate: "2023-09-07",
             expiryDate: "2023-12-07",
             status: "expired",
-            price: 899.99
+            price: 2000.00 // Updated to User Plan price (2,000 ฿)
           }
         ],
-        totalSpent: 899.99,
+        totalSpent: 2000.00, // Updated to match new price
         status: "inactive"
       }
     ];

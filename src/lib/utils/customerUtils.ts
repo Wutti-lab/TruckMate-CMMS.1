@@ -22,7 +22,7 @@ export function convertPendingUserToCustomer(user: PendingUser): Customer {
     purchaseDate: user.createdAt.split('T')[0],
     expiryDate: getExpiryDate(),
     status: "active",
-    price: 2000.00 // Standard price
+    price: 2000.00 // User Plan price (2,000 ฿)
   };
 
   // Create the customer with the default license
@@ -35,7 +35,7 @@ export function convertPendingUserToCustomer(user: PendingUser): Customer {
     country: "Deutschland", // Default country
     registrationDate: user.createdAt.split('T')[0],
     licenses: [defaultLicense],
-    totalSpent: 2000.00, // Standard price
+    totalSpent: 2000.00, // User Plan price (2,000 ฿)
     status: user.approvalStatus === 'approved' ? "active" : "inactive"
   };
 
