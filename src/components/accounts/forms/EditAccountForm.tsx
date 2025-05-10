@@ -4,12 +4,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { User } from "@/lib/types/user-roles";
 import { editAccountFormSchema, EditAccountFormValues } from "./EditAccountFormSchema";
 import { Form } from "@/components/ui/form";
-import { NameField } from "./fields/NameField";
-import { EmailField } from "./fields/EmailField";
-import { PasswordField } from "./fields/PasswordField";
-import { RoleField } from "./fields/RoleField";
-import { StatusField } from "./fields/StatusField";
-import { FormActions } from "./fields/FormActions";
+import { 
+  NameField,
+  EmailField,
+  PasswordField,
+  RoleField,
+  StatusField,
+  FormActions
+} from "./fields";
 
 interface EditAccountFormProps {
   user: User & { status?: string };
