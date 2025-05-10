@@ -1,3 +1,4 @@
+
 import { Link } from "react-router-dom";
 import { 
   LayoutDashboard, 
@@ -99,7 +100,14 @@ export function Sidebar() {
     >
       <SidebarHeader className="p-4 border-b border-sidebar-border">
         <div className="flex flex-col space-y-1">
-          <h2 className="text-xl font-bold text-sky-100">TruckMate CMMS</h2>
+          <div className="flex items-center mb-2">
+            <img 
+              src="/lovable-uploads/263fb180-3e33-4bd3-a0a9-ab3a7355d13c.png" 
+              alt="TruckMate CMMS Logo" 
+              className="h-10 mr-2"
+            />
+            <h2 className="text-xl font-bold text-sky-100">TruckMate CMMS</h2>
+          </div>
           <p className="text-sm text-sky-200">ระบบจัดการยานพาหนะที่ง่ายดาย</p>
         </div>
 
