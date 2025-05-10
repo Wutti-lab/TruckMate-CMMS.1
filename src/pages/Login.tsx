@@ -7,14 +7,6 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { LanguageSelector } from "@/components/language/LanguageSelector";
 import { LoginFormWithCredentials } from "@/components/auth/LoginFormWithCredentials";
 
-const userCredentials = [
-  { role: 'Admin', email: 'admin@truckmate.com', password: '123456' },
-  { role: 'Fleet Manager', email: 'fleet@truckmate.com', password: '123456' },
-  { role: 'Driver', email: 'driver@truckmate.com', password: '123456' },
-  { role: 'Mechanic', email: 'mechanic@truckmate.com', password: '123456' },
-  { role: 'Dispatcher', email: 'dispatcher@truckmate.com', password: '123456' },
-];
-
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -48,14 +40,6 @@ export default function Login() {
     }
   };
 
-  const fillCredentials = (role: string) => {
-    const user = userCredentials.find(user => user.role === role);
-    if (user) {
-      setEmail(user.email);
-      setPassword(user.password);
-    }
-  };
-
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-fleet-50 to-white p-4">
       <div className="w-full max-w-md space-y-8">
@@ -86,12 +70,10 @@ export default function Login() {
           password={password}
           rememberMe={rememberMe}
           isLoading={isLoading}
-          userCredentials={userCredentials}
           onEmailChange={(e) => setEmail(e.target.value)}
           onPasswordChange={(e) => setPassword(e.target.value)}
           onRememberMeChange={setRememberMe}
           onSubmit={handleSubmit}
-          onFillCredentials={fillCredentials}
         />
       </div>
     </div>

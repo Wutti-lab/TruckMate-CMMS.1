@@ -7,25 +7,17 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { LoginCredentialsCard } from "./LoginCredentialsCard";
-
-interface UserCredential {
-  role: string;
-  email: string;
-  password: string;
-}
 
 interface LoginFormProps {
   email: string;
   password: string;
   rememberMe: boolean;
   isLoading: boolean;
-  userCredentials: UserCredential[];
   onEmailChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onPasswordChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onRememberMeChange: (checked: boolean) => void;
   onSubmit: (e: React.FormEvent) => void;
-  onFillCredentials: (role: string) => void;
+  onFillCredentials?: (role: string) => void;
 }
 
 export function LoginFormWithCredentials({
@@ -33,12 +25,10 @@ export function LoginFormWithCredentials({
   password,
   rememberMe,
   isLoading,
-  userCredentials,
   onEmailChange,
   onPasswordChange,
   onRememberMeChange,
-  onSubmit,
-  onFillCredentials
+  onSubmit
 }: LoginFormProps) {
   const { t } = useLanguage();
   const [showPassword, setShowPassword] = useState(false);
@@ -108,10 +98,15 @@ export function LoginFormWithCredentials({
             </a>
           </div>
 
-          <LoginCredentialsCard 
-            credentials={userCredentials} 
-            onSelectCredential={onFillCredentials} 
-          />
+          <div className="bg-gray-50 p-3 rounded-md border border-gray-200 text-center">
+            <p className="text-sm">{t("noAccount")}</p>
+            <Link 
+              to="/register" 
+              className="text-fleet-600 hover:underline text-sm font-medium block mt-1"
+            >
+              {t("register")}
+            </Link>
+          </div>
         </CardContent>
         <CardFooter className="flex-col space-y-4">
           <Button
