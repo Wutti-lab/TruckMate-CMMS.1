@@ -1,4 +1,3 @@
-
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { Toaster } from "@/components/ui/toaster";
 import Login from "@/pages/Login";
@@ -19,112 +18,115 @@ import Pricing from "@/pages/Pricing";
 import AdvertisementManager from "@/pages/AdvertisementManager";
 import { LocationProvider } from "@/contexts/LocationContext";
 import { NotificationProvider } from "@/contexts/NotificationContext";
+import { LanguageProvider } from "@/contexts/LanguageContext";
 
 function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <LocationProvider>
-          <NotificationProvider>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/pricing" element={<Pricing />} />
-              
-              {/* Protected Routes that require authentication */}
-              <Route
-                path="/dashboard"
-                element={
-                  <ProtectedRoute allowedRoles={[UserRole.ADMIN, UserRole.FLEET_MANAGER, UserRole.DRIVER, UserRole.MECHANIC, UserRole.DISPATCHER]}>
-                    <AppLayout>
-                      <Dashboard />
-                    </AppLayout>
-                  </ProtectedRoute>
-                }
-              />
-              
-              <Route
-                path="/vehicles"
-                element={
-                  <ProtectedRoute allowedRoles={[UserRole.ADMIN, UserRole.FLEET_MANAGER]}>
-                    <AppLayout>
-                      <Vehicles />
-                    </AppLayout>
-                  </ProtectedRoute>
-                }
-              />
-              
-              <Route
-                path="/drivers"
-                element={
-                  <ProtectedRoute allowedRoles={[UserRole.ADMIN, UserRole.FLEET_MANAGER]}>
-                    <AppLayout>
-                      <Drivers />
-                    </AppLayout>
-                  </ProtectedRoute>
-                }
-              />
-              
-              <Route
-                path="/map"
-                element={
-                  <ProtectedRoute allowedRoles={[UserRole.ADMIN, UserRole.FLEET_MANAGER, UserRole.DISPATCHER]}>
-                    <AppLayout>
-                      <Map />
-                    </AppLayout>
-                  </ProtectedRoute>
-                }
-              />
-              
-              <Route
-                path="/inspections"
-                element={
-                  <ProtectedRoute allowedRoles={[UserRole.ADMIN, UserRole.FLEET_MANAGER, UserRole.MECHANIC, UserRole.DRIVER]}>
-                    <AppLayout>
-                      <Inspections />
-                    </AppLayout>
-                  </ProtectedRoute>
-                }
-              />
-              
-              <Route
-                path="/qr-scanner"
-                element={
-                  <ProtectedRoute allowedRoles={[UserRole.ADMIN, UserRole.DRIVER, UserRole.FLEET_MANAGER]}>
-                    <AppLayout>
-                      <QRScanner />
-                    </AppLayout>
-                  </ProtectedRoute>
-                }
-              />
-              
-              <Route
-                path="/accounts"
-                element={
-                  <ProtectedRoute allowedRoles={[UserRole.ADMIN]}>
-                    <AppLayout>
-                      <Accounts />
-                    </AppLayout>
-                  </ProtectedRoute>
-                }
-              />
-              
-              <Route
-                path="/advertisements"
-                element={
-                  <ProtectedRoute allowedRoles={[UserRole.ADMIN]}>
-                    <AppLayout>
-                      <AdvertisementManager />
-                    </AppLayout>
-                  </ProtectedRoute>
-                }
-              />
-              
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-            <Toaster />
-          </NotificationProvider>
-        </LocationProvider>
+        <LanguageProvider>
+          <LocationProvider>
+            <NotificationProvider>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/pricing" element={<Pricing />} />
+                
+                {/* Protected Routes that require authentication */}
+                <Route
+                  path="/dashboard"
+                  element={
+                    <ProtectedRoute allowedRoles={[UserRole.ADMIN, UserRole.FLEET_MANAGER, UserRole.DRIVER, UserRole.MECHANIC, UserRole.DISPATCHER]}>
+                      <AppLayout>
+                        <Dashboard />
+                      </AppLayout>
+                    </ProtectedRoute>
+                  }
+                />
+                
+                <Route
+                  path="/vehicles"
+                  element={
+                    <ProtectedRoute allowedRoles={[UserRole.ADMIN, UserRole.FLEET_MANAGER]}>
+                      <AppLayout>
+                        <Vehicles />
+                      </AppLayout>
+                    </ProtectedRoute>
+                  }
+                />
+                
+                <Route
+                  path="/drivers"
+                  element={
+                    <ProtectedRoute allowedRoles={[UserRole.ADMIN, UserRole.FLEET_MANAGER]}>
+                      <AppLayout>
+                        <Drivers />
+                      </AppLayout>
+                    </ProtectedRoute>
+                  }
+                />
+                
+                <Route
+                  path="/map"
+                  element={
+                    <ProtectedRoute allowedRoles={[UserRole.ADMIN, UserRole.FLEET_MANAGER, UserRole.DISPATCHER]}>
+                      <AppLayout>
+                        <Map />
+                      </AppLayout>
+                    </ProtectedRoute>
+                  }
+                />
+                
+                <Route
+                  path="/inspections"
+                  element={
+                    <ProtectedRoute allowedRoles={[UserRole.ADMIN, UserRole.FLEET_MANAGER, UserRole.MECHANIC, UserRole.DRIVER]}>
+                      <AppLayout>
+                        <Inspections />
+                      </AppLayout>
+                    </ProtectedRoute>
+                  }
+                />
+                
+                <Route
+                  path="/qr-scanner"
+                  element={
+                    <ProtectedRoute allowedRoles={[UserRole.ADMIN, UserRole.DRIVER, UserRole.FLEET_MANAGER]}>
+                      <AppLayout>
+                        <QRScanner />
+                      </AppLayout>
+                    </ProtectedRoute>
+                  }
+                />
+                
+                <Route
+                  path="/accounts"
+                  element={
+                    <ProtectedRoute allowedRoles={[UserRole.ADMIN]}>
+                      <AppLayout>
+                        <Accounts />
+                      </AppLayout>
+                    </ProtectedRoute>
+                  }
+                />
+                
+                <Route
+                  path="/advertisements"
+                  element={
+                    <ProtectedRoute allowedRoles={[UserRole.ADMIN]}>
+                      <AppLayout>
+                        <AdvertisementManager />
+                      </AppLayout>
+                    </ProtectedRoute>
+                  }
+                />
+                
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+              <Toaster />
+            </NotificationProvider>
+          </LocationProvider>
+        </LanguageProvider>
       </AuthProvider>
     </BrowserRouter>
   );

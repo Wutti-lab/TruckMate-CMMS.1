@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface AdBannerProps {
   position?: 'top' | 'bottom';
@@ -10,39 +11,94 @@ interface AdBannerProps {
 export function AdBanner({ position = 'top' }: AdBannerProps) {
   const [currentAd, setCurrentAd] = useState(0);
   const isMobile = useIsMobile();
+  const { language } = useLanguage();
   
-  // Example advertisements
-  const advertisements = [
-    {
-      title: "Fahrzeugteile Sonderangebot",
-      description: "20% Rabatt auf alle Ersatzteile bis Ende des Monats",
-      bgColor: "bg-gradient-to-r from-sky-400 to-blue-500",
-      link: "#"
-    },
-    {
-      title: "TruckTracker Pro",
-      description: "Verbessern Sie Ihre Flottenverfolgung mit unserem Premium-Upgrade",
-      bgColor: "bg-gradient-to-r from-amber-300 to-orange-500",
-      link: "#"
-    },
-    {
-      title: "Wartungsworkshop",
-      description: "Melden Sie sich für unseren kommenden Online-Workshop an",
-      bgColor: "bg-gradient-to-r from-green-400 to-emerald-600",
-      link: "#"
-    }
-  ];
+  // Example advertisements with translations
+  const advertisements = {
+    en: [
+      {
+        title: "Vehicle Parts Special Offer",
+        description: "20% discount on all spare parts until the end of the month",
+        bgColor: "bg-gradient-to-r from-sky-400 to-blue-500",
+        link: "#",
+        buttonText: "Learn More"
+      },
+      {
+        title: "TruckTracker Pro",
+        description: "Improve your fleet tracking with our premium upgrade",
+        bgColor: "bg-gradient-to-r from-amber-300 to-orange-500",
+        link: "#",
+        buttonText: "Learn More"
+      },
+      {
+        title: "Maintenance Workshop",
+        description: "Sign up for our upcoming online workshop",
+        bgColor: "bg-gradient-to-r from-green-400 to-emerald-600",
+        link: "#",
+        buttonText: "Learn More"
+      }
+    ],
+    th: [
+      {
+        title: "ข้อเสนอพิเศษชิ้นส่วนยานพาหนะ",
+        description: "ส่วนลด 20% สำหรับอะไหล่ทั้งหมดจนถึงสิ้นเดือน",
+        bgColor: "bg-gradient-to-r from-sky-400 to-blue-500",
+        link: "#",
+        buttonText: "เรียนรู้เพิ่มเติม"
+      },
+      {
+        title: "TruckTracker Pro",
+        description: "ปรับปรุงการติดตามยานพาหนะของคุณด้วยการอัปเกรดพรีเมียม",
+        bgColor: "bg-gradient-to-r from-amber-300 to-orange-500",
+        link: "#",
+        buttonText: "เรียนรู้เพิ่มเติม"
+      },
+      {
+        title: "เวิร์กชอปการบำรุงรักษา",
+        description: "ลงทะเบียนเข้าร่วมเวิร์กชอปออนไลน์ที่กำลังจะมาถึง",
+        bgColor: "bg-gradient-to-r from-green-400 to-emerald-600",
+        link: "#",
+        buttonText: "เรียนรู้เพิ่มเติม"
+      }
+    ],
+    de: [
+      {
+        title: "Fahrzeugteile Sonderangebot",
+        description: "20% Rabatt auf alle Ersatzteile bis Ende des Monats",
+        bgColor: "bg-gradient-to-r from-sky-400 to-blue-500",
+        link: "#",
+        buttonText: "Mehr erfahren"
+      },
+      {
+        title: "TruckTracker Pro",
+        description: "Verbessern Sie Ihre Flottenverfolgung mit unserem Premium-Upgrade",
+        bgColor: "bg-gradient-to-r from-amber-300 to-orange-500",
+        link: "#",
+        buttonText: "Mehr erfahren"
+      },
+      {
+        title: "Wartungsworkshop",
+        description: "Melden Sie sich für unseren kommenden Online-Workshop an",
+        bgColor: "bg-gradient-to-r from-green-400 to-emerald-600",
+        link: "#",
+        buttonText: "Mehr erfahren"
+      }
+    ]
+  };
 
+  // Get ads for current language or fall back to English
+  const currentLanguageAds = advertisements[language as keyof typeof advertisements] || advertisements.en;
+  
   // Rotate advertisements
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentAd((prev) => (prev + 1) % advertisements.length);
+      setCurrentAd((prev) => (prev + 1) % currentLanguageAds.length);
     }, 8000);
     
     return () => clearInterval(interval);
-  }, [advertisements.length]);
+  }, [currentLanguageAds.length]);
 
-  const ad = advertisements[currentAd];
+  const ad = currentLanguageAds[currentAd];
 
   return (
     <div className={`relative w-full ${ad.bgColor} text-white p-3 shadow-md ${position === 'top' ? 'border-b' : 'border-t'} border-slate-700`}>
@@ -53,7 +109,7 @@ export function AdBanner({ position = 'top' }: AdBannerProps) {
           href={ad.link} 
           className="mt-2 text-xs bg-white/20 hover:bg-white/30 transition-colors px-3 py-1 rounded-full"
         >
-          Mehr erfahren
+          {ad.buttonText}
         </a>
       </div>
     </div>
