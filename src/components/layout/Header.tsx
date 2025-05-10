@@ -5,7 +5,7 @@ import { NotificationsDropdown } from "./NotificationsDropdown";
 import { HeaderProfile } from "./HeaderProfile";
 
 export function Header() {
-  const { language, t } = useLanguage();
+  const { t } = useLanguage();
 
   return (
     <header className="border-b bg-white p-4">
