@@ -24,8 +24,8 @@ export default function AdvertisementManager() {
   const [advertisements, setAdvertisements] = useState<Advertisement[]>([
     {
       id: "1",
-      title: "Fahrzeugteile Sonderangebot",
-      description: "20% Rabatt auf alle Ersatzteile bis Ende des Monats",
+      title: "ข้อเสนอพิเศษชิ้นส่วนยานพาหนะ",
+      description: "ส่วนลด 20% สำหรับอะไหล่ทั้งหมดจนถึงสิ้นเดือน",
       bgColor: "bg-gradient-to-r from-sky-400 to-blue-500",
       link: "#",
       active: true
@@ -33,15 +33,15 @@ export default function AdvertisementManager() {
     {
       id: "2",
       title: "TruckTracker Pro",
-      description: "Verbessern Sie Ihre Flottenverfolgung mit unserem Premium-Upgrade",
+      description: "ปรับปรุงการติดตามยานพาหนะของคุณด้วยการอัปเกรดพรีเมียม",
       bgColor: "bg-gradient-to-r from-amber-300 to-orange-500",
       link: "#",
       active: true
     },
     {
       id: "3",
-      title: "Wartungsworkshop",
-      description: "Melden Sie sich für unseren kommenden Online-Workshop an",
+      title: "เวิร์กชอปการบำรุงรักษา",
+      description: "ลงทะเบียนเข้าร่วมเวิร์กชอปออนไลน์ที่กำลังจะมาถึง",
       bgColor: "bg-gradient-to-r from-green-400 to-emerald-600",
       link: "#",
       active: true
@@ -59,18 +59,18 @@ export default function AdvertisementManager() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   
   const colorOptions = [
-    { value: "bg-gradient-to-r from-sky-400 to-blue-500", label: "Blau" },
-    { value: "bg-gradient-to-r from-amber-300 to-orange-500", label: "Orange" },
-    { value: "bg-gradient-to-r from-green-400 to-emerald-600", label: "Grün" },
-    { value: "bg-gradient-to-r from-purple-400 to-pink-500", label: "Lila" },
-    { value: "bg-gradient-to-r from-red-400 to-rose-500", label: "Rot" }
+    { value: "bg-gradient-to-r from-sky-400 to-blue-500", label: "สีฟ้า" },
+    { value: "bg-gradient-to-r from-amber-300 to-orange-500", label: "สีส้ม" },
+    { value: "bg-gradient-to-r from-green-400 to-emerald-600", label: "สีเขียว" },
+    { value: "bg-gradient-to-r from-purple-400 to-pink-500", label: "สีม่วง" },
+    { value: "bg-gradient-to-r from-red-400 to-rose-500", label: "สีแดง" }
   ];
   
   const handleAddNewAd = () => {
     if (!newAd.title || !newAd.description) {
       toast({
-        title: "Fehlende Informationen",
-        description: "Bitte füllen Sie alle erforderlichen Felder aus.",
+        title: "ข้อมูลไม่ครบถ้วน",
+        description: "กรุณากรอกข้อมูลในช่องที่จำเป็นทั้งหมด",
         variant: "destructive"
       });
       return;
@@ -92,8 +92,8 @@ export default function AdvertisementManager() {
     });
     
     toast({
-      title: "Werbung hinzugefügt",
-      description: "Die neue Werbeanzeige wurde erfolgreich hinzugefügt."
+      title: "เพิ่มโฆษณาแล้ว",
+      description: "โฆษณาใหม่ได้รับการเพิ่มเรียบร้อยแล้ว"
     });
   };
   
@@ -106,8 +106,8 @@ export default function AdvertisementManager() {
   const deleteAd = (id: string) => {
     setAdvertisements(advertisements.filter(ad => ad.id !== id));
     toast({
-      title: "Werbung gelöscht",
-      description: "Die Werbeanzeige wurde erfolgreich gelöscht."
+      title: "ลบโฆษณาแล้ว",
+      description: "โฆษณาได้รับการลบเรียบร้อยแล้ว"
     });
   };
   
@@ -115,11 +115,11 @@ export default function AdvertisementManager() {
     const file = e.target.files?.[0];
     if (!file) return;
     
-    // Überprüfen der Dateigröße (max 2MB)
+    // ตรวจสอบขนาดไฟล์ (สูงสุด 2MB)
     if (file.size > 2 * 1024 * 1024) {
       toast({
-        title: "Bild zu groß",
-        description: "Die Bildgröße sollte maximal 2MB betragen.",
+        title: "ขนาดรูปภาพใหญ่เกินไป",
+        description: "ขนาดรูปภาพควรมีขนาดไม่เกิน 2MB",
         variant: "destructive"
       });
       return;
@@ -128,13 +128,13 @@ export default function AdvertisementManager() {
     const reader = new FileReader();
     reader.onload = (event) => {
       if (event.target?.result) {
-        // Bildvorschau erstellen und Größe überprüfen
+        // สร้างตัวอย่างภาพและตรวจสอบขนาด
         const img = new Image();
         img.onload = () => {
           if (img.width > 1200 || img.height > 800) {
             toast({
-              title: "Bildabmessungen zu groß",
-              description: "Empfohlene maximale Abmessungen: 1200x800 Pixel",
+              title: "ขนาดรูปภาพใหญ่เกินไป",
+              description: "ขนาดภาพที่แนะนำ: ไม่เกิน 1200x800 พิกเซล",
               variant: "destructive"
             });
           }
@@ -157,49 +157,49 @@ export default function AdvertisementManager() {
   return (
     <div className="container mx-auto py-6 space-y-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold">Werbeanzeigen-Manager</h1>
+        <h1 className="text-3xl font-bold">ตัวจัดการโฆษณา</h1>
       </div>
       
       <div className="grid gap-6 md:grid-cols-2">
         <Card>
           <CardHeader>
-            <CardTitle>Neue Werbeanzeige erstellen</CardTitle>
-            <CardDescription>Fügen Sie eine neue Werbeanzeige hinzu, die in der App angezeigt wird.</CardDescription>
+            <CardTitle>สร้างโฆษณาใหม่</CardTitle>
+            <CardDescription>เพิ่มโฆษณาใหม่ที่จะแสดงในแอพ</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="title">Titel</Label>
+              <Label htmlFor="title">หัวข้อ</Label>
               <Input 
                 id="title" 
                 value={newAd.title} 
                 onChange={(e) => setNewAd({...newAd, title: e.target.value})}
-                placeholder="Titel der Werbeanzeige"
+                placeholder="หัวข้อของโฆษณา"
               />
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="description">Beschreibung</Label>
+              <Label htmlFor="description">คำอธิบาย</Label>
               <Textarea 
                 id="description" 
                 value={newAd.description}
                 onChange={(e) => setNewAd({...newAd, description: e.target.value})}
-                placeholder="Kurze Beschreibung"
+                placeholder="คำอธิบายสั้นๆ"
                 rows={3}
               />
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="link">Link</Label>
+              <Label htmlFor="link">ลิงก์</Label>
               <Input 
                 id="link" 
                 value={newAd.link} 
                 onChange={(e) => setNewAd({...newAd, link: e.target.value})}
-                placeholder="URL für die Werbeanzeige"
+                placeholder="URL สำหรับโฆษณา"
               />
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="image">Bild (optional)</Label>
+              <Label htmlFor="image">รูปภาพ (ไม่จำเป็น)</Label>
               <div className="flex flex-col gap-2">
                 <Input
                   ref={fileInputRef}
@@ -210,7 +210,7 @@ export default function AdvertisementManager() {
                   className="cursor-pointer"
                 />
                 <div className="text-xs text-gray-500">
-                  Empfohlene Größe: max. 1200x800 Pixel, max. 2MB, Formate: JPG, PNG, GIF, WebP
+                  ขนาดที่แนะนำ: ไม่เกิน 1200x800 พิกเซล, ขนาดไม่เกิน 2MB, รูปแบบ: JPG, PNG, GIF, WebP
                 </div>
                 
                 {newAd.image && (
@@ -224,7 +224,7 @@ export default function AdvertisementManager() {
                     </button>
                     <img 
                       src={newAd.image} 
-                      alt="Vorschau" 
+                      alt="ตัวอย่าง" 
                       className="h-32 w-auto object-contain mx-auto"
                     />
                   </div>
@@ -233,13 +233,13 @@ export default function AdvertisementManager() {
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="color">Hintergrundfarbe</Label>
+              <Label htmlFor="color">สีพื้นหลัง</Label>
               <Select 
                 value={newAd.bgColor} 
                 onValueChange={(value) => setNewAd({...newAd, bgColor: value})}
               >
                 <SelectTrigger id="color">
-                  <SelectValue placeholder="Wählen Sie eine Farbe" />
+                  <SelectValue placeholder="เลือกสี" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
@@ -258,15 +258,15 @@ export default function AdvertisementManager() {
               onClick={handleAddNewAd}
               className="w-full"
             >
-              Werbeanzeige hinzufügen
+              เพิ่มโฆษณา
             </Button>
           </CardFooter>
         </Card>
         
         <Card>
           <CardHeader>
-            <CardTitle>Vorschau</CardTitle>
-            <CardDescription>So wird Ihre Werbeanzeige aussehen</CardDescription>
+            <CardTitle>ตัวอย่าง</CardTitle>
+            <CardDescription>โฆษณาของคุณจะมีลักษณะแบบนี้</CardDescription>
           </CardHeader>
           <CardContent>
             <div className={`${newAd.bgColor} w-full text-white p-3 rounded-md shadow-md`}>
@@ -275,18 +275,18 @@ export default function AdvertisementManager() {
                   <div className="mb-2">
                     <img 
                       src={newAd.image} 
-                      alt={newAd.title || "Werbebild"} 
+                      alt={newAd.title || "ภาพโฆษณา"} 
                       className="h-12 w-auto object-contain rounded"
                     />
                   </div>
                 )}
-                <h3 className="font-bold text-sm">{newAd.title || "Werbetitel"}</h3>
-                <p className="text-xs mt-1">{newAd.description || "Werbebeschreibung"}</p>
+                <h3 className="font-bold text-sm">{newAd.title || "ชื่อโฆษณา"}</h3>
+                <p className="text-xs mt-1">{newAd.description || "รายละเอียดโฆษณา"}</p>
                 <a 
                   href={newAd.link || "#"} 
                   className="mt-2 text-xs bg-white/20 hover:bg-white/30 transition-colors px-3 py-1 rounded-full"
                 >
-                  Mehr erfahren
+                  เรียนรู้เพิ่มเติม
                 </a>
               </div>
             </div>
@@ -296,18 +296,18 @@ export default function AdvertisementManager() {
       
       <Card>
         <CardHeader>
-          <CardTitle>Werbeanzeigen verwalten</CardTitle>
-          <CardDescription>Liste aller vorhandenen Werbeanzeigen</CardDescription>
+          <CardTitle>จัดการโฆษณา</CardTitle>
+          <CardDescription>รายการโฆษณาทั้งหมดที่มีอยู่</CardDescription>
         </CardHeader>
         <CardContent>
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Titel</TableHead>
-                <TableHead>Beschreibung</TableHead>
-                <TableHead>Bild</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead className="text-right">Aktionen</TableHead>
+                <TableHead>หัวข้อ</TableHead>
+                <TableHead>คำอธิบาย</TableHead>
+                <TableHead>รูปภาพ</TableHead>
+                <TableHead>สถานะ</TableHead>
+                <TableHead className="text-right">การดำเนินการ</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -328,7 +328,7 @@ export default function AdvertisementManager() {
                   </TableCell>
                   <TableCell>
                     <span className={`px-2 py-1 rounded-full text-xs ${ad.active ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}`}>
-                      {ad.active ? 'Aktiv' : 'Inaktiv'}
+                      {ad.active ? 'ใช้งาน' : 'ไม่ใช้งาน'}
                     </span>
                   </TableCell>
                   <TableCell className="text-right space-x-2">
@@ -337,14 +337,14 @@ export default function AdvertisementManager() {
                       size="sm"
                       onClick={() => toggleAdStatus(ad.id)}
                     >
-                      {ad.active ? 'Deaktivieren' : 'Aktivieren'}
+                      {ad.active ? 'ปิดการใช้งาน' : 'เปิดการใช้งาน'}
                     </Button>
                     <Button 
                       variant="destructive" 
                       size="sm"
                       onClick={() => deleteAd(ad.id)}
                     >
-                      Löschen
+                      ลบ
                     </Button>
                   </TableCell>
                 </TableRow>
