@@ -1,7 +1,7 @@
 
 import { Language, Translations } from "../types/language";
-import { enTranslations } from "./en";
-import { thTranslations } from "./th"; // Updated import will point to the new structure
+import { enTranslations } from "./en/index";
+import { thTranslations } from "./th"; 
 import { deTranslations } from "./de";
 
 // Combine all translations
