@@ -23,6 +23,8 @@ export interface PendingUser {
 
 export interface UserWithPassword extends User {
   password: string;
+  activationDate?: string;
+  expiryDate?: string;
 }
 
 export interface AuthContextType {

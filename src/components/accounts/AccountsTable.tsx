@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { 
   Table, 
   TableBody, 
@@ -16,80 +16,78 @@ import {
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 import { Badge } from "@/components/ui/badge";
-import { MoreHorizontal, Pencil, Trash2 } from "lucide-react";
 import { UserRole } from "@/lib/types/user-roles";
-import { EditAccountModal } from "./EditAccountModal";
 import { useAuth } from "@/contexts/AuthContext";
+import { EditAccountModal } from "./EditAccountModal";
+import { MoreHorizontal, Pencil, Trash2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { useLanguage } from "@/contexts/LanguageContext";
-
-export interface Account {
-  id: string;
-  name: string;
-  email: string;
-  role: UserRole;
-  status: 'active' | 'inactive';
-  password?: string; // Optional password field for updates
-}
+import { 
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { formatDistanceToNow } from "date-fns";
 
 interface AccountsTableProps {
   searchQuery: string;
 }
 
 export function AccountsTable({ searchQuery }: AccountsTableProps) {
-  const { mockUsers, updateUserList, deleteUser } = useAuth();
+  const { mockUsers, deleteUser, hasRole } = useAuth();
   const { toast } = useToast();
-  const { t } = useLanguage();
-  const [accounts, setAccounts] = useState<Account[]>([]);
-  const [editAccount, setEditAccount] = useState<Account | null>(null);
+  const [selectedUser, setSelectedUser] = useState<any | null>(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
-  // Fetch and convert users to accounts on component mount
-  useEffect(() => {
-    const initialAccounts: Account[] = mockUsers.map(user => ({
-      ...user,
-      status: 'active' // Set a default status for all users
-    }));
-    setAccounts(initialAccounts);
-  }, [mockUsers]);
-
-  // Filter accounts based on search query
-  const filteredAccounts = accounts.filter(account => 
-    account.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-    account.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    account.role.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
-  const handleEdit = (account: Account) => {
-    setEditAccount(account);
-    setIsEditModalOpen(true);
+  // Format date to display in a locale-friendly way
+  const formatDate = (dateString?: string) => {
+    if (!dateString) return '-';
+    return new Date(dateString).toLocaleDateString();
   };
 
-  const handleDelete = (id: string) => {
+  // Calculate if account is expired
+  const isAccountExpired = (expiryDate?: string) => {
+    if (!expiryDate) return false;
+    const today = new Date();
+    const expiry = new Date(expiryDate);
+    return today > expiry;
+  };
+
+  // Calculate days remaining until expiry
+  const daysUntilExpiry = (expiryDate?: string) => {
+    if (!expiryDate) return null;
+    
+    const today = new Date();
+    const expiry = new Date(expiryDate);
+    
+    // If already expired, return 0
+    if (today > expiry) return 0;
+    
+    const differenceInTime = expiry.getTime() - today.getTime();
+    return Math.ceil(differenceInTime / (1000 * 3600 * 24));
+  };
+
+  // Filter users based on search query
+  const filteredUsers = mockUsers.filter(user => 
+    user.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+    user.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    user.role.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+  
+  // Check if current user can edit/delete accounts
+  const canEditAccounts = hasRole([UserRole.ADMIN, UserRole.DEV_ADMIN]);
+
+  const handleDeleteUser = (id: string, name: string) => {
     deleteUser(id);
-    setAccounts(accounts.filter(account => account.id !== id));
     toast({
       title: "Account deleted",
-      description: "The user account has been permanently removed.",
+      description: `${name}'s account has been deleted.`
     });
   };
 
-  const handleSaveEdit = (updatedAccount: Account) => {
-    // Update the local accounts state
-    setAccounts(accounts.map(account => 
-      account.id === updatedAccount.id ? updatedAccount : account
-    ));
-    
-    // Update the context
-    updateUserList(updatedAccount);
-    
-    // Close the modal
-    setIsEditModalOpen(false);
-    
-    toast({
-      title: "Account updated",
-      description: "The user account has been successfully updated.",
-    });
+  const handleEditUser = (user: any) => {
+    setSelectedUser(user);
+    setIsEditModalOpen(true);
   };
 
   return (
@@ -97,75 +95,115 @@ export function AccountsTable({ searchQuery }: AccountsTableProps) {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>{t("name")}</TableHead>
-            <TableHead>{t("email")}</TableHead>
-            <TableHead>{t("role")}</TableHead>
-            <TableHead>{t("status")}</TableHead>
-            <TableHead className="w-[80px]"></TableHead>
+            <TableHead>Name</TableHead>
+            <TableHead>Email</TableHead>
+            <TableHead>Role</TableHead>
+            <TableHead>Activated</TableHead>
+            <TableHead>Expires</TableHead>
+            <TableHead className="text-right">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {filteredAccounts.length > 0 ? (
-            filteredAccounts.map((account) => (
-              <TableRow key={account.id}>
-                <TableCell className="font-medium">{account.name}</TableCell>
-                <TableCell>{account.email}</TableCell>
-                <TableCell>
-                  <Badge variant="outline" className="capitalize">
-                    {account.role.replace('_', ' ')}
-                  </Badge>
-                </TableCell>
-                <TableCell>
-                  <Badge 
-                    variant={account.status === 'active' ? "default" : "destructive"}
-                    className="capitalize"
-                  >
-                    {account.status}
-                  </Badge>
-                </TableCell>
-                <TableCell>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" size="icon">
-                        <MoreHorizontal className="h-4 w-4" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuItem 
-                        className="cursor-pointer"
-                        onClick={() => handleEdit(account)}
-                      >
-                        <Pencil className="mr-2 h-4 w-4" />
-                        {t("edit")}
-                      </DropdownMenuItem>
-                      <DropdownMenuItem 
-                        className="cursor-pointer text-red-600"
-                        onClick={() => handleDelete(account.id)}
-                      >
-                        <Trash2 className="mr-2 h-4 w-4" />
-                        {t("delete")}
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </TableCell>
-              </TableRow>
-            ))
+          {filteredUsers.length > 0 ? (
+            filteredUsers.map((user) => {
+              const expired = isAccountExpired(user.expiryDate);
+              const daysLeft = daysUntilExpiry(user.expiryDate);
+              
+              return (
+                <TableRow key={user.id}>
+                  <TableCell className="font-medium">{user.name}</TableCell>
+                  <TableCell>{user.email}</TableCell>
+                  <TableCell>
+                    <Badge variant="outline" className="capitalize">
+                      {user.role.replace('_', ' ').toLowerCase()}
+                    </Badge>
+                  </TableCell>
+                  <TableCell>
+                    {user.activationDate ? (
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <span>{formatDate(user.activationDate)}</span>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>Activation date</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+                    ) : '-'}
+                  </TableCell>
+                  <TableCell>
+                    {user.expiryDate ? (
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <div>
+                              <span 
+                                className={expired ? "text-red-500 font-medium" : ""}
+                              >
+                                {formatDate(user.expiryDate)}
+                              </span>
+                              {!expired && daysLeft !== null && (
+                                <span className="ml-2 text-xs text-gray-500">
+                                  ({daysLeft} days left)
+                                </span>
+                              )}
+                              {expired && (
+                                <Badge variant="destructive" className="ml-2">
+                                  Expired
+                                </Badge>
+                              )}
+                            </div>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>{expired ? "Account expired" : `Account valid for ${daysLeft} more days`}</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+                    ) : '-'}
+                  </TableCell>
+                  <TableCell className="text-right">
+                    {canEditAccounts && (
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button variant="ghost" size="icon">
+                            <MoreHorizontal className="h-4 w-4" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                          <DropdownMenuItem onClick={() => handleEditUser(user)}>
+                            <Pencil className="mr-2 h-4 w-4" />
+                            Edit
+                          </DropdownMenuItem>
+                          <DropdownMenuItem 
+                            onClick={() => handleDeleteUser(user.id, user.name)}
+                            className="text-red-500"
+                          >
+                            <Trash2 className="mr-2 h-4 w-4" />
+                            Delete
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    )}
+                  </TableCell>
+                </TableRow>
+              );
+            })
           ) : (
             <TableRow>
-              <TableCell colSpan={5} className="text-center py-6 text-muted-foreground">
-                {t("noAccountsFound")}
+              <TableCell colSpan={6} className="h-24 text-center">
+                No accounts found.
               </TableCell>
             </TableRow>
           )}
         </TableBody>
       </Table>
-
-      {editAccount && (
+      
+      {selectedUser && (
         <EditAccountModal
-          account={editAccount}
+          user={selectedUser}
           open={isEditModalOpen}
           onOpenChange={setIsEditModalOpen}
-          onSave={handleSaveEdit}
         />
       )}
     </>

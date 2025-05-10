@@ -1,3 +1,4 @@
+
 import React, { createContext, useState, ReactNode, useEffect } from 'react';
 import { User, UserRole } from '@/lib/types/user-roles';
 import { 
@@ -46,6 +47,13 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
   }, []);
 
+  // Calculate expiry date (1 year from activation)
+  const calculateExpiryDate = (activationDate: string): string => {
+    const date = new Date(activationDate);
+    date.setFullYear(date.getFullYear() + 1);
+    return date.toISOString().split('T')[0];
+  };
+
   // Simulated login function
   const login = async (email: string, password: string): Promise<void> => {
     // Simulates an API request
@@ -54,6 +62,20 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         const foundUser = mockUsers.find(u => u.email === email && u.password === password);
         
         if (foundUser) {
+          // Set activation date if not already set
+          if (!foundUser.activationDate) {
+            const today = new Date().toISOString().split('T')[0];
+            foundUser.activationDate = today;
+            foundUser.expiryDate = calculateExpiryDate(today);
+            
+            // Update the user in the mockUsers array
+            const updatedUsers = mockUsers.map(u => 
+              u.id === foundUser.id ? foundUser : u
+            );
+            setMockUsers(updatedUsers);
+            localStorage.setItem('mockUsers', JSON.stringify(updatedUsers));
+          }
+          
           const { password, ...userWithoutPassword } = foundUser;
           setUser(userWithoutPassword);
           localStorage.setItem('user', JSON.stringify(userWithoutPassword));
@@ -124,7 +146,15 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   // Account management functions
   const createUser = (newUser: UserWithPassword) => {
-    const updatedUsers = [...mockUsers, newUser];
+    // Set activation date and expiry date for new users
+    const today = new Date().toISOString().split('T')[0];
+    const userWithDates = {
+      ...newUser,
+      activationDate: today,
+      expiryDate: calculateExpiryDate(today)
+    };
+    
+    const updatedUsers = [...mockUsers, userWithDates];
     setMockUsers(updatedUsers);
     localStorage.setItem('mockUsers', JSON.stringify(updatedUsers));
   };
@@ -177,13 +207,17 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const pendingUser = pendingUsers.find(pu => pu.id === id);
     
     if (pendingUser) {
-      // Add to regular users
+      const today = new Date().toISOString().split('T')[0];
+      
+      // Add to regular users with activation date and expiry date
       const newUser: UserWithPassword = {
         id: pendingUser.id,
         name: pendingUser.name,
         email: pendingUser.email,
         role: pendingUser.role,
-        password: pendingUser.password
+        password: pendingUser.password,
+        activationDate: today,
+        expiryDate: calculateExpiryDate(today)
       };
       
       const updatedUsers = [...mockUsers, newUser];
