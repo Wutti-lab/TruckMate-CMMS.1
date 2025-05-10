@@ -19,6 +19,9 @@ export interface PendingUser {
   paymentStatus: 'paid' | 'unpaid';
   approvalStatus: 'pending' | 'approved' | 'rejected';
   createdAt: string;
+  company?: string;
+  phoneNumber?: string;
+  jobTitle?: string;
 }
 
 export interface UserWithPassword extends User {

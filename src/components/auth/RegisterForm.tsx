@@ -1,5 +1,6 @@
+
 import { useState } from "react";
-import { useRouter } from 'next/navigation';
+import { useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { v4 as uuidv4 } from 'uuid';
@@ -39,7 +40,7 @@ interface FormData extends z.infer<typeof formSchema> {}
 
 export function RegisterForm() {
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
+  const navigate = useNavigate();
   const { createPendingUser } = useAuth();
   const { language } = useLanguage();
 
@@ -72,9 +73,10 @@ export function RegisterForm() {
           role: UserRole.FLEET_MANAGER,
           createdAt: new Date().toISOString(),
           approvalStatus: 'approved', // Auto-approve
-          paymentStatus: 'paid' as 'paid' | 'unpaid', // Explicitly type as union type
-          company: data.company || '',
+          paymentStatus: 'paid', // Explicitly type as union type
+          // Additional fields to conform to the PendingUser type
           phoneNumber: data.phone || '',
+          company: data.company || '',
           jobTitle: data.jobTitle || '',
         });
 
@@ -82,7 +84,7 @@ export function RegisterForm() {
           title: language === 'de' ? "Konto erstellt" : language === 'th' ? "สร้างบัญชีแล้ว" : "Account Created",
           description: language === 'de' ? "Ihr Konto wurde erfolgreich erstellt." : language === 'th' ? "บัญชีของคุณถูกสร้างเรียบร้อยแล้ว" : "Your account has been successfully created.",
         });
-        router.push("/login");
+        navigate("/login");
       } else {
         console.error("createPendingUser is not a function or is undefined");
         toast({
