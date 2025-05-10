@@ -28,8 +28,8 @@ import {
   SelectValue
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
-import { Account } from "./AccountsTable";
-import { UserRole } from "@/lib/types/user-roles";
+import { User, UserRole } from "@/lib/types/user-roles";
+import { useAuth } from "@/contexts/AuthContext";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 // Hier fügen wir alle möglichen UserRole Werte hinzu
@@ -55,37 +55,36 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>;
 
 interface EditAccountModalProps {
-  account: Account;
+  user: User & { status?: string };
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onSave: (updatedAccount: Account) => void;
 }
 
 export function EditAccountModal({ 
-  account, 
+  user, 
   open, 
-  onOpenChange, 
-  onSave 
+  onOpenChange
 }: EditAccountModalProps) {
   const [isLoading, setIsLoading] = useState(false);
   const { language } = useLanguage();
+  const { updateUserList } = useAuth();
   
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: account.name,
-      email: account.email,
+      name: user.name,
+      email: user.email,
       password: "",
-      role: account.role,
-      status: account.status
+      role: user.role,
+      status: (user as any).status || 'active'
     },
   });
 
   const onSubmit = async (data: FormValues) => {
     setIsLoading(true);
     try {
-      const updatedAccount = {
-        ...account,
+      const updatedUser = {
+        ...user,
         name: data.name,
         email: data.email,
         role: data.role,
@@ -93,10 +92,11 @@ export function EditAccountModal({
       };
       
       if (data.password && data.password.trim() !== "") {
-        updatedAccount.password = data.password;
+        (updatedUser as any).password = data.password;
       }
       
-      onSave(updatedAccount);
+      updateUserList(updatedUser);
+      onOpenChange(false);
     } finally {
       setIsLoading(false);
     }

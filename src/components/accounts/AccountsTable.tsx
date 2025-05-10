@@ -16,7 +16,7 @@ import {
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 import { Badge } from "@/components/ui/badge";
-import { UserRole } from "@/lib/types/user-roles";
+import { UserRole, User } from "@/lib/types/user-roles";
 import { useAuth } from "@/contexts/AuthContext";
 import { EditAccountModal } from "./EditAccountModal";
 import { MoreHorizontal, Pencil, Trash2 } from "lucide-react";
@@ -36,7 +36,7 @@ interface AccountsTableProps {
 export function AccountsTable({ searchQuery }: AccountsTableProps) {
   const { mockUsers, deleteUser, hasRole } = useAuth();
   const { toast } = useToast();
-  const [selectedUser, setSelectedUser] = useState<any | null>(null);
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   // Format date to display in a locale-friendly way
@@ -85,7 +85,7 @@ export function AccountsTable({ searchQuery }: AccountsTableProps) {
     });
   };
 
-  const handleEditUser = (user: any) => {
+  const handleEditUser = (user: User) => {
     setSelectedUser(user);
     setIsEditModalOpen(true);
   };

@@ -13,4 +13,6 @@ export interface User {
   name: string;
   email: string;
   role: UserRole;
+  activationDate?: string;
+  expiryDate?: string;
 }
