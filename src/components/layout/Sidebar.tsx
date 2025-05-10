@@ -9,7 +9,8 @@ import {
   QrCode, 
   LogOut,
   UserCog,
-  CreditCard
+  CreditCard,
+  Image
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -73,6 +74,12 @@ export function Sidebar() {
       title: "Account Management | จัดการบัญชี",
       icon: <UserCog size={20} />,
       href: "/accounts",
+      roles: [UserRole.ADMIN],
+    },
+    {
+      title: "Advertisement Manager | จัดการโฆษณา",
+      icon: <Image size={20} />,
+      href: "/advertisements",
       roles: [UserRole.ADMIN],
     },
     {

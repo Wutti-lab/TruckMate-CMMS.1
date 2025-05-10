@@ -16,6 +16,7 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import { UserRole } from "@/lib/types/user-roles";
 import Index from "@/pages/Index";
 import Pricing from "@/pages/Pricing";
+import AdvertisementManager from "@/pages/AdvertisementManager";
 import { LocationProvider } from "@/contexts/LocationContext";
 import { NotificationProvider } from "@/contexts/NotificationContext";
 
@@ -103,6 +104,17 @@ function App() {
                   <ProtectedRoute allowedRoles={[UserRole.ADMIN]}>
                     <AppLayout>
                       <Accounts />
+                    </AppLayout>
+                  </ProtectedRoute>
+                }
+              />
+              
+              <Route
+                path="/advertisements"
+                element={
+                  <ProtectedRoute allowedRoles={[UserRole.ADMIN]}>
+                    <AppLayout>
+                      <AdvertisementManager />
                     </AppLayout>
                   </ProtectedRoute>
                 }
