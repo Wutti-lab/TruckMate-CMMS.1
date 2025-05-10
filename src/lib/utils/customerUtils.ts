@@ -45,8 +45,13 @@ export function convertPendingUserToCustomer(user: PendingUser): Customer {
 /**
  * Generates a random license key
  */
-function generateLicenseKey(): string {
-  return `TRUCK-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
+export function generateLicenseKey(): string {
+  // Format: TRUCK-XXXXXX-XXXXXX-XXXXXX
+  const segment1 = Math.random().toString(36).substring(2, 8).toUpperCase();
+  const segment2 = Math.random().toString(36).substring(2, 8).toUpperCase();
+  const segment3 = Math.random().toString(36).substring(2, 8).toUpperCase();
+  
+  return `TRUCK-${segment1}-${segment2}-${segment3}`;
 }
 
 /**
