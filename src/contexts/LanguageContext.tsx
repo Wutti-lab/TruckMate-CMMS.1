@@ -46,5 +46,5 @@ export const useLanguage = (): LanguageContextType => {
   return context;
 };
 
-// Re-export types for convenience
-export { Language } from '@/types/language';
+// Re-export types for convenience - FIX: use 'export type' for re-exporting types
+export type { Language } from '@/types/language';
