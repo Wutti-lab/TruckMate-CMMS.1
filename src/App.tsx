@@ -40,7 +40,7 @@ function App() {
                 <Route
                   path="/dashboard"
                   element={
-                    <ProtectedRoute allowedRoles={[UserRole.ADMIN, UserRole.FLEET_MANAGER, UserRole.DRIVER, UserRole.MECHANIC, UserRole.DISPATCHER]}>
+                    <ProtectedRoute allowedRoles={[UserRole.ADMIN, UserRole.DEV_ADMIN, UserRole.FLEET_MANAGER, UserRole.DRIVER, UserRole.MECHANIC, UserRole.DISPATCHER]}>
                       <AppLayout>
                         <Dashboard />
                       </AppLayout>
@@ -51,7 +51,7 @@ function App() {
                 <Route
                   path="/vehicles"
                   element={
-                    <ProtectedRoute allowedRoles={[UserRole.ADMIN, UserRole.FLEET_MANAGER]}>
+                    <ProtectedRoute allowedRoles={[UserRole.ADMIN, UserRole.DEV_ADMIN, UserRole.FLEET_MANAGER]}>
                       <AppLayout>
                         <Vehicles />
                       </AppLayout>
@@ -62,7 +62,7 @@ function App() {
                 <Route
                   path="/drivers"
                   element={
-                    <ProtectedRoute allowedRoles={[UserRole.ADMIN, UserRole.FLEET_MANAGER]}>
+                    <ProtectedRoute allowedRoles={[UserRole.ADMIN, UserRole.DEV_ADMIN, UserRole.FLEET_MANAGER]}>
                       <AppLayout>
                         <Drivers />
                       </AppLayout>
@@ -73,7 +73,7 @@ function App() {
                 <Route
                   path="/map"
                   element={
-                    <ProtectedRoute allowedRoles={[UserRole.ADMIN, UserRole.FLEET_MANAGER, UserRole.DISPATCHER]}>
+                    <ProtectedRoute allowedRoles={[UserRole.ADMIN, UserRole.DEV_ADMIN, UserRole.FLEET_MANAGER, UserRole.DISPATCHER]}>
                       <AppLayout>
                         <Map />
                       </AppLayout>
@@ -84,7 +84,7 @@ function App() {
                 <Route
                   path="/inspections"
                   element={
-                    <ProtectedRoute allowedRoles={[UserRole.ADMIN, UserRole.FLEET_MANAGER, UserRole.MECHANIC, UserRole.DRIVER]}>
+                    <ProtectedRoute allowedRoles={[UserRole.ADMIN, UserRole.DEV_ADMIN, UserRole.FLEET_MANAGER, UserRole.MECHANIC, UserRole.DRIVER]}>
                       <AppLayout>
                         <Inspections />
                       </AppLayout>
@@ -95,7 +95,7 @@ function App() {
                 <Route
                   path="/qr-scanner"
                   element={
-                    <ProtectedRoute allowedRoles={[UserRole.ADMIN, UserRole.DRIVER, UserRole.FLEET_MANAGER]}>
+                    <ProtectedRoute allowedRoles={[UserRole.ADMIN, UserRole.DEV_ADMIN, UserRole.DRIVER, UserRole.FLEET_MANAGER]}>
                       <AppLayout>
                         <QRScanner />
                       </AppLayout>
@@ -106,7 +106,7 @@ function App() {
                 <Route
                   path="/accounts"
                   element={
-                    <ProtectedRoute allowedRoles={[UserRole.ADMIN]}>
+                    <ProtectedRoute allowedRoles={[UserRole.ADMIN, UserRole.DEV_ADMIN]}>
                       <AppLayout>
                         <Accounts />
                       </AppLayout>
@@ -117,7 +117,7 @@ function App() {
                 <Route
                   path="/customers"
                   element={
-                    <ProtectedRoute allowedRoles={[UserRole.ADMIN, UserRole.FLEET_MANAGER]}>
+                    <ProtectedRoute allowedRoles={[UserRole.ADMIN, UserRole.DEV_ADMIN, UserRole.FLEET_MANAGER]}>
                       <AppLayout>
                         <Customers />
                       </AppLayout>
@@ -128,7 +128,7 @@ function App() {
                 <Route
                   path="/advertisements"
                   element={
-                    <ProtectedRoute allowedRoles={[UserRole.ADMIN]}>
+                    <ProtectedRoute allowedRoles={[UserRole.ADMIN, UserRole.DEV_ADMIN]}>
                       <AppLayout>
                         <AdvertisementManager />
                       </AppLayout>

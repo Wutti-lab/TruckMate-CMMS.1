@@ -35,6 +35,7 @@ export const formSchema = z.object({
   }),
   role: z.enum([
     UserRole.ADMIN, 
+    UserRole.DEV_ADMIN,
     UserRole.FLEET_MANAGER, 
     UserRole.DRIVER, 
     UserRole.MECHANIC, 
@@ -127,6 +128,7 @@ export function AccountCreationForm({ onSubmit, onCancel }: AccountCreationFormP
                 </FormControl>
                 <SelectContent>
                   <SelectItem value={UserRole.ADMIN}>Admin</SelectItem>
+                  <SelectItem value={UserRole.DEV_ADMIN}>Dev Admin</SelectItem>
                   <SelectItem value={UserRole.FLEET_MANAGER}>Fleet Manager</SelectItem>
                   <SelectItem value={UserRole.DRIVER}>Driver</SelectItem>
                   <SelectItem value={UserRole.MECHANIC}>Mechanic</SelectItem>
