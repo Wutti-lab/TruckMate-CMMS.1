@@ -1,20 +1,14 @@
 
 import { useState } from "react";
 import { Header } from "@/components/layout/Header";
-import { 
-  Card, 
-  CardContent, 
-  CardDescription, 
-  CardFooter, 
-  CardHeader, 
-  CardTitle 
-} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Truck, User, Check, ArrowLeft, QrCode } from "lucide-react";
+import { Truck, User, ArrowLeft } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { PricingPlan } from "@/components/pricing/PricingPlan";
+import { QRCodeDialog } from "@/components/pricing/QRCodeDialog";
+import { CustomOfferSection } from "@/components/pricing/CustomOfferSection";
 
 export default function Pricing() {
   const { toast } = useToast();
@@ -43,6 +37,22 @@ export default function Pricing() {
     navigate("/dashboard");
   };
 
+  const vehicleFeatures = [
+    t("completeVehicleManagement"),
+    t("vehicleInspections"),
+    t("maintenanceTracking"),
+    t("qrCodeSupport"),
+    t("oneUserIncluded")
+  ];
+
+  const userFeatures = [
+    t("individualUserProfile"),
+    t("roleBasedAccess"),
+    t("userSpecificDashboards"),
+    t("activityLogs"),
+    t("mobileAppAccess")
+  ];
+
   return (
     <div className="flex flex-col h-full">
       <Header />
@@ -68,154 +78,36 @@ export default function Pricing() {
 
           <div className="grid md:grid-cols-2 gap-8">
             {/* Vehicle Plan */}
-            <Card className="flex flex-col border-2 border-fleet-200 hover:border-fleet-400 transition-colors">
-              <CardHeader>
-                <div className="flex items-center justify-center mb-4">
-                  <div className="p-3 rounded-full bg-fleet-100">
-                    <Truck className="h-10 w-10 text-fleet-600" />
-                  </div>
-                </div>
-                <CardTitle className="text-center text-2xl">{t("vehiclePlan")}</CardTitle>
-                <CardDescription className="text-center text-lg mt-2">
-                  5,000 ฿ <span className="text-sm">{t("perVehicle")}</span>
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="flex-grow">
-                <ul className="space-y-3">
-                  <li className="flex items-start">
-                    <Check className="h-5 w-5 text-fleet-500 mr-2 mt-0.5" />
-                    <span>{t("completeVehicleManagement")}</span>
-                  </li>
-                  <li className="flex items-start">
-                    <Check className="h-5 w-5 text-fleet-500 mr-2 mt-0.5" />
-                    <span>{t("vehicleInspections")}</span>
-                  </li>
-                  <li className="flex items-start">
-                    <Check className="h-5 w-5 text-fleet-500 mr-2 mt-0.5" />
-                    <span>{t("maintenanceTracking")}</span>
-                  </li>
-                  <li className="flex items-start">
-                    <Check className="h-5 w-5 text-fleet-500 mr-2 mt-0.5" />
-                    <span>{t("qrCodeSupport")}</span>
-                  </li>
-                  <li className="flex items-start">
-                    <Check className="h-5 w-5 text-fleet-500 mr-2 mt-0.5" />
-                    <span>{t("oneUserIncluded")}</span>
-                  </li>
-                </ul>
-              </CardContent>
-              <CardFooter>
-                <Button 
-                  className="w-full bg-fleet-600" 
-                  onClick={() => handlePayment("Vehicle")}
-                  disabled={isProcessing}
-                >
-                  {isProcessing ? t("processing") : t("buyNow")}
-                </Button>
-              </CardFooter>
-            </Card>
+            <PricingPlan
+              title={t("vehiclePlan")}
+              price="5,000 ฿"
+              priceSuffix={t("perVehicle")}
+              icon={<Truck className="h-10 w-10 text-fleet-600" />}
+              features={vehicleFeatures}
+              onBuy={() => handlePayment("Vehicle")}
+              isProcessing={isProcessing}
+            />
 
             {/* User Plan */}
-            <Card className="flex flex-col border-2 border-fleet-200 hover:border-fleet-400 transition-colors">
-              <CardHeader>
-                <div className="flex items-center justify-center mb-4">
-                  <div className="p-3 rounded-full bg-fleet-100">
-                    <User className="h-10 w-10 text-fleet-600" />
-                  </div>
-                </div>
-                <CardTitle className="text-center text-2xl">{t("userPlan")}</CardTitle>
-                <CardDescription className="text-center text-lg mt-2">
-                  2,000 ฿ <span className="text-sm">{t("perUser")}</span>
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="flex-grow">
-                <ul className="space-y-3">
-                  <li className="flex items-start">
-                    <Check className="h-5 w-5 text-fleet-500 mr-2 mt-0.5" />
-                    <span>{t("individualUserProfile")}</span>
-                  </li>
-                  <li className="flex items-start">
-                    <Check className="h-5 w-5 text-fleet-500 mr-2 mt-0.5" />
-                    <span>{t("roleBasedAccess")}</span>
-                  </li>
-                  <li className="flex items-start">
-                    <Check className="h-5 w-5 text-fleet-500 mr-2 mt-0.5" />
-                    <span>{t("userSpecificDashboards")}</span>
-                  </li>
-                  <li className="flex items-start">
-                    <Check className="h-5 w-5 text-fleet-500 mr-2 mt-0.5" />
-                    <span>{t("activityLogs")}</span>
-                  </li>
-                  <li className="flex items-start">
-                    <Check className="h-5 w-5 text-fleet-500 mr-2 mt-0.5" />
-                    <span>{t("mobileAppAccess")}</span>
-                  </li>
-                </ul>
-              </CardContent>
-              <CardFooter>
-                <Button 
-                  className="w-full bg-fleet-600" 
-                  onClick={() => handlePayment("User")}
-                  disabled={isProcessing}
-                >
-                  {isProcessing ? t("processing") : t("buyNow")}
-                </Button>
-              </CardFooter>
-            </Card>
+            <PricingPlan
+              title={t("userPlan")}
+              price="2,000 ฿"
+              priceSuffix={t("perUser")}
+              icon={<User className="h-10 w-10 text-fleet-600" />}
+              features={userFeatures}
+              onBuy={() => handlePayment("User")}
+              isProcessing={isProcessing}
+            />
           </div>
 
-          <div className="mt-12 text-center">
-            <h2 className="text-xl font-semibold mb-4">{t("needCustomOffer")}?</h2>
-            <p className="mb-4 max-w-2xl mx-auto">
-              {t("contactUsForTailoredSolutions")}
-            </p>
-            <Button variant="outline" onClick={() => setShowQrCode(true)}>
-              <QrCode className="mr-2 h-4 w-4" />
-              {t("contact")}
-            </Button>
-          </div>
+          <CustomOfferSection onClick={() => setShowQrCode(true)} />
           
           {/* QR Code Payment Dialog */}
-          <Dialog open={showQrCode} onOpenChange={setShowQrCode}>
-            <DialogContent className="sm:max-w-md">
-              <DialogHeader>
-                <DialogTitle className="text-center">
-                  {t("scanQrToTransfer")}
-                </DialogTitle>
-              </DialogHeader>
-              <div className="flex flex-col items-center justify-center space-y-4">
-                <div className="max-w-[250px] mx-auto">
-                  <img 
-                    src="/lovable-uploads/1227902a-2033-4df9-a3c7-382e79e5b997.png"
-                    alt="PromptPay QR Code" 
-                    className="w-full h-auto"
-                  />
-                </div>
-                
-                <div className="text-center space-y-2">
-                  <p className="font-bold">
-                    {t("promptPay")}
-                  </p>
-                  <p>
-                    {t("phoneNumber")}
-                  </p>
-                </div>
-                
-                <div className="border-t w-full pt-4 mt-4">
-                  <p className="text-sm text-center text-gray-500">
-                    {t("afterTransferring")}
-                  </p>
-                </div>
-                
-                <Button 
-                  onClick={() => handlePaymentComplete("Vehicle")}
-                  className="w-full mt-4"
-                >
-                  {t("confirmPayment")}
-                </Button>
-              </div>
-            </DialogContent>
-          </Dialog>
+          <QRCodeDialog
+            open={showQrCode}
+            onOpenChange={setShowQrCode}
+            onConfirmPayment={() => handlePaymentComplete("Vehicle")}
+          />
         </div>
       </main>
     </div>
