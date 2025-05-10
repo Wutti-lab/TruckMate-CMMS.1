@@ -9,6 +9,7 @@ import { useToast } from "@/hooks/use-toast";
 import { DriverBasicInfo } from "./form/DriverBasicInfo";
 import { LicenseSection } from "./form/LicenseSection";
 import { MedicalExamSection } from "./form/MedicalExamSection";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 // File validation schemas
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
@@ -63,6 +64,8 @@ export interface UploadFile {
 
 export function AddDriverForm() {
   const { toast } = useToast();
+  const { language } = useLanguage();
+  
   const [uploadedFiles, setUploadedFiles] = useState<Record<string, UploadFile[]>>({
     license3File: [],
     license4File: [],
@@ -109,8 +112,16 @@ export function AddDriverForm() {
     console.log("Form submitted with data:", data);
     
     toast({
-      title: "Driver information saved",
-      description: "The driver has been added successfully"
+      title: language === 'en' 
+        ? "Driver information saved" 
+        : language === 'th' 
+          ? "บันทึกข้อมูลคนขับแล้ว" 
+          : "Fahrerinformationen gespeichert",
+      description: language === 'en'
+        ? "The driver has been added successfully"
+        : language === 'th'
+          ? "เพิ่มคนขับเรียบร้อยแล้ว"
+          : "Der Fahrer wurde erfolgreich hinzugefügt"
     });
   }
 
@@ -121,7 +132,13 @@ export function AddDriverForm() {
           <DriverBasicInfo form={form} />
 
           <div className="space-y-4">
-            <h3 className="font-semibold">License & Qualification | ใบอนุญาตและคุณสมบัติ</h3>
+            <h3 className="font-semibold">
+              {language === 'en' 
+                ? 'License & Qualification' 
+                : language === 'th' 
+                  ? 'ใบอนุญาตและคุณสมบัติ' 
+                  : 'Lizenz & Qualifikation'}
+            </h3>
             <LicenseSection 
               form={form} 
               uploadedFiles={uploadedFiles} 
@@ -130,7 +147,13 @@ export function AddDriverForm() {
           </div>
 
           <div className="space-y-4">
-            <h3 className="font-semibold">Medical Examinations | การตรวจสุขภาพ</h3>
+            <h3 className="font-semibold">
+              {language === 'en' 
+                ? 'Medical Examinations' 
+                : language === 'th' 
+                  ? 'การตรวจสุขภาพ' 
+                  : 'Medizinische Untersuchungen'}
+            </h3>
             <MedicalExamSection 
               form={form} 
               uploadedFiles={uploadedFiles} 
@@ -140,7 +163,11 @@ export function AddDriverForm() {
         </div>
 
         <Button type="submit" className="w-full bg-fleet-500">
-          Add Driver | เพิ่มคนขับ
+          {language === 'en' 
+            ? 'Add Driver' 
+            : language === 'th' 
+              ? 'เพิ่มคนขับ' 
+              : 'Fahrer hinzufügen'}
         </Button>
       </form>
     </Form>

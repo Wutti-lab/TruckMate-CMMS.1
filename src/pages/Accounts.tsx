@@ -12,12 +12,14 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { PendingUsersTable } from "@/components/accounts/PendingUsersTable";
 import { useAuth } from "@/contexts/AuthContext";
 import { Badge } from "@/components/ui/badge";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Accounts() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("active");
   const { pendingUsers, hasRole } = useAuth();
+  const { language } = useLanguage();
   
   const pendingCount = pendingUsers.filter(pu => pu.approvalStatus === 'pending').length;
   
@@ -29,12 +31,24 @@ export default function Accounts() {
       <Header />
       <main className="flex-1 p-6 overflow-auto">
         <div className="mb-6 flex flex-wrap gap-4 items-center justify-between">
-          <h1 className="text-2xl font-bold">Account Management | การจัดการบัญชี</h1>
+          <h1 className="text-2xl font-bold">
+            {language === 'en' 
+              ? 'Account Management' 
+              : language === 'th' 
+                ? 'การจัดการบัญชี'
+                : 'Kontoverwaltung'}
+          </h1>
           <div className="flex items-center gap-2">
             <div className="relative hidden lg:block">
               <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
               <Input
-                placeholder="Search accounts... | ค้นหาบัญชี..."
+                placeholder={
+                  language === 'en' 
+                    ? 'Search accounts...' 
+                    : language === 'th' 
+                      ? 'ค้นหาบัญชี...'
+                      : 'Konten suchen...'
+                }
                 className="pl-8 w-[300px]"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -48,7 +62,11 @@ export default function Accounts() {
               className="bg-fleet-500"
             >
               <Plus size={16} className="mr-2" />
-              Create Account | สร้างบัญชี
+              {language === 'en' 
+                ? 'Create Account' 
+                : language === 'th' 
+                  ? 'สร้างบัญชี'
+                  : 'Konto erstellen'}
             </Button>
           </div>
         </div>
@@ -56,11 +74,19 @@ export default function Accounts() {
         <Tabs defaultValue="active" value={activeTab} onValueChange={setActiveTab}>
           <TabsList className="mb-4">
             <TabsTrigger value="active">
-              Active Accounts | บัญชีที่ใช้งาน
+              {language === 'en' 
+                ? 'Active Accounts' 
+                : language === 'th' 
+                  ? 'บัญชีที่ใช้งาน'
+                  : 'Aktive Konten'}
             </TabsTrigger>
             {isSuperAdmin && (
               <TabsTrigger value="pending" className="relative">
-                Pending Approvals | รออนุมัติ
+                {language === 'en' 
+                  ? 'Pending Approvals' 
+                  : language === 'th' 
+                    ? 'รออนุมัติ'
+                    : 'Ausstehende Genehmigungen'}
                 {pendingCount > 0 && (
                   <Badge 
                     variant="destructive" 
@@ -76,7 +102,13 @@ export default function Accounts() {
           <TabsContent value="active">
             <Card>
               <CardHeader>
-                <CardTitle>User Accounts | บัญชีผู้ใช้</CardTitle>
+                <CardTitle>
+                  {language === 'en' 
+                    ? 'User Accounts' 
+                    : language === 'th' 
+                      ? 'บัญชีผู้ใช้'
+                      : 'Benutzerkonten'}
+                </CardTitle>
               </CardHeader>
               <CardContent className="p-0">
                 <AccountsTable searchQuery={searchQuery} />
@@ -88,11 +120,23 @@ export default function Accounts() {
             <TabsContent value="pending">
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between">
-                  <CardTitle>Pending Accounts | บัญชีรออนุมัติ</CardTitle>
+                  <CardTitle>
+                    {language === 'en' 
+                      ? 'Pending Accounts' 
+                      : language === 'th' 
+                        ? 'บัญชีรออนุมัติ'
+                        : 'Ausstehende Konten'}
+                  </CardTitle>
                   {pendingCount > 0 && (
                     <div className="flex items-center text-amber-500">
                       <AlertCircle size={16} className="mr-2" />
-                      <span>Requires approval | ต้องการการอนุมัติ</span>
+                      <span>
+                        {language === 'en' 
+                          ? 'Requires approval' 
+                          : language === 'th' 
+                            ? 'ต้องการการอนุมัติ'
+                            : 'Genehmigung erforderlich'}
+                      </span>
                     </div>
                   )}
                 </CardHeader>

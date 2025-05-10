@@ -15,9 +15,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { loginSchema } from "@/lib/validations/auth";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export function LoginForm() {
   const navigate = useNavigate();
+  const { t } = useLanguage();
   
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -41,7 +43,7 @@ export function LoginForm() {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>อีเมล</FormLabel>
+              <FormLabel>{t("email")}</FormLabel>
               <FormControl>
                 <Input placeholder="name@firma.de" {...field} />
               </FormControl>
@@ -54,7 +56,7 @@ export function LoginForm() {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>รหัสผ่าน</FormLabel>
+              <FormLabel>{t("password")}</FormLabel>
               <FormControl>
                 <Input type="password" {...field} />
               </FormControl>
@@ -74,13 +76,13 @@ export function LoginForm() {
                 />
               </FormControl>
               <FormLabel className="font-normal">
-                จดจำการเข้าสู่ระบบ
+                {t("rememberMe")}
               </FormLabel>
             </FormItem>
           )}
         />
         <Button type="submit" className="w-full bg-fleet-500 hover:bg-fleet-600">
-          เข้าสู่ระบบ
+          {t("loginButton")}
         </Button>
       </form>
     </Form>

@@ -1,3 +1,4 @@
+
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Header } from "@/components/layout/Header";
 import { Car, Fuel, MapPin, AlertTriangle, Battery, Clock, TrendingUp, Users, Wrench, ChartPie, Plus, UserRound } from "lucide-react";
@@ -24,6 +25,7 @@ import { format } from "date-fns";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { UserRole } from "@/lib/types/user-roles";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Dashboard() {
   const oilPricePerLiter = 1.25; // THB
@@ -32,19 +34,20 @@ export default function Dashboard() {
   const totalOilCost = oilPricePerLiter * avgOilConsumptionLiter * vehicleCount;
   const costPerVehicleThb = oilPricePerLiter * avgOilConsumptionLiter;
   const { loginActivities } = useAuth();
+  const { t, language } = useLanguage();
 
   // Stats for Fleet Status (Vehicles)
   const vehiclesData = [
-    { name: "Active | กำลังใช้งาน", value: 18, color: "#5AC87A" },       
-    { name: "Maintenance | อยู่ระหว่างซ่อมบำรุง", value: 3, color: "#FDBA5C" },      
-    { name: "Idle | จอดพัก", value: 3, color: "#A0AEC0" },     
+    { name: language === 'en' ? "Active" : language === 'th' ? "กำลังใช้งาน" : "Aktiv", value: 18, color: "#5AC87A" },       
+    { name: language === 'en' ? "Maintenance" : language === 'th' ? "อยู่ระหว่างซ่อมบำรุง" : "Wartung", value: 3, color: "#FDBA5C" },      
+    { name: language === 'en' ? "Idle" : language === 'th' ? "จอดพัก" : "Inaktiv", value: 3, color: "#A0AEC0" },     
   ];
 
-  // NEW: Chart Data for Trains
+  // Chart Data for Trains
   const trainsData = [
-    { name: "Running | วิ่ง", value: 6, color: "#4E96F5" },
-    { name: "Maintenance | ซ่อมบำรุง", value: 2, color: "#FDBA5C" },
-    { name: "Idle | จอด", value: 1, color: "#A0AEC0" },
+    { name: language === 'en' ? "Running" : language === 'th' ? "วิ่ง" : "In Betrieb", value: 6, color: "#4E96F5" },
+    { name: language === 'en' ? "Maintenance" : language === 'th' ? "ซ่อมบำรุง" : "Wartung", value: 2, color: "#FDBA5C" },
+    { name: language === 'en' ? "Idle" : language === 'th' ? "จอด" : "Stillstehend", value: 1, color: "#A0AEC0" },
   ];
   const trainCount = 9;
 
@@ -52,36 +55,36 @@ export default function Dashboard() {
   const [activities, setActivities] = useState([
     {
       id: 1,
-      title: "รถทะเบียน B-FR 323 ถึงจุดหมายแล้ว",
-      time: "5 นาทีที่แล้ว",
+      title: language === 'en' ? "Vehicle B-FR 323 has arrived at destination" : language === 'th' ? "รถทะเบียน B-FR 323 ถึงจุดหมายแล้ว" : "Fahrzeug B-FR 323 ist am Ziel angekommen",
+      time: language === 'en' ? "5 minutes ago" : language === 'th' ? "5 นาทีที่แล้ว" : "vor 5 Minuten",
       icon: MapPin,
       color: "text-green-500",
     },
     {
       id: 2,
-      title: "คำขอบำรุงรักษาใหม่สำหรับ B-FR 423",
-      time: "35 นาทีที่แล้ว",
+      title: language === 'en' ? "New maintenance request for B-FR 423" : language === 'th' ? "คำขอบำรุงรักษาใหม่สำหรับ B-FR 423" : "Neue Wartungsanfrage für B-FR 423",
+      time: language === 'en' ? "35 minutes ago" : language === 'th' ? "35 นาทีที่แล้ว" : "vor 35 Minuten",
       icon: Wrench,
       color: "text-orange-500",
     },
     {
       id: 3,
-      title: "น้ำมันเหลือน้อยใน B-FR 123",
-      time: "1 ชั่วโมงที่แล้ว",
+      title: language === 'en' ? "Low fuel in B-FR 123" : language === 'th' ? "น้ำมันเหลือน้อยใน B-FR 123" : "Niedriger Kraftstoffstand in B-FR 123",
+      time: language === 'en' ? "1 hour ago" : language === 'th' ? "1 ชั่วโมงที่แล้ว" : "vor 1 Stunde",
       icon: Fuel,
       color: "text-red-500",
     },
     {
       id: 4,
-      title: "คนขับ M. Schmidt เริ่มกะ",
-      time: "2 ชั่วโมงที่แล้ว",
+      title: language === 'en' ? "Driver M. Schmidt started shift" : language === 'th' ? "คนขับ M. Schmidt เริ่มกะ" : "Fahrer M. Schmidt hat Schicht begonnen",
+      time: language === 'en' ? "2 hours ago" : language === 'th' ? "2 ชั่วโมงที่แล้ว" : "vor 2 Stunden",
       icon: Users,
       color: "text-fleet-500",
     },
     {
       id: 5,
-      title: "อัปเดตเส้นทางสำหรับ B-FR 223",
-      time: "3 ชั่วโมงที่แล้ว",
+      title: language === 'en' ? "Route updated for B-FR 223" : language === 'th' ? "อัปเดตเส้นทางสำหรับ B-FR 223" : "Route für B-FR 223 aktualisiert",
+      time: language === 'en' ? "3 hours ago" : language === 'th' ? "3 ชั่วโมงที่แล้ว" : "vor 3 Stunden",
       icon: MapPin,
       color: "text-blue-500",
     },
@@ -97,11 +100,36 @@ export default function Dashboard() {
   const { toast } = useToast();
 
   const activityTypes = [
-    { value: "arrival", label: "Vehicle Arrival | การมาถึงของยานพาหนะ", icon: MapPin, color: "text-green-500" },
-    { value: "maintenance", label: "Maintenance Request | คำขอบำรุงรักษา", icon: Wrench, color: "text-orange-500" },
-    { value: "fuel", label: "Fuel Warning | คำเตือนน้ำมัน", icon: Fuel, color: "text-red-500" },
-    { value: "driver", label: "Driver Update | อัปเดตคนขับ", icon: Users, color: "text-fleet-500" },
-    { value: "route", label: "Route Update | อัปเดตเส้นทาง", icon: MapPin, color: "text-blue-500" },
+    { 
+      value: "arrival", 
+      label: language === 'en' ? "Vehicle Arrival" : language === 'th' ? "การมาถึงของยานพาหนะ" : "Fahrzeugankunft", 
+      icon: MapPin, 
+      color: "text-green-500" 
+    },
+    { 
+      value: "maintenance", 
+      label: language === 'en' ? "Maintenance Request" : language === 'th' ? "คำขอบำรุงรักษา" : "Wartungsanfrage", 
+      icon: Wrench, 
+      color: "text-orange-500" 
+    },
+    { 
+      value: "fuel", 
+      label: language === 'en' ? "Fuel Warning" : language === 'th' ? "คำเตือนน้ำมัน" : "Kraftstoffwarnung", 
+      icon: Fuel, 
+      color: "text-red-500" 
+    },
+    { 
+      value: "driver", 
+      label: language === 'en' ? "Driver Update" : language === 'th' ? "อัปเดตคนขับ" : "Fahreraktualisierung", 
+      icon: Users, 
+      color: "text-fleet-500" 
+    },
+    { 
+      value: "route", 
+      label: language === 'en' ? "Route Update" : language === 'th' ? "อัปเดตเส้นทาง" : "Routenaktualisierung", 
+      icon: MapPin, 
+      color: "text-blue-500" 
+    },
   ];
 
   const getActivityIcon = (type: string) => {
@@ -118,15 +146,15 @@ export default function Dashboard() {
     const newActivity = {
       id: activities.length + 1,
       title: data.title,
-      time: "เมื่อสักครู่",
+      time: language === 'en' ? "Just now" : language === 'th' ? "เมื่อสักครู่" : "Gerade eben",
       icon: getActivityIcon(data.type),
       color: getActivityColor(data.type),
     };
 
     setActivities([newActivity, ...activities.slice(0, 4)]);
     toast({
-      title: "Activity Added | เพิ่มกิจกรรมแล้ว",
-      description: "The new activity has been added successfully | เพิ่มกิจกรรมใหม่สำเร็จแล้ว",
+      title: language === 'en' ? "Activity Added" : language === 'th' ? "เพิ่มกิจกรรมแล้ว" : "Aktivität hinzugefügt",
+      description: language === 'en' ? "The new activity has been added successfully" : language === 'th' ? "เพิ่มกิจกรรมใหม่สำเร็จแล้ว" : "Die neue Aktivität wurde erfolgreich hinzugefügt",
     });
     activityForm.reset();
   };
@@ -160,10 +188,18 @@ export default function Dashboard() {
     const diffMins = Math.round(diffMs / 60000);
     
     if (diffMins < 60) {
-      return `${diffMins} ${diffMins === 1 ? 'minute' : 'minutes'} ago | เมื่อ ${diffMins} นาทีที่แล้ว`;
+      return language === 'en' 
+        ? `${diffMins} ${diffMins === 1 ? 'minute' : 'minutes'} ago` 
+        : language === 'th' 
+          ? `เมื่อ ${diffMins} นาทีที่แล้ว`
+          : `vor ${diffMins} ${diffMins === 1 ? 'Minute' : 'Minuten'}`;
     } else {
       const diffHours = Math.floor(diffMins / 60);
-      return `${diffHours} ${diffHours === 1 ? 'hour' : 'hours'} ago | เมื่อ ${diffHours} ชั่วโมงที่แล้ว`;
+      return language === 'en'
+        ? `${diffHours} ${diffHours === 1 ? 'hour' : 'hours'} ago`
+        : language === 'th'
+          ? `เมื่อ ${diffHours} ชั่วโมงที่แล้ว`
+          : `vor ${diffHours} ${diffHours === 1 ? 'Stunde' : 'Stunden'}`;
     }
   };
 
@@ -173,14 +209,24 @@ export default function Dashboard() {
       <main className="flex-1 p-3 md:p-6 overflow-auto">
         <div className="mb-4 md:mb-8">
           <h1 className="text-lg md:text-2xl font-bold tracking-tight">TruckMate CMMS Dashboard</h1>
-          <p className="text-xs md:text-base text-muted-foreground">Welcome back! | ยินดีต้อนรับกลับ นี่คือภาพรวมของกองยานพาหนะของคุณ</p>
+          <p className="text-xs md:text-base text-muted-foreground">
+            {language === 'en' 
+              ? 'Welcome back! Here is an overview of your fleet' 
+              : language === 'th' 
+                ? 'ยินดีต้อนรับกลับ นี่คือภาพรวมของกองยานพาหนะของคุณ'
+                : 'Willkommen zurück! Hier ist ein Überblick über Ihre Flotte'}
+          </p>
         </div>
         <div className="grid gap-3 md:gap-6 grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
           {/* Vehicle Fleet Status */}
           <Card>
             <CardHeader className="flex flex-row items-center justify-between p-2 md:p-3 md:pb-2">
               <CardTitle className="text-xs md:text-sm font-medium">
-                Fleet Status | สถานะกองยานพาหนะ
+                {language === 'en' 
+                  ? 'Fleet Status' 
+                  : language === 'th' 
+                    ? 'สถานะกองยานพาหนะ'
+                    : 'Flottenstatus'}
               </CardTitle>
               <Car className="h-3 w-3 md:h-4 md:w-4 text-fleet-500" />
             </CardHeader>
@@ -191,52 +237,37 @@ export default function Dashboard() {
                 <span className="text-[10px] md:text-xs text-muted-foreground">75%</span>
               </div>
               <p className="text-[10px] md:text-xs text-muted-foreground mt-1 md:mt-2">
-                18 vehicles in service | รถ 18 คันกำลังให้บริการ
+                {language === 'en' 
+                  ? '18 vehicles in service' 
+                  : language === 'th' 
+                    ? 'รถ 18 คันกำลังให้บริการ'
+                    : '18 Fahrzeuge im Einsatz'}
               </p>
             </CardContent>
           </Card>
           
           <Card>
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium">Fuel Efficiency | ประสิทธิภาพการใช้เชื้อเพลิง</CardTitle>
+              <CardTitle className="text-sm font-medium">
+                {language === 'en' 
+                  ? 'Fuel Efficiency' 
+                  : language === 'th' 
+                    ? 'ประสิทธิภาพการใช้เชื้อเพลิง'
+                    : 'Kraftstoffeffizienz'}
+              </CardTitle>
               <Fuel className="h-4 w-4 text-fleet-500" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">8.2 L / 100 km</div>
               <div className="flex items-center text-xs text-green-500 mt-2">
                 <TrendingUp className="h-3 w-3 mr-1" />
-                <span>5% better than last month | ดีขึ้น 5% จากเดือนที่แล้ว</span>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium">Driver Status | สถานะคนขับ</CardTitle>
-              <Users className="h-4 w-4 text-fleet-500" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">15/20</div>
-              <p className="text-xs text-muted-foreground mt-2">
-                15 drivers on duty | คนขับ 15 คนกำลังปฏิบัติงาน
-              </p>
-              <div className="flex items-center gap-2 mt-2">
-                <div className="w-2 h-2 rounded-full bg-green-500" />
-                <span className="text-xs">75% available | ความพร้อม 75%</span>
-              </div>
-            </CardContent>
-          </Card>
-          
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium">Maintenance | การบำรุงรักษา</CardTitle>
-              <Wrench className="h-4 w-4 text-fleet-500" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">3</div>
-              <div className="flex items-center text-orange-500 mt-2">
-                <AlertTriangle className="h-3 w-3 mr-1" />
-                <span className="text-xs">Awaiting maintenance | รอการบำรุงรักษา</span>
+                <span>
+                  {language === 'en' 
+                    ? '5% better than last month' 
+                    : language === 'th' 
+                      ? 'ดีขึ้น 5% จากเดือนที่แล้ว'
+                      : '5% besser als im letzten Monat'}
+                </span>
               </div>
             </CardContent>
           </Card>
@@ -244,32 +275,135 @@ export default function Dashboard() {
           <Card>
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="text-sm font-medium">
-                Oil Price & Costs | น้ำมันและต้นทุน
-                <span className="block text-xs text-muted-foreground">Current oil price and total cost | ราคาน้ำมันและต้นทุนรวม</span>
+                {language === 'en' 
+                  ? 'Driver Status' 
+                  : language === 'th' 
+                    ? 'สถานะคนขับ'
+                    : 'Fahrerstatus'}
+              </CardTitle>
+              <Users className="h-4 w-4 text-fleet-500" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">15/20</div>
+              <p className="text-xs text-muted-foreground mt-2">
+                {language === 'en' 
+                  ? '15 drivers on duty' 
+                  : language === 'th' 
+                    ? 'คนขับ 15 คนกำลังปฏิบัติงาน'
+                    : '15 Fahrer im Dienst'}
+              </p>
+              <div className="flex items-center gap-2 mt-2">
+                <div className="w-2 h-2 rounded-full bg-green-500" />
+                <span className="text-xs">
+                  {language === 'en' 
+                    ? '75% available' 
+                    : language === 'th' 
+                      ? 'ความพร้อม 75%'
+                      : '75% verfügbar'}
+                </span>
+              </div>
+            </CardContent>
+          </Card>
+          
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <CardTitle className="text-sm font-medium">
+                {language === 'en' 
+                  ? 'Maintenance' 
+                  : language === 'th' 
+                    ? 'การบำรุงรักษา'
+                    : 'Wartung'}
+              </CardTitle>
+              <Wrench className="h-4 w-4 text-fleet-500" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">3</div>
+              <div className="flex items-center text-orange-500 mt-2">
+                <AlertTriangle className="h-3 w-3 mr-1" />
+                <span className="text-xs">
+                  {language === 'en' 
+                    ? 'Awaiting maintenance' 
+                    : language === 'th' 
+                      ? 'รอการบำรุงรักษา'
+                      : 'Wartung ausstehend'}
+                </span>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <CardTitle className="text-sm font-medium">
+                {language === 'en' 
+                  ? 'Oil Price & Costs' 
+                  : language === 'th' 
+                    ? 'น้ำมันและต้นทุน'
+                    : 'Ölpreis & Kosten'}
+                <span className="block text-xs text-muted-foreground">
+                  {language === 'en' 
+                    ? 'Current oil price and total cost' 
+                    : language === 'th' 
+                      ? 'ราคาน้ำมันและต้นทุนรวม'
+                      : 'Aktueller Ölpreis und Gesamtkosten'}
+                </span>
               </CardTitle>
               <ChartPie className="h-4 w-4 text-fleet-500" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{oilPricePerLiter.toFixed(2)} THB / L</div>
               <div className="text-[10px] md:text-xs text-muted-foreground mt-1">
-                <span className="block">Avg. consumption: {avgOilConsumptionLiter} L / vehicle | การบริโภคเฉลี่ย: {avgOilConsumptionLiter} ลิตร / ยานพาหนะ</span>
+                <span className="block">
+                  {language === 'en' 
+                    ? `Avg. consumption: ${avgOilConsumptionLiter} L / vehicle` 
+                    : language === 'th' 
+                      ? `การบริโภคเฉลี่ย: ${avgOilConsumptionLiter} ลิตร / ยานพาหนะ`
+                      : `Durchschn. Verbrauch: ${avgOilConsumptionLiter} L / Fahrzeug`}
+                </span>
               </div>
               <div className="text-[10px] md:text-xs text-muted-foreground">
-                <span className="block">Fleet: {vehicleCount} vehicles | กองรถ {vehicleCount} คัน</span>
+                <span className="block">
+                  {language === 'en' 
+                    ? `Fleet: ${vehicleCount} vehicles` 
+                    : language === 'th' 
+                      ? `กองรถ ${vehicleCount} คัน`
+                      : `Flotte: ${vehicleCount} Fahrzeuge`}
+                </span>
               </div>
               <div className="text-xs mt-2 font-semibold">
                 <span className="block text-green-600">
-                  Total cost: {totalOilCost.toLocaleString("th-TH", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} THB | ต้นทุนรวม: {totalOilCost.toLocaleString("th-TH", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} บาท
+                  {language === 'en' 
+                    ? `Total cost: ${totalOilCost.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} THB` 
+                    : language === 'th' 
+                      ? `ต้นทุนรวม: ${totalOilCost.toLocaleString("th-TH", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} บาท`
+                      : `Gesamtkosten: ${totalOilCost.toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} THB`}
                 </span>
               </div>
               <div className="border-t border-muted-foreground mt-3 pt-2 space-y-1">
                 <div className="flex items-center gap-2 text-xs">
-                  <span className="font-medium">Per vehicle:</span>
+                  <span className="font-medium">
+                    {language === 'en' 
+                      ? 'Per vehicle:' 
+                      : language === 'th' 
+                        ? 'ต่อคัน:'
+                        : 'Pro Fahrzeug:'}
+                  </span>
                   <span>{avgOilConsumptionLiter} L</span>
                 </div>
                 <div className="flex items-center gap-2 text-xs">
-                  <span className="font-medium">Cost/vehicle:</span>
-                  <span>{costPerVehicleThb.toLocaleString("th-TH", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} THB</span>
+                  <span className="font-medium">
+                    {language === 'en' 
+                      ? 'Cost/vehicle:' 
+                      : language === 'th' 
+                        ? 'ต้นทุน/คัน:'
+                        : 'Kosten/Fahrzeug:'}
+                  </span>
+                  <span>
+                    {language === 'en' 
+                      ? `${costPerVehicleThb.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} THB` 
+                      : language === 'th' 
+                        ? `${costPerVehicleThb.toLocaleString("th-TH", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} บาท`
+                        : `${costPerVehicleThb.toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} THB`}
+                  </span>
                 </div>
               </div>
             </CardContent>
@@ -283,10 +417,18 @@ export default function Dashboard() {
               <div>
                 <CardTitle className="text-base md:text-lg flex items-center gap-2">
                   <ChartPie className="h-5 w-5 text-fleet-500" />
-                  Fleet Status | สถานะกองยาน
+                  {language === 'en' 
+                    ? 'Fleet Status' 
+                    : language === 'th' 
+                      ? 'สถานะกองยาน'
+                      : 'Flottenstatus'}
                 </CardTitle>
                 <p className="text-xs mt-1 text-muted-foreground">
-                  Ratio of vehicles by status (Active / Maintenance / Idle) | สัดส่วนสถานะรถแต่ละประเภท
+                  {language === 'en' 
+                    ? 'Ratio of vehicles by status (Active / Maintenance / Idle)' 
+                    : language === 'th' 
+                      ? 'สัดส่วนสถานะรถแต่ละประเภท'
+                      : 'Verhältnis der Fahrzeuge nach Status (Aktiv / Wartung / Inaktiv)'}
                 </p>
               </div>
             </CardHeader>
@@ -313,7 +455,11 @@ export default function Dashboard() {
                     <Legend verticalAlign="bottom" height={24} wrapperStyle={{ fontSize: "12px" }} />
                     <RechartsTooltip
                       formatter={(value: number, name: string) =>
-                        [`${value} vehicles | คัน`, name]
+                        language === 'en' 
+                          ? [`${value} vehicles`, name] 
+                          : language === 'th' 
+                            ? [`${value} คัน`, name]
+                            : [`${value} Fahrzeuge`, name]
                       }
                     />
                   </PieChart>
@@ -330,10 +476,18 @@ export default function Dashboard() {
               <div>
                 <CardTitle className="text-base md:text-lg flex items-center gap-2">
                   <ChartPie className="h-5 w-5 text-fleet-500" />
-                  Train Status | สถานะขบวนรถไฟ
+                  {language === 'en' 
+                    ? 'Train Status' 
+                    : language === 'th' 
+                      ? 'สถานะขบวนรถไฟ'
+                      : 'Zugstatus'}
                 </CardTitle>
                 <p className="text-xs mt-1 text-muted-foreground">
-                  Ratio of trains by status (Running / Maintenance / Idle) | สัดส่วนสถานะของขบวนรถไฟแต่ละประเภท
+                  {language === 'en' 
+                    ? 'Ratio of trains by status (Running / Maintenance / Idle)' 
+                    : language === 'th' 
+                      ? 'สัดส่วนสถานะของขบวนรถไฟแต่ละประเภท'
+                      : 'Verhältnis der Züge nach Status (In Betrieb / Wartung / Stillstehend)'}
                 </p>
               </div>
             </CardHeader>
@@ -360,7 +514,11 @@ export default function Dashboard() {
                     <Legend verticalAlign="bottom" height={24} wrapperStyle={{ fontSize: "12px" }} />
                     <RechartsTooltip
                       formatter={(value: number, name: string) =>
-                        [`${value} trains | ขบวน`, name]
+                        language === 'en' 
+                          ? [`${value} trains`, name] 
+                          : language === 'th' 
+                            ? [`${value} ขบวน`, name]
+                            : [`${value} Züge`, name]
                       }
                     />
                   </PieChart>
@@ -376,16 +534,32 @@ export default function Dashboard() {
             <CardHeader>
               <CardTitle className="text-base md:text-lg flex items-center gap-2">
                 <UserRound className="h-5 w-5 text-fleet-500" />
-                Login Activities | กิจกรรมการเข้าสู่ระบบ
+                {language === 'en' ? 'Login Activities' : language === 'th' ? 'กิจกรรมการเข้าสู่ระบบ' : 'Anmeldeaktivitäten'}
               </CardTitle>
               <CardDescription className="text-xs">
                 {user?.role === UserRole.ADMIN || user?.role === UserRole.FLEET_MANAGER 
-                  ? "All user login activities | กิจกรรมการเข้าสู่ระบบของผู้ใช้ทั้งหมด" 
+                  ? language === 'en' 
+                    ? "All user login activities" 
+                    : language === 'th' 
+                      ? "กิจกรรมการเข้าสู่ระบบของผู้ใช้ทั้งหมด" 
+                      : "Alle Benutzeranmeldeaktivitäten"
                   : user?.role === UserRole.DRIVER
-                    ? "Login activities for drivers | กิจกรรมการเข้าสู่ระบบของคนขับ"
+                    ? language === 'en'
+                      ? "Login activities for drivers"
+                      : language === 'th'
+                        ? "กิจกรรมการเข้าสู่ระบบของคนขับ"
+                        : "Anmeldeaktivitäten für Fahrer"
                     : user?.role === UserRole.MECHANIC
-                      ? "Login activities for mechanics | กิจกรรมการเข้าสู่ระบบของช่างซ่อม"
-                      : "Your login activities | กิจกรรมการเข้าสู่ระบบของคุณ"}
+                      ? language === 'en'
+                        ? "Login activities for mechanics"
+                        : language === 'th'
+                          ? "กิจกรรมการเข้าสู่ระบบของช่างซ่อม"
+                          : "Anmeldeaktivitäten für Mechaniker"
+                      : language === 'en'
+                        ? "Your login activities"
+                        : language === 'th'
+                          ? "กิจกรรมการเข้าสู่ระบบของคุณ"
+                          : "Ihre Anmeldeaktivitäten"}
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -393,9 +567,15 @@ export default function Dashboard() {
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead className="w-[180px]">User | ผู้ใช้</TableHead>
-                      <TableHead>Role | บทบาท</TableHead>
-                      <TableHead className="text-right">Time | เวลา</TableHead>
+                      <TableHead className="w-[180px]">
+                        {language === 'en' ? 'User' : language === 'th' ? 'ผู้ใช้' : 'Benutzer'}
+                      </TableHead>
+                      <TableHead>
+                        {language === 'en' ? 'Role' : language === 'th' ? 'บทบาท' : 'Rolle'}
+                      </TableHead>
+                      <TableHead className="text-right">
+                        {language === 'en' ? 'Time' : language === 'th' ? 'เวลา' : 'Zeit'}
+                      </TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -417,8 +597,20 @@ export default function Dashboard() {
               ) : (
                 <div className="flex flex-col items-center justify-center py-6 text-center text-muted-foreground">
                   <UserRound className="h-10 w-10 mb-2 opacity-20" />
-                  <p>No login activities yet | ยังไม่มีกิจกรรมการเข้าสู่ระบบ</p>
-                  <p className="text-xs mt-1">Log in to see activity records | เข้าสู่ระบบเพื่อดูบันทึกกิจกรรม</p>
+                  <p>
+                    {language === 'en' 
+                      ? 'No login activities yet' 
+                      : language === 'th' 
+                        ? 'ยังไม่มีกิจกรรมการเข้าสู่ระบบ'
+                        : 'Noch keine Anmeldeaktivitäten'}
+                  </p>
+                  <p className="text-xs mt-1">
+                    {language === 'en' 
+                      ? 'Log in to see activity records' 
+                      : language === 'th' 
+                        ? 'เข้าสู่ระบบเพื่อดูบันทึกกิจกรรม'
+                        : 'Melden Sie sich an, um Aktivitätsaufzeichnungen zu sehen'}
+                  </p>
                 </div>
               )}
             </CardContent>
@@ -432,8 +624,20 @@ export default function Dashboard() {
         <div className="grid gap-3 md:gap-6 mt-3 md:mt-6 grid-cols-1 md:grid-cols-12">
           <Card className="col-span-1 md:col-span-8">
             <CardHeader>
-              <CardTitle className="text-sm md:text-base">ภาพรวมกองยานพาหนะ</CardTitle>
-              <CardDescription className="text-xs md:text-sm">สถานะรถปัจจุบัน</CardDescription>
+              <CardTitle className="text-sm md:text-base">
+                {language === 'en' 
+                  ? 'Fleet Overview' 
+                  : language === 'th' 
+                    ? 'ภาพรวมกองยานพาหนะ'
+                    : 'Flottenübersicht'}
+              </CardTitle>
+              <CardDescription className="text-xs md:text-sm">
+                {language === 'en' 
+                  ? 'Current vehicle status' 
+                  : language === 'th' 
+                    ? 'สถานะรถปัจจุบัน'
+                    : 'Aktueller Fahrzeugstatus'}
+              </CardDescription>
             </CardHeader>
             <CardContent className="p-0">
               <div className="rounded-md border">
@@ -452,7 +656,17 @@ export default function Dashboard() {
                             ? "bg-orange-100 text-orange-600" 
                             : "bg-green-100 text-green-600"
                         }`}>
-                          {index === 3 ? "Wartung" : "Aktiv"}
+                          {index === 3 
+                            ? language === 'en' 
+                              ? "Maintenance" 
+                              : language === 'th' 
+                                ? "ซ่อมบำรุง"
+                                : "Wartung"
+                            : language === 'en'
+                              ? "Active"
+                              : language === 'th'
+                                ? "ใช้งานอยู่"
+                                : "Aktiv"}
                         </div>
                       </div>
                       
@@ -472,7 +686,9 @@ export default function Dashboard() {
                         </div>
                         <div className="flex items-center gap-1 text-[10px] md:text-xs text-muted-foreground">
                           <Clock className="h-2.5 w-2.5 md:h-3 md:w-3" />
-                          <span>{3 + index}.2 Std.</span>
+                          <span>
+                            {3 + index}.2 {language === 'en' ? 'hrs' : language === 'th' ? 'ชม.' : 'Std.'}
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -485,8 +701,16 @@ export default function Dashboard() {
           <Card className="col-span-1 md:col-span-4">
             <CardHeader className="flex flex-row items-center justify-between">
               <div>
-                <CardTitle className="text-sm md:text-base">กิจกรรมล่าสุด</CardTitle>
-                <CardDescription className="text-xs md:text-sm">การอัพเดตกองยานพาหนะแบบเรียลไทม์</CardDescription>
+                <CardTitle className="text-sm md:text-base">
+                  {language === 'en' ? 'Recent Activities' : language === 'th' ? 'กิจกรรมล่าสุด' : 'Neueste Aktivitäten'}
+                </CardTitle>
+                <CardDescription className="text-xs md:text-sm">
+                  {language === 'en' 
+                    ? 'Real-time fleet updates' 
+                    : language === 'th' 
+                      ? 'การอัพเดตกองยานพาหนะแบบเรียลไทม์'
+                      : 'Echtzeit-Flottenaktualisierungen'}
+                </CardDescription>
               </div>
               <Sheet>
                 <SheetTrigger asChild>
@@ -496,7 +720,13 @@ export default function Dashboard() {
                 </SheetTrigger>
                 <SheetContent>
                   <SheetHeader>
-                    <SheetTitle>Add New Activity | เพิ่มกิจกรรมใหม่</SheetTitle>
+                    <SheetTitle>
+                      {language === 'en' 
+                        ? 'Add New Activity' 
+                        : language === 'th' 
+                          ? 'เพิ่มกิจกรรมใหม่'
+                          : 'Neue Aktivität hinzufügen'}
+                    </SheetTitle>
                   </SheetHeader>
                   <Form {...activityForm}>
                     <form onSubmit={activityForm.handleSubmit(handleAddActivity)} className="space-y-4 mt-4">
@@ -505,11 +735,23 @@ export default function Dashboard() {
                         name="type"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Activity Type | ประเภทกิจกรรม</FormLabel>
+                            <FormLabel>
+                              {language === 'en' 
+                                ? 'Activity Type' 
+                                : language === 'th' 
+                                  ? 'ประเภทกิจกรรม'
+                                  : 'Aktivitätstyp'}
+                            </FormLabel>
                             <Select onValueChange={field.onChange}>
                               <FormControl>
                                 <SelectTrigger>
-                                  <SelectValue placeholder="Select activity type" />
+                                  <SelectValue placeholder={
+                                    language === 'en' 
+                                      ? "Select activity type" 
+                                      : language === 'th' 
+                                        ? "เลือกประเภทกิจกรรม"
+                                        : "Aktivitätstyp auswählen"
+                                  } />
                                 </SelectTrigger>
                               </FormControl>
                               <SelectContent>
@@ -528,15 +770,31 @@ export default function Dashboard() {
                         name="title"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Activity Description | รายละเอียดกิจกรรม</FormLabel>
+                            <FormLabel>
+                              {language === 'en' 
+                                ? 'Activity Description' 
+                                : language === 'th' 
+                                  ? 'รายละเอียดกิจกรรม'
+                                  : 'Aktivitätsbeschreibung'}
+                            </FormLabel>
                             <FormControl>
-                              <Input placeholder="Enter activity description" {...field} />
+                              <Input placeholder={
+                                language === 'en' 
+                                  ? "Enter activity description" 
+                                  : language === 'th' 
+                                    ? "ป้อนรายละเอียดกิจกรรม"
+                                    : "Aktivitätsbeschreibung eingeben"
+                              } {...field} />
                             </FormControl>
                           </FormItem>
                         )}
                       />
                       <Button type="submit" className="w-full">
-                        Add Activity | เพิ่มกิจกรรม
+                        {language === 'en' 
+                          ? 'Add Activity' 
+                          : language === 'th' 
+                            ? 'เพิ่มกิจกรรม'
+                            : 'Aktivität hinzufügen'}
                       </Button>
                     </form>
                   </Form>

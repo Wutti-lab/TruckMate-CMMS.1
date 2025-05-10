@@ -7,9 +7,11 @@ import { InspectionTabs } from "@/components/inspections/InspectionTabs";
 import { NewInspectionForm } from "@/components/inspections/NewInspectionForm";
 import { Button } from "@/components/ui/button";
 import { PlusCircle, XCircle } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Inspections() {
   const [showNewInspection, setShowNewInspection] = useState(false);
+  const { language } = useLanguage();
   
   return (
     <div className="flex flex-col h-full">
@@ -23,7 +25,13 @@ export default function Inspections() {
         {showNewInspection ? (
           <div className="mb-8 animate-in fade-in slide-in-from-top-4 duration-300">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-bold">New Inspection | การตรวจสอบใหม่</h2>
+              <h2 className="text-xl font-bold">
+                {language === 'en' 
+                  ? 'New Inspection' 
+                  : language === 'th' 
+                    ? 'การตรวจสอบใหม่'
+                    : 'Neue Inspektion'}
+              </h2>
               <Button 
                 variant="ghost" 
                 size="sm" 
@@ -31,7 +39,11 @@ export default function Inspections() {
                 className="flex items-center gap-1"
               >
                 <XCircle size={16} />
-                Cancel | ยกเลิก
+                {language === 'en' 
+                  ? 'Cancel' 
+                  : language === 'th' 
+                    ? 'ยกเลิก'
+                    : 'Abbrechen'}
               </Button>
             </div>
             <NewInspectionForm onSubmitSuccess={() => setShowNewInspection(false)} />
@@ -43,7 +55,11 @@ export default function Inspections() {
               className="flex items-center gap-1"
             >
               <PlusCircle size={16} />
-              New Inspection | การตรวจสอบใหม่
+              {language === 'en' 
+                ? 'New Inspection' 
+                : language === 'th' 
+                  ? 'การตรวจสอบใหม่'
+                  : 'Neue Inspektion'}
             </Button>
           </div>
         )}
