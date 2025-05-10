@@ -1,4 +1,3 @@
-
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -19,6 +18,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { useAuth } from "@/contexts/AuthContext";
 import { generateLicenseKey } from "@/lib/utils/customerUtils";
 import { useToast } from "@/hooks/use-toast";
+import { UserRole } from "@/lib/types/user-roles";
 
 // Extended registration schema with additional fields
 const registerSchema = z.object({
@@ -62,7 +62,7 @@ export function RegisterForm() {
       name: values.name,
       email: values.email,
       password: values.password,
-      role: 'customer',
+      role: UserRole.FLEET_MANAGER, // Using UserRole enum instead of string
       createdAt: new Date().toISOString(),
       approvalStatus: 'approved',
       paymentStatus: 'paid',
