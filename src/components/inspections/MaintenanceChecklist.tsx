@@ -10,20 +10,22 @@ import { ProductTransport } from "./checklist/ProductTransport";
 import { useAuth } from "@/contexts/AuthContext";
 import { UserRole } from "@/lib/types/user-roles";
 import { Info } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export function MaintenanceChecklist() {
   const { user } = useAuth();
+  const { t } = useLanguage();
   const isDriver = user?.role === UserRole.DRIVER;
   
   return (
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center">
-          Truck Maintenance Checklist | รายการตรวจสอบการบำรุงรักษารถบรรทุก
+          {t("truckMaintenanceChecklist")}
           {isDriver && (
             <div className="ml-2 p-1 bg-blue-100 text-blue-700 rounded-md flex items-center text-xs">
               <Info size={14} className="mr-1" />
-              <span>Driver View | มุมมองคนขับ</span>
+              <span>{t("driverView")}</span>
             </div>
           )}
         </CardTitle>

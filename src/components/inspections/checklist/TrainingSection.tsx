@@ -2,22 +2,25 @@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { GraduationCap } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export function TrainingSection() {
+  const { t } = useLanguage();
+  
   return (
     <div className="space-y-4">
-      <h3 className="font-semibold">Schulung und Wartung</h3>
+      <h3 className="font-semibold">{t("trainingAndMaintenance")}</h3>
       <div className="space-y-2">
         <div className="flex items-center space-x-2">
           <Checkbox id="training" />
           <Label htmlFor="training" className="flex items-center gap-2">
             <GraduationCap size={16} />
-            Regelmäßige Sicherheitsschulung absolviert
+            {t("safetyTrainingCompleted")}
           </Label>
         </div>
         <div className="flex items-center space-x-2">
           <Checkbox id="cleaning_supplies" />
-          <Label htmlFor="cleaning_supplies">Fahrzeugreinigungsmittel verfügbar</Label>
+          <Label htmlFor="cleaning_supplies">{t("cleaningSuppliesAvailable")}</Label>
         </div>
       </div>
       <div className="p-4 bg-secondary rounded-lg text-sm space-y-2">
