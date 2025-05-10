@@ -49,7 +49,8 @@ export function CustomersTable({
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat(language === 'de' ? 'de-DE' : 'en-US', { 
       style: 'currency', 
-      currency: 'EUR'
+      currency: 'THB',
+      currencyDisplay: 'symbol'
     }).format(amount);
   };
 
@@ -67,7 +68,7 @@ export function CustomersTable({
           <TableHead>{language === 'de' ? 'Kunde/Firma' : 'Customer/Company'}</TableHead>
           <TableHead>{language === 'de' ? 'Kontakt' : 'Contact'}</TableHead>
           <TableHead>{language === 'de' ? 'Lizenzen' : 'Licenses'}</TableHead>
-          <TableHead>{language === 'de' ? 'Ausgaben' : 'Total Spent'}</TableHead>
+          <TableHead>{language === 'de' ? 'Ausgaben (฿)' : 'Total Spent (฿)'}</TableHead>
           <TableHead>{language === 'de' ? 'Status' : 'Status'}</TableHead>
           <TableHead className="w-[80px]"></TableHead>
         </TableRow>

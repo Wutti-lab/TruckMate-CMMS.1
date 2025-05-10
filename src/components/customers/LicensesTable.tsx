@@ -26,7 +26,8 @@ export function LicensesTable({ licenses }: LicensesTableProps) {
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat(language === 'de' ? 'de-DE' : 'en-US', { 
       style: 'currency', 
-      currency: 'EUR'
+      currency: 'THB',
+      currencyDisplay: 'symbol'
     }).format(amount);
   };
 
@@ -47,7 +48,7 @@ export function LicensesTable({ licenses }: LicensesTableProps) {
           <TableHead>{language === 'de' ? 'Lizenzschlüssel' : 'License Key'}</TableHead>
           <TableHead>{language === 'de' ? 'Gekauft am' : 'Purchase Date'}</TableHead>
           <TableHead>{language === 'de' ? 'Ablaufdatum' : 'Expiry Date'}</TableHead>
-          <TableHead>{language === 'de' ? 'Preis' : 'Price'}</TableHead>
+          <TableHead>{language === 'de' ? 'Preis (฿)' : 'Price (฿)'}</TableHead>
           <TableHead>{language === 'de' ? 'Status' : 'Status'}</TableHead>
         </TableRow>
       </TableHeader>
