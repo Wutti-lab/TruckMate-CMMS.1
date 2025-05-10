@@ -13,6 +13,7 @@ import { Package, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface PartInfo {
   id: string;
@@ -27,27 +28,27 @@ interface PartInfo {
 const vehicleParts: PartInfo[] = [
   {
     id: "P001",
-    name: "Brake Pads | ผ้าเบรก",
+    name: "Brake Pads | Bremsbeläge",
     installedDate: "2024-03-15",
-    supplier: "BrakeTech Co. | เบรคเทค จำกัด",
+    supplier: "BrakeTech Co. | BrakeTech GmbH",
     warrantyEnd: "2025-03-15",
     vehicleId: "B-FR-123",
     vehicleModel: "Tesla Model Y"
   },
   {
     id: "P002",
-    name: "Air Filter | กรองอากาศ",
+    name: "Air Filter | Luftfilter",
     installedDate: "2024-02-20",
-    supplier: "FilterPro | ฟิลเตอร์โปร",
+    supplier: "FilterPro | FilterPro GmbH",
     warrantyEnd: "2025-02-20",
     vehicleId: "B-FR-234",
     vehicleModel: "VW ID.4"
   },
   {
     id: "P003",
-    name: "Battery | แบตเตอรี่",
+    name: "Battery | Batterie",
     installedDate: "2024-01-10",
-    supplier: "PowerCell | พาวเวอร์เซลล์",
+    supplier: "PowerCell | PowerCell GmbH",
     warrantyEnd: "2026-01-10",
     vehicleId: "B-FR-345",
     vehicleModel: "Audi e-tron"
@@ -62,14 +63,15 @@ export function VehicleParts() {
   });
   const { toast } = useToast();
   const [parts, setParts] = useState<PartInfo[]>(vehicleParts);
+  const { language } = useLanguage();
 
   const handleAddPart = (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!newPart.name || !newPart.supplier || !newPart.vehicleId || !newPart.vehicleModel || !newPart.warrantyEnd) {
       toast({
-        title: "Missing fields | ข้อมูลไม่ครบถ้วน",
-        description: "Please fill out all required fields | กรุณากรอกข้อมูลให้ครบถ้วน",
+        title: language === 'de' ? "Fehlende Felder" : "Missing fields",
+        description: language === 'de' ? "Bitte füllen Sie alle erforderlichen Felder aus" : "Please fill out all required fields",
         variant: "destructive"
       });
       return;
@@ -89,8 +91,10 @@ export function VehicleParts() {
     });
     
     toast({
-      title: "Part added successfully | เพิ่มชิ้นส่วนสำเร็จ",
-      description: `${partToAdd.name} has been added | ${partToAdd.name} ได้ถูกเพิ่มแล้ว`,
+      title: language === 'de' ? "Teil erfolgreich hinzugefügt" : "Part added successfully",
+      description: language === 'de' ? 
+        `${partToAdd.name} wurde hinzugefügt` : 
+        `${partToAdd.name} has been added`,
     });
   };
 
@@ -100,7 +104,7 @@ export function VehicleParts() {
         <div className="flex items-center gap-2">
           <Package className="h-5 w-5" />
           <h2 className="text-lg font-semibold">
-            Replacement Parts | อะไหล่ทดแทน
+            {language === 'de' ? "Ersatzteile" : "Replacement Parts"}
           </h2>
         </div>
         <Button 
@@ -108,7 +112,7 @@ export function VehicleParts() {
           className="flex items-center gap-1 bg-fleet-500"
         >
           <Plus size={16} />
-          Add Part | เพิ่มชิ้นส่วน
+          {language === 'de' ? "Teil hinzufügen" : "Add Part"}
         </Button>
       </div>
 
@@ -117,12 +121,12 @@ export function VehicleParts() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Vehicle ID | รหัสรถ</TableHead>
-                <TableHead>Vehicle Model | รุ่นรถ</TableHead>
-                <TableHead>Part Name | ชื่อชิ้นส่วน</TableHead>
-                <TableHead>Installation Date | วันที่ติดตั้ง</TableHead>
-                <TableHead>Supplier | ผู้จัดจำหน่าย</TableHead>
-                <TableHead>Warranty Until | รับประกันถึง</TableHead>
+                <TableHead>{language === 'de' ? "Fahrzeug-ID" : "Vehicle ID"}</TableHead>
+                <TableHead>{language === 'de' ? "Fahrzeugmodell" : "Vehicle Model"}</TableHead>
+                <TableHead>{language === 'de' ? "Teilname" : "Part Name"}</TableHead>
+                <TableHead>{language === 'de' ? "Installationsdatum" : "Installation Date"}</TableHead>
+                <TableHead>{language === 'de' ? "Lieferant" : "Supplier"}</TableHead>
+                <TableHead>{language === 'de' ? "Garantie bis" : "Warranty Until"}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -144,14 +148,14 @@ export function VehicleParts() {
       <Dialog open={isAddPartOpen} onOpenChange={setIsAddPartOpen}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>Add New Part | เพิ่มชิ้นส่วนใหม่</DialogTitle>
+            <DialogTitle>{language === 'de' ? "Neues Teil hinzufügen" : "Add New Part"}</DialogTitle>
           </DialogHeader>
           
           <form onSubmit={handleAddPart} className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <label htmlFor="vehicleId" className="text-sm font-medium">
-                  Vehicle ID | รหัสรถ *
+                  {language === 'de' ? "Fahrzeug-ID *" : "Vehicle ID *"}
                 </label>
                 <input
                   id="vehicleId"
@@ -164,7 +168,7 @@ export function VehicleParts() {
               
               <div className="space-y-2">
                 <label htmlFor="vehicleModel" className="text-sm font-medium">
-                  Vehicle Model | รุ่นรถ *
+                  {language === 'de' ? "Fahrzeugmodell *" : "Vehicle Model *"}
                 </label>
                 <input
                   id="vehicleModel"
@@ -178,7 +182,7 @@ export function VehicleParts() {
             
             <div className="space-y-2">
               <label htmlFor="name" className="text-sm font-medium">
-                Part Name | ชื่อชิ้นส่วน *
+                {language === 'de' ? "Teilname *" : "Part Name *"}
               </label>
               <input
                 id="name"
@@ -191,7 +195,7 @@ export function VehicleParts() {
             
             <div className="space-y-2">
               <label htmlFor="supplier" className="text-sm font-medium">
-                Supplier | ผู้จัดจำหน่าย *
+                {language === 'de' ? "Lieferant *" : "Supplier *"}
               </label>
               <input
                 id="supplier"
@@ -205,7 +209,7 @@ export function VehicleParts() {
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <label htmlFor="installedDate" className="text-sm font-medium">
-                  Installation Date | วันที่ติดตั้ง *
+                  {language === 'de' ? "Installationsdatum *" : "Installation Date *"}
                 </label>
                 <input
                   id="installedDate"
@@ -219,7 +223,7 @@ export function VehicleParts() {
               
               <div className="space-y-2">
                 <label htmlFor="warrantyEnd" className="text-sm font-medium">
-                  Warranty Until | รับประกันถึง *
+                  {language === 'de' ? "Garantie bis *" : "Warranty Until *"}
                 </label>
                 <input
                   id="warrantyEnd"
@@ -238,10 +242,10 @@ export function VehicleParts() {
                 variant="outline" 
                 onClick={() => setIsAddPartOpen(false)}
               >
-                Cancel | ยกเลิก
+                {language === 'de' ? "Abbrechen" : "Cancel"}
               </Button>
               <Button type="submit" className="bg-fleet-500">
-                Add Part | เพิ่มชิ้นส่วน
+                {language === 'de' ? "Teil hinzufügen" : "Add Part"}
               </Button>
             </div>
           </form>
