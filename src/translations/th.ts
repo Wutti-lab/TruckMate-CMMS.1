@@ -129,6 +129,12 @@ export const thTranslations = {
   "needCustomOffer": "ต้องการข้อเสนอที่กำหนดเอง",
   "contactUsForTailoredSolutions": "ติดต่อทีมขายของเราสำหรับโซลูชั่นที่ปรับให้เข้ากับความต้องการเฉพาะของกองยานพาหนะของคุณ",
   "contact": "ติดต่อฝ่ายขาย",
+  "paymentDetails": "รายละเอียดการชำระเงิน",
+  "scanQrToTransfer": "สแกน QR เพื่อโอนเข้าบัญชี",
+  "promptPay": "พร้อมเพย์",
+  "phoneNumber": "เบอร์โทร: 080-929-9965",
+  "afterTransferring": "หลังจากโอนเงิน กรุณาส่งหลักฐานการโอนเงินไปที่เบอร์โทรนี้",
+  "confirmPayment": "ยืนยันการชำระเงิน",
   
   // Advertisements Page
   "adManager": "จัดการโฆษณา",
@@ -231,4 +237,3 @@ export const thTranslations = {
   // New Inspection
   "newInspection": "การตรวจสอบใหม่"
 };
-

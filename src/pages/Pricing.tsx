@@ -10,31 +10,36 @@ import {
   CardTitle 
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Truck, User, Check, ArrowLeft } from "lucide-react";
+import { Truck, User, Check, ArrowLeft, QrCode } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
-import { useLanguage } from "@/contexts/LanguageContext";
+import { useLanguage, extractLanguageText } from "@/contexts/LanguageContext";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 export default function Pricing() {
   const { toast } = useToast();
   const navigate = useNavigate();
   const [isProcessing, setIsProcessing] = useState(false);
+  const [showQrCode, setShowQrCode] = useState(false);
   const { t, language } = useLanguage();
 
   const handlePayment = (plan: string) => {
     setIsProcessing(true);
-    // Simulate a payment process
-    setTimeout(() => {
-      setIsProcessing(false);
-      toast({
-        title: t("paymentSuccessful"),
-        description: `${t("thankYouForPurchasing")} ${plan} ${t("plan")}`,
-      });
-      navigate("/dashboard");
-    }, 2000);
+    // Show QR code dialog instead of simulating payment
+    setShowQrCode(true);
+    setIsProcessing(false);
   };
 
   const handleBackToDashboard = () => {
+    navigate("/dashboard");
+  };
+
+  const handlePaymentComplete = (plan: string) => {
+    toast({
+      title: t("paymentSuccessful"),
+      description: `${t("thankYouForPurchasing")} ${plan} ${t("plan")}`,
+    });
+    setShowQrCode(false);
     navigate("/dashboard");
   };
 
@@ -164,8 +169,63 @@ export default function Pricing() {
             <p className="mb-4 max-w-2xl mx-auto">
               {t("contactUsForTailoredSolutions")}
             </p>
-            <Button variant="outline">{t("contact")}</Button>
+            <Button variant="outline" onClick={() => setShowQrCode(true)}>
+              <QrCode className="mr-2 h-4 w-4" />
+              {t("contact")}
+            </Button>
           </div>
+          
+          {/* QR Code Payment Dialog */}
+          <Dialog open={showQrCode} onOpenChange={setShowQrCode}>
+            <DialogContent className="sm:max-w-md">
+              <DialogHeader>
+                <DialogTitle className="text-center">
+                  {language === 'th' ? 'สแกน QR เพื่อโอนเข้าบัญชี' : 
+                   language === 'de' ? 'QR-Code scannen, um auf das Konto zu überweisen' : 
+                   'Scan QR to transfer to account'}
+                </DialogTitle>
+              </DialogHeader>
+              <div className="flex flex-col items-center justify-center space-y-4">
+                <div className="max-w-[250px] mx-auto">
+                  <img 
+                    src="/lovable-uploads/1227902a-2033-4df9-a3c7-382e79e5b997.png"
+                    alt="PromptPay QR Code" 
+                    className="w-full h-auto"
+                  />
+                </div>
+                
+                <div className="text-center space-y-2">
+                  <p className="font-bold">
+                    {language === 'th' ? 'พร้อมเพย์' : 
+                     language === 'de' ? 'PromptPay' : 
+                     'PromptPay'}
+                  </p>
+                  <p>
+                    {language === 'th' ? 'เบอร์โทร: 080-929-9965' : 
+                     language === 'de' ? 'Telefon: 080-929-9965' : 
+                     'Phone: 080-929-9965'}
+                  </p>
+                </div>
+                
+                <div className="border-t w-full pt-4 mt-4">
+                  <p className="text-sm text-center text-gray-500">
+                    {language === 'th' ? 'หลังจากโอนเงิน กรุณาส่งหลักฐานการโอนเงินไปที่เบอร์โทรนี้' : 
+                     language === 'de' ? 'Nach der Überweisung senden Sie bitte den Zahlungsnachweis an diese Telefonnummer' : 
+                     'After transferring, please send proof of payment to this phone number'}
+                  </p>
+                </div>
+                
+                <Button 
+                  onClick={() => handlePaymentComplete("Vehicle")}
+                  className="w-full mt-4"
+                >
+                  {language === 'th' ? 'ยืนยันการชำระเงิน' : 
+                   language === 'de' ? 'Zahlung bestätigen' : 
+                   'Confirm Payment'}
+                </Button>
+              </div>
+            </DialogContent>
+          </Dialog>
         </div>
       </main>
     </div>

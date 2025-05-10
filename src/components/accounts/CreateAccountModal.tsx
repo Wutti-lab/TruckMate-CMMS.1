@@ -34,7 +34,8 @@ import { useAuth } from "@/contexts/AuthContext";
 import { UserRole } from "@/lib/types/user-roles";
 import { useState as useStatePayment } from "react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { AlertCircle } from "lucide-react";
+import { AlertCircle, QrCode } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface CreateAccountModalProps {
   open: boolean;
@@ -77,6 +78,7 @@ export function CreateAccountModal({ open, onOpenChange }: CreateAccountModalPro
   const { createPendingUser } = useAuth();
   const [showPaymentInfo, setShowPaymentInfo] = useState(false);
   const [paymentConfirmed, setPaymentConfirmed] = useState(false);
+  const { language } = useLanguage();
 
   const onSubmit = (data: FormValues) => {
     if (!showPaymentInfo) {
@@ -147,10 +149,34 @@ export function CreateAccountModal({ open, onOpenChange }: CreateAccountModalPro
             
             <div className="rounded-md border p-4 space-y-2">
               <h3 className="font-medium">Payment Information | ข้อมูลการชำระเงิน</h3>
-              <p className="text-sm">Bank Transfer: SCB 123-456-7890 | โอนเงิน: SCB 123-456-7890</p>
-              <p className="text-sm">Name: TruckMate CMMS | ชื่อ: TruckMate CMMS</p>
-              <p className="text-sm">Amount: 2000 THB | จำนวนเงิน: 2000 บาท</p>
-              <p className="text-sm">Reference: {form.getValues("email")} | อ้างอิง: {form.getValues("email")}</p>
+              
+              <div className="flex flex-col items-center justify-center mt-4 mb-2">
+                <div className="max-w-[200px] mb-4">
+                  <img 
+                    src="/lovable-uploads/1227902a-2033-4df9-a3c7-382e79e5b997.png" 
+                    alt="PromptPay QR Code"
+                    className="w-full h-auto"
+                  />
+                </div>
+                
+                <div className="text-center">
+                  <p className="font-medium">
+                    {language === 'th' ? 'พร้อมเพย์' : 
+                     language === 'de' ? 'PromptPay' : 
+                     'PromptPay'}
+                  </p>
+                  <p className="text-sm">
+                    {language === 'th' ? 'เบอร์โทร: 080-929-9965' : 
+                     language === 'de' ? 'Telefon: 080-929-9965' : 
+                     'Phone: 080-929-9965'}
+                  </p>
+                  <p className="text-sm mt-2">
+                    {language === 'th' ? 'อ้างอิง: ' : 
+                     language === 'de' ? 'Referenz: ' : 
+                     'Reference: '}{form.getValues("email")}
+                  </p>
+                </div>
+              </div>
             </div>
             
             <div className="flex items-center">
