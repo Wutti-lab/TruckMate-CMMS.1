@@ -30,6 +30,9 @@ export function VehicleTypeSelector({ defaultValue, onChange }: VehicleTypeSelec
           <SelectItem value="fuel">
             {extractLanguageText("Fuel | น้ำมัน | Kraftstoff", language)}
           </SelectItem>
+          <SelectItem value="hybrid">
+            {extractLanguageText("Hybrid | ไฮบริด | Hybrid", language)}
+          </SelectItem>
         </SelectContent>
       </Select>
     </FormItem>
