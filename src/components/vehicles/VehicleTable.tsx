@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/table";
 import { Card, CardContent } from "@/components/ui/card";
 import { VehicleTableRow } from "./VehicleTableRow";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface Vehicle {
   id: string;
@@ -27,24 +28,31 @@ interface VehicleTableProps {
 }
 
 export function VehicleTable({ vehicles }: VehicleTableProps) {
+  const { language } = useLanguage();
+  
+  // Function to get the correct header text based on language
+  const getHeaderText = (en: string, de: string): string => {
+    return language === 'de' ? de : en;
+  };
+
   return (
     <Card>
       <CardContent className="p-0">
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>License Plate | ทะเบียนรถ</TableHead>
-              <TableHead>Driver | คนขับ</TableHead>
-              <TableHead>Model | รุ่น</TableHead>
-              <TableHead>Location | ตำแหน่ง</TableHead>
-              <TableHead>Status | สถานะ</TableHead>
-              <TableHead>Battery Level | ระดับแบตเตอรี่</TableHead>
+              <TableHead>{getHeaderText("License Plate", "Kennzeichen")}</TableHead>
+              <TableHead>{getHeaderText("Driver", "Fahrer")}</TableHead>
+              <TableHead>{getHeaderText("Model", "Modell")}</TableHead>
+              <TableHead>{getHeaderText("Location", "Standort")}</TableHead>
+              <TableHead>{getHeaderText("Status", "Status")}</TableHead>
+              <TableHead>{getHeaderText("Battery Level", "Batteriestand")}</TableHead>
               <TableHead>
                 <span className="flex items-center gap-1">
-                  Motortemp.
+                  {getHeaderText("Motor Temp.", "Motortemp.")}
                 </span>
               </TableHead>
-              <TableHead>Next Service | การซ่อมบำรุงครั้งต่อไป</TableHead>
+              <TableHead>{getHeaderText("Next Service", "Nächste Wartung")}</TableHead>
               <TableHead></TableHead>
             </TableRow>
           </TableHeader>
@@ -58,4 +66,3 @@ export function VehicleTable({ vehicles }: VehicleTableProps) {
     </Card>
   );
 }
-
