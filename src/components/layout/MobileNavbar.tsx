@@ -3,9 +3,11 @@ import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useSidebar } from "@/components/ui/sidebar";
 import { AdBanner } from "@/components/ads/AdBanner";
+import { useLanguage, extractLanguageText } from "@/contexts/LanguageContext";
 
 export function MobileNavbar() {
   const { toggleSidebar } = useSidebar();
+  const { language } = useLanguage();
   
   return (
     <>
@@ -27,7 +29,9 @@ export function MobileNavbar() {
           />
           <div>
             <h2 className="text-lg font-bold text-sky-100">TruckMate CMMS</h2>
-            <p className="text-xs text-slate-300">ระบบจัดการยานพาหนะที่ง่ายดาย</p>
+            <p className="text-xs text-slate-300">
+              {extractLanguageText("Easy vehicle management system | ระบบจัดการยานพาหนะที่ง่ายดาย", language)}
+            </p>
           </div>
         </div>
       </div>

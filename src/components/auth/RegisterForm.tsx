@@ -14,11 +14,11 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { registerSchema } from "@/lib/validations/auth";
-import { useLanguage } from "@/contexts/LanguageContext";
+import { useLanguage, extractLanguageText } from "@/contexts/LanguageContext";
 
 export function RegisterForm() {
   const navigate = useNavigate();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),

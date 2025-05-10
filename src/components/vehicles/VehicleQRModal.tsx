@@ -3,6 +3,7 @@ import { QrCode } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import QRCode from "react-qr-code";
+import { useLanguage, extractLanguageText } from "@/contexts/LanguageContext";
 
 interface Vehicle {
   id: string;
@@ -87,11 +88,20 @@ const vehicleParts = [
 ];
 
 export function VehicleQRModal({ vehicle }: VehicleQRModalProps) {
+  const { language } = useLanguage();
+  
   // Get parts for this specific vehicle
   const vehicleReplacementParts = vehicleParts.filter(part => part.vehicleId === vehicle.id);
   
   // Get driver for this vehicle
   const driver = driversData.find(driver => driver.name === vehicle.driver);
+
+  // Process part names and suppliers to extract only the current language text
+  const processedParts = vehicleReplacementParts.map(part => ({
+    ...part,
+    name: extractLanguageText(part.name, language),
+    supplier: extractLanguageText(part.supplier, language)
+  }));
 
   // Create a comprehensive data structure for the QR code that includes all necessary information
   const qrData = {
@@ -118,7 +128,7 @@ export function VehicleQRModal({ vehicle }: VehicleQRModalProps) {
       hoursThisWeek: driver.hoursThisWeek,
       shift: driver.shift
     } : null,
-    replacementParts: vehicleReplacementParts.map(part => ({
+    replacementParts: processedParts.map(part => ({
       name: part.name,
       installedDate: part.installedDate,
       supplier: part.supplier,
@@ -139,7 +149,7 @@ export function VehicleQRModal({ vehicle }: VehicleQRModalProps) {
         <DialogHeader>
           <DialogTitle>{vehicle.id} | QR Code</DialogTitle>
           <DialogDescription>
-            Scan with TruckMate QR Scanner | สแกนด้วยเครื่องสแกนคิวอาร์โค้ด TruckMate
+            {extractLanguageText("Scan with TruckMate QR Scanner | สแกนด้วยเครื่องสแกนคิวอาร์โค้ด TruckMate", language)}
           </DialogDescription>
         </DialogHeader>
         <div className="flex flex-col items-center justify-center p-6 space-y-4">
@@ -150,7 +160,7 @@ export function VehicleQRModal({ vehicle }: VehicleQRModalProps) {
             viewBox="0 0 256 256"
           />
           <p className="text-sm text-muted-foreground text-center">
-            Scan to view complete vehicle, driver and parts details | สแกนเพื่อดูรายละเอียดทั้งหมดของยานพาหนะ คนขับและชิ้นส่วน
+            {extractLanguageText("Scan to view complete vehicle, driver and parts details | สแกนเพื่อดูรายละเอียดทั้งหมดของยานพาหนะ คนขับและชิ้นส่วน", language)}
           </p>
         </div>
       </DialogContent>

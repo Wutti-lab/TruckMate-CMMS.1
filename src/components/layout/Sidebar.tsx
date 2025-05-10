@@ -17,7 +17,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
 import { UserRole } from "@/lib/types/user-roles";
-import { useLanguage } from "@/contexts/LanguageContext";
+import { useLanguage, extractLanguageText } from "@/contexts/LanguageContext";
 
 import {
   Sidebar as ShadcnSidebar,
@@ -33,7 +33,7 @@ import {
 export function Sidebar() {
   const { user, logout, hasRole } = useAuth();
   const { openMobile, setOpenMobile } = useSidebar();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   const menuItems = [
     {

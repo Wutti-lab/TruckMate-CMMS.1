@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { useLanguage, extractLanguageText } from "@/contexts/LanguageContext";
 
 // Example notifications for demonstration
 const exampleNotifications = [
@@ -70,9 +71,11 @@ export function Header() {
   const navigate = useNavigate();
   const [notifications, setNotifications] = useState(exampleNotifications);
   const [showNotifications, setShowNotifications] = useState(false);
+  const { language } = useLanguage();
   
   const unreadCount = notifications.filter(n => !n.read).length;
   
+  // The page titles in different languages
   const pageTitle = {
     "/dashboard": "Dashboard | แดชบอร์ด",
     "/vehicles": "Vehicles | ยานพาหนะ",
@@ -114,12 +117,16 @@ export function Header() {
         return <InfoIcon className="h-4 w-4 text-blue-500" />;
     }
   };
+
+  // Get the current page title and extract the appropriate language text
+  const currentPageTitle = pageTitle[window.location.pathname as keyof typeof pageTitle];
+  const formattedPageTitle = currentPageTitle ? extractLanguageText(currentPageTitle, language) : "TruckMate CMMS";
   
   return (
     <header className="border-b bg-white p-4">
       <div className="flex items-center justify-between">
         <h1 className="font-semibold">
-          {pageTitle[window.location.pathname as keyof typeof pageTitle] || "TruckMate CMMS"}
+          {formattedPageTitle}
         </h1>
         <div className="flex items-center gap-3">
           <div className="relative">
@@ -136,7 +143,7 @@ export function Header() {
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-80 bg-white p-2">
                 <div className="flex items-center justify-between py-2 px-3">
-                  <h3 className="font-medium">Notifications | การแจ้งเตือน</h3>
+                  <h3 className="font-medium">{extractLanguageText("Notifications | การแจ้งเตือน", language)}</h3>
                   {unreadCount > 0 && (
                     <Button 
                       variant="ghost" 
@@ -144,7 +151,7 @@ export function Header() {
                       onClick={markAllAsRead}
                       className="text-xs h-7 px-2"
                     >
-                      Mark all as read | ทำเครื่องหมายทั้งหมดว่าอ่านแล้ว
+                      {extractLanguageText("Mark all as read | ทำเครื่องหมายทั้งหมดว่าอ่านแล้ว", language)}
                     </Button>
                   )}
                 </div>
@@ -153,7 +160,7 @@ export function Header() {
                 
                 {notifications.length === 0 ? (
                   <div className="py-4 text-center text-gray-500">
-                    No notifications | ไม่มีการแจ้งเตือน
+                    {extractLanguageText("No notifications | ไม่มีการแจ้งเตือน", language)}
                   </div>
                 ) : (
                   <div className="max-h-80 overflow-y-auto">
@@ -166,7 +173,9 @@ export function Header() {
                           <div className="mt-1">{notificationIcon(notification.type)}</div>
                           <div className="flex-1">
                             <div className="flex justify-between">
-                              <h4 className="text-sm font-medium">{notification.title}</h4>
+                              <h4 className="text-sm font-medium">
+                                {extractLanguageText(notification.title, language)}
+                              </h4>
                               <Button
                                 variant="ghost"
                                 size="icon"
@@ -176,12 +185,14 @@ export function Header() {
                                 <X className="h-3 w-3" />
                               </Button>
                             </div>
-                            <p className="text-xs text-gray-700 mt-1">{notification.message}</p>
+                            <p className="text-xs text-gray-700 mt-1">
+                              {extractLanguageText(notification.message, language)}
+                            </p>
                             <div className="flex justify-between items-center mt-1">
                               <span className="text-xs text-gray-500">{notification.time}</span>
                               {!notification.read && (
                                 <Badge variant="outline" className="h-5 text-xs bg-blue-50 border-blue-200">
-                                  New | ใหม่
+                                  {extractLanguageText("New | ใหม่", language)}
                                 </Badge>
                               )}
                             </div>
@@ -194,7 +205,7 @@ export function Header() {
                             className="mt-1 h-6 text-xs p-0 underline text-blue-500 hover:text-blue-700"
                             onClick={() => markAsRead(notification.id)}
                           >
-                            Mark as read | ทำเครื่องหมายว่าอ่านแล้ว
+                            {extractLanguageText("Mark as read | ทำเครื่องหมายว่าอ่านแล้ว", language)}
                           </Button>
                         )}
                       </div>
@@ -206,7 +217,7 @@ export function Header() {
                 
                 <div className="px-3 py-2">
                   <Button variant="outline" size="sm" className="w-full">
-                    View all notifications | ดูการแจ้งเตือนทั้งหมด
+                    {extractLanguageText("View all notifications | ดูการแจ้งเตือนทั้งหมด", language)}
                   </Button>
                 </div>
               </DropdownMenuContent>
@@ -226,15 +237,15 @@ export function Header() {
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 <DropdownMenuItem>
-                  Profile Settings | การตั้งค่าโปรไฟล์
+                  {extractLanguageText("Profile Settings | การตั้งค่าโปรไฟล์", language)}
                 </DropdownMenuItem>
                 <DropdownMenuItem>
-                  System Preferences | การตั้งค่าระบบ
+                  {extractLanguageText("System Preferences | การตั้งค่าระบบ", language)}
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={handleLogout} className="text-red-600">
                   <LogOut className="h-4 w-4 mr-2" />
-                  Logout | ออกจากระบบ
+                  {extractLanguageText("Logout | ออกจากระบบ", language)}
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

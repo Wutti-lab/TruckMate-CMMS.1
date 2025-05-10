@@ -6,6 +6,27 @@ import { getTranslation } from '@/translations';
 // Create the language context
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
+// Helper function to extract the current language from bilingual text
+export const extractLanguageText = (text: string, language: Language): string => {
+  if (!text.includes(' | ')) {
+    return text; // Return original if no separator found
+  }
+
+  // Split by the separator
+  const parts = text.split(' | ');
+
+  switch (language) {
+    case 'en':
+      return parts[0]; // English is typically first
+    case 'th':
+      return parts.length > 1 ? parts[1] : parts[0]; // Thai is typically second
+    case 'de':
+      return parts.length > 0 ? parts[0] : text; // German replaces English position
+    default:
+      return parts[0]; // Default to first part
+  }
+};
+
 // Provider component for the language context
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   // Get initial language from localStorage or default to 'en'
