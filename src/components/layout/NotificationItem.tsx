@@ -4,15 +4,7 @@ import { AlertTriangle, CheckCircle, InfoIcon, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useLanguage, extractLanguageText } from "@/contexts/LanguageContext";
-
-interface Notification {
-  id: number;
-  title: string;
-  message: string;
-  time: string;
-  type: "warning" | "success" | "info";
-  read: boolean;
-}
+import { Notification } from "@/contexts/NotificationContext";
 
 interface NotificationItemProps {
   notification: Notification;
@@ -34,6 +26,7 @@ export function NotificationItem({
       case 'success':
         return <CheckCircle className="h-4 w-4 text-green-500" />;
       case 'info':
+      case 'error':
       default:
         return <InfoIcon className="h-4 w-4 text-blue-500" />;
     }

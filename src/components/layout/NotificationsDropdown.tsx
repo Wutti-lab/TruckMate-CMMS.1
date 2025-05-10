@@ -11,71 +11,18 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useLanguage, extractLanguageText } from "@/contexts/LanguageContext";
 import { NotificationItem } from "./NotificationItem";
-
-// Example notifications for demonstration
-const exampleNotifications = [
-  { 
-    id: 1, 
-    title: "Maintenance Alert | การแจ้งเตือนการบำรุงรักษา", 
-    message: "Vehicle B-FR-123 requires immediate maintenance | ยานพาหนะ B-FR-123 ต้องการการบำรุงรักษาทันที", 
-    time: "10 minutes ago", 
-    type: "warning",
-    read: false 
-  },
-  { 
-    id: 2, 
-    title: "Inspection Complete | การตรวจสอบเสร็จสิ้น", 
-    message: "Monthly inspection for vehicle B-FR-234 completed | การตรวจสอบประจำเดือนสำหรับยานพาหนะ B-FR-234 เสร็จสิ้นแล้ว", 
-    time: "2 hours ago", 
-    type: "success",
-    read: true 
-  },
-  { 
-    id: 3, 
-    title: "Driver Alert | การแจ้งเตือนคนขับ", 
-    message: "Driver Jan Weber has exceeded driving hours | คนขับ Jan Weber ขับขี่เกินเวลาที่กำหนด", 
-    time: "Yesterday", 
-    type: "warning",
-    read: false 
-  },
-  { 
-    id: 4, 
-    title: "New Vehicle Added | เพิ่มยานพาหนะใหม่", 
-    message: "Vehicle B-FR-789 has been added to the fleet | ยานพาหนะ B-FR-789 ได้รับการเพิ่มเข้าสู่กองยานพาหนะแล้ว", 
-    time: "2 days ago", 
-    type: "info",
-    read: true 
-  },
-  { 
-    id: 5, 
-    title: "System Update | การอัปเดตระบบ", 
-    message: "TruckMate CMMS will be updated tonight at 02:00 | TruckMate CMMS จะได้รับการอัปเดตคืนนี้เวลา 02:00 น.", 
-    time: "2 days ago", 
-    type: "info",
-    read: true 
-  },
-];
+import { useNotifications, NotificationType } from "@/contexts/NotificationContext";
 
 export function NotificationsDropdown() {
-  const [notifications, setNotifications] = useState(exampleNotifications);
   const { language } = useLanguage();
+  const { 
+    notifications,
+    unreadCount,
+    markAsRead,
+    markAllAsRead,
+    removeNotification
+  } = useNotifications();
   
-  const unreadCount = notifications.filter(n => !n.read).length;
-  
-  const markAsRead = (id: number) => {
-    setNotifications(notifications.map(n => 
-      n.id === id ? { ...n, read: true } : n
-    ));
-  };
-  
-  const markAllAsRead = () => {
-    setNotifications(notifications.map(n => ({ ...n, read: true })));
-  };
-  
-  const removeNotification = (id: number) => {
-    setNotifications(notifications.filter(n => n.id !== id));
-  };
-
   return (
     <div className="relative">
       <DropdownMenu>
