@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface AdBannerProps {
   position?: 'top' | 'bottom';
@@ -8,6 +9,7 @@ interface AdBannerProps {
 
 export function AdBanner({ position = 'top' }: AdBannerProps) {
   const [currentAd, setCurrentAd] = useState(0);
+  const isMobile = useIsMobile();
   
   // Example advertisements
   const advertisements = [
