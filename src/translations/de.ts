@@ -1,0 +1,153 @@
+
+export const deTranslations = {
+  // Login page
+  "login": "Anmelden",
+  "email": "E-Mail",
+  "password": "Passwort",
+  "rememberMe": "Angemeldet bleiben",
+  "forgotPassword": "Passwort vergessen?",
+  "loginButton": "Anmelden",
+  "loggingIn": "Anmeldung läuft...",
+  "testAccounts": "Testkonten:",
+  "passwordForAll": "Passwort für alle:",
+  "viewPricingPlans": "Preispläne anzeigen",
+  "enterCredentials": "Geben Sie Ihre Anmeldedaten ein, um auf Ihr Konto zuzugreifen",
+  "easyVehicleManagement": "Einfaches Fahrzeugmanagementsystem",
+  
+  // Dashboard
+  "dashboard": "Dashboard",
+  "vehicles": "Fahrzeuge",
+  "drivers": "Fahrer",
+  "map": "Karte",
+  "inspections": "Inspektionen",
+  "qrScanner": "QR-Scanner",
+  "accounts": "Konten",
+  "advertisements": "Werbung",
+  "fleetStatus": "Flottenstatus",
+  "vehiclesInService": "Fahrzeuge im Einsatz",
+  "fuelEfficiency": "Kraftstoffeffizienz",
+  "betterThanLastMonth": "besser als im letzten Monat",
+  "driverStatus": "Fahrerstatus",
+  "driversOnDuty": "Fahrer im Dienst",
+  "available": "verfügbar",
+  "maintenanceStatus": "Wartung",
+  "awaitingMaintenance": "Wartung ausstehend",
+  "oilPriceCosts": "Ölpreis & Kosten",
+  "currentOilPriceAndTotal": "Aktueller Ölpreis und Gesamtkosten",
+  "avgConsumption": "Durchschn. Verbrauch",
+  "perVehicle": "pro Fahrzeug",
+  "fleet": "Flotte",
+  "totalCost": "Gesamtkosten",
+  "vehiclePerformance": "Fahrzeugleistung",
+  "perVehicleText": "Pro Fahrzeug",
+  "costPerVehicle": "Kosten/Fahrzeug",
+  "fleetOverview": "Flottenübersicht",
+  "currentVehicleStatus": "Aktueller Fahrzeugstatus",
+  "recentActivities": "Neueste Aktivitäten",
+  "realTimeFleetUpdates": "Echtzeit-Flottenaktualisierungen",
+  "addNewActivity": "Neue Aktivität hinzufügen",
+  "activityType": "Aktivitätstyp",
+  "selectActivityType": "Aktivitätstyp auswählen",
+  "activityDescription": "Aktivitätsbeschreibung",
+  "enterActivityDescription": "Aktivitätsbeschreibung eingeben",
+  "addActivity": "Aktivität hinzufügen",
+  "vehicleArrival": "Fahrzeugankunft",
+  "maintenanceRequest": "Wartungsanfrage",
+  "fuelWarning": "Kraftstoffwarnung",
+  "driverUpdate": "Fahreraktualisierung",
+  "routeUpdate": "Routenaktualisierung",
+  "justNow": "Gerade eben",
+  "minutesAgo": "Minuten",
+  "hourAgo": "Stunde",
+  "hoursAgo": "Stunden",
+  "welcomeBack": "Willkommen zurück! Hier ist ein Überblick über Ihre Flotte",
+  
+  // Inspections
+  "newInspection": "Neue Inspektion",
+  "cancel": "Abbrechen",
+  
+  // Account Management
+  "accountManagement": "Kontoverwaltung",
+  "searchAccounts": "Konten suchen...",
+  "createAccount": "Konto erstellen",
+  "activeAccounts": "Aktive Konten",
+  "pendingApprovals": "Ausstehende Genehmigungen",
+  "userAccounts": "Benutzerkonten",
+  "pendingAccounts": "Ausstehende Konten",
+  "requiresApproval": "Genehmigung erforderlich",
+  
+  // Driver Form
+  "licenseQualification": "Lizenz & Qualifikation",
+  "medicalExaminations": "Medizinische Untersuchungen",
+  "addDriver": "Fahrer hinzufügen",
+  "driverInfoSaved": "Fahrerinformationen gespeichert",
+  "driverAddedSuccess": "Der Fahrer wurde erfolgreich hinzugefügt",
+  
+  // Train Status
+  "trainStatus": "Zugstatus",
+  "ratioOfTrains": "Verhältnis der Züge nach Status (In Betrieb / Wartung / Stillstehend)",
+  
+  // Login Activities
+  "loginActivities": "Anmeldeaktivitäten",
+  "allUserLoginActivities": "Alle Benutzeranmeldeaktivitäten",
+  "loginActivitiesForDrivers": "Anmeldeaktivitäten für Fahrer",
+  "loginActivitiesForMechanics": "Anmeldeaktivitäten für Mechaniker",
+  "yourLoginActivities": "Ihre Anmeldeaktivitäten",
+  "user": "Benutzer",
+  "role": "Rolle",
+  "time": "Zeit",
+  "noLoginActivities": "Noch keine Anmeldeaktivitäten",
+  "logInToSeeActivity": "Melden Sie sich an, um Aktivitätsaufzeichnungen zu sehen",
+  
+  // Register Form
+  "name": "Name",
+  "confirmPassword": "Passwort bestätigen",
+  "createAccountButton": "Konto erstellen",
+  
+  // Vehicle Status
+  "active": "Aktiv",
+  "maintenance": "Wartung",
+  "idle": "Inaktiv",
+  "running": "In Betrieb",
+  
+  // Statuses and activities
+  "vehicleArrived": "Fahrzeug B-FR 323 ist am Ziel angekommen",
+  "newMaintenanceRequest": "Neue Wartungsanfrage für B-FR 423",
+  "lowFuel": "Niedriger Kraftstoffstand in B-FR 123",
+  "driverStartedShift": "Fahrer M. Schmidt hat Schicht begonnen",
+  "routeUpdated": "Route für B-FR 223 aktualisiert",
+  
+  // Login success messages
+  "loginSuccessful": "Anmeldung erfolgreich",
+  "welcomeTo": "Willkommen bei TruckMate CMMS",
+  
+  // Login error messages
+  "loginFailed": "Anmeldung fehlgeschlagen",
+  "invalidCredentials": "Ungültige E-Mail oder Passwort",
+  
+  // Pricing page
+  "pricing": "Preise",
+  "choosePlan": "Wählen Sie den Plan, der Ihren Anforderungen entspricht",
+  "vehiclePlan": "Fahrzeugplan",
+  "userPlan": "Benutzerplan",
+  "completeVehicleManagement": "Komplettes Fahrzeugmanagement",
+  "vehicleInspections": "Fahrzeuginspektionen",
+  "maintenanceTracking": "Wartungsverfolgung",
+  "qrCodeSupport": "QR-Code Unterstützung",
+  "oneUserIncluded": "Ein Benutzer inbegriffen",
+  "individualUserProfile": "Individuelles Benutzerprofil",
+  "roleBasedAccess": "Rollenbasierter Zugriff",
+  "userSpecificDashboards": "Benutzerspezifische Dashboards",
+  "activityLogs": "Aktivitätsprotokolle",
+  "mobileAppAccess": "Zugriff auf die mobile App",
+  "buyNow": "Jetzt kaufen",
+  "processing": "Verarbeitung",
+  "paymentSuccessful": "Zahlung erfolgreich",
+  "thankYouForPurchasing": "Vielen Dank für den Kauf des",
+  "plan": "Plans",
+  "needCustomOffer": "Benötigen Sie ein individuelles Angebot",
+  "contactUsForTailoredSolutions": "Kontaktieren Sie uns für maßgeschneiderte Lösungen für große Flotten oder spezielle Anforderungen",
+  "contact": "Kontakt",
+  "backToDashboard": "Zurück zum Dashboard",
+  "logout": "Abmelden"
+};

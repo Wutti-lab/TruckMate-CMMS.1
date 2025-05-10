@@ -18,7 +18,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 
 export function RegisterForm() {
   const navigate = useNavigate();
-  const { language } = useLanguage();
+  const { t } = useLanguage();
   
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
@@ -43,9 +43,7 @@ export function RegisterForm() {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>
-                {language === 'en' ? 'Name' : language === 'th' ? 'ชื่อ' : 'Name'}
-              </FormLabel>
+              <FormLabel>{t("name")}</FormLabel>
               <FormControl>
                 <Input placeholder="Max Mustermann" {...field} />
               </FormControl>
@@ -58,9 +56,7 @@ export function RegisterForm() {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>
-                {language === 'en' ? 'Email' : language === 'th' ? 'อีเมล' : 'E-Mail'}
-              </FormLabel>
+              <FormLabel>{t("email")}</FormLabel>
               <FormControl>
                 <Input placeholder="name@firma.de" {...field} />
               </FormControl>
@@ -73,9 +69,7 @@ export function RegisterForm() {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>
-                {language === 'en' ? 'Password' : language === 'th' ? 'รหัสผ่าน' : 'Passwort'}
-              </FormLabel>
+              <FormLabel>{t("password")}</FormLabel>
               <FormControl>
                 <Input type="password" {...field} />
               </FormControl>
@@ -88,9 +82,7 @@ export function RegisterForm() {
           name="confirmPassword"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>
-                {language === 'en' ? 'Confirm Password' : language === 'th' ? 'ยืนยันรหัสผ่าน' : 'Passwort bestätigen'}
-              </FormLabel>
+              <FormLabel>{t("confirmPassword")}</FormLabel>
               <FormControl>
                 <Input type="password" {...field} />
               </FormControl>
@@ -99,7 +91,7 @@ export function RegisterForm() {
           )}
         />
         <Button type="submit" className="w-full bg-fleet-500 hover:bg-fleet-600">
-          {language === 'en' ? 'Create Account' : language === 'th' ? 'สร้างบัญชี' : 'Konto erstellen'}
+          {t("createAccountButton")}
         </Button>
       </form>
     </Form>

@@ -21,6 +21,7 @@ import { UserRole } from "@/lib/types/user-roles";
 import { EditAccountModal } from "./EditAccountModal";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export interface Account {
   id: string;
@@ -38,6 +39,7 @@ interface AccountsTableProps {
 export function AccountsTable({ searchQuery }: AccountsTableProps) {
   const { mockUsers, updateUserList, deleteUser } = useAuth();
   const { toast } = useToast();
+  const { t } = useLanguage();
   const [accounts, setAccounts] = useState<Account[]>([]);
   const [editAccount, setEditAccount] = useState<Account | null>(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -95,10 +97,10 @@ export function AccountsTable({ searchQuery }: AccountsTableProps) {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Name | ชื่อ</TableHead>
-            <TableHead>Email | อีเมล</TableHead>
-            <TableHead>Role | บทบาท</TableHead>
-            <TableHead>Status | สถานะ</TableHead>
+            <TableHead>{t("name")}</TableHead>
+            <TableHead>{t("email")}</TableHead>
+            <TableHead>{t("role")}</TableHead>
+            <TableHead>{t("status")}</TableHead>
             <TableHead className="w-[80px]"></TableHead>
           </TableRow>
         </TableHeader>
@@ -134,14 +136,14 @@ export function AccountsTable({ searchQuery }: AccountsTableProps) {
                         onClick={() => handleEdit(account)}
                       >
                         <Pencil className="mr-2 h-4 w-4" />
-                        Edit
+                        {t("edit")}
                       </DropdownMenuItem>
                       <DropdownMenuItem 
                         className="cursor-pointer text-red-600"
                         onClick={() => handleDelete(account.id)}
                       >
                         <Trash2 className="mr-2 h-4 w-4" />
-                        Delete
+                        {t("delete")}
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
@@ -151,7 +153,7 @@ export function AccountsTable({ searchQuery }: AccountsTableProps) {
           ) : (
             <TableRow>
               <TableCell colSpan={5} className="text-center py-6 text-muted-foreground">
-                No accounts found
+                {t("noAccountsFound")}
               </TableCell>
             </TableRow>
           )}
