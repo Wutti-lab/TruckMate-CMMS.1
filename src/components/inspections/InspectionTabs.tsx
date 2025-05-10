@@ -16,34 +16,37 @@ import { TransportRegulations } from "./TransportRegulations";
 import { DeliveryManagement } from "./DeliveryManagement";
 import { EmergencyContacts } from "./EmergencyContacts";
 import { Card, CardContent } from "@/components/ui/card";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export function InspectionTabs() {
+  const { language } = useLanguage();
+
   return (
     <Tabs defaultValue="inspections" className="w-full">
       <TabsList className="grid grid-cols-2 md:grid-cols-4 gap-3 p-2 mb-6">
         <TabsTrigger value="inspections" className="flex items-center gap-2 py-2 px-3">
           <ClipboardList size={16} />
-          Inspektionen
+          {language === 'th' ? "การตรวจสอบ" : "Inspektionen"}
         </TabsTrigger>
         <TabsTrigger value="deliveries" className="flex items-center gap-2 py-2 px-3">
           <MapPin size={16} />
-          Lieferungen
+          {language === 'th' ? "การส่งมอบ" : "Lieferungen"}
         </TabsTrigger>
         <TabsTrigger value="templates" className="flex items-center gap-2 py-2 px-3">
           <CheckSquare size={16} />
-          Vorlagen
+          {language === 'th' ? "แม่แบบ" : "Vorlagen"}
         </TabsTrigger>
         <TabsTrigger value="maintenance" className="flex items-center gap-2 py-2 px-3">
           <Truck size={16} />
-          Wartung
+          {language === 'th' ? "การบำรุงรักษา" : "Wartung"}
         </TabsTrigger>
         <TabsTrigger value="timeRestrictions" className="flex items-center gap-2 py-2 px-3">
           <Clock size={16} />
-          Fahrzeiten
+          {language === 'th' ? "เวลาขับขี่" : "Fahrzeiten"}
         </TabsTrigger>
         <TabsTrigger value="emergency" className="flex items-center gap-2 py-2 px-3">
           <Phone size={16} />
-          Notfall
+          {language === 'th' ? "ฉุกเฉิน" : "Notfall"}
         </TabsTrigger>
       </TabsList>
       
