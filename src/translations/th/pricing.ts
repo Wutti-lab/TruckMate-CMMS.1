@@ -1,4 +1,3 @@
-
 // Pricing page related translations
 export const pricingTranslations = {
   "choosePlan": "เลือกแผนที่เหมาะกับความต้องการของคุณ",
@@ -28,9 +27,9 @@ export const pricingTranslations = {
   "scanQrToTransfer": "สแกน QR เพื่อโอนเข้าบัญชี",
   "promptPay": "พร้อมเพย์",
   "phoneNumber": "เบอร์โทร: 080-929-9965",
-  "afterTransferring": "หลังจากโอนเงิน กรุณาส่งหลักฐานการโอนเงินไปที่อีเมลนี้",
+  "afterTransferring": "หลังจากโอนเงิน กรุณาส่งหลักฐานการโอนเงินไปที่อีเมลนี้ truckmatecmms@gmail.com",
   "confirmPayment": "ยืนยันการชำระเงิน",
   "sendPaymentVerification": "ส่งหลักฐานการชำระเงิน:",
   "paymentEmail": "truckmatecmms@gmail.com",
-  "pleaseVerifyPayment": "กรุณาส่งหลักฐานการชำระเงินไปที่อีเมลนี้",
+  "pleaseVerifyPayment": "กรุณาส่งหลักฐานการโอนเงินไปที่อีเมลนี้ truckmatecmms@gmail.com",
 };
