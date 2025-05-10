@@ -33,4 +33,6 @@ export const pricingTranslations = {
   "sendPaymentVerification": "Zahlungsnachweis senden:",
   "paymentEmail": "truckmatecmms@gmail.com",
   "pleaseVerifyPayment": "Bitte senden Sie den Zahlungsnachweis an diese E-Mail: truckmatecmms@gmail.com",
+  "freeTrialBadge": "3 Monate kostenlos testen",
+  "freeTrialDescription": "Testen Sie alle Funktionen 3 Monate kostenlos, keine Kreditkarte erforderlich",
 };

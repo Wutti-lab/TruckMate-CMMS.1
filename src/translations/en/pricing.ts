@@ -34,4 +34,6 @@ export const pricingTranslations = {
   "sendPaymentVerification": "Send payment verification:",
   "paymentEmail": "truckmatecmms@gmail.com",
   "pleaseVerifyPayment": "Please send payment verification to this email: truckmatecmms@gmail.com",
+  "freeTrialBadge": "3 Months Free Trial",
+  "freeTrialDescription": "Try all features for free for 3 months, no credit card required",
 };

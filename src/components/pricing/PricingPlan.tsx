@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
 import { ReactNode } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { Badge } from "@/components/ui/badge";
 
 interface PricingFeature {
   text: string;
@@ -17,6 +18,7 @@ interface PricingPlanProps {
   features: string[];
   onBuy: () => void;
   isProcessing: boolean;
+  showFreeTrial?: boolean;
 }
 
 export function PricingPlan({
@@ -27,6 +29,7 @@ export function PricingPlan({
   features,
   onBuy,
   isProcessing,
+  showFreeTrial = false,
 }: PricingPlanProps) {
   const { t } = useLanguage();
   
@@ -42,6 +45,17 @@ export function PricingPlan({
         <CardDescription className="text-center text-lg mt-2">
           {price} <span className="text-sm">{priceSuffix}</span>
         </CardDescription>
+        
+        {showFreeTrial && (
+          <div className="mt-2 text-center">
+            <Badge variant="outline" className="bg-green-50 text-green-700 border-green-300 hover:bg-green-100">
+              {t("freeTrialBadge")}
+            </Badge>
+            <p className="text-xs mt-2 text-green-600">
+              {t("freeTrialDescription")}
+            </p>
+          </div>
+        )}
       </CardHeader>
       <CardContent className="flex-grow">
         <ul className="space-y-3">

@@ -86,6 +86,7 @@ export default function Pricing() {
               features={vehicleFeatures}
               onBuy={() => handlePayment("Vehicle")}
               isProcessing={isProcessing}
+              showFreeTrial={true}
             />
 
             {/* User Plan */}
@@ -97,6 +98,7 @@ export default function Pricing() {
               features={userFeatures}
               onBuy={() => handlePayment("User")}
               isProcessing={isProcessing}
+              showFreeTrial={true}
             />
           </div>
 

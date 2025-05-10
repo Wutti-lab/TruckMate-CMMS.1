@@ -33,4 +33,6 @@ export const pricingTranslations = {
   "sendPaymentVerification": "ส่งหลักฐานการชำระเงิน:",
   "paymentEmail": "truckmatecmms@gmail.com",
   "pleaseVerifyPayment": "กรุณาส่งหลักฐานการโอนเงินไปที่อีเมลนี้ truckmatecmms@gmail.com",
+  "freeTrialBadge": "ทดลองใช้ฟรี 3 เดือน",
+  "freeTrialDescription": "ทดลองใช้ฟีเจอร์ทั้งหมดฟรี 3 เดือน ไม่ต้องใช้บัตรเครดิต",
 };
