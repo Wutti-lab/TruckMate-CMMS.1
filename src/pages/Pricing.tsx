@@ -19,7 +19,7 @@ export default function Pricing() {
   const { toast } = useToast();
   const navigate = useNavigate();
   const [isProcessing, setIsProcessing] = useState(false);
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   const handlePayment = (plan: string) => {
     setIsProcessing(true);
@@ -27,8 +27,8 @@ export default function Pricing() {
     setTimeout(() => {
       setIsProcessing(false);
       toast({
-        title: `${t("paymentSuccessful")} | การชำระเงินสำเร็จ`,
-        description: `${t("thankYouForPurchasing")} ${plan} ${t("plan")} | ขอบคุณสำหรับการซื้อแผน ${plan}`,
+        title: t("paymentSuccessful"),
+        description: `${t("thankYouForPurchasing")} ${plan} ${t("plan")}`,
       });
       navigate("/dashboard");
     }, 2000);
@@ -50,14 +50,14 @@ export default function Pricing() {
               className="mb-4"
             >
               <ArrowLeft className="mr-2 h-4 w-4" />
-              {t("backToDashboard")} | กลับไปที่แดชบอร์ด | Zurück zum Dashboard
+              {t("backToDashboard")}
             </Button>
           </div>
 
           <div className="mb-8 text-center">
-            <h1 className="text-3xl font-bold mb-2">TruckMate CMMS {t("pricing")} | โมเดลราคา</h1>
+            <h1 className="text-3xl font-bold mb-2">TruckMate CMMS {t("pricing")}</h1>
             <p className="text-muted-foreground">
-              {t("choosePlan")} | เลือกแผนที่ตรงกับความต้องการของคุณ
+              {t("choosePlan")}
             </p>
           </div>
 
@@ -70,32 +70,32 @@ export default function Pricing() {
                     <Truck className="h-10 w-10 text-fleet-600" />
                   </div>
                 </div>
-                <CardTitle className="text-center text-2xl">{t("vehiclePlan")} | แผนยานพาหนะ</CardTitle>
+                <CardTitle className="text-center text-2xl">{t("vehiclePlan")}</CardTitle>
                 <CardDescription className="text-center text-lg mt-2">
-                  5,000 ฿ <span className="text-sm">{t("perVehicle")} / ต่อยานพาหนะ</span>
+                  5,000 ฿ <span className="text-sm">{t("perVehicle")}</span>
                 </CardDescription>
               </CardHeader>
               <CardContent className="flex-grow">
                 <ul className="space-y-3">
                   <li className="flex items-start">
                     <Check className="h-5 w-5 text-fleet-500 mr-2 mt-0.5" />
-                    <span>{t("completeVehicleManagement")} | การจัดการยานพาหนะเต็มรูปแบบ</span>
+                    <span>{t("completeVehicleManagement")}</span>
                   </li>
                   <li className="flex items-start">
                     <Check className="h-5 w-5 text-fleet-500 mr-2 mt-0.5" />
-                    <span>{t("vehicleInspections")} | การตรวจสอบยานพาหนะ</span>
+                    <span>{t("vehicleInspections")}</span>
                   </li>
                   <li className="flex items-start">
                     <Check className="h-5 w-5 text-fleet-500 mr-2 mt-0.5" />
-                    <span>{t("maintenanceTracking")} | การติดตามการบำรุงรักษา</span>
+                    <span>{t("maintenanceTracking")}</span>
                   </li>
                   <li className="flex items-start">
                     <Check className="h-5 w-5 text-fleet-500 mr-2 mt-0.5" />
-                    <span>{t("qrCodeSupport")} | รองรับ QR โค้ด</span>
+                    <span>{t("qrCodeSupport")}</span>
                   </li>
                   <li className="flex items-start">
                     <Check className="h-5 w-5 text-fleet-500 mr-2 mt-0.5" />
-                    <span>{t("oneUserIncluded")} | รวมผู้ใช้ 1 คน</span>
+                    <span>{t("oneUserIncluded")}</span>
                   </li>
                 </ul>
               </CardContent>
@@ -105,7 +105,7 @@ export default function Pricing() {
                   onClick={() => handlePayment("Vehicle")}
                   disabled={isProcessing}
                 >
-                  {isProcessing ? `${t("processing")}... | กำลังดำเนินการ...` : `${t("buyNow")} | ซื้อเลย`}
+                  {isProcessing ? t("processing") : t("buyNow")}
                 </Button>
               </CardFooter>
             </Card>
@@ -118,32 +118,32 @@ export default function Pricing() {
                     <User className="h-10 w-10 text-fleet-600" />
                   </div>
                 </div>
-                <CardTitle className="text-center text-2xl">{t("userPlan")} | แผนผู้ใช้</CardTitle>
+                <CardTitle className="text-center text-2xl">{t("userPlan")}</CardTitle>
                 <CardDescription className="text-center text-lg mt-2">
-                  2,000 ฿ <span className="text-sm">{t("perUser")} / ต่อผู้ใช้</span>
+                  2,000 ฿ <span className="text-sm">{t("perUser")}</span>
                 </CardDescription>
               </CardHeader>
               <CardContent className="flex-grow">
                 <ul className="space-y-3">
                   <li className="flex items-start">
                     <Check className="h-5 w-5 text-fleet-500 mr-2 mt-0.5" />
-                    <span>{t("individualUserProfile")} | โปรไฟล์ผู้ใช้ส่วนบุคคล</span>
+                    <span>{t("individualUserProfile")}</span>
                   </li>
                   <li className="flex items-start">
                     <Check className="h-5 w-5 text-fleet-500 mr-2 mt-0.5" />
-                    <span>{t("roleBasedAccess")} | การเข้าถึงตามบทบาท</span>
+                    <span>{t("roleBasedAccess")}</span>
                   </li>
                   <li className="flex items-start">
                     <Check className="h-5 w-5 text-fleet-500 mr-2 mt-0.5" />
-                    <span>{t("userSpecificDashboards")} | แดชบอร์ดเฉพาะผู้ใช้</span>
+                    <span>{t("userSpecificDashboards")}</span>
                   </li>
                   <li className="flex items-start">
                     <Check className="h-5 w-5 text-fleet-500 mr-2 mt-0.5" />
-                    <span>{t("activityLogs")} | บันทึกกิจกรรม</span>
+                    <span>{t("activityLogs")}</span>
                   </li>
                   <li className="flex items-start">
                     <Check className="h-5 w-5 text-fleet-500 mr-2 mt-0.5" />
-                    <span>{t("mobileAppAccess")} | การเข้าถึงแอปมือถือ</span>
+                    <span>{t("mobileAppAccess")}</span>
                   </li>
                 </ul>
               </CardContent>
@@ -153,20 +153,18 @@ export default function Pricing() {
                   onClick={() => handlePayment("User")}
                   disabled={isProcessing}
                 >
-                  {isProcessing ? `${t("processing")}... | กำลังดำเนินการ...` : `${t("buyNow")} | ซื้อเลย`}
+                  {isProcessing ? t("processing") : t("buyNow")}
                 </Button>
               </CardFooter>
             </Card>
           </div>
 
           <div className="mt-12 text-center">
-            <h2 className="text-xl font-semibold mb-4">{t("needCustomOffer")}? | ต้องการข้อเสนอที่กำหนดเอง?</h2>
+            <h2 className="text-xl font-semibold mb-4">{t("needCustomOffer")}?</h2>
             <p className="mb-4 max-w-2xl mx-auto">
               {t("contactUsForTailoredSolutions")}
-              <br />
-              ติดต่อเราสำหรับโซลูชันที่ปรับแต่งสำหรับกองยานพาหนะขนาดใหญ่หรือความต้องการพิเศษ
             </p>
-            <Button variant="outline">{t("contact")} | ติดต่อ</Button>
+            <Button variant="outline">{t("contact")}</Button>
           </div>
         </div>
       </main>

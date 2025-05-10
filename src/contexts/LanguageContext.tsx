@@ -399,7 +399,32 @@ const translations: Translations = {
     
     // Login error messages
     "loginFailed": "Anmeldung fehlgeschlagen",
-    "invalidCredentials": "Ungültige E-Mail oder Passwort"
+    "invalidCredentials": "Ungültige E-Mail oder Passwort",
+    
+    // Pricing page
+    "pricing": "Preise",
+    "choosePlan": "Wählen Sie den Plan, der Ihren Anforderungen entspricht",
+    "vehiclePlan": "Fahrzeugplan",
+    "userPlan": "Benutzerplan",
+    "completeVehicleManagement": "Komplettes Fahrzeugmanagement",
+    "vehicleInspections": "Fahrzeuginspektionen",
+    "maintenanceTracking": "Wartungsverfolgung",
+    "qrCodeSupport": "QR-Code Unterstützung",
+    "oneUserIncluded": "Ein Benutzer inbegriffen",
+    "individualUserProfile": "Individuelles Benutzerprofil",
+    "roleBasedAccess": "Rollenbasierter Zugriff",
+    "userSpecificDashboards": "Benutzerspezifische Dashboards",
+    "activityLogs": "Aktivitätsprotokolle",
+    "mobileAppAccess": "Zugriff auf die mobile App",
+    "buyNow": "Jetzt kaufen",
+    "processing": "Verarbeitung",
+    "paymentSuccessful": "Zahlung erfolgreich",
+    "thankYouForPurchasing": "Vielen Dank für den Kauf des",
+    "plan": "Plans",
+    "needCustomOffer": "Benötigen Sie ein individuelles Angebot",
+    "contactUsForTailoredSolutions": "Kontaktieren Sie uns für maßgeschneiderte Lösungen für große Flotten oder spezielle Anforderungen",
+    "contact": "Kontakt",
+    "backToDashboard": "Zurück zum Dashboard"
   }
 };
 
