@@ -1,6 +1,8 @@
+
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { Toaster } from "@/components/ui/toaster";
 import Login from "@/pages/Login";
+import Register from "@/pages/Register";
 import Dashboard from "@/pages/Dashboard";
 import Vehicles from "@/pages/Vehicles";
 import Drivers from "@/pages/Drivers";
@@ -30,6 +32,7 @@ function App() {
               <Routes>
                 <Route path="/" element={<Index />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
                 <Route path="/pricing" element={<Pricing />} />
                 
                 {/* Protected Routes that require authentication */}

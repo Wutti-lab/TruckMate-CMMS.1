@@ -17,4 +17,18 @@ export const authTranslations = {
   "noAccount": "Don't have an account yet?",
   "register": "Register",
   "viewPricingPlans": "View Pricing Plans",
+  
+  // Registration Page
+  "createAccountDescription": "Create your account to get started with TruckMate CMMS",
+  "name": "Full Name",
+  "namePlaceholder": "John Doe",
+  "emailPlaceholder": "your@email.com",
+  "phoneNumber": "Phone Number",
+  "company": "Company (Optional)",
+  "companyPlaceholder": "Your Company Name",
+  "jobTitle": "Job Title (Optional)",
+  "jobTitlePlaceholder": "Fleet Manager",
+  "confirmPassword": "Confirm Password",
+  "createAccountButton": "Create Account",
+  "alreadyHaveAccount": "Already have an account?",
 };
