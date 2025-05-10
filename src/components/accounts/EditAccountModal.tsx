@@ -1,4 +1,8 @@
 
+import { useState } from "react";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Dialog,
   DialogContent,
@@ -7,14 +11,14 @@ import {
   DialogHeader,
   DialogTitle
 } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
-  FormDescription
+  FormMessage
 } from "@/components/ui/form";
 import {
   Select,
@@ -23,22 +27,12 @@ import {
   SelectTrigger,
   SelectValue
 } from "@/components/ui/select";
-import { Switch } from "@/components/ui/switch";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import { Account } from "./AccountsTable";
 import { UserRole } from "@/lib/types/user-roles";
+import { useLanguage } from "@/contexts/LanguageContext";
 
-interface EditAccountModalProps {
-  account: Account;
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  onSave: (account: Account) => void;
-}
-
+// Hier fügen wir alle möglichen UserRole Werte hinzu
 const formSchema = z.object({
   name: z.string().min(2, {
     message: "Name must be at least 2 characters.",
@@ -46,49 +40,81 @@ const formSchema = z.object({
   email: z.string().email({
     message: "Please enter a valid email address.",
   }),
+  password: z.string().optional(),
   role: z.enum([
-    UserRole.ADMIN, 
-    UserRole.FLEET_MANAGER, 
-    UserRole.DRIVER, 
-    UserRole.MECHANIC, 
+    UserRole.ADMIN,
+    UserRole.DEV_ADMIN,
+    UserRole.FLEET_MANAGER,
+    UserRole.DRIVER,
+    UserRole.MECHANIC,
     UserRole.DISPATCHER
   ]),
-  status: z.enum(['active', 'inactive']),
-  password: z.string().optional(),
+  status: z.enum(['active', 'inactive'])
 });
 
 type FormValues = z.infer<typeof formSchema>;
 
-export function EditAccountModal({ account, open, onOpenChange, onSave }: EditAccountModalProps) {
+interface EditAccountModalProps {
+  account: Account;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  onSave: (updatedAccount: Account) => void;
+}
+
+export function EditAccountModal({ 
+  account, 
+  open, 
+  onOpenChange, 
+  onSave 
+}: EditAccountModalProps) {
+  const [isLoading, setIsLoading] = useState(false);
+  const { language } = useLanguage();
+  
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: account.name,
       email: account.email,
-      role: account.role,
-      status: account.status,
       password: "",
+      role: account.role,
+      status: account.status
     },
   });
 
-  const onSubmit = (data: FormValues) => {
-    onSave({
-      ...account,
-      name: data.name,
-      email: data.email,
-      role: data.role,
-      status: data.status,
-      password: data.password, // Include password in the saved data
-    });
+  const onSubmit = async (data: FormValues) => {
+    setIsLoading(true);
+    try {
+      const updatedAccount = {
+        ...account,
+        name: data.name,
+        email: data.email,
+        role: data.role,
+        status: data.status
+      };
+      
+      if (data.password && data.password.trim() !== "") {
+        updatedAccount.password = data.password;
+      }
+      
+      onSave(updatedAccount);
+    } finally {
+      setIsLoading(false);
+    }
   };
-
+  
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[500px]">
+      <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Edit Account | แก้ไขบัญชี</DialogTitle>
+          <DialogTitle>
+            {language === 'en' ? 'Edit Account' : 
+             language === 'th' ? 'แก้ไขบัญชี' : 
+             'Konto bearbeiten'}
+          </DialogTitle>
           <DialogDescription>
-            Update the account details below.
+            {language === 'en' ? 'Make changes to the user account.' : 
+             language === 'th' ? 'ทำการเปลี่ยนแปลงบัญชีผู้ใช้' : 
+             'Nehmen Sie Änderungen am Benutzerkonto vor.'}
           </DialogDescription>
         </DialogHeader>
         
@@ -99,7 +125,11 @@ export function EditAccountModal({ account, open, onOpenChange, onSave }: EditAc
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Name | ชื่อ</FormLabel>
+                  <FormLabel>
+                    {language === 'en' ? 'Name' : 
+                     language === 'th' ? 'ชื่อ' : 
+                     'Name'}
+                  </FormLabel>
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
@@ -113,31 +143,32 @@ export function EditAccountModal({ account, open, onOpenChange, onSave }: EditAc
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email | อีเมล</FormLabel>
+                  <FormLabel>
+                    {language === 'en' ? 'Email' : 
+                     language === 'th' ? 'อีเมล' : 
+                     'E-Mail'}
+                  </FormLabel>
                   <FormControl>
-                    <Input type="email" {...field} />
+                    <Input {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-
+            
             <FormField
               control={form.control}
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password | รหัสผ่าน</FormLabel>
+                  <FormLabel>
+                    {language === 'en' ? 'Password (leave blank to keep current)' : 
+                     language === 'th' ? 'รหัสผ่าน (เว้นว่างไว้เพื่อใช้รหัสปัจจุบัน)' : 
+                     'Passwort (leer lassen, um aktuelles beizubehalten)'}
+                  </FormLabel>
                   <FormControl>
-                    <Input 
-                      type="password" 
-                      placeholder="Enter new password" 
-                      {...field} 
-                    />
+                    <Input type="password" {...field} />
                   </FormControl>
-                  <FormDescription>
-                    Leave blank to keep the current password
-                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -148,18 +179,20 @@ export function EditAccountModal({ account, open, onOpenChange, onSave }: EditAc
               name="role"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Role | บทบาท</FormLabel>
-                  <Select 
-                    onValueChange={field.onChange} 
-                    defaultValue={field.value}
-                  >
+                  <FormLabel>
+                    {language === 'en' ? 'Role' : 
+                     language === 'th' ? 'บทบาท' : 
+                     'Rolle'}
+                  </FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue />
+                        <SelectValue placeholder="Select role" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
                       <SelectItem value={UserRole.ADMIN}>Admin</SelectItem>
+                      <SelectItem value={UserRole.DEV_ADMIN}>Dev Admin</SelectItem>
                       <SelectItem value={UserRole.FLEET_MANAGER}>Fleet Manager</SelectItem>
                       <SelectItem value={UserRole.DRIVER}>Driver</SelectItem>
                       <SelectItem value={UserRole.MECHANIC}>Mechanic</SelectItem>
@@ -175,36 +208,51 @@ export function EditAccountModal({ account, open, onOpenChange, onSave }: EditAc
               control={form.control}
               name="status"
               render={({ field }) => (
-                <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3">
-                  <div className="space-y-0.5">
-                    <FormLabel>Active Status | สถานะการใช้งาน</FormLabel>
-                    <FormDescription>
-                      {field.value === 'active' 
-                        ? 'Account is active and user can log in.' 
-                        : 'Account is inactive and user cannot log in.'}
-                    </FormDescription>
-                  </div>
-                  <FormControl>
-                    <Switch
-                      checked={field.value === 'active'}
-                      onCheckedChange={(checked) => 
-                        field.onChange(checked ? 'active' : 'inactive')
-                      }
-                    />
-                  </FormControl>
+                <FormItem>
+                  <FormLabel>
+                    {language === 'en' ? 'Status' : 
+                     language === 'th' ? 'สถานะ' : 
+                     'Status'}
+                  </FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select status" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="active">Active</SelectItem>
+                      <SelectItem value="inactive">Inactive</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
                 </FormItem>
               )}
             />
             
-            <DialogFooter>
+            <DialogFooter className="pt-4">
               <Button 
                 variant="outline" 
-                type="button" 
                 onClick={() => onOpenChange(false)}
+                type="button"
               >
-                Cancel | ยกเลิก
+                {language === 'en' ? 'Cancel' : 
+                 language === 'th' ? 'ยกเลิก' : 
+                 'Abbrechen'}
               </Button>
-              <Button type="submit">Save Changes | บันทึกการเปลี่ยนแปลง</Button>
+              <Button 
+                type="submit" 
+                disabled={isLoading}
+              >
+                {isLoading ? 
+                  (language === 'en' ? 'Saving...' : 
+                   language === 'th' ? 'กำลังบันทึก...' : 
+                   'Speichern...') : 
+                  (language === 'en' ? 'Save changes' : 
+                   language === 'th' ? 'บันทึกการเปลี่ยนแปลง' : 
+                   'Änderungen speichern')
+                }
+              </Button>
             </DialogFooter>
           </form>
         </Form>
