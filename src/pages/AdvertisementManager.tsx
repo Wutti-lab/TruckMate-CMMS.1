@@ -5,8 +5,11 @@ import AdForm from '@/components/advertisements/AdForm';
 import AdPreview from '@/components/advertisements/AdPreview';
 import AdTable from '@/components/advertisements/AdTable';
 import { Advertisement } from '@/components/advertisements/types';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function AdvertisementManager() {
+  const { t } = useLanguage();
+  
   const [advertisements, setAdvertisements] = useState<Advertisement[]>([
     {
       id: "1",
@@ -45,8 +48,8 @@ export default function AdvertisementManager() {
   const handleAddNewAd = () => {
     if (!newAd.title || !newAd.description) {
       toast({
-        title: "ข้อมูลไม่ครบถ้วน",
-        description: "กรุณากรอกข้อมูลในช่องที่จำเป็นทั้งหมด",
+        title: t("incompleteData"),
+        description: t("fillRequiredFields"),
         variant: "destructive"
       });
       return;
@@ -68,8 +71,8 @@ export default function AdvertisementManager() {
     });
     
     toast({
-      title: "เพิ่มโฆษณาแล้ว",
-      description: "โฆษณาใหม่ได้รับการเพิ่มเรียบร้อยแล้ว"
+      title: t("adAdded"),
+      description: t("newAdAddedSuccess")
     });
   };
   
@@ -82,15 +85,15 @@ export default function AdvertisementManager() {
   const deleteAd = (id: string) => {
     setAdvertisements(advertisements.filter(ad => ad.id !== id));
     toast({
-      title: "ลบโฆษณาแล้ว",
-      description: "โฆษณาได้รับการลบเรียบร้อยแล้ว"
+      title: t("adDeleted"),
+      description: t("adDeletedSuccess")
     });
   };
   
   return (
     <div className="container mx-auto py-6 space-y-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold">ตัวจัดการโฆษณา</h1>
+        <h1 className="text-3xl font-bold">{t("advertisementManager")}</h1>
       </div>
       
       <div className="grid gap-6 md:grid-cols-2">

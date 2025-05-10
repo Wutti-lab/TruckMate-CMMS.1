@@ -1,4 +1,3 @@
-
 export const thTranslations = {
   // Login page
   "login": "เข้าสู่ระบบ",
@@ -58,7 +57,7 @@ export const thTranslations = {
   "routeUpdate": "อัปเดตเส้นทาง",
   "justNow": "เมื่อสักครู่",
   "minutesAgo": "นาทีที่แล้ว",
-  "hourAgo": "ชั่วโมงที่แล้ว",
+  "hourAgo": "ชั��วโมงที่แล้ว",
   "hoursAgo": "ชั่วโมงที่แล้ว",
   "welcomeBack": "ยินดีต้อนรับกลับ นี่คือภาพรวมของกองยานพาหนะของคุณ",
   
@@ -124,7 +123,53 @@ export const thTranslations = {
   // Login error messages
   "loginFailed": "เข้าสู่ระบบล้มเหลว",
   "invalidCredentials": "อีเมลหรือรหัสผ่านไม่ถูกต้อง",
-
+  
+  // Advertisement Manager
+  "advertisementManager": "ตัวจัดการโฆษณา",
+  "createNewAd": "สร้างโฆษณาใหม่",
+  "addNewAdToShow": "เพิ่มโฆษณาใหม่ที่จะแสดงในแอพ",
+  "preview": "ตัวอย่าง",
+  "adPreviewDescription": "โฆษณาของคุณจะมีลักษณะแบบนี้",
+  "title": "หัวข้อ",
+  "description": "คำอธิบาย",
+  "link": "ลิงก์",
+  "image": "รูปภาพ",
+  "optionalImage": "รูปภาพ (ไม่จำเป็น)",
+  "adImage": "ภาพโฆษณา",
+  "adTitle": "ชื่อโฆษณา",
+  "adDescription": "รายละเอียดโฆษณา",
+  "backgroundColor": "สีพื้นหลัง",
+  "selectColor": "เลือกสี",
+  "blueColor": "สีฟ้า",
+  "orangeColor": "สีส้ม",
+  "greenColor": "สีเขียว",
+  "purpleColor": "สีม่วง",
+  "redColor": "สีแดง",
+  "addAdvertisement": "เพิ่มโฆษณา",
+  "manageAds": "จัดการโฆษณา",
+  "allExistingAds": "รายการโฆษณาทั้งหมดที่มีอยู่",
+  "status": "สถานะ",
+  "active": "ใช้งาน",
+  "inactive": "ไม่ใช้งาน",
+  "actions": "การดำเนินการ",
+  "activate": "เปิดการใช้งาน",
+  "deactivate": "ปิดการใช้งาน",
+  "delete": "ลบ",
+  "learnMore": "เรียนรู้เพิ่มเติม",
+  "adTitlePlaceholder": "หัวข้อของโฆษณา",
+  "shortDescriptionPlaceholder": "คำอธิบายสั้นๆ",
+  "adUrlPlaceholder": "URL สำหรับโฆษณา",
+  "imageTooLarge": "ขนาดรูปภาพใหญ่เกินไป",
+  "imageMaxSize": "ขนาดรูปภาพควรมีขนาดไม่เกิน 2MB",
+  "imageRecommendedSize": "ขนาดภาพที่แนะนำ: ไม่เกิน 1200x800 พิกเซล",
+  "imageRecommendations": "ขนาดที่แนะนำ: ไม่เกิน 1200x800 พิกเซล, ขนาดไม่เกิน 2MB, รูปแบบ: JPG, PNG, GIF, WebP",
+  "incompleteData": "ข้อมูลไม่ครบถ้วน",
+  "fillRequiredFields": "กรุณากรอกข้อมูลในช่องที่จำเป็นทั้งหมด",
+  "adAdded": "เพิ่มโฆษณาแล้ว",
+  "newAdAddedSuccess": "โฆษณาใหม่ได้รับการเพิ่มเรียบร้อยแล้ว",
+  "adDeleted": "ลบโฆษณาแล้ว",
+  "adDeletedSuccess": "โฆษณาได้รับการลบเรียบร้อยแล้ว",
+  
   // Pricing page
   "pricing": "แผนราคา",
   "logout": "ออกจากระบบ"

@@ -1,4 +1,3 @@
-
 export const enTranslations = {
   // Login page
   "login": "Login",
@@ -127,5 +126,51 @@ export const enTranslations = {
 
   // Pricing page
   "pricing": "Pricing",
-  "logout": "Logout"
+  "logout": "Logout",
+  
+  // Advertisement Manager
+  "advertisementManager": "Advertisement Manager",
+  "createNewAd": "Create New Advertisement",
+  "addNewAdToShow": "Add a new advertisement to display in the app",
+  "preview": "Preview",
+  "adPreviewDescription": "Your advertisement will look like this",
+  "title": "Title",
+  "description": "Description",
+  "link": "Link",
+  "image": "Image",
+  "optionalImage": "Image (Optional)",
+  "adImage": "Ad image",
+  "adTitle": "Ad title",
+  "adDescription": "Ad description",
+  "backgroundColor": "Background Color",
+  "selectColor": "Select a color",
+  "blueColor": "Blue",
+  "orangeColor": "Orange",
+  "greenColor": "Green",
+  "purpleColor": "Purple",
+  "redColor": "Red",
+  "addAdvertisement": "Add Advertisement",
+  "manageAds": "Manage Advertisements",
+  "allExistingAds": "All existing advertisements",
+  "status": "Status",
+  "active": "Active",
+  "inactive": "Inactive",
+  "actions": "Actions",
+  "activate": "Activate",
+  "deactivate": "Deactivate",
+  "delete": "Delete",
+  "learnMore": "Learn More",
+  "adTitlePlaceholder": "Advertisement title",
+  "shortDescriptionPlaceholder": "Short description",
+  "adUrlPlaceholder": "URL for advertisement",
+  "imageTooLarge": "Image too large",
+  "imageMaxSize": "Image size should be less than 2MB",
+  "imageRecommendedSize": "Recommended image size: max 1200x800 pixels",
+  "imageRecommendations": "Recommended size: max 1200x800 pixels, max 2MB, formats: JPG, PNG, GIF, WebP",
+  "incompleteData": "Incomplete data",
+  "fillRequiredFields": "Please fill in all required fields",
+  "adAdded": "Advertisement added",
+  "newAdAddedSuccess": "New advertisement has been added successfully",
+  "adDeleted": "Advertisement deleted",
+  "adDeletedSuccess": "The advertisement has been deleted successfully"
 };

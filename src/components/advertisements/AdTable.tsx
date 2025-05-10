@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Advertisement } from './types';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface AdTableProps {
   advertisements: Advertisement[];
@@ -12,21 +13,23 @@ interface AdTableProps {
 }
 
 const AdTable: React.FC<AdTableProps> = ({ advertisements, onToggleStatus, onDelete }) => {
+  const { t } = useLanguage();
+  
   return (
     <Card>
       <CardHeader>
-        <CardTitle>จัดการโฆษณา</CardTitle>
-        <CardDescription>รายการโฆษณาทั้งหมดที่มีอยู่</CardDescription>
+        <CardTitle>{t("manageAds")}</CardTitle>
+        <CardDescription>{t("allExistingAds")}</CardDescription>
       </CardHeader>
       <CardContent>
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>หัวข้อ</TableHead>
-              <TableHead>คำอธิบาย</TableHead>
-              <TableHead>รูปภาพ</TableHead>
-              <TableHead>สถานะ</TableHead>
-              <TableHead className="text-right">การดำเนินการ</TableHead>
+              <TableHead>{t("title")}</TableHead>
+              <TableHead>{t("description")}</TableHead>
+              <TableHead>{t("image")}</TableHead>
+              <TableHead>{t("status")}</TableHead>
+              <TableHead className="text-right">{t("actions")}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -47,7 +50,7 @@ const AdTable: React.FC<AdTableProps> = ({ advertisements, onToggleStatus, onDel
                 </TableCell>
                 <TableCell>
                   <span className={`px-2 py-1 rounded-full text-xs ${ad.active ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}`}>
-                    {ad.active ? 'ใช้งาน' : 'ไม่ใช้งาน'}
+                    {ad.active ? t("active") : t("inactive")}
                   </span>
                 </TableCell>
                 <TableCell className="text-right space-x-2">
@@ -56,14 +59,14 @@ const AdTable: React.FC<AdTableProps> = ({ advertisements, onToggleStatus, onDel
                     size="sm"
                     onClick={() => onToggleStatus(ad.id)}
                   >
-                    {ad.active ? 'ปิดการใช้งาน' : 'เปิดการใช้งาน'}
+                    {ad.active ? t("deactivate") : t("activate")}
                   </Button>
                   <Button 
                     variant="destructive" 
                     size="sm"
                     onClick={() => onDelete(ad.id)}
                   >
-                    ลบ
+                    {t("delete")}
                   </Button>
                 </TableCell>
               </TableRow>

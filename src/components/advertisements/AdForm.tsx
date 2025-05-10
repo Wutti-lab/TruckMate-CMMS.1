@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectVa
 import { toast } from "@/hooks/use-toast";
 import { X } from 'lucide-react';
 import { Advertisement, colorOptions } from './types';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface AdFormProps {
   newAd: Omit<Advertisement, 'id' | 'active'>;
@@ -18,16 +19,17 @@ interface AdFormProps {
 
 const AdForm: React.FC<AdFormProps> = ({ newAd, setNewAd, onAddAd }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const { t } = useLanguage();
   
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
     
-    // ตรวจสอบขนาดไฟล์ (สูงสุด 2MB)
+    // Check file size (max 2MB)
     if (file.size > 2 * 1024 * 1024) {
       toast({
-        title: "ขนาดรูปภาพใหญ่เกินไป",
-        description: "ขนาดรูปภาพควรมีขนาดไม่เกิน 2MB",
+        title: t("imageTooLarge"),
+        description: t("imageMaxSize"),
         variant: "destructive"
       });
       return;
@@ -36,13 +38,13 @@ const AdForm: React.FC<AdFormProps> = ({ newAd, setNewAd, onAddAd }) => {
     const reader = new FileReader();
     reader.onload = (event) => {
       if (event.target?.result) {
-        // สร้างตัวอย่างภาพและตรวจสอบขนาด
+        // Create image preview and check dimensions
         const img = new Image();
         img.onload = () => {
           if (img.width > 1200 || img.height > 800) {
             toast({
-              title: "ขนาดรูปภาพใหญ่เกินไป",
-              description: "ขนาดภาพที่แนะนำ: ไม่เกิน 1200x800 พิกเซล",
+              title: t("imageTooLarge"),
+              description: t("imageRecommendedSize"),
               variant: "destructive"
             });
           }
@@ -65,43 +67,43 @@ const AdForm: React.FC<AdFormProps> = ({ newAd, setNewAd, onAddAd }) => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>สร้างโฆษณาใหม่</CardTitle>
-        <CardDescription>เพิ่มโฆษณาใหม่ที่จะแสดงในแอพ</CardDescription>
+        <CardTitle>{t("createNewAd")}</CardTitle>
+        <CardDescription>{t("addNewAdToShow")}</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="space-y-2">
-          <Label htmlFor="title">หัวข้อ</Label>
+          <Label htmlFor="title">{t("title")}</Label>
           <Input 
             id="title" 
             value={newAd.title} 
             onChange={(e) => setNewAd({...newAd, title: e.target.value})}
-            placeholder="หัวข้อของโฆษณา"
+            placeholder={t("adTitlePlaceholder")}
           />
         </div>
         
         <div className="space-y-2">
-          <Label htmlFor="description">คำอธิบาย</Label>
+          <Label htmlFor="description">{t("description")}</Label>
           <Textarea 
             id="description" 
             value={newAd.description}
             onChange={(e) => setNewAd({...newAd, description: e.target.value})}
-            placeholder="คำอธิบายสั้นๆ"
+            placeholder={t("shortDescriptionPlaceholder")}
             rows={3}
           />
         </div>
         
         <div className="space-y-2">
-          <Label htmlFor="link">ลิงก์</Label>
+          <Label htmlFor="link">{t("link")}</Label>
           <Input 
             id="link" 
             value={newAd.link} 
             onChange={(e) => setNewAd({...newAd, link: e.target.value})}
-            placeholder="URL สำหรับโฆษณา"
+            placeholder={t("adUrlPlaceholder")}
           />
         </div>
         
         <div className="space-y-2">
-          <Label htmlFor="image">รูปภาพ (ไม่จำเป็น)</Label>
+          <Label htmlFor="image">{t("optionalImage")}</Label>
           <div className="flex flex-col gap-2">
             <Input
               ref={fileInputRef}
@@ -112,7 +114,7 @@ const AdForm: React.FC<AdFormProps> = ({ newAd, setNewAd, onAddAd }) => {
               className="cursor-pointer"
             />
             <div className="text-xs text-gray-500">
-              ขนาดที่แนะนำ: ไม่เกิน 1200x800 พิกเซล, ขนาดไม่เกิน 2MB, รูปแบบ: JPG, PNG, GIF, WebP
+              {t("imageRecommendations")}
             </div>
             
             {newAd.image && (
@@ -126,7 +128,7 @@ const AdForm: React.FC<AdFormProps> = ({ newAd, setNewAd, onAddAd }) => {
                 </button>
                 <img 
                   src={newAd.image} 
-                  alt="ตัวอย่าง" 
+                  alt={t("preview")} 
                   className="h-32 w-auto object-contain mx-auto"
                 />
               </div>
@@ -135,19 +137,19 @@ const AdForm: React.FC<AdFormProps> = ({ newAd, setNewAd, onAddAd }) => {
         </div>
         
         <div className="space-y-2">
-          <Label htmlFor="color">สีพื้นหลัง</Label>
+          <Label htmlFor="color">{t("backgroundColor")}</Label>
           <Select 
             value={newAd.bgColor} 
             onValueChange={(value) => setNewAd({...newAd, bgColor: value})}
           >
             <SelectTrigger id="color">
-              <SelectValue placeholder="เลือกสี" />
+              <SelectValue placeholder={t("selectColor")} />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
                 {colorOptions.map((color) => (
                   <SelectItem key={color.value} value={color.value}>
-                    {color.label}
+                    {t(color.label)}
                   </SelectItem>
                 ))}
               </SelectGroup>
@@ -160,7 +162,7 @@ const AdForm: React.FC<AdFormProps> = ({ newAd, setNewAd, onAddAd }) => {
           onClick={onAddAd}
           className="w-full"
         >
-          เพิ่มโฆษณา
+          {t("addAdvertisement")}
         </Button>
       </CardFooter>
     </Card>
