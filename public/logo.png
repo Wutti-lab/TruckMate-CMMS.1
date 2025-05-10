@@ -1,4 +1,2 @@
-
-<!-- This would be the binary data for the logo, but we can't actually write binary data in this format. 
-The user will need to upload their logo image to the public folder and name it logo.png.
-For now, we'll assume the logo exists at this path. -->
+<!-- This is a placeholder for the binary data of the image -->
+<!-- The user will need to ensure the uploaded image is saved as logo.png in the public folder -->

@@ -23,7 +23,7 @@ export function MobileNavbar() {
         </Button>
         <div className="ml-4 flex items-center">
           <img 
-            src="/lovable-uploads/263fb180-3e33-4bd3-a0a9-ab3a7355d13c.png" 
+            src="/lovable-uploads/1275ea89-d888-449c-bc6c-295e38039de9.png" 
             alt="TruckMate CMMS Logo" 
             className="h-8 mr-2"
           />

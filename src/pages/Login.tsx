@@ -88,9 +88,9 @@ export default function Login() {
           {/* Logo */}
           <div className="flex justify-center mb-6">
             <img 
-              src="/logo.png" 
+              src="/lovable-uploads/1275ea89-d888-449c-bc6c-295e38039de9.png" 
               alt="TruckMate CMMS Logo" 
-              className="h-20 w-auto"
+              className="h-32 w-auto"
             />
           </div>
           
