@@ -54,7 +54,7 @@ const translations: Translations = {
     "driverStatus": "Driver Status",
     "driversOnDuty": "drivers on duty",
     "available": "available",
-    "maintenance": "Maintenance",
+    "maintenanceStatus": "Maintenance",
     "awaitingMaintenance": "Awaiting maintenance",
     "oilPriceCosts": "Oil Price & Costs",
     "currentOilPriceAndTotal": "Current oil price and total cost",
@@ -139,7 +139,15 @@ const translations: Translations = {
     "newMaintenanceRequest": "New maintenance request for B-FR 423",
     "lowFuel": "Low fuel in B-FR 123",
     "driverStartedShift": "Driver M. Schmidt started shift",
-    "routeUpdated": "Route updated for B-FR 223"
+    "routeUpdated": "Route updated for B-FR 223",
+    
+    // Login success messages
+    "loginSuccessful": "Login successful",
+    "welcomeTo": "Welcome to TruckMate CMMS",
+    
+    // Login error messages
+    "loginFailed": "Login failed",
+    "invalidCredentials": "Invalid email or password"
   },
   th: {
     // Login page
@@ -172,7 +180,7 @@ const translations: Translations = {
     "driverStatus": "สถานะคนขับ",
     "driversOnDuty": "คนขับกำลังปฏิบัติงาน",
     "available": "ความพร้อม",
-    "maintenance": "การบำรุงรักษา",
+    "maintenanceStatus": "การบำรุงรักษา",
     "awaitingMaintenance": "รอการบำรุงรักษา",
     "oilPriceCosts": "น้ำมันและต้นทุน",
     "currentOilPriceAndTotal": "ราคาน้ำมันและต้นทุนรวม",
@@ -257,7 +265,15 @@ const translations: Translations = {
     "newMaintenanceRequest": "คำขอบำรุงรักษาใหม่สำหรับ B-FR 423",
     "lowFuel": "น้ำมันเหลือน้อยใน B-FR 123",
     "driverStartedShift": "คนขับ M. Schmidt เริ่มกะ",
-    "routeUpdated": "อัปเดตเส้นทางสำหรับ B-FR 223"
+    "routeUpdated": "อัปเดตเส้นทางสำหรับ B-FR 223",
+    
+    // Login success messages
+    "loginSuccessful": "เข้าสู่ระบบสำเร็จ",
+    "welcomeTo": "ยินดีต้อนรับสู่ TruckMate CMMS",
+    
+    // Login error messages
+    "loginFailed": "เข้าสู่ระบบล้มเหลว",
+    "invalidCredentials": "อีเมลหรือรหัสผ่านไม่ถูกต้อง"
   },
   de: {
     // Login page
@@ -290,7 +306,7 @@ const translations: Translations = {
     "driverStatus": "Fahrerstatus",
     "driversOnDuty": "Fahrer im Dienst",
     "available": "verfügbar",
-    "maintenance": "Wartung",
+    "maintenanceStatus": "Wartung",
     "awaitingMaintenance": "Wartung ausstehend",
     "oilPriceCosts": "Ölpreis & Kosten",
     "currentOilPriceAndTotal": "Aktueller Ölpreis und Gesamtkosten",
@@ -375,7 +391,15 @@ const translations: Translations = {
     "newMaintenanceRequest": "Neue Wartungsanfrage für B-FR 423",
     "lowFuel": "Niedriger Kraftstoffstand in B-FR 123",
     "driverStartedShift": "Fahrer M. Schmidt hat Schicht begonnen",
-    "routeUpdated": "Route für B-FR 223 aktualisiert"
+    "routeUpdated": "Route für B-FR 223 aktualisiert",
+    
+    // Login success messages
+    "loginSuccessful": "Anmeldung erfolgreich",
+    "welcomeTo": "Willkommen bei TruckMate CMMS",
+    
+    // Login error messages
+    "loginFailed": "Anmeldung fehlgeschlagen",
+    "invalidCredentials": "Ungültige E-Mail oder Passwort"
   }
 };
 
