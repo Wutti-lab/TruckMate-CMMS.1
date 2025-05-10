@@ -12,6 +12,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { AddDriverModal } from "@/components/drivers/AddDriverModal";
 import { DriverSchedule } from "@/components/drivers/DriverSchedule";
+import { useLanguage, extractLanguageText } from "@/contexts/LanguageContext";
 
 const initialDrivers = [
   {
@@ -80,6 +81,7 @@ export default function Drivers() {
   const [searchQuery, setSearchQuery] = useState("");
   const [drivers, setDrivers] = useState(initialDrivers);
   const isMobile = useIsMobile();
+  const { language } = useLanguage();
   
   const filteredDrivers = drivers.filter((driver) => 
     driver.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -98,7 +100,7 @@ export default function Drivers() {
       <DrawerContent>
         <div className="p-4 space-y-4">
           <Input
-            placeholder="Search drivers... | ค้นหาพนักงานขับรถ..."
+            placeholder={extractLanguageText("Search drivers... | ค้นหาพนักงานขับรถ...", language)}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full"
@@ -114,13 +116,13 @@ export default function Drivers() {
       <main className="flex-1 p-4 md:p-6 overflow-auto space-y-6">
         <div className="mb-6 space-y-4">
           <div className="flex items-center justify-between">
-            <h1 className="text-xl md:text-2xl font-bold">Drivers | พนักงานขับรถ</h1>
+            <h1 className="text-xl md:text-2xl font-bold">{extractLanguageText("Drivers | พนักงานขับรถ", language)}</h1>
             <div className="flex items-center gap-2">
               {!isMobile && (
                 <div className="relative hidden lg:block">
                   <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                   <Input
-                    placeholder="Search drivers... | ค้นหาพนักงานขับรถ..."
+                    placeholder={extractLanguageText("Search drivers... | ค้นหาพนักงานขับรถ...", language)}
                     className="pl-8 w-[200px] md:w-[300px]"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
@@ -137,18 +139,18 @@ export default function Drivers() {
 
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             <DriverStats 
-              title="Total Drivers | พนักงานทั้งหมด"
+              title={extractLanguageText("Total Drivers | พนักงานทั้งหมด", language)}
               value={drivers.length}
               icon="users"
             />
             <DriverStats 
-              title="Active Drivers | พนักงานที่ทำงานอยู่"
+              title={extractLanguageText("Active Drivers | พนักงานที่ทำงานอยู่", language)}
               value={drivers.filter(d => d.status === "Active").length}
               icon="user-check"
               variant="active"
             />
             <DriverStats 
-              title="Off-duty | ไม่ได้ปฏิบัติงาน"
+              title={extractLanguageText("Off-duty | ไม่ได้ปฏิบัติงาน", language)}
               value={drivers.filter(d => d.status !== "Active").length}
               icon="user-x"
               variant="inactive"

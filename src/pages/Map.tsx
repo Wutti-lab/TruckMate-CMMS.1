@@ -13,6 +13,7 @@ import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { useLocation } from "@/contexts/LocationContext";
+import { useLanguage, extractLanguageText } from "@/contexts/LanguageContext";
 
 export default function Map() {
   const [searchParams] = useSearchParams();
@@ -27,6 +28,7 @@ export default function Map() {
   const [showNotifications, setShowNotifications] = useState(false);
   
   const { toast } = useToast();
+  const { language } = useLanguage();
   const { 
     updateVehicleLocation, 
     vehicleLocations, 
@@ -44,8 +46,8 @@ export default function Map() {
       if (selectedVehicle) {
         startTrackingVehicle(selectedVehicle);
         toast({
-          title: `Tracking ${selectedVehicle} | กำลังติดตาม ${selectedVehicle}`,
-          description: "Real-time location updates enabled | เปิดใช้งานการอัปเดตตำแหน่งแบบเรียลไทม์"
+          title: extractLanguageText(`Tracking ${selectedVehicle} | กำลังติดตาม ${selectedVehicle}`, language),
+          description: extractLanguageText("Real-time location updates enabled | เปิดใช้งานการอัปเดตตำแหน่งแบบเรียลไทม์", language)
         });
       }
     }
@@ -72,8 +74,8 @@ export default function Map() {
     setShowRouteHistory(!showRouteHistory);
     if (!showRouteHistory) {
       toast({
-        title: "Route History | ประวัติเส้นทาง",
-        description: "Showing the last 24 hours of route data | แสดงข้อมูลเส้นทางในช่วง 24 ชั่วโมงที่ผ่านมา"
+        title: extractLanguageText("Route History | ประวัติเส้นทาง", language),
+        description: extractLanguageText("Showing the last 24 hours of route data | แสดงข้อมูลเส้นทางในช่วง 24 ชั่วโมงที่ผ่านมา", language)
       });
     }
   };
@@ -112,12 +114,12 @@ export default function Map() {
       <Header />
       <main className="flex-1 p-6 relative overflow-hidden">
         <div className="mb-4 flex flex-wrap gap-4 items-center justify-between">
-          <h1 className="text-2xl font-bold">Map | แผนที่</h1>
+          <h1 className="text-2xl font-bold">{extractLanguageText("Map | แผนที่", language)}</h1>
           <div className="flex items-center gap-2">
             <div className="relative">
               <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
               <Input
-                placeholder="Search address or vehicle... | ค้นหาที่อยู่หรือยานพาหนะ..."
+                placeholder={extractLanguageText("Search address or vehicle... | ค้นหาที่อยู่หรือยานพาหนะ...", language)}
                 className="pl-8 w-[200px] md:w-[300px]"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -165,10 +167,10 @@ export default function Map() {
             <div className="flex justify-between items-center">
               <CardTitle className="text-md flex items-center gap-2">
                 <Navigation className="h-4 w-4 text-fleet-500" />
-                Driver Location | ตำแหน่งคนขับ
+                {extractLanguageText("Driver Location | ตำแหน่งคนขับ", language)}
               </CardTitle>
               <div className="flex items-center gap-2">
-                <span className="text-sm text-muted-foreground">Live Tracking | การติดตามแบบเรียลไทม์</span>
+                <span className="text-sm text-muted-foreground">{extractLanguageText("Live Tracking | การติดตามแบบเรียลไทม์", language)}</span>
                 <Switch 
                   checked={trackingActive} 
                   onCheckedChange={toggleTracking}
@@ -180,7 +182,7 @@ export default function Map() {
             <div className="flex flex-wrap gap-4 justify-between items-center">
               <div className="flex items-center gap-2">
                 <Badge variant="outline" className={trackingActive ? "bg-green-100 text-green-600" : "bg-gray-100"}>
-                  {trackingActive ? "Active | กำลังใช้งาน" : "Inactive | ไม่ได้ใช้งาน"}
+                  {extractLanguageText(trackingActive ? "Active | กำลังใช้งาน" : "Inactive | ไม่ได้ใช้งาน", language)}
                 </Badge>
                 {driverLocation && (
                   <div className="text-sm font-mono">
@@ -189,7 +191,7 @@ export default function Map() {
                 )}
                 {lastUpdateTime && (
                   <div className="text-xs text-muted-foreground">
-                    Last updated: {lastUpdateTime} | อัพเดทล่าสุด: {lastUpdateTime}
+                    {extractLanguageText(`Last updated: ${lastUpdateTime} | อัพเดทล่าสุด: ${lastUpdateTime}`, language)}
                   </div>
                 )}
               </div>
@@ -201,7 +203,7 @@ export default function Map() {
                     variant="default" 
                     className="bg-fleet-500"
                   >
-                    Enable Tracking | เปิดใช้การติดตาม
+                    {extractLanguageText("Enable Tracking | เปิดใช้การติดตาม", language)}
                   </Button>
                 )}
               </div>
@@ -211,9 +213,9 @@ export default function Map() {
 
         <Tabs defaultValue="map" className="h-[calc(100%-120px)]">
           <TabsList>
-            <TabsTrigger value="map">Map | แผนที่</TabsTrigger>
-            <TabsTrigger value="satellite">Satellite | ภาพดาวเทียม</TabsTrigger>
-            <TabsTrigger value="traffic">Traffic | การจราจร</TabsTrigger>
+            <TabsTrigger value="map">{extractLanguageText("Map | แผนที่", language)}</TabsTrigger>
+            <TabsTrigger value="satellite">{extractLanguageText("Satellite | ภาพดาวเทียม", language)}</TabsTrigger>
+            <TabsTrigger value="traffic">{extractLanguageText("Traffic | การจราจร", language)}</TabsTrigger>
           </TabsList>
           <TabsContent value="map" className="h-full">
             <div className="relative rounded-md h-full border overflow-hidden">
@@ -228,15 +230,15 @@ export default function Map() {
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center gap-2 text-sm">
                       <div className="w-3 h-3 rounded-full bg-green-500" />
-                      <span>Active | กำลังปฏิบัติงาน</span>
+                      <span>{extractLanguageText("Active | กำลังปฏิบัติงาน", language)}</span>
                     </div>
                     <div className="flex items-center gap-2 text-sm">
                       <div className="w-3 h-3 rounded-full bg-yellow-500" />
-                      <span>Inactive | ไม่ได้ปฏิบัติงาน</span>
+                      <span>{extractLanguageText("Inactive | ไม่ได้ปฏิบัติงาน", language)}</span>
                     </div>
                     <div className="flex items-center gap-2 text-sm">
                       <div className="w-3 h-3 rounded-full bg-red-500" />
-                      <span>Problem | มีปัญหา</span>
+                      <span>{extractLanguageText("Problem | มีปัญหา", language)}</span>
                     </div>
                   </div>
                 </CardContent>
@@ -245,7 +247,7 @@ export default function Map() {
               {showEmergencyContacts && (
                 <div className="absolute left-4 top-4 w-[350px] max-h-[80vh] overflow-y-auto bg-white rounded-lg shadow-lg p-4 z-20">
                   <div className="flex justify-between items-center mb-4">
-                    <h2 className="text-lg font-semibold">Emergency Contacts | รายชื่อติดต่อฉุกเฉิน</h2>
+                    <h2 className="text-lg font-semibold">{extractLanguageText("Emergency Contacts | รายชื่อติดต่อฉุกเฉิน", language)}</h2>
                     <Button
                       variant="ghost"
                       size="sm"
@@ -262,7 +264,7 @@ export default function Map() {
                 <div className="absolute left-4 top-4 w-[350px] max-h-[80vh] overflow-y-auto bg-white rounded-lg shadow-lg p-4 z-20">
                   <div className="flex justify-between items-center mb-4">
                     <h2 className="text-lg font-semibold">
-                      Route History | ประวัติเส้นทาง
+                      {extractLanguageText("Route History | ประวัติเส้นทาง", language)}
                       <Badge className="ml-2 bg-fleet-500">{selectedVehicle}</Badge>
                     </h2>
                     <Button
@@ -291,7 +293,7 @@ export default function Map() {
                 <div className="absolute right-4 top-16 w-[350px] max-h-[80vh] overflow-y-auto bg-white rounded-lg shadow-lg p-4 z-20">
                   <div className="flex justify-between items-center mb-4">
                     <h2 className="text-lg font-semibold">
-                      Notifications | การแจ้งเตือน
+                      {extractLanguageText("Notifications | การแจ้งเตือน", language)}
                     </h2>
                     <Button
                       variant="ghost"
@@ -332,7 +334,7 @@ export default function Map() {
           </TabsContent>
           
           <div className="mt-2 text-xs text-muted-foreground">
-            <p>Note: Mapbox token required for map functionality | หมายเหตุ: จำเป็นต้องใช้ Mapbox token สำหรับฟังก์ชันแผนที่</p>
+            <p>{extractLanguageText("Note: Mapbox token required for map functionality | หมายเหตุ: จำเป็นต้องใช้ Mapbox token สำหรับฟังก์ชันแผนที่", language)}</p>
           </div>
         </Tabs>
         
@@ -356,10 +358,10 @@ export default function Map() {
               <div className="mt-4 space-y-2">
                 <div className="flex items-center gap-2 text-sm">
                   <MapPin className="h-4 w-4 text-fleet-500" />
-                  <span>Bangkok, Central | กรุงเทพ, เขตกลาง</span>
+                  <span>{extractLanguageText("Bangkok, Central | กรุงเทพ, เขตกลาง", language)}</span>
                 </div>
                 <div className="text-sm">
-                  <span className="font-medium">Driver | คนขับ:</span> {
+                  <span className="font-medium">{extractLanguageText("Driver | คนขับ:", language)}</span> {
                     selectedVehicle === "B-FR-123" ? "Max Müller" :
                     selectedVehicle === "B-FR-234" ? "Lisa Schmidt" :
                     selectedVehicle === "B-FR-345" ? "Jan Weber" :
@@ -367,39 +369,39 @@ export default function Map() {
                   }
                 </div>
                 <div className="text-sm">
-                  <span className="font-medium">Status | สถานะ:</span>{" "}
-                  <span className="text-green-600">Driving | กำลังขับ</span>
+                  <span className="font-medium">{extractLanguageText("Status | สถานะ:", language)}</span>{" "}
+                  <span className="text-green-600">{extractLanguageText("Driving | กำลังขับ", language)}</span>
                 </div>
                 <div className="text-sm">
-                  <span className="font-medium">Speed | ความเร็ว:</span> 42 km/h
+                  <span className="font-medium">{extractLanguageText("Speed | ความเร็ว:", language)}</span> 42 km/h
                 </div>
                 <div className="text-sm">
-                  <span className="font-medium">Fuel | เชื้อเพลิง:</span> 68%
+                  <span className="font-medium">{extractLanguageText("Fuel | เชื้อเพลิง:", language)}</span> 68%
                 </div>
               </div>
               
               <div className="mt-4 flex justify-end gap-2">
-                <Button variant="outline" size="sm">Details | รายละเอียด</Button>
+                <Button variant="outline" size="sm">{extractLanguageText("Details | รายละเอียด", language)}</Button>
                 <Button 
                   size="sm" 
                   className="bg-fleet-500"
                   onClick={() => {
                     if (trackingActive) {
                       toast({
-                        title: "Already Tracking | กำลังติดตามอยู่แล้ว",
-                        description: "This vehicle is already being tracked | ยานพาหนะนี้กำลังถูกติดตามอยู่"
+                        title: extractLanguageText("Already Tracking | กำลังติดตามอยู่แล้ว", language),
+                        description: extractLanguageText("This vehicle is already being tracked | ยานพาหนะนี้กำลังถูกติดตามอยู่", language)
                       });
                     } else {
                       setTrackingActive(true);
                       startTrackingVehicle(selectedVehicle);
                       toast({
-                        title: "Navigation Started | เริ่มการนำทาง",
-                        description: "Tracking vehicle location | กำลังติดตามตำแหน่งยานพาหนะ"
+                        title: extractLanguageText("Navigation Started | เริ่มการนำทาง", language),
+                        description: extractLanguageText("Tracking vehicle location | กำลังติดตามตำแหน่งยานพาหนะ", language)
                       });
                     }
                   }}
                 >
-                  Navigation | นำทาง
+                  {extractLanguageText("Navigation | นำทาง", language)}
                 </Button>
               </div>
             </CardContent>

@@ -6,44 +6,41 @@ interface DriverStatsProps {
   title: string;
   value: number;
   icon: "users" | "user-check" | "user-x";
-  variant?: "default" | "active" | "inactive";
+  variant?: "active" | "inactive";
 }
 
-export function DriverStats({ title, value, icon, variant = "default" }: DriverStatsProps) {
+export function DriverStats({ title, value, icon, variant }: DriverStatsProps) {
   const getIcon = () => {
     switch (icon) {
       case "users":
-        return <Users className="h-4 w-4 md:h-5 md:w-5 text-fleet-500" />;
+        return <Users className="h-5 w-5 text-slate-600" />;
       case "user-check":
-        return <UserCheck className="h-4 w-4 md:h-5 md:w-5 text-green-500" />;
+        return <UserCheck className="h-5 w-5 text-green-600" />;
       case "user-x":
-        return <UserX className="h-4 w-4 md:h-5 md:w-5 text-orange-500" />;
+        return <UserX className="h-5 w-5 text-orange-600" />;
       default:
-        return <Users className="h-4 w-4 md:h-5 md:w-5 text-fleet-500" />;
+        return null;
     }
   };
 
   const getBgColor = () => {
-    switch (variant) {
-      case "active":
-        return "bg-green-50";
-      case "inactive":
-        return "bg-orange-50";
-      default:
-        return "bg-fleet-50";
-    }
+    if (variant === "active") return "bg-green-50";
+    if (variant === "inactive") return "bg-orange-50";
+    return "bg-slate-50";
   };
 
   return (
     <Card className={getBgColor()}>
-      <CardContent className="p-3 md:p-4">
-        <div className="flex items-center justify-between">
-          <p className="text-xs md:text-sm font-medium text-gray-600 line-clamp-2">{title}</p>
-          <div className="rounded-full p-1.5 md:p-2 bg-white shadow-sm shrink-0 ml-2">
+      <CardContent className="p-4">
+        <div className="flex justify-between items-center">
+          <div>
+            <p className="text-sm font-medium text-muted-foreground mb-1">{title}</p>
+            <p className="text-3xl font-bold">{value}</p>
+          </div>
+          <div className="h-12 w-12 rounded-full bg-white flex items-center justify-center shadow-sm">
             {getIcon()}
           </div>
         </div>
-        <p className="mt-2 md:mt-3 text-2xl md:text-3xl font-bold">{value}</p>
       </CardContent>
     </Card>
   );
