@@ -1,0 +1,112 @@
+
+import { User, UserRole } from '@/lib/types/user-roles';
+import { LoginActivity, PendingUser, UserWithPassword } from './types';
+import { calculateExpiryDate } from './utils';
+
+// Authentication Actions
+export const authActions = (
+  mockUsers: UserWithPassword[],
+  pendingUsers: PendingUser[],
+  loginActivities: LoginActivity[],
+  setUser: React.Dispatch<React.SetStateAction<User | null>>,
+  setMockUsers: React.Dispatch<React.SetStateAction<UserWithPassword[]>>,
+  setPendingUsers: React.Dispatch<React.SetStateAction<PendingUser[]>>,
+  setLoginActivities: React.Dispatch<React.SetStateAction<LoginActivity[]>>
+) => {
+  // Simulated login function
+  const login = async (email: string, password: string): Promise<void> => {
+    // Simulates an API request
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        const foundUser = mockUsers.find(u => u.email === email && u.password === password);
+        
+        if (foundUser) {
+          // Set activation date if not already set
+          if (!foundUser.activationDate) {
+            const today = new Date().toISOString().split('T')[0];
+            foundUser.activationDate = today;
+            foundUser.expiryDate = calculateExpiryDate(today);
+            
+            // Update the user in the mockUsers array
+            const updatedUsers = mockUsers.map(u => 
+              u.id === foundUser.id ? foundUser : u
+            );
+            setMockUsers(updatedUsers);
+            localStorage.setItem('mockUsers', JSON.stringify(updatedUsers));
+          }
+          
+          const { password, ...userWithoutPassword } = foundUser;
+          setUser(userWithoutPassword);
+          localStorage.setItem('user', JSON.stringify(userWithoutPassword));
+          
+          // Add new login activity
+          const newActivity: LoginActivity = {
+            id: Date.now().toString(),
+            userId: foundUser.id,
+            userName: foundUser.name,
+            timestamp: new Date(),
+            userRole: foundUser.role
+          };
+          
+          const updatedActivities = [newActivity, ...loginActivities.slice(0, 9)]; // Keep only last 10
+          setLoginActivities(updatedActivities);
+          localStorage.setItem('loginActivities', JSON.stringify(updatedActivities));
+          
+          resolve();
+        } else {
+          reject(new Error('Invalid email or password'));
+        }
+      }, 500);
+    });
+  };
+
+  const logout = () => {
+    setUser(null);
+    localStorage.removeItem('user');
+  };
+
+  // Check if user has a specific role
+  const hasRole = (user: User | null, roles: UserRole | UserRole[]): boolean => {
+    if (!user) return false;
+    
+    if (Array.isArray(roles)) {
+      return roles.includes(user.role);
+    }
+    
+    return user.role === roles;
+  };
+
+  // Get filtered login activities based on user role
+  const getFilteredLoginActivities = (user: User | null): LoginActivity[] => {
+    if (!user) return [];
+
+    // Admin and Fleet Manager can see all login activities
+    if (user.role === UserRole.ADMIN || user.role === UserRole.DEV_ADMIN || user.role === UserRole.FLEET_MANAGER) {
+      return loginActivities;
+    }
+    
+    // Drivers can only see their own logins and other drivers' logins
+    if (user.role === UserRole.DRIVER) {
+      return loginActivities.filter(activity => 
+        activity.userId === user.id || activity.userRole === UserRole.DRIVER
+      );
+    }
+    
+    // Mechanics can only see their own logins and other mechanics' logins
+    if (user.role === UserRole.MECHANIC) {
+      return loginActivities.filter(activity => 
+        activity.userId === user.id || activity.userRole === UserRole.MECHANIC
+      );
+    }
+    
+    // Default: only see own logins
+    return loginActivities.filter(activity => activity.userId === user.id);
+  };
+
+  return {
+    login,
+    logout,
+    hasRole,
+    getFilteredLoginActivities
+  };
+};
