@@ -56,7 +56,7 @@ export function PendingUsersTable({ searchQuery }: PendingUsersTableProps) {
 
   const getPaymentStatusBadge = (status: string) => {
     if (status === "paid") {
-      return <Badge variant="success">Paid | ชำระแล้ว</Badge>;
+      return <Badge variant="secondary" className="bg-green-100 text-green-800">Paid | ชำระแล้ว</Badge>;
     }
     return <Badge variant="outline">Unpaid | ยังไม่ชำระ</Badge>;
   };
@@ -66,7 +66,7 @@ export function PendingUsersTable({ searchQuery }: PendingUsersTableProps) {
       case "pending":
         return <Badge variant="secondary">Pending | รออนุมัติ</Badge>;
       case "approved":
-        return <Badge variant="success">Approved | อนุมัติแล้ว</Badge>;
+        return <Badge variant="secondary" className="bg-green-100 text-green-800">Approved | อนุมัติแล้ว</Badge>;
       case "rejected":
         return <Badge variant="destructive">Rejected | ถูกปฏิเสธ</Badge>;
       default:
