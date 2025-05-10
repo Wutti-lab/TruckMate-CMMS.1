@@ -8,18 +8,19 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useToast } from "@/components/ui/use-toast";
+import { useLanguage, extractLanguageText } from "@/contexts/LanguageContext";
 
 const vehicleSchema = z.object({
-  id: z.string().min(1, "License plate is required | ต้องระบุป้ายทะเบียน"),
-  driver: z.string().min(1, "Driver is required | ต้องระบุชื่อคนขับ"),
-  model: z.string().min(1, "Model is required | ต้องระบุรุ่น"),
-  location: z.string().min(1, "Location is required | ต้องระบุสถานที่"),
-  status: z.string().min(1, "Status is required | ต้องระบุสถานะ"),
+  id: z.string().min(1, "License plate is required | ต้องระบุป้ายทะเบียน | Kennzeichen ist erforderlich"),
+  driver: z.string().min(1, "Driver is required | ต้องระบุชื่อคนขับ | Fahrer ist erforderlich"),
+  model: z.string().min(1, "Model is required | ต้องระบุรุ่น | Modell ist erforderlich"),
+  location: z.string().min(1, "Location is required | ต้องระบุสถานที่ | Standort ist erforderlich"),
+  status: z.string().min(1, "Status is required | ต้องระบุสถานะ | Status ist erforderlich"),
   batteryLevel: z.coerce.number().min(0).max(100).optional(),
   fuelLevel: z.coerce.number().min(0).max(100).optional(),
   engineTemp: z.coerce.number().min(0).max(150).default(80),
-  lastService: z.string().min(1, "Last service is required | ต้องระบุวันที่บริการล่าสุด"),
-  nextService: z.string().min(1, "Next service is required | ต้องระบุวันที่บริการถัดไป"),
+  lastService: z.string().min(1, "Last service is required | ต้องระบุวันที่บริการล่าสุด | Letzte Wartung ist erforderlich"),
+  nextService: z.string().min(1, "Next service is required | ต้องระบุวันที่บริการถัดไป | Nächste Wartung ist erforderlich"),
 });
 
 type VehicleFormValues = z.infer<typeof vehicleSchema>;
@@ -31,6 +32,7 @@ interface AddVehicleFormProps {
 
 export function AddVehicleForm({ onSubmit, onCancel }: AddVehicleFormProps) {
   const { toast } = useToast();
+  const { language } = useLanguage();
   const [vehicleType, setVehicleType] = useState<"electric" | "fuel">("electric");
 
   const form = useForm<VehicleFormValues>({
@@ -64,8 +66,8 @@ export function AddVehicleForm({ onSubmit, onCancel }: AddVehicleFormProps) {
   const handleSubmit = (values: VehicleFormValues) => {
     onSubmit(values);
     toast({
-      title: "Vehicle added | เพิ่มยานพาหนะแล้ว",
-      description: `${values.model} (${values.id}) was successfully added | เพิ่มเรียบร้อยแล้ว`,
+      title: extractLanguageText("Vehicle added | เพิ่มยานพาหนะแล้ว | Fahrzeug hinzugefügt", language),
+      description: extractLanguageText(`${values.model} (${values.id}) was successfully added | เพิ่มเรียบร้อยแล้ว | ${values.model} (${values.id}) wurde erfolgreich hinzugefügt`, language),
     });
   };
 
@@ -78,9 +80,9 @@ export function AddVehicleForm({ onSubmit, onCancel }: AddVehicleFormProps) {
             name="id"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>License Plate | ป้ายทะเบียน</FormLabel>
+                <FormLabel>{extractLanguageText("License Plate | ป้ายทะเบียน | Kennzeichen", language)}</FormLabel>
                 <FormControl>
-                  <Input placeholder="e.g. BKK-123" {...field} />
+                  <Input placeholder={extractLanguageText("e.g. BKK-123 | เช่น BKK-123 | z.B. BKK-123", language)} {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -91,9 +93,9 @@ export function AddVehicleForm({ onSubmit, onCancel }: AddVehicleFormProps) {
             name="driver"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Driver | คนขับ</FormLabel>
+                <FormLabel>{extractLanguageText("Driver | คนขับ | Fahrer", language)}</FormLabel>
                 <FormControl>
-                  <Input placeholder="Driver name" {...field} />
+                  <Input placeholder={extractLanguageText("Driver name | ชื่อคนขับ | Fahrername", language)} {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -104,9 +106,9 @@ export function AddVehicleForm({ onSubmit, onCancel }: AddVehicleFormProps) {
             name="model"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Model | รุ่น</FormLabel>
+                <FormLabel>{extractLanguageText("Model | รุ่น | Modell", language)}</FormLabel>
                 <FormControl>
-                  <Input placeholder="e.g. Tesla Model Y" {...field} />
+                  <Input placeholder={extractLanguageText("e.g. Tesla Model Y | เช่น Tesla Model Y | z.B. Tesla Model Y", language)} {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -117,9 +119,9 @@ export function AddVehicleForm({ onSubmit, onCancel }: AddVehicleFormProps) {
             name="location"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Location | สถานที่</FormLabel>
+                <FormLabel>{extractLanguageText("Location | สถานที่ | Standort", language)}</FormLabel>
                 <FormControl>
-                  <Input placeholder="e.g. Bangkok" {...field} />
+                  <Input placeholder={extractLanguageText("e.g. Bangkok | เช่น กรุงเทพฯ | z.B. Bangkok", language)} {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -130,17 +132,17 @@ export function AddVehicleForm({ onSubmit, onCancel }: AddVehicleFormProps) {
             name="status"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Status | สถานะ</FormLabel>
+                <FormLabel>{extractLanguageText("Status | สถานะ | Status", language)}</FormLabel>
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <FormControl>
                     <SelectTrigger>
-                      <SelectValue placeholder="Select status" />
+                      <SelectValue placeholder={extractLanguageText("Select status | เลือกสถานะ | Status auswählen", language)} />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent className="bg-white">
-                    <SelectItem value="Active">Active | ใช้งาน</SelectItem>
-                    <SelectItem value="Inactive">Inactive | ไม่ใช้งาน</SelectItem>
-                    <SelectItem value="Maintenance">Maintenance | ซ่อมบำรุง</SelectItem>
+                    <SelectItem value="Active">{extractLanguageText("Active | ใช้งาน | Aktiv", language)}</SelectItem>
+                    <SelectItem value="Inactive">{extractLanguageText("Inactive | ไม่ใช้งาน | Inaktiv", language)}</SelectItem>
+                    <SelectItem value="Maintenance">{extractLanguageText("Maintenance | ซ่อมบำรุง | Wartung", language)}</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />
@@ -148,16 +150,16 @@ export function AddVehicleForm({ onSubmit, onCancel }: AddVehicleFormProps) {
             )}
           />
           <FormItem>
-            <FormLabel>Vehicle Type | ประเภทยานพาหนะ</FormLabel>
+            <FormLabel>{extractLanguageText("Vehicle Type | ประเภทยานพาหนะ | Fahrzeugtyp", language)}</FormLabel>
             <Select onValueChange={handleVehicleTypeChange} defaultValue="electric">
               <FormControl>
                 <SelectTrigger>
-                  <SelectValue placeholder="Select type" />
+                  <SelectValue placeholder={extractLanguageText("Select type | เลือกประเภท | Typ auswählen", language)} />
                 </SelectTrigger>
               </FormControl>
               <SelectContent className="bg-white">
-                <SelectItem value="electric">Electric | ไฟฟ้า</SelectItem>
-                <SelectItem value="fuel">Fuel | น้ำมัน</SelectItem>
+                <SelectItem value="electric">{extractLanguageText("Electric | ไฟฟ้า | Elektrisch", language)}</SelectItem>
+                <SelectItem value="fuel">{extractLanguageText("Fuel | น้ำมัน | Kraftstoff", language)}</SelectItem>
               </SelectContent>
             </Select>
           </FormItem>
@@ -167,7 +169,7 @@ export function AddVehicleForm({ onSubmit, onCancel }: AddVehicleFormProps) {
               name="batteryLevel"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Battery Level | ระดับแบตเตอรี่ (%)</FormLabel>
+                  <FormLabel>{extractLanguageText("Battery Level | ระดับแบตเตอรี่ (%) | Batteriestand (%)", language)}</FormLabel>
                   <FormControl>
                     <Input type="number" min="0" max="100" {...field} />
                   </FormControl>
@@ -181,7 +183,7 @@ export function AddVehicleForm({ onSubmit, onCancel }: AddVehicleFormProps) {
               name="fuelLevel"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Fuel Level | ระดับน้ำมัน (%)</FormLabel>
+                  <FormLabel>{extractLanguageText("Fuel Level | ระดับน้ำมัน (%) | Kraftstoffstand (%)", language)}</FormLabel>
                   <FormControl>
                     <Input type="number" min="0" max="100" {...field} />
                   </FormControl>
@@ -195,7 +197,7 @@ export function AddVehicleForm({ onSubmit, onCancel }: AddVehicleFormProps) {
             name="engineTemp"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Engine Temperature | อุณหภูมิเครื่องยนต์ (°C)</FormLabel>
+                <FormLabel>{extractLanguageText("Engine Temperature | อุณหภูมิเครื่องยนต์ (°C) | Motortemperatur (°C)", language)}</FormLabel>
                 <FormControl>
                   <Input type="number" min="0" max="150" {...field} />
                 </FormControl>
@@ -208,7 +210,7 @@ export function AddVehicleForm({ onSubmit, onCancel }: AddVehicleFormProps) {
             name="lastService"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Last Service | บริการล่าสุด</FormLabel>
+                <FormLabel>{extractLanguageText("Last Service | บริการล่าสุด | Letzte Wartung", language)}</FormLabel>
                 <FormControl>
                   <Input placeholder="MM/DD/YYYY" {...field} />
                 </FormControl>
@@ -221,7 +223,7 @@ export function AddVehicleForm({ onSubmit, onCancel }: AddVehicleFormProps) {
             name="nextService"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Next Service | บริการถัดไป</FormLabel>
+                <FormLabel>{extractLanguageText("Next Service | บริการถัดไป | Nächste Wartung", language)}</FormLabel>
                 <FormControl>
                   <Input placeholder="MM/DD/YYYY" {...field} />
                 </FormControl>
@@ -233,10 +235,10 @@ export function AddVehicleForm({ onSubmit, onCancel }: AddVehicleFormProps) {
 
         <div className="flex justify-end gap-2">
           <Button variant="outline" type="button" onClick={onCancel}>
-            Cancel | ยกเลิก
+            {extractLanguageText("Cancel | ยกเลิก | Abbrechen", language)}
           </Button>
           <Button type="submit" className="bg-fleet-500">
-            Add Vehicle | เพิ่มยานพาหนะ
+            {extractLanguageText("Add Vehicle | เพิ่มยานพาหนะ | Fahrzeug hinzufügen", language)}
           </Button>
         </div>
       </form>

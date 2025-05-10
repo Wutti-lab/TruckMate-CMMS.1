@@ -6,6 +6,7 @@ import {
   DialogTitle
 } from "@/components/ui/dialog";
 import { AddVehicleForm } from "./AddVehicleForm";
+import { useLanguage, extractLanguageText } from "@/contexts/LanguageContext";
 
 interface Vehicle {
   id: string;
@@ -27,6 +28,8 @@ interface AddVehicleDialogProps {
 }
 
 export function AddVehicleDialog({ open, onOpenChange, onSubmit }: AddVehicleDialogProps) {
+  const { language } = useLanguage();
+  
   const handleCancel = () => {
     onOpenChange(false);
   };
@@ -40,7 +43,7 @@ export function AddVehicleDialog({ open, onOpenChange, onSubmit }: AddVehicleDia
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[600px] bg-white">
         <DialogHeader>
-          <DialogTitle>Add New Vehicle | เพิ่มยานพาหนะใหม่</DialogTitle>
+          <DialogTitle>{extractLanguageText("Add New Vehicle | เพิ่มยานพาหนะใหม่ | Neues Fahrzeug hinzufügen", language)}</DialogTitle>
         </DialogHeader>
         <AddVehicleForm onSubmit={handleSubmit} onCancel={handleCancel} />
       </DialogContent>
