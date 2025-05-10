@@ -11,14 +11,14 @@ import { useToast } from '@/hooks/use-toast';
 
 export function SleepingArea() {
   const [checklistItems, setChecklistItems] = useState([
-    { id: 'beds', label: 'Beds/Mattresses in good condition | เตียง/ที่นอนอยู่ในสภาพดี', checked: false },
-    { id: 'capacity', label: 'Sleeping spaces for 2-4 people available | มีพื้นที่นอนสำหรับ 2-4 คน', checked: false },
-    { id: 'clean', label: 'Area clean and sanitized | พื้นที่สะอาดและฆ่าเชื้อแล้ว', checked: false },
-    { id: 'linen', label: 'Fresh linen available | มีผ้าปูที่นอนสะอาด', checked: false },
-    { id: 'privacy', label: 'Privacy curtains functional | ม่านกั้นความเป็นส่วนตัวใช้งานได้', checked: false },
-    { id: 'storage', label: 'Personal storage available | มีที่เก็บของส่วนตัว', checked: false },
-    { id: 'lighting', label: 'Reading lights operational | ไฟอ่านหนังสือทำงานได้', checked: false },
-    { id: 'ventilation', label: 'Proper ventilation | การระบายอากาศเหมาะสม', checked: false }
+    { id: 'beds', label: 'Betten/Matratzen in gutem Zustand', checked: false },
+    { id: 'capacity', label: 'Schlafplätze für 2-4 Personen verfügbar', checked: false },
+    { id: 'clean', label: 'Bereich gereinigt und desinfiziert', checked: false },
+    { id: 'linen', label: 'Frische Bettwäsche verfügbar', checked: false },
+    { id: 'privacy', label: 'Vorhänge für Privatsphäre funktionsfähig', checked: false },
+    { id: 'storage', label: 'Persönlicher Stauraum vorhanden', checked: false },
+    { id: 'lighting', label: 'Leselampen funktionsfähig', checked: false },
+    { id: 'ventilation', label: 'Ausreichende Belüftung', checked: false }
   ]);
   
   const [comments, setComments] = useState('');
@@ -36,31 +36,31 @@ export function SleepingArea() {
     const total = checklistItems.length;
     
     toast({
-      title: "Inspection Updated | การตรวจสอบได้รับการปรับปรุง",
-      description: `${completed} of ${total} items checked | ตรวจสอบ ${completed} จาก ${total} รายการ`
+      title: "Inspektion aktualisiert",
+      description: `${completed} von ${total} Punkten überprüft`
     });
   };
   
   const handleImageUpload = () => {
     // Mock image upload
-    const newImage = `/placeholder.svg?text=Sleeping+Area+Image+${images.length + 1}`;
+    const newImage = `/placeholder.svg?text=Schlafbereich+Bild+${images.length + 1}`;
     setImages([...images, newImage]);
     
     toast({
-      title: "Image Uploaded | อัปโหลดรูปภาพแล้ว",
-      description: "Image has been added to the inspection | รูปภาพถูกเพิ่มเข้าไปในการตรวจสอบแล้ว"
+      title: "Bild hochgeladen",
+      description: "Das Bild wurde zur Inspektion hinzugefügt"
     });
   };
   
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Sleeping Area | พื้นที่นอน</CardTitle>
+        <CardTitle>Schlafbereich</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="space-y-6">
           <div>
-            <h3 className="text-sm font-medium mb-3">Checklist Items | รายการตรวจสอบ</h3>
+            <h3 className="text-sm font-medium mb-3">Checkliste</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {checklistItems.map((item) => (
                 <div key={item.id} className="flex items-start space-x-2">
@@ -78,9 +78,9 @@ export function SleepingArea() {
           </div>
           
           <div>
-            <h3 className="text-sm font-medium mb-3">Comments | ความคิดเห็น</h3>
+            <h3 className="text-sm font-medium mb-3">Kommentare</h3>
             <Textarea
-              placeholder="Add notes about the sleeping area condition... | เพิ่มบันทึกเกี่ยวกับสภาพพื้นที่นอน..."
+              placeholder="Notizen zum Zustand des Schlafbereichs hinzufügen..."
               value={comments}
               onChange={(e) => setComments(e.target.value)}
               className="h-24"
@@ -88,11 +88,11 @@ export function SleepingArea() {
           </div>
           
           <div>
-            <h3 className="text-sm font-medium mb-3">Documentation | เอกสารประกอบ</h3>
+            <h3 className="text-sm font-medium mb-3">Dokumentation</h3>
             <div className="flex flex-wrap gap-3 mb-3">
               {images.map((image, index) => (
                 <div key={index} className="relative w-24 h-24 border rounded-md overflow-hidden">
-                  <img src={image} alt={`Sleeping area ${index + 1}`} className="w-full h-full object-cover" />
+                  <img src={image} alt={`Schlafbereich ${index + 1}`} className="w-full h-full object-cover" />
                 </div>
               ))}
               
@@ -100,7 +100,7 @@ export function SleepingArea() {
                 <div className="flex items-center justify-center w-full h-24 border-2 border-dashed rounded-md border-gray-300 p-4">
                   <div className="text-center">
                     <Upload className="mx-auto h-6 w-6 text-gray-400" />
-                    <p className="mt-1 text-xs text-gray-500">No images uploaded | ยังไม่มีรูปภาพที่อัปโหลด</p>
+                    <p className="mt-1 text-xs text-gray-500">Keine Bilder hochgeladen</p>
                   </div>
                 </div>
               )}
@@ -109,7 +109,7 @@ export function SleepingArea() {
             <div className="flex gap-3">
               <Button type="button" variant="outline" onClick={handleImageUpload} className="flex gap-2">
                 <Camera size={16} />
-                Add Photo | เพิ่มรูปภาพ
+                Foto hinzufügen
               </Button>
               
               <div className="relative">
@@ -120,7 +120,7 @@ export function SleepingArea() {
                 />
                 <Button variant="outline" className="flex gap-2">
                   <Upload size={16} />
-                  Upload | อัปโหลด
+                  Hochladen
                 </Button>
               </div>
             </div>
@@ -131,12 +131,12 @@ export function SleepingArea() {
               <div>
                 <p className="text-sm">
                   <span className="font-medium">Status: </span>
-                  <span className="text-amber-600">In Progress | กำลังดำเนินการ</span>
+                  <span className="text-amber-600">In Bearbeitung</span>
                 </p>
               </div>
               <div className="space-x-2">
-                <Button variant="outline">Cancel | ยกเลิก</Button>
-                <Button onClick={handleSaveChanges}>Save | บันทึก</Button>
+                <Button variant="outline">Abbrechen</Button>
+                <Button onClick={handleSaveChanges}>Speichern</Button>
               </div>
             </div>
           </div>

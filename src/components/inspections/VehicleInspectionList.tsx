@@ -15,8 +15,8 @@ const inspections = [
   {
     id: 1,
     vehicleId: "B-FR-123",
-    type: "Routine | ประจำวัน",
-    status: "Pending | รอดำเนินการ",
+    type: "Routine",
+    status: "Ausstehend",
     date: "25.04.2023",
     completedItems: 0,
     totalItems: 15,
@@ -24,8 +24,8 @@ const inspections = [
   {
     id: 2,
     vehicleId: "B-FR-234",
-    type: "Maintenance | การบำรุงรักษา",
-    status: "Completed | เสร็จสิ้น",
+    type: "Wartung",
+    status: "Abgeschlossen",
     date: "20.04.2023",
     completedItems: 12,
     totalItems: 12,
@@ -33,8 +33,8 @@ const inspections = [
   {
     id: 3,
     vehicleId: "B-FR-345",
-    type: "Safety | ความปลอดภัย",
-    status: "In Progress | กำลังดำเนินการ",
+    type: "Sicherheit",
+    status: "In Bearbeitung",
     date: "22.04.2023",
     completedItems: 8,
     totalItems: 20,
@@ -46,11 +46,11 @@ export function VehicleInspectionList() {
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead>Vehicle | ยานพาหนะ</TableHead>
-          <TableHead>Type | ประเภท</TableHead>
-          <TableHead>Status | สถานะ</TableHead>
-          <TableHead>Date | วันที่</TableHead>
-          <TableHead>Progress | ความคืบหน้า</TableHead>
+          <TableHead>Fahrzeug</TableHead>
+          <TableHead>Typ</TableHead>
+          <TableHead>Status</TableHead>
+          <TableHead>Datum</TableHead>
+          <TableHead>Fortschritt</TableHead>
           <TableHead></TableHead>
         </TableRow>
       </TableHeader>
@@ -68,9 +68,9 @@ export function VehicleInspectionList() {
               <Badge
                 variant="outline"
                 className={
-                  inspection.status.includes("Completed")
+                  inspection.status === "Abgeschlossen"
                     ? "border-green-200 bg-green-50 text-green-600"
-                    : inspection.status.includes("Progress")
+                    : inspection.status === "In Bearbeitung"
                     ? "border-orange-200 bg-orange-50 text-orange-600"
                     : "border-gray-200 bg-gray-50 text-gray-600"
                 }
@@ -107,10 +107,10 @@ export function VehicleInspectionList() {
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="bg-white">
-                  <DropdownMenuItem>View Details | ดูรายละเอียด</DropdownMenuItem>
-                  <DropdownMenuItem>Edit | แก้ไข</DropdownMenuItem>
-                  <DropdownMenuItem>Export PDF | ส่งออก PDF</DropdownMenuItem>
-                  <DropdownMenuItem className="text-red-600">Delete | ลบ</DropdownMenuItem>
+                  <DropdownMenuItem>Details anzeigen</DropdownMenuItem>
+                  <DropdownMenuItem>Bearbeiten</DropdownMenuItem>
+                  <DropdownMenuItem>PDF exportieren</DropdownMenuItem>
+                  <DropdownMenuItem className="text-red-600">Löschen</DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             </TableCell>

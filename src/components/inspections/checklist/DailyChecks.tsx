@@ -5,27 +5,27 @@ import { Label } from "@/components/ui/label";
 export function DailyChecks() {
   return (
     <div className="space-y-4">
-      <h3 className="font-semibold">Daily Checks | การตรวจสอบประจำวัน</h3>
+      <h3 className="font-semibold">Tägliche Prüfungen</h3>
       <div className="space-y-2">
         <div className="flex items-center space-x-2">
           <Checkbox id="cleaning" />
-          <Label htmlFor="cleaning">Vehicle cleaned inside and outside | ทำความสะอาดยานพาหนะทั้งภายในและภายนอก</Label>
+          <Label htmlFor="cleaning">Fahrzeug innen und außen gereinigt</Label>
         </div>
         <div className="flex items-center space-x-2">
           <Checkbox id="engine" />
-          <Label htmlFor="engine">Engine condition checked | ตรวจสอบสภาพเครื่องยนต์</Label>
+          <Label htmlFor="engine">Motorenzustand überprüft</Label>
         </div>
         <div className="flex items-center space-x-2">
           <Checkbox id="overall" />
-          <Label htmlFor="overall">Overall vehicle condition checked | ตรวจสอบสภาพทั่วไปของยานพาหนะ</Label>
+          <Label htmlFor="overall">Gesamtzustand des Fahrzeugs überprüft</Label>
         </div>
         <div className="flex items-center space-x-2">
           <Checkbox id="manual" />
-          <Label htmlFor="manual">Manual read and understood | อ่านและทำความเข้าใจคู่มือ</Label>
+          <Label htmlFor="manual">Handbuch gelesen und verstanden</Label>
         </div>
         <div className="flex items-center space-x-2">
           <Checkbox id="damage" />
-          <Label htmlFor="damage">Checked for damages | ตรวจสอบความเสียหาย</Label>
+          <Label htmlFor="damage">Auf Schäden überprüft</Label>
         </div>
       </div>
     </div>
