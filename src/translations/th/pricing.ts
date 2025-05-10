@@ -28,6 +28,9 @@ export const pricingTranslations = {
   "scanQrToTransfer": "สแกน QR เพื่อโอนเข้าบัญชี",
   "promptPay": "พร้อมเพย์",
   "phoneNumber": "เบอร์โทร: 080-929-9965",
-  "afterTransferring": "หลังจากโอนเงิน กรุณาส่งหลักฐานการโอนเงินไปที่เบอร์โทรนี้",
+  "afterTransferring": "หลังจากโอนเงิน กรุณาส่งหลักฐานการโอนเงินไปที่อีเมลนี้",
   "confirmPayment": "ยืนยันการชำระเงิน",
+  "sendPaymentVerification": "ส่งหลักฐานการชำระเงิน:",
+  "paymentEmail": "truckmatecmms@gmail.com",
+  "pleaseVerifyPayment": "กรุณาส่งหลักฐานการชำระเงินไปที่อีเมลนี้",
 };

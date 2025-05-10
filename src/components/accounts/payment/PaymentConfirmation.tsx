@@ -57,6 +57,22 @@ export function PaymentConfirmation({ userEmail, onBack, onSubmit }: PaymentConf
             </p>
           </div>
         </div>
+        
+        <div className="mt-4 text-center border-t pt-3">
+          <p className="font-medium mb-1">
+            {language === 'th' ? 'ส่งหลักฐานการชำระเงิน:' : 
+             language === 'de' ? 'Zahlungsnachweis senden:' : 
+             'Send payment verification:'}
+          </p>
+          <p className="text-sm font-medium text-blue-600">
+            truckmatecmms@gmail.com
+          </p>
+          <p className="text-xs mt-1 text-gray-600">
+            {language === 'th' ? 'กรุณาส่งหลักฐานการชำระเงินไปที่อีเมลนี้' : 
+             language === 'de' ? 'Bitte senden Sie die Nachweise auch hier her' : 
+             'Please send payment verification to this email'}
+          </p>
+        </div>
       </div>
       
       <div className="flex items-center">
