@@ -2,7 +2,7 @@
 import { Language, Translations } from "../types/language";
 import { enTranslations } from "./en/index";
 import { thTranslations } from "./th"; 
-import { deTranslations } from "./de";
+import { deTranslations } from "./de/index";
 
 // Combine all translations
 export const translations: Translations = {
