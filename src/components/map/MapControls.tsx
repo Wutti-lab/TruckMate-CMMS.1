@@ -1,9 +1,10 @@
+
 import { Button } from "@/components/ui/button";
 import { Locate, Map, Search, PhoneCall, History, Bell } from "lucide-react";
 
 interface MapControlsProps {
-  getUserLocation: () => void;
-  resetToken: () => void;
+  getUserLocation?: () => void;
+  resetToken?: () => void;
   searchQuery?: string;
   setSearchQuery?: (query: string) => void;
   setShowEmergencyContacts?: (show: boolean) => void;
@@ -16,8 +17,8 @@ interface MapControlsProps {
 }
 
 export function MapControls({
-  getUserLocation,
-  resetToken,
+  getUserLocation = () => {},
+  resetToken = () => {},
   searchQuery,
   setSearchQuery,
   setShowEmergencyContacts,
