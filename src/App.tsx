@@ -19,6 +19,7 @@ import { UserRole } from "@/lib/types/user-roles";
 import Index from "@/pages/Index";
 import Pricing from "@/pages/Pricing";
 import AdvertisementManager from "@/pages/AdvertisementManager";
+import FunctionListPage from "@/pages/FunctionList";
 import { LocationProvider } from "@/contexts/LocationContext";
 import { NotificationProvider } from "@/contexts/NotificationContext";
 import { LanguageProvider } from "@/contexts/LanguageContext";
@@ -35,6 +36,18 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/pricing" element={<Pricing />} />
+                
+                {/* New Function List Route */}
+                <Route
+                  path="/functions"
+                  element={
+                    <ProtectedRoute allowedRoles={[UserRole.ADMIN, UserRole.DEV_ADMIN, UserRole.FLEET_MANAGER, UserRole.DRIVER, UserRole.MECHANIC, UserRole.DISPATCHER]}>
+                      <AppLayout>
+                        <FunctionListPage />
+                      </AppLayout>
+                    </ProtectedRoute>
+                  }
+                />
                 
                 {/* Protected Routes that require authentication */}
                 <Route
