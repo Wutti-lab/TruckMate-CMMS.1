@@ -9,20 +9,20 @@ export default function FunctionListPage() {
   
   const getPageTitle = () => {
     switch(language) {
-      case 'de': return 'Funktionsübersicht';
-      case 'th': return 'ภาพรวมฟังก์ชัน';
-      default: return 'Function Overview';
+      case 'de': return 'Detaillierte Funktionsübersicht';
+      case 'th': return 'ภาพรวมฟังก์ชันโดยละเอียด';
+      default: return 'Detailed Function Overview';
     }
   };
 
   const getPageDescription = () => {
     switch(language) {
       case 'de': 
-        return 'Eine Übersicht aller Funktionen der TruckMate CMMS Plattform';
+        return 'Eine detaillierte Übersicht aller Funktionen der TruckMate CMMS Plattform nach Benutzerrollen';
       case 'th': 
-        return 'ภาพรวมของฟังก์ชันทั้งหมดของแพลตฟอร์ม TruckMate CMMS';
+        return 'ภาพรวมโดยละเอียดของฟังก์ชันทั้งหมดของแพลตฟอร์ม TruckMate CMMS ตามบทบาทผู้ใช้';
       default: 
-        return 'An overview of all functions in the TruckMate CMMS platform';
+        return 'A detailed overview of all functions in the TruckMate CMMS platform organized by user roles';
     }
   };
   

@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { 
   Truck, Users, Map, ClipboardCheck, QrCode,
@@ -9,6 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useAuth } from "@/contexts/AuthContext";
 import { UserRole } from "@/lib/types/user-roles";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 type AppFunction = {
   title: {
@@ -28,7 +29,8 @@ type AppFunction = {
 
 export function FunctionList() {
   const { language } = useLanguage();
-  const { hasRole } = useAuth();
+  const { hasRole, user } = useAuth();
+  const [viewMode, setViewMode] = useState<"user" | "all">("user");
   
   const functions: AppFunction[] = [
     {
@@ -184,31 +186,160 @@ export function FunctionList() {
     }
   };
 
-  const userAccessibleFunctions = functions.filter(func => 
-    hasRole(func.roles)
-  );
+  const getRoleLabel = (role: UserRole) => {
+    switch(language) {
+      case 'de':
+        switch(role) {
+          case UserRole.ADMIN: return 'Administrator';
+          case UserRole.DEV_ADMIN: return 'Entwickler-Administrator';
+          case UserRole.FLEET_MANAGER: return 'Flottenmanager';
+          case UserRole.DRIVER: return 'Fahrer';
+          case UserRole.MECHANIC: return 'Mechaniker';
+          case UserRole.DISPATCHER: return 'Disponent';
+        }
+        break;
+      case 'th':
+        switch(role) {
+          case UserRole.ADMIN: return 'ผู้ดูแลระบบ';
+          case UserRole.DEV_ADMIN: return 'ผู้ดูแลระบบนักพัฒนา';
+          case UserRole.FLEET_MANAGER: return 'ผู้จัดการกองยานพาหนะ';
+          case UserRole.DRIVER: return 'คนขับ';
+          case UserRole.MECHANIC: return 'ช่างกล';
+          case UserRole.DISPATCHER: return 'ผู้จัดส่ง';
+        }
+        break;
+      default:
+        switch(role) {
+          case UserRole.ADMIN: return 'Administrator';
+          case UserRole.DEV_ADMIN: return 'Developer Administrator';
+          case UserRole.FLEET_MANAGER: return 'Fleet Manager';
+          case UserRole.DRIVER: return 'Driver';
+          case UserRole.MECHANIC: return 'Mechanic';
+          case UserRole.DISPATCHER: return 'Dispatcher';
+        }
+    }
+  };
+
+  const getViewTitle = () => {
+    switch(language) {
+      case 'de': return 'Funktionen anzeigen nach';
+      case 'th': return 'ดูฟังก์ชันตาม';
+      default: return 'View functions by';
+    }
+  };
+
+  const getUserFunctions = () => {
+    return functions.filter(func => hasRole(func.roles));
+  };
+
+  // Get functions by role
+  const getFunctionsByRole = (role: UserRole) => {
+    return functions.filter(func => func.roles.includes(role));
+  };
+
+  // All roles used in the system
+  const allRoles = Object.values(UserRole);
+
+  // Get current tab key based on user's role
+  const getCurrentTabKey = () => {
+    if (user) {
+      return user.role;
+    }
+    return UserRole.ADMIN; // Default tab
+  };
 
   return (
-    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-      {userAccessibleFunctions.map((func, index) => (
-        <Link key={index} to={func.path} className="block transition-transform hover:scale-105">
-          <Card className="h-full border border-gray-200 hover:border-fleet-500 hover:shadow-md transition-all">
-            <CardHeader className="pb-2">
-              <div className="flex items-start justify-between">
-                <CardTitle className="text-lg font-medium flex items-center gap-2">
-                  <func.icon className="h-5 w-5 text-fleet-600" />
-                  {getLocalizedTitle(func)}
-                </CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground">
-                {getLocalizedDescription(func)}
-              </p>
-            </CardContent>
-          </Card>
-        </Link>
-      ))}
+    <div className="space-y-6">
+      <div className="border rounded-lg p-4 bg-white shadow-sm">
+        <h2 className="text-xl font-semibold mb-4">
+          {getViewTitle()}
+        </h2>
+        
+        <Tabs defaultValue={viewMode} onValueChange={(value) => setViewMode(value as "user" | "all")}>
+          <TabsList className="mb-4">
+            <TabsTrigger value="user">
+              {language === 'de' ? 'Meine Funktionen' : 
+               language === 'th' ? 'ฟังก์ชันของฉัน' : 
+               'My Functions'}
+            </TabsTrigger>
+            <TabsTrigger value="all">
+              {language === 'de' ? 'Alle Rollen & Funktionen' : 
+               language === 'th' ? 'บทบาทและฟังก์ชันทั้งหมด' : 
+               'All Roles & Functions'}
+            </TabsTrigger>
+          </TabsList>
+          
+          <TabsContent value="user" className="mt-0">
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              {getUserFunctions().map((func, index) => (
+                <Link key={index} to={func.path} className="block transition-transform hover:scale-105">
+                  <Card className="h-full border border-gray-200 hover:border-fleet-500 hover:shadow-md transition-all">
+                    <CardHeader className="pb-2">
+                      <div className="flex items-start justify-between">
+                        <CardTitle className="text-lg font-medium flex items-center gap-2">
+                          <func.icon className="h-5 w-5 text-fleet-600" />
+                          {getLocalizedTitle(func)}
+                        </CardTitle>
+                      </div>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-sm text-muted-foreground">
+                        {getLocalizedDescription(func)}
+                      </p>
+                    </CardContent>
+                  </Card>
+                </Link>
+              ))}
+            </div>
+          </TabsContent>
+          
+          <TabsContent value="all" className="mt-0">
+            <div className="space-y-8">
+              {allRoles.map((role) => {
+                const roleFunctions = getFunctionsByRole(role);
+                
+                if (roleFunctions.length === 0) return null;
+                
+                return (
+                  <div key={role} className="border-t pt-4 first:border-t-0 first:pt-0">
+                    <h3 className="text-lg font-semibold mb-3 flex items-center">
+                      <span className="inline-block w-3 h-3 rounded-full bg-fleet-500 mr-2"></span>
+                      {getRoleLabel(role)}
+                      <span className="text-sm ml-2 text-muted-foreground">
+                        ({roleFunctions.length} {language === 'de' ? 'Funktionen' : 
+                                               language === 'th' ? 'ฟังก์ชัน' : 
+                                               'functions'})
+                      </span>
+                    </h3>
+                    
+                    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                      {roleFunctions.map((func, index) => (
+                        <Link key={index} to={func.path} className="block transition-transform hover:scale-105">
+                          <Card className="h-full border border-gray-200 hover:border-fleet-500 hover:shadow-md transition-all">
+                            <CardHeader className="pb-2">
+                              <div className="flex items-start justify-between">
+                                <CardTitle className="text-lg font-medium flex items-center gap-2">
+                                  <func.icon className="h-5 w-5 text-fleet-600" />
+                                  {getLocalizedTitle(func)}
+                                </CardTitle>
+                              </div>
+                            </CardHeader>
+                            <CardContent>
+                              <p className="text-sm text-muted-foreground">
+                                {getLocalizedDescription(func)}
+                              </p>
+                            </CardContent>
+                          </Card>
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </TabsContent>
+        </Tabs>
+      </div>
     </div>
   );
 }
