@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Header } from "@/components/layout/Header";
@@ -184,7 +183,6 @@ export default function Map() {
           startTrackingVehicle={startTrackingVehicle}
         />
       </main>
-      <AdBanner position="bottom" />
     </div>
   );
 }
