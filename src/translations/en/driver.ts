@@ -1,5 +1,102 @@
 
 export const driverTranslations = {
-  // Driver related translations can be added here
-  // This is a placeholder file to match the structure with Thai translations
+  // General driver information
+  "driver": "Driver",
+  "drivers": "Drivers",
+  "driverManagement": "Driver Management",
+  "addDriver": "Add Driver",
+  "editDriver": "Edit Driver",
+  "deleteDriver": "Delete Driver",
+  "driverDetails": "Driver Details",
+  "driverName": "Driver Name",
+  "driverLicense": "Driver License",
+  "licenseNumber": "License Number",
+  "licenseExpiry": "License Expiry",
+  "licenseClass": "License Class",
+  
+  // Driver status and performance
+  "active": "Active",
+  "inactive": "Inactive",
+  "onLeave": "On Leave",
+  "suspended": "Suspended",
+  "driverStatus": "Driver Status",
+  "performance": "Performance",
+  "safetyScore": "Safety Score",
+  "fuelEfficiency": "Fuel Efficiency",
+  "onTimeDelivery": "On-time Delivery",
+  "totalTrips": "Total Trips",
+  "totalDistance": "Total Distance",
+  
+  // Driver documentation
+  "documents": "Documents",
+  "uploadDocuments": "Upload Documents",
+  "identification": "Identification",
+  "medicalCertificate": "Medical Certificate",
+  "trainingCertificates": "Training Certificates",
+  "documentExpiry": "Document Expiry",
+  "documentStatus": "Document Status",
+  "verified": "Verified",
+  "pending": "Pending",
+  "expired": "Expired",
+
+  // Contact information
+  "contactInfo": "Contact Information",
+  "phoneNumber": "Phone Number",
+  "email": "Email",
+  "emergencyContact": "Emergency Contact",
+  "address": "Address",
+  
+  // Schedule and assignments
+  "schedule": "Schedule",
+  "assignments": "Assignments",
+  "assignVehicle": "Assign Vehicle",
+  "assignedVehicle": "Assigned Vehicle",
+  "availability": "Availability",
+  "workingHours": "Working Hours",
+  "restPeriod": "Rest Period",
+  
+  // Training and compliance
+  "training": "Training",
+  "safetyTraining": "Safety Training",
+  "hazmatTraining": "Hazardous Materials Training",
+  "defensiveDriving": "Defensive Driving",
+  "trainingStatus": "Training Status",
+  "trainingDue": "Training Due",
+  "complianceStatus": "Compliance Status",
+
+  // Logistics and transportation specific terms
+  "routePlanning": "Route Planning",
+  "loadOptimization": "Load Optimization",
+  "deliveryManagement": "Delivery Management",
+  "realTimeTracking": "Real-time Tracking",
+  "lastMileDelivery": "Last Mile Delivery",
+  "crossDocking": "Cross Docking",
+  "warehouseManagement": "Warehouse Management",
+  "fleetUtilization": "Fleet Utilization",
+  "transportationCosts": "Transportation Costs",
+  "optimizeRoutes": "Optimize Routes",
+  
+  // Transportation Management System specific terms
+  "customerFocused": "Customer Focused",
+  "fleetManagement": "Fleet Management",
+  "routeOptimization": "Route Optimization",
+  "endToEndVisibility": "End-to-End Visibility",
+  "financialAccuracy": "Financial Accuracy",
+  "dynamicRouting": "Dynamic Routing",
+  "networkPlanning": "Network Planning",
+  "realtimeVisibility": "Real-time Visibility",
+  "temperatureTracking": "Temperature Tracking",
+  "iotCapabilities": "IoT Capabilities",
+  "dispatchManagement": "Dispatch Management",
+  "digitalOperations": "Digital Operations",
+  "warehouseOperations": "Warehouse Operations",
+  "orderAllocation": "Order Allocation",
+  "loadingEfficiency": "Loading Efficiency",
+  "digitalRecording": "Digital Recording",
+  "realtimeUpdates": "Real-time Updates",
+  "embeddedAnalytics": "Embedded Analytics",
+  "performanceInsights": "Performance Insights",
+  "customerExperience": "Customer Experience",
+  "systemIntegration": "System Integration",
+  "sustainability": "Sustainability"
 };
