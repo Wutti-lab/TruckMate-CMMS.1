@@ -1,10 +1,12 @@
 
 import { TableCell } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { MoreHorizontal, Navigation, MapPin, CheckCircle2, History } from "lucide-react";
+import { MoreHorizontal, Navigation, MapPin, CheckCircle2, History, Eye, Map, Calendar, FileText, Trash2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { VehicleQRModal } from "../VehicleQRModal";
 import { Vehicle } from "../types/Vehicle";
+import { useToast } from "@/hooks/use-toast";
+import { useLanguage } from "@/contexts/LanguageContext";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -27,6 +29,44 @@ export function VehicleActions({
   onShowHealth,
   onShowHistory
 }: VehicleActionsProps) {
+  const { toast } = useToast();
+  const { language } = useLanguage();
+  
+  const handleViewDetails = () => {
+    toast({
+      title: language === 'de' ? "Details anzeigen" : "View Details",
+      description: `${vehicle.id} - ${vehicle.model}`
+    });
+  };
+  
+  const handleScheduleService = () => {
+    toast({
+      title: language === 'de' ? "Wartung planen" : "Schedule Service",
+      description: language === 'de' 
+        ? `Wartung für ${vehicle.id} wird geplant` 
+        : `Scheduling maintenance for ${vehicle.id}`
+    });
+  };
+  
+  const handleReports = () => {
+    toast({
+      title: language === 'de' ? "Berichte" : "Reports",
+      description: language === 'de' 
+        ? `Berichte für ${vehicle.id} werden generiert` 
+        : `Generating reports for ${vehicle.id}`
+    });
+  };
+  
+  const handleRemove = () => {
+    toast({
+      title: language === 'de' ? "Entfernen" : "Remove",
+      description: language === 'de' 
+        ? `${vehicle.id} wird entfernt` 
+        : `Removing ${vehicle.id}`,
+      variant: "destructive"
+    });
+  };
+  
   return (
     <TableCell>
       <div className="flex items-center gap-2">
@@ -76,11 +116,31 @@ export function VehicleActions({
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="bg-white">
-            <DropdownMenuItem>View Details | Details anzeigen</DropdownMenuItem>
-            <DropdownMenuItem>Show on Map | Auf Karte anzeigen</DropdownMenuItem>
-            <DropdownMenuItem>Schedule Service | Wartung planen</DropdownMenuItem>
-            <DropdownMenuItem>Reports | Berichte</DropdownMenuItem>
-            <DropdownMenuItem className="text-red-600">
+            <DropdownMenuItem onClick={handleViewDetails}>
+              <Eye size={14} className="mr-2" />
+              View Details | Details anzeigen
+            </DropdownMenuItem>
+            
+            <DropdownMenuItem onClick={() => window.open(`/map?vehicle=${vehicle.id}`, '_blank')}>
+              <Map size={14} className="mr-2" />
+              Show on Map | Auf Karte anzeigen
+            </DropdownMenuItem>
+            
+            <DropdownMenuItem onClick={handleScheduleService}>
+              <Calendar size={14} className="mr-2" />
+              Schedule Service | Wartung planen
+            </DropdownMenuItem>
+            
+            <DropdownMenuItem onClick={handleReports}>
+              <FileText size={14} className="mr-2" />
+              Reports | Berichte
+            </DropdownMenuItem>
+            
+            <DropdownMenuItem 
+              onClick={handleRemove}
+              className="text-red-600"
+            >
+              <Trash2 size={14} className="mr-2" />
               Remove | Entfernen
             </DropdownMenuItem>
           </DropdownMenuContent>
