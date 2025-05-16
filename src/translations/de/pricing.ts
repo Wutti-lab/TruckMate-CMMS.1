@@ -35,4 +35,14 @@ export const pricingTranslations = {
   "pleaseVerifyPayment": "Bitte senden Sie den Zahlungsnachweis an diese E-Mail: truckmatecmms@gmail.com",
   "freeTrialBadge": "3 Monate kostenlos testen",
   "freeTrialDescription": "Testen Sie alle Funktionen 3 Monate kostenlos, keine Kreditkarte erforderlich",
+  
+  // New payment proof upload translations
+  "uploadPaymentProof": "Zahlungsnachweis hochladen (Fotos oder PDF)",
+  "fileSelected": "Datei(en) ausgewählt",
+  "sendPaymentProof": "Zahlungsnachweis senden",
+  "sending": "Wird gesendet...",
+  "noFilesSelected": "Keine Dateien ausgewählt",
+  "pleaseSelectProofFile": "Bitte wählen Sie eine Datei als Zahlungsnachweis aus",
+  "proofSent": "Zahlungsnachweis gesendet",
+  "proofSentDescription": "Ihr Zahlungsnachweis wurde an truckmatecmms@gmail.com gesendet"
 };

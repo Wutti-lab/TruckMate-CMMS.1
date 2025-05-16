@@ -1,9 +1,11 @@
 
 import { useState } from "react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { AlertCircle } from "lucide-react";
+import { AlertCircle, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { FileUpload } from "@/components/inspections/FileUpload";
+import { useToast } from "@/hooks/use-toast";
 
 interface PaymentConfirmationProps {
   userEmail: string;
@@ -13,7 +15,46 @@ interface PaymentConfirmationProps {
 
 export function PaymentConfirmation({ userEmail, onBack, onSubmit }: PaymentConfirmationProps) {
   const [paymentConfirmed, setPaymentConfirmed] = useState(false);
+  const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
+  const [isSending, setIsSending] = useState(false);
   const { language, t } = useLanguage();
+  const { toast } = useToast();
+  
+  const handleFilesSelected = (files: File[]) => {
+    setUploadedFiles(files);
+    // When files are uploaded, automatically check the confirmation checkbox
+    if (files.length > 0) {
+      setPaymentConfirmed(true);
+    }
+  };
+  
+  const handleSendProof = async () => {
+    if (uploadedFiles.length === 0) {
+      toast({
+        title: t("noFilesSelected"),
+        description: t("pleaseSelectProofFile"),
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    setIsSending(true);
+    
+    // Simulate sending email with attachment
+    setTimeout(() => {
+      setIsSending(false);
+      toast({
+        title: t("proofSent"),
+        description: t("proofSentDescription"),
+      });
+      
+      // Clear uploaded files after successful send
+      setUploadedFiles([]);
+      
+      // Proceed with submission
+      onSubmit();
+    }, 2000);
+  };
   
   return (
     <div className="space-y-4 py-4">
@@ -55,14 +96,44 @@ export function PaymentConfirmation({ userEmail, onBack, onSubmit }: PaymentConf
         </div>
         
         <div className="mt-4 text-center border-t pt-3">
-          <p className="font-medium mb-1">
-            {t("sendPaymentVerification")}
+          <p className="font-medium mb-3">
+            {language === 'de' ? 'Zahlungsnachweis hochladen:' :
+             language === 'th' ? 'อัปโหลดหลักฐานการชำระเงิน:' :
+             'Upload payment proof:'}
           </p>
-          <p className="text-sm font-medium text-blue-600">
+          
+          <FileUpload
+            onFilesSelected={handleFilesSelected}
+            accept=".pdf,.jpg,.jpeg,.png"
+            icon={<Send className="h-6 w-6 text-muted-foreground" />}
+          />
+          
+          {uploadedFiles.length > 0 && (
+            <div className="text-sm mt-2 text-green-600">
+              {uploadedFiles.length} {t("fileSelected")}
+            </div>
+          )}
+          
+          <div className="mt-3">
+            <Button
+              onClick={handleSendProof}
+              disabled={uploadedFiles.length === 0 || isSending}
+              className="w-full"
+            >
+              {isSending ? (
+                language === 'de' ? 'Wird gesendet...' :
+                language === 'th' ? 'กำลังส่ง...' :
+                'Sending...'
+              ) : (
+                language === 'de' ? 'Zahlungsnachweis senden' :
+                language === 'th' ? 'ส่งหลักฐานการชำระเงิน' :
+                'Send Payment Proof'
+              )}
+            </Button>
+          </div>
+          
+          <p className="text-xs mt-3 text-gray-600">
             {t("paymentEmail")}
-          </p>
-          <p className="text-xs mt-1 text-gray-600">
-            {t("pleaseVerifyPayment")}
           </p>
         </div>
       </div>

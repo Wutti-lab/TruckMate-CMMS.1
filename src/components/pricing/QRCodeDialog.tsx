@@ -1,7 +1,11 @@
 
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { FileUpload } from "@/components/inspections/FileUpload";
+import { useToast } from "@/hooks/use-toast";
+import { Send } from "lucide-react";
 
 interface QRCodeDialogProps {
   open: boolean;
@@ -15,6 +19,42 @@ export function QRCodeDialog({
   onConfirmPayment,
 }: QRCodeDialogProps) {
   const { t } = useLanguage();
+  const { toast } = useToast();
+  const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
+  const [isSending, setIsSending] = useState(false);
+  
+  const handleFilesSelected = (files: File[]) => {
+    setUploadedFiles(files);
+  };
+  
+  const handleSendProof = async () => {
+    if (uploadedFiles.length === 0) {
+      toast({
+        title: t("noFilesSelected"),
+        description: t("pleaseSelectProofFile"),
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    setIsSending(true);
+    
+    // Simulate sending email with attachment
+    // In a real implementation, this would connect to a backend API
+    setTimeout(() => {
+      setIsSending(false);
+      toast({
+        title: t("proofSent"),
+        description: t("proofSentDescription"),
+      });
+      
+      // Clear uploaded files after successful send
+      setUploadedFiles([]);
+      
+      // Proceed with payment confirmation
+      onConfirmPayment();
+    }, 2000);
+  };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -42,18 +82,47 @@ export function QRCodeDialog({
             </p>
           </div>
           
-          <div className="border-t w-full pt-4 mt-4">
-            <p className="text-sm text-center text-gray-500">
+          <div className="border-t w-full pt-4 mt-2">
+            <p className="text-sm text-center text-gray-500 mb-2">
               {t("afterTransferring")}
             </p>
+            
+            <div className="mt-3 space-y-3">
+              <p className="text-sm font-medium text-center">
+                {t("uploadPaymentProof")}
+              </p>
+              
+              <FileUpload
+                onFilesSelected={handleFilesSelected}
+                accept=".pdf,.jpg,.jpeg,.png"
+                icon={<Send className="h-6 w-6 text-muted-foreground" />}
+              />
+              
+              {uploadedFiles.length > 0 && (
+                <div className="text-sm text-center text-green-600">
+                  {uploadedFiles.length} {t("fileSelected")}
+                </div>
+              )}
+            </div>
           </div>
           
-          <Button 
-            onClick={onConfirmPayment}
-            className="w-full mt-4"
-          >
-            {t("confirmPayment")}
-          </Button>
+          <div className="flex flex-col w-full gap-2 mt-2">
+            <Button 
+              onClick={handleSendProof}
+              className="w-full"
+              disabled={uploadedFiles.length === 0 || isSending}
+            >
+              {isSending ? t("sending") : t("sendPaymentProof")}
+            </Button>
+            
+            <Button 
+              onClick={onConfirmPayment}
+              className="w-full"
+              variant="outline"
+            >
+              {t("confirmPayment")}
+            </Button>
+          </div>
         </div>
       </DialogContent>
     </Dialog>

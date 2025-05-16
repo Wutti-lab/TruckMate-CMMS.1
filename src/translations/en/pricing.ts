@@ -36,4 +36,14 @@ export const pricingTranslations = {
   "pleaseVerifyPayment": "Please send payment verification to this email: truckmatecmms@gmail.com",
   "freeTrialBadge": "3 Months Free Trial",
   "freeTrialDescription": "Try all features for free for 3 months, no credit card required",
+  
+  // New payment proof upload translations
+  "uploadPaymentProof": "Upload payment proof (photos or PDF)",
+  "fileSelected": "file(s) selected",
+  "sendPaymentProof": "Send Payment Proof",
+  "sending": "Sending...",
+  "noFilesSelected": "No files selected",
+  "pleaseSelectProofFile": "Please select a file to upload as payment proof",
+  "proofSent": "Payment proof sent",
+  "proofSentDescription": "Your payment proof has been sent to truckmatecmms@gmail.com"
 };
