@@ -1,5 +1,5 @@
 
-// Pricing page related translations
+// Payment related translations
 export const pricingTranslations = {
   "choosePlan": "เลือกแผนที่เหมาะกับความต้องการของคุณ",
   "perVehicle": "ต่อยานพาหนะ / ปี",
@@ -44,5 +44,12 @@ export const pricingTranslations = {
   "noFilesSelected": "ไม่ได้เลือกไฟล์",
   "pleaseSelectProofFile": "กรุณาเลือกไฟล์เพื่ออัปโหลดเป็นหลักฐานการชำระเงิน",
   "proofSent": "ส่งหลักฐานการชำระเงินแล้ว",
-  "proofSentDescription": "หลักฐานการชำระเงินของคุณได้ถูกส่งไปที่ truckmatecmms@gmail.com แล้ว"
+  "proofSentDescription": "หลักฐานการชำระเงินของคุณถูกส่งไปยัง truckmatecmms@gmail.com",
+  
+  // Export report translations
+  "exportReport": "ส่งออกรายงาน",
+  "reportExported": "ส่งออกรายงานแล้ว",
+  "reportExportedDescription": "รายงานการบำรุงรักษาสำหรับ {vehicleId} ได้ถูกดาวน์โหลดแล้ว",
+  "exportFailed": "การส่งออกล้มเหลว",
+  "exportFailedDescription": "เกิดข้อผิดพลาดขณะส่งออกรายงาน"
 };

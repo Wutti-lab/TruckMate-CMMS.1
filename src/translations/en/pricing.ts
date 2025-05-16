@@ -1,4 +1,3 @@
-
 export const pricingTranslations = {
   // Pricing Page
   "backToDashboard": "Back to Dashboard",
@@ -45,5 +44,12 @@ export const pricingTranslations = {
   "noFilesSelected": "No files selected",
   "pleaseSelectProofFile": "Please select a file to upload as payment proof",
   "proofSent": "Payment proof sent",
-  "proofSentDescription": "Your payment proof has been sent to truckmatecmms@gmail.com"
+  "proofSentDescription": "Your payment proof has been sent to truckmatecmms@gmail.com",
+  
+  // Export report translations
+  "exportReport": "Export Report",
+  "reportExported": "Report exported",
+  "reportExportedDescription": "Maintenance report for {vehicleId} has been downloaded",
+  "exportFailed": "Export failed",
+  "exportFailedDescription": "An error occurred while exporting the report"
 };

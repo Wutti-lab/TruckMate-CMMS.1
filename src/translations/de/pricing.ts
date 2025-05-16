@@ -44,5 +44,12 @@ export const pricingTranslations = {
   "noFilesSelected": "Keine Dateien ausgewählt",
   "pleaseSelectProofFile": "Bitte wählen Sie eine Datei als Zahlungsnachweis aus",
   "proofSent": "Zahlungsnachweis gesendet",
-  "proofSentDescription": "Ihr Zahlungsnachweis wurde an truckmatecmms@gmail.com gesendet"
+  "proofSentDescription": "Ihr Zahlungsnachweis wurde an truckmatecmms@gmail.com gesendet",
+  
+  // Export report translations
+  "exportReport": "Bericht exportieren",
+  "reportExported": "Bericht exportiert",
+  "reportExportedDescription": "Wartungsbericht für {vehicleId} wurde heruntergeladen",
+  "exportFailed": "Export fehlgeschlagen",
+  "exportFailedDescription": "Beim Exportieren des Berichts ist ein Fehler aufgetreten"
 };
