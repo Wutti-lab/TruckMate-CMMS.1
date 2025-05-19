@@ -2,9 +2,10 @@
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Badge } from "@/components/ui/badge";
+import { PaymentForm } from "./PaymentForm";
 
 interface PricingFeature {
   text: string;
@@ -32,6 +33,16 @@ export function PricingPlan({
   showFreeTrial = false,
 }: PricingPlanProps) {
   const { t } = useLanguage();
+  const [showPaymentForm, setShowPaymentForm] = useState(false);
+  
+  const handleBuyClick = () => {
+    setShowPaymentForm(true);
+  };
+  
+  const handlePaymentSuccess = () => {
+    setShowPaymentForm(false);
+    onBuy(); // Call the original onBuy function from parent
+  };
   
   return (
     <Card className="flex flex-col border-2 border-fleet-200 hover:border-fleet-400 transition-colors">
@@ -70,11 +81,19 @@ export function PricingPlan({
       <CardFooter>
         <Button 
           className="w-full bg-fleet-600" 
-          onClick={onBuy}
+          onClick={handleBuyClick}
           disabled={isProcessing}
         >
           {isProcessing ? t("processing") : t("buyNow")}
         </Button>
+        
+        {/* Payment Form Dialog */}
+        <PaymentForm 
+          open={showPaymentForm} 
+          onOpenChange={setShowPaymentForm} 
+          onSuccess={handlePaymentSuccess}
+          planTitle={title}
+        />
       </CardFooter>
     </Card>
   );

@@ -51,5 +51,22 @@ export const pricingTranslations = {
   "reportExported": "Bericht exportiert",
   "reportExportedDescription": "Wartungsbericht für {vehicleId} wurde heruntergeladen",
   "exportFailed": "Export fehlgeschlagen",
-  "exportFailedDescription": "Beim Exportieren des Berichts ist ein Fehler aufgetreten"
+  "exportFailedDescription": "Beim Exportieren des Berichts ist ein Fehler aufgetreten",
+  
+  // New payment form translations
+  "buyingPlan": "Plan kaufen",
+  "name": "Name",
+  "email": "E-Mail",
+  "phone": "Telefon",
+  "address": "Adresse",
+  "company": "Firma",
+  "fullName": "Vollständiger Name",
+  "fullAddress": "Vollständige Adresse",
+  "companyName": "Firmenname",
+  "phoneNumber": "Telefonnummer",
+  "requiredField": "Dieses Feld ist erforderlich",
+  "invalidEmail": "Muss eine gültige E-Mail-Adresse sein",
+  "formProcessing": "Ihre Anfrage wird bearbeitet...",
+  "formSubmitted": "Formular erfolgreich übermittelt",
+  "formError": "Bei der Bearbeitung Ihrer Anfrage ist ein Fehler aufgetreten"
 };

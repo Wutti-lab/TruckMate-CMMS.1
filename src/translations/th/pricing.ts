@@ -51,5 +51,22 @@ export const pricingTranslations = {
   "reportExported": "ส่งออกรายงานแล้ว",
   "reportExportedDescription": "รายงานการบำรุงรักษาสำหรับ {vehicleId} ได้ถูกดาวน์โหลดแล้ว",
   "exportFailed": "การส่งออกล้มเหลว",
-  "exportFailedDescription": "เกิดข้อผิดพลาดขณะส่งออกรายงาน"
+  "exportFailedDescription": "เกิดข้อผิดพลาดขณะส่งออกรายงาน",
+  
+  // New payment form translations
+  "buyingPlan": "กำลังซื้อแผน",
+  "name": "ชื่อ",
+  "email": "อีเมล",
+  "phone": "โทรศัพท์",
+  "address": "ที่อยู่",
+  "company": "บริษัท",
+  "fullName": "ชื่อเต็ม",
+  "fullAddress": "ที่อยู่เต็ม",
+  "companyName": "ชื่อบริษัท",
+  "phoneNumber": "หมายเลขโทรศัพท์",
+  "requiredField": "จำเป็นต้องกรอกช่องนี้",
+  "invalidEmail": "ต้องเป็นที่อยู่อีเมลที่ถูกต้อง",
+  "formProcessing": "กำลังประมวลผลคำขอของคุณ...",
+  "formSubmitted": "ส่งแบบฟอร์มเรียบร้อยแล้ว",
+  "formError": "เกิดข้อผิดพลาดในการประมวลผลคำขอของคุณ"
 };

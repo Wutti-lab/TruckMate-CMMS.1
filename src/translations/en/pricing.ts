@@ -1,3 +1,4 @@
+
 export const pricingTranslations = {
   // Pricing Page
   "backToDashboard": "Back to Dashboard",
@@ -51,5 +52,22 @@ export const pricingTranslations = {
   "reportExported": "Report exported",
   "reportExportedDescription": "Maintenance report for {vehicleId} has been downloaded",
   "exportFailed": "Export failed",
-  "exportFailedDescription": "An error occurred while exporting the report"
+  "exportFailedDescription": "An error occurred while exporting the report",
+  
+  // New payment form translations
+  "buyingPlan": "Buying Plan",
+  "name": "Name",
+  "email": "Email",
+  "phone": "Phone",
+  "address": "Address",
+  "company": "Company",
+  "fullName": "Full name",
+  "fullAddress": "Full address",
+  "companyName": "Company name",
+  "phoneNumber": "Phone number",
+  "requiredField": "This field is required",
+  "invalidEmail": "Must be a valid email address",
+  "formProcessing": "Processing your request...",
+  "formSubmitted": "Form submitted successfully",
+  "formError": "There was an error processing your request"
 };

@@ -18,14 +18,21 @@ export default function Pricing() {
   const { t } = useLanguage();
 
   const handlePayment = (plan: string) => {
-    setIsProcessing(true);
-    // Show QR code dialog instead of simulating payment
-    setShowQrCode(true);
-    setIsProcessing(false);
+    // No longer opening QR code dialog directly here
+    // as this is now handled by the PaymentForm component
+    toast({
+      title: t("paymentSuccessful"),
+      description: `${t("thankYouForPurchasing")} ${plan} ${t("plan")}`,
+    });
+    navigate("/dashboard");
   };
 
   const handleBackToDashboard = () => {
     navigate("/dashboard");
+  };
+
+  const handleCustomOfferClick = () => {
+    setShowQrCode(true);
   };
 
   const handlePaymentComplete = (plan: string) => {
@@ -102,13 +109,13 @@ export default function Pricing() {
             />
           </div>
 
-          <CustomOfferSection onClick={() => setShowQrCode(true)} />
+          <CustomOfferSection onClick={handleCustomOfferClick} />
           
-          {/* QR Code Payment Dialog */}
+          {/* QR Code Payment Dialog - only for custom offers now */}
           <QRCodeDialog
             open={showQrCode}
             onOpenChange={setShowQrCode}
-            onConfirmPayment={() => handlePaymentComplete("Vehicle")}
+            onConfirmPayment={() => handlePaymentComplete("Custom")}
           />
         </div>
       </main>
