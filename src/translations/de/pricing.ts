@@ -63,7 +63,7 @@ export const pricingTranslations = {
   "fullName": "Vollständiger Name",
   "fullAddress": "Vollständige Adresse",
   "companyName": "Firmenname",
-  "phoneNumber": "Telefonnummer",
+  "contactNumber": "Telefonnummer",
   "requiredField": "Dieses Feld ist erforderlich",
   "invalidEmail": "Muss eine gültige E-Mail-Adresse sein",
   "formProcessing": "Ihre Anfrage wird bearbeitet...",

@@ -105,9 +105,9 @@ export function PaymentForm({
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{language === 'de' ? 'Name' : 'Name'}</FormLabel>
+                  <FormLabel>{t("name")}</FormLabel>
                   <FormControl>
-                    <Input placeholder={language === 'de' ? 'Vollständiger Name' : 'Full name'} {...field} />
+                    <Input placeholder={t("fullName")} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -119,7 +119,7 @@ export function PaymentForm({
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>{t("email")}</FormLabel>
                   <FormControl>
                     <Input placeholder="email@example.com" type="email" {...field} />
                   </FormControl>
@@ -133,9 +133,9 @@ export function PaymentForm({
               name="phone"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{language === 'de' ? 'Telefon' : 'Phone'}</FormLabel>
+                  <FormLabel>{t("phone")}</FormLabel>
                   <FormControl>
-                    <Input placeholder={language === 'de' ? 'Telefonnummer' : 'Phone number'} {...field} />
+                    <Input placeholder={t("contactNumber")} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -147,9 +147,9 @@ export function PaymentForm({
               name="address"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{language === 'de' ? 'Adresse' : 'Address'}</FormLabel>
+                  <FormLabel>{t("address")}</FormLabel>
                   <FormControl>
-                    <Input placeholder={language === 'de' ? 'Vollständige Adresse' : 'Full address'} {...field} />
+                    <Input placeholder={t("fullAddress")} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -161,9 +161,9 @@ export function PaymentForm({
               name="company"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{language === 'de' ? 'Firma' : 'Company'}</FormLabel>
+                  <FormLabel>{t("company")}</FormLabel>
                   <FormControl>
-                    <Input placeholder={language === 'de' ? 'Firmenname' : 'Company name'} {...field} />
+                    <Input placeholder={t("companyName")} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

@@ -63,7 +63,7 @@ export const pricingTranslations = {
   "fullName": "ชื่อเต็ม",
   "fullAddress": "ที่อยู่เต็ม",
   "companyName": "ชื่อบริษัท",
-  "phoneNumber": "หมายเลขโทรศัพท์",
+  "contactNumber": "หมายเลขโทรศัพท์",
   "requiredField": "จำเป็นต้องกรอกช่องนี้",
   "invalidEmail": "ต้องเป็นที่อยู่อีเมลที่ถูกต้อง",
   "formProcessing": "กำลังประมวลผลคำขอของคุณ...",
