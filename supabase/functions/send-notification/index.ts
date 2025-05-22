@@ -1,6 +1,6 @@
 
+// @ts-nocheck
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { Resend } from "https://esm.sh/resend@1.0.0";
 
 // CORS headers für Cross-Origin-Anfragen
 const corsHeaders = {
@@ -9,9 +9,8 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type",
 };
 
-// Resend API-Client initialisieren
+// Resend API-Schlüssel aus Umgebungsvariablen holen
 const resendApiKey = Deno.env.get("RESEND_API_KEY");
-const resend = resendApiKey ? new Resend(resendApiKey) : null;
 
 interface NotificationRequest {
   type: "registration" | "approval" | "rejection";
@@ -162,26 +161,39 @@ function generateRejectionEmail(userData: NotificationRequest["userData"]) {
   };
 }
 
-// E-Mail mit Resend versenden
+// E-Mail mit fetch API senden anstatt mit Resend
 async function sendEmail(emailData: any) {
-  if (!resend) {
-    console.log("RESEND_API_KEY nicht konfiguriert. E-Mail würde gesendet werden:", JSON.stringify(emailData, null, 2));
-    return { success: true, message: "E-Mail simuliert (kein API-Key)" };
-  }
-
   try {
-    const { data, error } = await resend.emails.send({
-      from: "TruckMate CMMS <onboarding@resend.dev>", // Muss mit validierter Domain angepasst werden
-      ...emailData
-    });
-    
-    if (error) {
-      console.error("Fehler beim Senden der E-Mail:", error);
-      return { success: false, message: error.message };
+    // Wenn kein API-Schlüssel konfiguriert ist, simulieren wir den E-Mail-Versand
+    if (!resendApiKey) {
+      console.log("RESEND_API_KEY nicht konfiguriert. E-Mail würde gesendet werden:", JSON.stringify(emailData, null, 2));
+      return { success: true, message: "E-Mail simuliert (kein API-Key)" };
     }
-    
+
+    // Resend API direkt über fetch aufrufen
+    const response = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${resendApiKey}`
+      },
+      body: JSON.stringify({
+        from: "TruckMate CMMS <onboarding@resend.dev>",
+        ...emailData
+      })
+    });
+
+    if (!response.ok) {
+      const errorData = await response.text();
+      console.error("Fehler beim Senden der E-Mail:", errorData);
+      return { success: false, message: `API-Fehler: ${response.status}`, error: errorData };
+    }
+
+    const data = await response.json();
+    console.log("E-Mail erfolgreich gesendet:", data);
     return { success: true, message: "E-Mail erfolgreich gesendet", data };
-  } catch (err) {
+    
+  } catch (err: any) {
     console.error("Fehler bei Resend API:", err);
     return { success: false, message: err.message };
   }
@@ -194,7 +206,10 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
+    console.log("Edge-Funktion aufgerufen:", req.method);
+    
     const { type, userData }: NotificationRequest = await req.json();
+    console.log(`Verarbeite ${type}-Benachrichtigung für:`, userData.email);
 
     let emailData;
     let confirmationResult = null;
@@ -204,6 +219,7 @@ const handler = async (req: Request): Promise<Response> => {
         emailData = generateRegistrationEmail(userData);
         // Zusätzlich eine Bestätigungsmail an den Benutzer senden
         confirmationResult = await sendEmail(generateRegistrationConfirmationEmail(userData));
+        console.log("Bestätigungs-E-Mail an Benutzer gesendet:", confirmationResult);
         break;
       case "approval":
         emailData = generateApprovalEmail(userData);
@@ -215,8 +231,9 @@ const handler = async (req: Request): Promise<Response> => {
         throw new Error("Unbekannter Benachrichtigungstyp");
     }
 
-    // E-Mail über Resend senden
+    // E-Mail über die sendEmail Funktion senden
     const result = await sendEmail(emailData);
+    console.log(`${type}-Benachrichtigungs-E-Mail-Ergebnis:`, result);
     
     // Wenn es eine Registrierung ist, geben wir auch das Ergebnis der Bestätigungs-E-Mail zurück
     if (type === "registration" && confirmationResult) {
