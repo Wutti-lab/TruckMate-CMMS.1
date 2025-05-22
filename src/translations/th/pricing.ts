@@ -1,4 +1,3 @@
-
 // Payment related translations
 export const pricingTranslations = {
   "choosePlan": "เลือกแผนที่เหมาะกับความต้องการของคุณ",
@@ -99,6 +98,36 @@ export const pricingTranslations = {
   "vehicles100Plus": "ตั้งแต่ 100 คันขึ้นไป",
   "vehicles200Plus": "ตั้งแต่ 200 คันขึ้นไป",
   "yearlyPayment": "การชำระเงินรายปี",
-  "customPricing": "ราคาที่กำหนดเอง"
+  "customPricing": "ราคาที่กำหนดเอง",
+  
+  // New subscription model translations
+  "subscriptionModel": "รูปแบบการสมัครสมาชิก",
+  "starterPackage": "แพ็คเกจเริ่มต้น",
+  "standardPackage": "แพ็คเกจมาตรฐาน",
+  "professionalPackage": "แพ็คเกจมืออาชีพ",
+  "enterprisePackage": "โซลูชั่นองค์กร",
+  "starterDescription": "สำหรับธุรกิจขนาดเล็กหรือสถานที่เดียว",
+  "standardDescription": "สำหรับองค์กรอุตสาหกรรมขนาดกลาง",
+  "professionalDescription": "สำหรับองค์กรอุตสาหกรรมขนาดใหญ่",
+  "enterpriseDescription": "สามารถเจรจาเป็นรายบุคคลสำหรับองค์กรขนาดใหญ่ที่มีหลายสถานที่",
+  "starterFeatures": "จำกัดจำนวนผู้ใช้หรือเครื่องจักร",
+  "standardFeatures": "โมดูล ผู้ใช้ สินทรัพย์ เพิ่มเติม",
+  "professionalFeatures": "คุณสมบัติขั้นสูง หลายบทบาทผู้ใช้",
+  "enterpriseFeatures": "ปรับแต่งได้ตามความต้องการของลูกค้า",
+  "includedInSubscription": "รวมอยู่ในการสมัครสมาชิก",
+  "webAndMobileApp": "การเข้าถึงแอปบนเว็บและมือถือ (Android/iOS)",
+  "cloudStorage": "พื้นที่เก็บข้อมูลและฐานข้อมูลบนคลาวด์",
+  "technicalSupport": "การสนับสนุนทางเทคนิคและการอัปเดต",
+  "regularBackups": "การสำรองข้อมูลเป็นประจำ",
+  "multiTenantSystem": "ระบบหลายผู้เช่า",
+  "dataManagement": "การจัดการข้อมูล",
+  "newCustomerSetup": "การตั้งค่าลูกค้าใหม่",
+  "ownCompanySettings": "การตั้งค่าบริษัทของตนเอง",
+  "ownUserAccounts": "บัญชีผู้ใช้และบทบาทของตนเอง",
+  "ownMachineData": "ข้อมูลเครื่องจักรและสถานที่ของตนเอง",
+  "ownReports": "รายงานและแผนการบำรุงรักษาของตนเอง",
+  "yearly": "รายปี",
+  "monthly": "รายเดือน",
+  "thbYear": "บาท/ปี",
+  "thbMonth": "บาท/เดือน",
 };
-

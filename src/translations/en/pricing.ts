@@ -1,4 +1,3 @@
-
 export const pricingTranslations = {
   // Pricing Page
   "backToDashboard": "Back to Dashboard",
@@ -100,6 +99,36 @@ export const pricingTranslations = {
   "vehicles100Plus": "100+ vehicles",
   "vehicles200Plus": "200+ vehicles",
   "yearlyPayment": "Yearly payment",
-  "customPricing": "Custom pricing"
+  "customPricing": "Custom pricing",
+  
+  // New subscription model translations
+  "subscriptionModel": "Subscription Model",
+  "starterPackage": "Starter Package",
+  "standardPackage": "Standard Package",
+  "professionalPackage": "Professional Package",
+  "enterprisePackage": "Enterprise Solution",
+  "starterDescription": "For small businesses or single locations",
+  "standardDescription": "For medium industrial enterprises",
+  "professionalDescription": "For large industrial enterprises",
+  "enterpriseDescription": "Individually negotiable for large operations with multiple locations",
+  "starterFeatures": "Limited to a certain number of users or machines",
+  "standardFeatures": "More modules, users, assets",
+  "professionalFeatures": "Advanced features, multiple user roles",
+  "enterpriseFeatures": "Fully customizable according to customer needs",
+  "includedInSubscription": "Included in subscription",
+  "webAndMobileApp": "Access to web and mobile app (Android/iOS)",
+  "cloudStorage": "Cloud storage & database",
+  "technicalSupport": "Technical support & updates",
+  "regularBackups": "Regular backups",
+  "multiTenantSystem": "Multi-tenant system",
+  "dataManagement": "Data Management",
+  "newCustomerSetup": "New Customer Setup",
+  "ownCompanySettings": "Own company settings",
+  "ownUserAccounts": "Own user accounts & roles",
+  "ownMachineData": "Own machine & location data",
+  "ownReports": "Own reports & maintenance plans",
+  "yearly": "Yearly",
+  "monthly": "Monthly",
+  "thbYear": "THB/year",
+  "thbMonth": "THB/month",
 };
-

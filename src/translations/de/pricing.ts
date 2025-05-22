@@ -1,4 +1,3 @@
-
 // Pricing related translations
 export const pricingTranslations = {
   "choosePlan": "Wählen Sie den Plan, der Ihren Anforderungen entspricht",
@@ -99,6 +98,36 @@ export const pricingTranslations = {
   "vehicles100Plus": "Ab 100 Fahrzeugen",
   "vehicles200Plus": "Ab 200 Fahrzeugen",
   "yearlyPayment": "Jährliche Zahlung",
-  "customPricing": "Individuelle Preisgestaltung"
+  "customPricing": "Individuelle Preisgestaltung",
+  
+  // New subscription model translations
+  "subscriptionModel": "Abo-Modell",
+  "starterPackage": "Starter-Paket",
+  "standardPackage": "Standard-Paket",
+  "professionalPackage": "Profi-Paket",
+  "enterprisePackage": "Enterprise-Lösung",
+  "starterDescription": "Für kleinere Betriebe oder einzelne Standorte",
+  "standardDescription": "Für mittlere Industrieunternehmen",
+  "professionalDescription": "Für große Industrieunternehmen",
+  "enterpriseDescription": "Individuell verhandelbar bei großen Betrieben mit mehreren Standorten",
+  "starterFeatures": "Begrenzt auf eine bestimmte Anzahl Nutzer oder Maschinen",
+  "standardFeatures": "Mehr Module, Benutzer, Assets",
+  "professionalFeatures": "Erweiterte Funktionen, mehrere Benutzerrollen",
+  "enterpriseFeatures": "Vollständig anpassbar nach Kundenwunsch",
+  "includedInSubscription": "Im Abo inklusive",
+  "webAndMobileApp": "Nutzung der Web- und mobilen App (Android/iOS)",
+  "cloudStorage": "Cloud-Speicher & Datenbank",
+  "technicalSupport": "Technischer Support & Updates",
+  "regularBackups": "Regelmäßige Backups",
+  "multiTenantSystem": "Mandanten-System",
+  "dataManagement": "Datenverwaltung",
+  "newCustomerSetup": "Neue Kundeneinrichtung",
+  "ownCompanySettings": "Eigene Firmeneinstellungen",
+  "ownUserAccounts": "Eigene Benutzerkonten & Rollen",
+  "ownMachineData": "Eigene Maschinen- & Standortdaten",
+  "ownReports": "Eigene Reports & Wartungspläne",
+  "yearly": "Jährlich",
+  "monthly": "Monatlich",
+  "thbYear": "THB/Jahr",
+  "thbMonth": "THB/Monat",
 };
-
