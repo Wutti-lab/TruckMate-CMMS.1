@@ -18,7 +18,6 @@ import { CustomerFormFields } from "./CustomerFormFields";
 
 // Schema for customer form
 const customerSchema = z.object({
-  id: z.string().optional(),
   name: z.string().min(2, { message: "Name must be at least 2 characters" }),
   company: z.string().min(1, { message: "Company name is required" }),
   email: z.string().email({ message: "Please enter a valid email address" }),
@@ -41,7 +40,6 @@ export function CustomerForm({ customer, onSubmit, onCancel }: CustomerFormProps
   const form = useForm<CustomerFormValues>({
     resolver: zodResolver(customerSchema),
     defaultValues: {
-      id: customer?.id || '',
       name: customer?.name || '',
       company: customer?.company || '',
       email: customer?.email || '',

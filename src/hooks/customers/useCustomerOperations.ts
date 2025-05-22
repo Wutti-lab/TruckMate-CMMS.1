@@ -1,4 +1,3 @@
-
 import { Customer } from "@/lib/types/customer-types";
 import { CustomerFormValues } from "@/components/customers/forms/CustomerForm";
 import { supabase } from "@/integrations/supabase/client";
@@ -66,9 +65,8 @@ export function useCustomerOperations(
         email: formData.email || "",
         phone: formData.phone || "",
         country: formData.country || "",
-        status: formData.status || 'active',
-        registration_date: formData.registrationDate || null,
-        total_spent: formData.totalSpent || 0
+        // We don't include status, registrationDate, or totalSpent here
+        // as they are not part of the form values
       };
       
       if (isEditMode && selectedCustomer) {
@@ -92,9 +90,10 @@ export function useCustomerOperations(
                 email: formData.email || "",
                 phone: formData.phone || "",
                 country: formData.country || "",
-                status: formData.status || 'active',
-                registrationDate: formData.registrationDate || "",
-                totalSpent: formData.totalSpent || 0
+                // Keep existing values for these properties
+                status: customer.status,
+                registrationDate: customer.registrationDate,
+                totalSpent: customer.totalSpent
               }
             : customer
         ));
@@ -104,10 +103,17 @@ export function useCustomerOperations(
           description: "Customer updated successfully",
         });
       } else {
-        // Insert
+        // Insert - we need to provide default values for the fields not in the form
+        const dbData = {
+          ...customerData,
+          status: 'active', // Default status
+          registration_date: new Date().toISOString(), // Default registration date
+          total_spent: 0 // Default total spent
+        };
+
         const { data, error } = await supabase
           .from('customers')
-          .insert(customerData)
+          .insert(dbData)
           .select();
           
         if (error) {
