@@ -1,9 +1,10 @@
 
-import { NotificationRequest } from "./types.ts";
+import { NotificationRequest, EmailData } from "./types.ts";
 
+// Template for admin notification about new registrations
 export function generateRegistrationEmail(userData: NotificationRequest["userData"]) {
   return {
-    to: "truckmatecmms@gmail.com", // Empfänger-E-Mail-Adresse
+    to: "truckmatecmms@gmail.com", 
     subject: "Neue TruckMate CMMS-Kontoregistrierung",
     html: `
       <h2>Neue Kontoregistrierung für TruckMate CMMS</h2>
@@ -42,7 +43,7 @@ export function generateRegistrationEmail(userData: NotificationRequest["userDat
   };
 }
 
-// Registrierungsbestätigungsemail für den Benutzer
+// Registration confirmation email template for the user
 export function generateRegistrationConfirmationEmail(userData: NotificationRequest["userData"]) {
   return {
     to: userData.email,
@@ -65,9 +66,10 @@ export function generateRegistrationConfirmationEmail(userData: NotificationRequ
   };
 }
 
+// Account approval email template (sent to admin for forwarding)
 export function generateApprovalEmail(userData: NotificationRequest["userData"]) {
   return {
-    to: "truckmatecmms@gmail.com", // Admin-Email für manuelle Weiterleitung
+    to: "truckmatecmms@gmail.com",
     subject: `KONTO AKTIVIERT: ${userData.name} - TruckMate CMMS`,
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 5px;">
@@ -129,9 +131,10 @@ export function generateApprovalEmail(userData: NotificationRequest["userData"])
   };
 }
 
+// Account rejection email template (sent to admin for forwarding)
 export function generateRejectionEmail(userData: NotificationRequest["userData"]) {
   return {
-    to: "truckmatecmms@gmail.com", // Admin-Email für manuelle Weiterleitung
+    to: "truckmatecmms@gmail.com", 
     subject: `KONTO ABGELEHNT: ${userData.name} - TruckMate CMMS`,
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 5px;">
@@ -184,6 +187,46 @@ export function generateRejectionEmail(userData: NotificationRequest["userData"]
         
         <p style="color: #666; font-size: 14px;">Diese Benachrichtigung wurde automatisch vom TruckMate CMMS-System generiert.</p>
       </div>
+    `
+  };
+}
+
+// Direct customer email template - can be used to send directly to customers when domain is verified
+export function generateDirectCustomerApprovalEmail(userData: NotificationRequest["userData"]): EmailData {
+  return {
+    to: userData.email,
+    subject: "Willkommen bei TruckMate CMMS - Ihr Konto wurde aktiviert",
+    html: `
+      <html>
+      <body style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+        <div style="text-align: center; margin-bottom: 20px;">
+          <img src="https://truckmatecmms.com/lovable-uploads/3a761e15-fdda-4b29-85ed-81450a5e2bc3.png" alt="TruckMate CMMS Logo" style="max-width: 150px; height: auto;" />
+        </div>
+        
+        <h2 style="color: #1a73e8; margin-bottom: 20px;">Willkommen bei TruckMate CMMS, ${userData.name}!</h2>
+        
+        <p>Wir freuen uns, Ihnen mitteilen zu können, dass Ihr Konto genehmigt wurde und jetzt aktiv ist.</p>
+        
+        <p>Mit TruckMate CMMS können Sie:</p>
+        <ul style="margin-bottom: 20px;">
+          <li>Ihre Flotte effizient verwalten</li>
+          <li>Fahrzeugwartung überwachen</li>
+          <li>Fahrer und Routen optimieren</li>
+          <li>Alle notwendigen Inspektionen dokumentieren</li>
+        </ul>
+        
+        <p>Sie können sich jetzt mit Ihrer E-Mail-Adresse <strong>${userData.email}</strong> und Ihrem Passwort anmelden.</p>
+        
+        <p style="margin: 30px 0; text-align: center;">
+          <a href="https://truckmate-cmms.com/login" style="background-color: #1a73e8; color: white; padding: 12px 20px; text-decoration: none; border-radius: 4px; font-weight: bold;">Jetzt anmelden</a>
+        </p>
+        
+        <p>Falls Sie Fragen haben oder Unterstützung benötigen, können Sie uns jederzeit kontaktieren:</p>
+        <p style="margin-bottom: 20px;">E-Mail: <a href="mailto:truckmatecmms@gmail.com">truckmatecmms@gmail.com</a></p>
+        
+        <p style="color: #666; font-size: 14px;">Mit freundlichen Grüßen,<br>Ihr TruckMate CMMS-Team</p>
+      </body>
+      </html>
     `
   };
 }

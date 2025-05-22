@@ -1,6 +1,6 @@
 
 export interface NotificationRequest {
-  type: "registration" | "approval" | "rejection";
+  type: "registration" | "approval" | "rejection" | "direct-approval";
   userData: {
     name: string;
     email: string;

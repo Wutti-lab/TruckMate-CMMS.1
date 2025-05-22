@@ -7,7 +7,8 @@ import {
   generateRegistrationEmail, 
   generateRegistrationConfirmationEmail,
   generateApprovalEmail,
-  generateRejectionEmail
+  generateRejectionEmail,
+  generateDirectCustomerApprovalEmail
 } from "./email-templates.ts";
 
 const handler = async (req: Request): Promise<Response> => {
@@ -34,6 +35,10 @@ const handler = async (req: Request): Promise<Response> => {
         break;
       case "approval":
         emailData = generateApprovalEmail(userData);
+        break;
+      case "direct-approval":
+        // Direkte E-Mail an Kunden, wenn Domain verifiziert ist
+        emailData = generateDirectCustomerApprovalEmail(userData);
         break;
       case "rejection":
         emailData = generateRejectionEmail(userData);
