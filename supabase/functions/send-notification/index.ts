@@ -1,5 +1,6 @@
 
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
+import { Resend } from "https://esm.sh/resend@1.0.0";
 
 // CORS headers für Cross-Origin-Anfragen
 const corsHeaders = {
@@ -7,6 +8,10 @@ const corsHeaders = {
   "Access-Control-Allow-Headers":
     "authorization, x-client-info, apikey, content-type",
 };
+
+// Resend API-Client initialisieren
+const resendApiKey = Deno.env.get("RESEND_API_KEY");
+const resend = resendApiKey ? new Resend(resendApiKey) : null;
 
 interface NotificationRequest {
   type: "registration" | "approval" | "rejection";
@@ -64,13 +69,38 @@ function generateRegistrationEmail(userData: NotificationRequest["userData"]) {
 function generateApprovalEmail(userData: NotificationRequest["userData"]) {
   return {
     to: userData.email,
-    subject: "Ihr TruckMate CMMS-Konto wurde genehmigt",
+    subject: "Willkommen bei TruckMate CMMS - Ihr Konto wurde genehmigt",
     html: `
-      <h2>Willkommen bei TruckMate CMMS, ${userData.name}!</h2>
-      <p>Wir freuen uns, Ihnen mitteilen zu können, dass Ihr Konto genehmigt wurde und jetzt aktiv ist.</p>
-      <p>Sie können sich jetzt mit Ihrer E-Mail-Adresse und Ihrem Passwort anmelden und alle Funktionen von TruckMate CMMS nutzen.</p>
-      <p>Bei Fragen stehen wir Ihnen gerne zur Verfügung.</p>
-      <p>Mit freundlichen Grüßen,<br>Das TruckMate CMMS-Team</p>
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 5px;">
+        <div style="text-align: center; margin-bottom: 20px;">
+          <img src="https://truckmate-cmms.com/logo.png" alt="TruckMate CMMS Logo" style="max-width: 150px; height: auto;" />
+        </div>
+        
+        <h2 style="color: #1a73e8; margin-bottom: 20px;">Willkommen bei TruckMate CMMS, ${userData.name}!</h2>
+        
+        <p>Wir freuen uns, Ihnen mitteilen zu können, dass Ihr Konto genehmigt wurde und jetzt aktiv ist.</p>
+        
+        <p>Mit TruckMate CMMS können Sie:</p>
+        <ul style="margin-bottom: 20px;">
+          <li>Ihre Flotte effizient verwalten</li>
+          <li>Fahrzeugwartung überwachen</li>
+          <li>Fahrer und Routen optimieren</li>
+          <li>Alle notwendigen Inspektionen dokumentieren</li>
+        </ul>
+        
+        <p>Sie können sich jetzt mit Ihrer E-Mail-Adresse <strong>${userData.email}</strong> und Ihrem Passwort anmelden.</p>
+        
+        <div style="text-align: center; margin: 30px 0;">
+          <a href="https://truckmate-cmms.com/login" style="background-color: #1a73e8; color: white; padding: 12px 20px; text-decoration: none; border-radius: 4px; font-weight: bold;">Jetzt anmelden</a>
+        </div>
+        
+        <p>Falls Sie Fragen haben oder Unterstützung benötigen, können Sie uns jederzeit kontaktieren:</p>
+        <p style="margin-bottom: 20px;">E-Mail: <a href="mailto:support@truckmate-cmms.com">support@truckmate-cmms.com</a></p>
+        
+        <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 20px 0;" />
+        
+        <p style="color: #666; font-size: 14px;">Mit freundlichen Grüßen,<br>Ihr TruckMate CMMS-Team</p>
+      </div>
     `
   };
 }
@@ -80,20 +110,58 @@ function generateRejectionEmail(userData: NotificationRequest["userData"]) {
     to: userData.email,
     subject: "Information zu Ihrem TruckMate CMMS-Konto",
     html: `
-      <h2>Vielen Dank für Ihr Interesse an TruckMate CMMS, ${userData.name}</h2>
-      <p>Leider müssen wir Ihnen mitteilen, dass Ihr Kontoantrag nicht genehmigt werden konnte.</p>
-      <p>Für weitere Informationen oder Fragen kontaktieren Sie uns bitte unter truckmatecmms@gmail.com.</p>
-      <p>Mit freundlichen Grüßen,<br>Das TruckMate CMMS-Team</p>
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 5px;">
+        <div style="text-align: center; margin-bottom: 20px;">
+          <img src="https://truckmate-cmms.com/logo.png" alt="TruckMate CMMS Logo" style="max-width: 150px; height: auto;" />
+        </div>
+        
+        <h2 style="color: #555; margin-bottom: 20px;">Vielen Dank für Ihr Interesse an TruckMate CMMS, ${userData.name}</h2>
+        
+        <p>Wir möchten uns für Ihr Interesse an unserem Flottenmanagementsystem bedanken.</p>
+        
+        <p>Leider müssen wir Ihnen mitteilen, dass Ihr Kontoantrag zu diesem Zeitpunkt nicht genehmigt werden konnte.</p>
+        
+        <p>Dies kann verschiedene Gründe haben:</p>
+        <ul style="margin-bottom: 20px;">
+          <li>Unvollständige Unternehmensinformationen</li>
+          <li>Die angegebene Branche passt nicht zu unserem aktuellen Angebot</li>
+          <li>Wir benötigen zusätzliche Informationen zu Ihrem Anwendungsfall</li>
+        </ul>
+        
+        <p>Für weitere Informationen oder Fragen kontaktieren Sie uns bitte direkt:</p>
+        <p style="margin-bottom: 20px;">E-Mail: <a href="mailto:truckmatecmms@gmail.com">truckmatecmms@gmail.com</a></p>
+        
+        <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 20px 0;" />
+        
+        <p style="color: #666; font-size: 14px;">Mit freundlichen Grüßen,<br>Ihr TruckMate CMMS-Team</p>
+      </div>
     `
   };
 }
 
-// Simulierte E-Mail-Sendung (für Testzwecke)
-async function simulateSendEmail(emailData: any) {
-  console.log("E-Mail würde gesendet werden:", JSON.stringify(emailData, null, 2));
-  // Hier würde in der Produktion die tatsächliche E-Mail-Versendung stattfinden
-  // mit einem Dienst wie SendGrid, AWS SES oder einem SMTP-Server
-  return { success: true, message: "E-Mail simuliert gesendet" };
+// E-Mail mit Resend versenden
+async function sendEmail(emailData: any) {
+  if (!resend) {
+    console.log("RESEND_API_KEY nicht konfiguriert. E-Mail würde gesendet werden:", JSON.stringify(emailData, null, 2));
+    return { success: true, message: "E-Mail simuliert (kein API-Key)" };
+  }
+
+  try {
+    const { data, error } = await resend.emails.send({
+      from: "TruckMate CMMS <onboarding@resend.dev>", // Muss mit validierter Domain angepasst werden
+      ...emailData
+    });
+    
+    if (error) {
+      console.error("Fehler beim Senden der E-Mail:", error);
+      return { success: false, message: error.message };
+    }
+    
+    return { success: true, message: "E-Mail erfolgreich gesendet", data };
+  } catch (err) {
+    console.error("Fehler bei Resend API:", err);
+    return { success: false, message: err.message };
+  }
 }
 
 const handler = async (req: Request): Promise<Response> => {
@@ -120,8 +188,8 @@ const handler = async (req: Request): Promise<Response> => {
         throw new Error("Unbekannter Benachrichtigungstyp");
     }
 
-    // E-Mail senden (hier simuliert)
-    const result = await simulateSendEmail(emailData);
+    // E-Mail über Resend senden
+    const result = await sendEmail(emailData);
     
     return new Response(JSON.stringify(result), {
       status: 200,
