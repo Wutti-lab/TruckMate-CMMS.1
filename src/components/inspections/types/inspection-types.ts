@@ -13,4 +13,5 @@ export interface Inspection {
   date: string;
   completedItems: number;
   totalItems: number;
+  notes?: string;
 }

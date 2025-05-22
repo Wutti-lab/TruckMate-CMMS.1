@@ -7,12 +7,15 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { InspectionEditForm } from "./form/InspectionEditForm";
+import { Inspection } from "./types/inspection-types";
 
 interface InspectionEditDialogProps {
   isOpen: boolean;
   onClose: () => void;
   isThaiLanguage: boolean;
   onSave: () => void;
+  inspection: Inspection | null;
 }
 
 export function InspectionEditDialog({
@@ -20,7 +23,14 @@ export function InspectionEditDialog({
   onClose,
   isThaiLanguage,
   onSave,
+  inspection,
 }: InspectionEditDialogProps) {
+  const handleSubmit = () => {
+    // Form submission is handled by the form component
+    onSave();
+    onClose();
+  };
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-lg">
@@ -29,14 +39,15 @@ export function InspectionEditDialog({
             {isThaiLanguage ? "แก้ไขการตรวจสอบ" : "Inspektion bearbeiten"}
           </DialogTitle>
         </DialogHeader>
-        <div className="py-4">
-          {/* Form would go here in a real implementation */}
-          <p className="text-center text-muted-foreground">
-            {isThaiLanguage
-              ? "ฟอร์มแก้ไขการตรวจสอบจะแสดงที่นี่"
-              : "Hier würde das Bearbeitungsformular angezeigt werden"}
-          </p>
-        </div>
+        
+        {inspection && (
+          <InspectionEditForm 
+            inspection={inspection} 
+            isThaiLanguage={isThaiLanguage} 
+            onSubmit={handleSubmit}
+          />
+        )}
+        
         <DialogFooter>
           <Button 
             variant="outline" 
@@ -44,7 +55,10 @@ export function InspectionEditDialog({
           >
             {isThaiLanguage ? "ยกเลิก" : "Abbrechen"}
           </Button>
-          <Button onClick={onSave}>
+          <Button 
+            type="submit"
+            form="inspection-edit-form" // Connect to the form id
+          >
             {isThaiLanguage ? "บันทึก" : "Speichern"}
           </Button>
         </DialogFooter>
