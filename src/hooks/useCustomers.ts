@@ -1,8 +1,9 @@
 
 import { useState, useEffect } from "react";
-import { Customer } from "@/lib/types/customer-types";
+import { Customer, SoftwareLicense } from "@/lib/types/customer-types";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { CustomerFormValues } from "@/components/customers/forms/CustomerForm";
 
 export function useCustomers() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -126,7 +127,7 @@ export function useCustomers() {
   };
 
   // Handle saving a customer
-  const handleSaveCustomer = async (formData: any) => {
+  const handleSaveCustomer = async (formData: CustomerFormValues) => {
     try {
       // Convert to database format
       const customerData = {
@@ -135,8 +136,8 @@ export function useCustomers() {
         email: formData.email,
         phone: formData.phone,
         country: formData.country,
-        status: formData.status,
-        registration_date: formData.registrationDate ? new Date(formData.registrationDate) : null,
+        status: formData.status || 'active',
+        registration_date: formData.registrationDate || null,
         total_spent: formData.totalSpent || 0
       };
       
@@ -219,10 +220,10 @@ export function useCustomers() {
         customer_id: selectedCustomer.id,
         product_name: license.productName,
         license_key: license.licenseKey,
-        purchase_date: license.purchaseDate ? new Date(license.purchaseDate) : null,
-        expiry_date: license.expiryDate ? new Date(license.expiryDate) : null,
+        purchase_date: license.purchaseDate || null,
+        expiry_date: license.expiryDate || null,
         status: license.status,
-        price: license.price,
+        price: Number(license.price),
         role: license.role
       };
       
