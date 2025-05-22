@@ -22,6 +22,7 @@ import { UserRole } from "@/lib/types/user-roles";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { CheckCircle } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -60,6 +61,33 @@ export function RegisterForm() {
     },
   });
 
+  // Funktion zum Senden der Registrierungsbenachrichtigung
+  const sendRegistrationNotification = async (userData: {
+    name: string;
+    email: string;
+    company?: string;
+    phoneNumber?: string;
+    jobTitle?: string;
+    registrationDate: string;
+  }) => {
+    try {
+      const { data, error } = await supabase.functions.invoke('send-notification', {
+        body: {
+          type: 'registration',
+          userData
+        }
+      });
+
+      if (error) {
+        console.error("Fehler beim Senden der Benachrichtigung:", error);
+      } else {
+        console.log("Benachrichtigung erfolgreich gesendet:", data);
+      }
+    } catch (err) {
+      console.error("Fehler beim Aufrufen der Edge Function:", err);
+    }
+  };
+
   const handleRegistration = async (data: FormData) => {
     setIsLoading(true);
     try {
@@ -68,37 +96,40 @@ export function RegisterForm() {
 
       // Check if createPendingUser is available and is a function
       if (createPendingUser && typeof createPendingUser === 'function') {
+        // Aktuelles Datum und Zeit für die Registrierung
+        const registrationDate = new Date().toISOString();
+        
         // Create pending user with correct types
-        createPendingUser({
+        const pendingUser = {
           id: uuidv4(),
           name: data.name,
           email: data.email,
           password: data.password,
           role: UserRole.FLEET_MANAGER,
-          createdAt: new Date().toISOString(),
+          createdAt: registrationDate,
           approvalStatus: 'pending', // Set to pending for manual approval
           paymentStatus: 'unpaid', // Will be updated after payment verification
           // Additional fields to conform to the PendingUser type
           phoneNumber: data.phone || '',
           company: data.company || '',
           jobTitle: data.jobTitle || '',
+        };
+        
+        createPendingUser(pendingUser);
+
+        // E-Mail-Benachrichtigung senden
+        await sendRegistrationNotification({
+          name: data.name,
+          email: data.email,
+          company: data.company,
+          phoneNumber: data.phone,
+          jobTitle: data.jobTitle,
+          registrationDate: registrationDate
         });
 
         // Show success message instead of redirecting
         setIsSubmitted(true);
         setSubmittedEmail(data.email);
-        
-        // Simulate sending email notification to admin
-        console.log("Registration email would be sent to: truckmatecmms@gmail.com");
-        console.log("Email content:", {
-          subject: "New TruckMate CMMS Account Registration",
-          name: data.name,
-          email: data.email,
-          company: data.company,
-          phone: data.phone,
-          jobTitle: data.jobTitle,
-          registrationDate: new Date().toISOString()
-        });
         
         toast({
           title: t("registrationSuccessful"),

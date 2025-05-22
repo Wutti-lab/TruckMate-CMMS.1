@@ -5,6 +5,8 @@ import { LanguageSelector } from "@/components/language/LanguageSelector";
 import { RegisterForm } from "@/components/auth/RegisterForm";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { InfoIcon } from "lucide-react";
 
 export default function Register() {
   const { t, language } = useLanguage();
@@ -33,6 +35,22 @@ export default function Register() {
             <LanguageSelector />
           </div>
         </div>
+
+        <Alert className="bg-blue-50 border-blue-200">
+          <InfoIcon className="h-4 w-4" />
+          <AlertTitle>
+            {language === 'de' ? "Wichtiger Hinweis" : 
+             language === 'th' ? "ข้อมูลสำคัญ" : 
+             "Important Information"}
+          </AlertTitle>
+          <AlertDescription>
+            {language === 'de' 
+              ? "Nach der Registrierung wird Ihr Konto manuell überprüft. Sie erhalten eine E-Mail, sobald Ihr Konto freigeschaltet ist." 
+              : language === 'th' 
+              ? "หลังจากลงทะเบียน บัญชีของคุณจะได้รับการตรวจสอบด้วยตนเอง คุณจะได้รับอีเมลเมื่อบัญชีของคุณได้รับการอนุมัติ" 
+              : "After registration, your account will be manually reviewed. You will receive an email once your account is approved."}
+          </AlertDescription>
+        </Alert>
 
         <RegisterForm />
         

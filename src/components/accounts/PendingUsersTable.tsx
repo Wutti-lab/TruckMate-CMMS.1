@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { 
   Table, 
@@ -22,6 +21,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { formatDistanceToNow } from "date-fns";
+import { supabase } from "@/integrations/supabase/client";
 
 interface PendingUsersTableProps {
   searchQuery: string;
@@ -38,41 +38,59 @@ export function PendingUsersTable({ searchQuery }: PendingUsersTableProps) {
     user.role.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const handleApprove = (user: PendingUser) => {
+  // E-Mail-Benachrichtigung senden (Genehmigung oder Ablehnung)
+  const sendNotification = async (user: PendingUser, type: 'approval' | 'rejection') => {
+    try {
+      const { data, error } = await supabase.functions.invoke('send-notification', {
+        body: {
+          type: type,
+          userData: {
+            name: user.name,
+            email: user.email,
+            company: user.company,
+            phoneNumber: user.phoneNumber,
+            jobTitle: user.jobTitle,
+            registrationDate: user.createdAt
+          }
+        }
+      });
+
+      if (error) {
+        console.error(`Fehler beim Senden der ${type}-Benachrichtigung:`, error);
+        return false;
+      } else {
+        console.log(`${type}-Benachrichtigung erfolgreich gesendet:`, data);
+        return true;
+      }
+    } catch (err) {
+      console.error("Fehler beim Aufrufen der Edge Function:", err);
+      return false;
+    }
+  };
+
+  const handleApprove = async (user: PendingUser) => {
     // Approve the user
     approvePendingUser(user.id);
     
-    // Simulate sending approval email to the user
-    console.log("Approval email would be sent to:", user.email);
-    console.log("Email content:", {
-      subject: "Your TruckMate CMMS Account has been Approved",
-      name: user.name,
-      email: user.email,
-      message: "Your account has been approved. You can now log in to TruckMate CMMS."
-    });
+    // Benachrichtigungs-E-Mail an den Benutzer senden
+    const emailSent = await sendNotification(user, 'approval');
     
     toast({
       title: "Account approved",
-      description: `${user.name}'s account has been approved and activated. A confirmation email has been sent.`,
+      description: `${user.name}'s account has been approved and activated. ${emailSent ? 'A confirmation email has been sent.' : 'Email notification failed.'}`,
     });
   };
 
-  const handleReject = (user: PendingUser) => {
+  const handleReject = async (user: PendingUser) => {
     // Reject the user
     rejectPendingUser(user.id);
     
-    // Simulate sending rejection email to the user
-    console.log("Rejection email would be sent to:", user.email);
-    console.log("Email content:", {
-      subject: "Your TruckMate CMMS Account Application",
-      name: user.name,
-      email: user.email,
-      message: "We're sorry, but your account application has been rejected. Please contact support for more information."
-    });
+    // Benachrichtigungs-E-Mail an den Benutzer senden
+    const emailSent = await sendNotification(user, 'rejection');
     
     toast({
       title: "Account rejected",
-      description: `${user.name}'s account has been rejected. A notification email has been sent.`,
+      description: `${user.name}'s account has been rejected. ${emailSent ? 'A notification email has been sent.' : 'Email notification failed.'}`,
     });
   };
 
