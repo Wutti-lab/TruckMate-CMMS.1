@@ -62,10 +62,10 @@ export function useCustomerOperations(
       // Convert to database format
       const customerData = {
         name: formData.name,
-        company: formData.company,
-        email: formData.email,
-        phone: formData.phone,
-        country: formData.country,
+        company: formData.company || "",
+        email: formData.email || "",
+        phone: formData.phone || "",
+        country: formData.country || "",
         status: formData.status || 'active',
         registration_date: formData.registrationDate || null,
         total_spent: formData.totalSpent || 0
@@ -88,10 +88,10 @@ export function useCustomerOperations(
             ? { 
                 ...customer, 
                 name: formData.name,
-                company: formData.company,
-                email: formData.email,
-                phone: formData.phone,
-                country: formData.country,
+                company: formData.company || "",
+                email: formData.email || "",
+                phone: formData.phone || "",
+                country: formData.country || "",
                 status: formData.status || 'active',
                 registrationDate: formData.registrationDate || "",
                 totalSpent: formData.totalSpent || 0
