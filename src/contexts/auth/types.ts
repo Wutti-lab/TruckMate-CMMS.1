@@ -14,18 +14,20 @@ export interface PendingUser {
   id: string;
   name: string;
   email: string;
+  phoneNumber?: string;
   role: UserRole;
   password: string;
   paymentStatus: 'paid' | 'unpaid';
   approvalStatus: 'pending' | 'approved' | 'rejected';
   createdAt: string;
   company?: string;
-  phoneNumber?: string;
   jobTitle?: string;
 }
 
 export interface UserWithPassword extends User {
   password: string;
+  phoneNumber?: string;
+  googleId?: string;
   activationDate?: string;
   expiryDate?: string;
 }
@@ -33,6 +35,8 @@ export interface UserWithPassword extends User {
 export interface AuthContextType {
   user: User | null;
   login: (email: string, password: string) => Promise<void>;
+  loginWithPhone: (phoneNumber: string, password: string) => Promise<void>;
+  loginWithGoogle: () => Promise<void>;
   logout: () => void;
   isAuthenticated: boolean;
   hasRole: (roles: UserRole | UserRole[]) => boolean;

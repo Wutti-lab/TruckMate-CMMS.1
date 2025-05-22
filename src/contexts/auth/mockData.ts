@@ -45,6 +45,24 @@ export const initialMockUsers: UserWithPassword[] = [
     email: "dev@truckmate.com",
     role: UserRole.DEV_ADMIN,
     password: "123456"
+  },
+  // Phone number users
+  {
+    id: "7",
+    name: "Phone User",
+    email: "phone@truckmate.com",
+    phoneNumber: "+49123456789",
+    role: UserRole.DRIVER,
+    password: "123456"
+  },
+  // Google users
+  {
+    id: "8",
+    name: "Google User",
+    email: "google@gmail.com",
+    googleId: "google-user-123",
+    role: UserRole.FLEET_MANAGER,
+    password: ""  // No password needed for Google authentication
   }
 ];
 

@@ -10,20 +10,26 @@ import { LoginFormWithCredentials } from "@/components/auth/LoginFormWithCredent
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   
-  const { login } = useAuth();
+  const { login, loginWithPhone, loginWithGoogle } = useAuth();
   const { toast } = useToast();
   const navigate = useNavigate();
   const { t } = useLanguage();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent, method: string) => {
     e.preventDefault();
     setIsLoading(true);
 
     try {
-      await login(email, password);
+      if (method === "email") {
+        await login(email, password);
+      } else if (method === "phone") {
+        await loginWithPhone(phoneNumber, password);
+      }
+      
       toast({
         title: t("loginSuccessful"),
         description: t("welcomeTo"),
@@ -33,7 +39,27 @@ export default function Login() {
       toast({
         variant: "destructive",
         title: t("loginFailed"),
-        description: t("invalidCredentials"),
+        description: method === "email" ? t("invalidCredentials") : t("invalidPhoneCredentials"),
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    setIsLoading(true);
+    try {
+      await loginWithGoogle();
+      toast({
+        title: t("loginSuccessful"),
+        description: t("welcomeTo"),
+      });
+      navigate("/dashboard");
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: t("loginFailed"),
+        description: t("googleLoginFailed"),
       });
     } finally {
       setIsLoading(false);
@@ -68,12 +94,15 @@ export default function Login() {
         <LoginFormWithCredentials
           email={email}
           password={password}
+          phoneNumber={phoneNumber}
           rememberMe={rememberMe}
           isLoading={isLoading}
           onEmailChange={(e) => setEmail(e.target.value)}
           onPasswordChange={(e) => setPassword(e.target.value)}
+          onPhoneNumberChange={(e) => setPhoneNumber(e.target.value)}
           onRememberMeChange={setRememberMe}
           onSubmit={handleSubmit}
+          onGoogleLogin={handleGoogleLogin}
         />
       </div>
     </div>
