@@ -66,6 +66,29 @@ function generateRegistrationEmail(userData: NotificationRequest["userData"]) {
   };
 }
 
+// Neue Registrierungsbestätigungsemail für den Benutzer
+function generateRegistrationConfirmationEmail(userData: NotificationRequest["userData"]) {
+  return {
+    to: userData.email,
+    subject: "Ihre Registrierung bei TruckMate CMMS",
+    html: `
+      <html>
+      <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; padding: 20px;">
+        <div style="text-align: center; margin-bottom: 20px;">
+          <img src="https://truckmatecmms.com/lovable-uploads/3a761e15-fdda-4b29-85ed-81450a5e2bc3.png" alt="TruckMate Logo" style="width: 150px;">
+        </div>
+        <h2 style="color: #4CAF50;">Vielen Dank für Ihre Registrierung bei TruckMate CMMS</h2>
+        <p>Sehr geehrte/r ${userData.name},</p>
+        <p>Wir freuen uns, dass Sie sich bei TruckMate CMMS registriert haben. Wir werden Ihre Anfrage in Kürze bearbeiten und uns zeitnah telefonisch sowie per E-Mail mit Ihnen in Verbindung setzen.</p>
+        <p>Falls Sie in der Zwischenzeit Fragen haben, stehen wir Ihnen gern zur Verfügung.</p>
+        <p>Vielen Dank für Ihr Vertrauen!</p>
+        <p>Mit freundlichen Grüßen,<br>Ihr TruckMate CMMS Team</p>
+      </body>
+      </html>
+    `
+  };
+}
+
 function generateApprovalEmail(userData: NotificationRequest["userData"]) {
   return {
     to: userData.email,
@@ -73,7 +96,7 @@ function generateApprovalEmail(userData: NotificationRequest["userData"]) {
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 5px;">
         <div style="text-align: center; margin-bottom: 20px;">
-          <img src="https://truckmate-cmms.com/logo.png" alt="TruckMate CMMS Logo" style="max-width: 150px; height: auto;" />
+          <img src="https://truckmatecmms.com/lovable-uploads/3a761e15-fdda-4b29-85ed-81450a5e2bc3.png" alt="TruckMate CMMS Logo" style="max-width: 150px; height: auto;" />
         </div>
         
         <h2 style="color: #1a73e8; margin-bottom: 20px;">Willkommen bei TruckMate CMMS, ${userData.name}!</h2>
@@ -112,7 +135,7 @@ function generateRejectionEmail(userData: NotificationRequest["userData"]) {
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 5px;">
         <div style="text-align: center; margin-bottom: 20px;">
-          <img src="https://truckmate-cmms.com/logo.png" alt="TruckMate CMMS Logo" style="max-width: 150px; height: auto;" />
+          <img src="https://truckmatecmms.com/lovable-uploads/3a761e15-fdda-4b29-85ed-81450a5e2bc3.png" alt="TruckMate CMMS Logo" style="max-width: 150px; height: auto;" />
         </div>
         
         <h2 style="color: #555; margin-bottom: 20px;">Vielen Dank für Ihr Interesse an TruckMate CMMS, ${userData.name}</h2>
@@ -174,9 +197,13 @@ const handler = async (req: Request): Promise<Response> => {
     const { type, userData }: NotificationRequest = await req.json();
 
     let emailData;
+    let confirmationResult = null;
+
     switch (type) {
       case "registration":
         emailData = generateRegistrationEmail(userData);
+        // Zusätzlich eine Bestätigungsmail an den Benutzer senden
+        confirmationResult = await sendEmail(generateRegistrationConfirmationEmail(userData));
         break;
       case "approval":
         emailData = generateApprovalEmail(userData);
@@ -190,6 +217,20 @@ const handler = async (req: Request): Promise<Response> => {
 
     // E-Mail über Resend senden
     const result = await sendEmail(emailData);
+    
+    // Wenn es eine Registrierung ist, geben wir auch das Ergebnis der Bestätigungs-E-Mail zurück
+    if (type === "registration" && confirmationResult) {
+      return new Response(JSON.stringify({
+        mainEmail: result,
+        confirmationEmail: confirmationResult
+      }), {
+        status: 200,
+        headers: {
+          "Content-Type": "application/json",
+          ...corsHeaders,
+        },
+      });
+    }
     
     return new Response(JSON.stringify(result), {
       status: 200,
