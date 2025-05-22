@@ -8,10 +8,12 @@ import { NewInspectionForm } from "@/components/inspections/NewInspectionForm";
 import { Button } from "@/components/ui/button";
 import { PlusCircle, XCircle } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useToast } from "@/hooks/use-toast";
 
 export default function Inspections() {
   const [showNewInspection, setShowNewInspection] = useState(false);
   const { t } = useLanguage();
+  const { toast } = useToast();
   
   return (
     <div className="flex flex-col h-full">
@@ -38,7 +40,15 @@ export default function Inspections() {
                 {t("cancel")}
               </Button>
             </div>
-            <NewInspectionForm onSubmitSuccess={() => setShowNewInspection(false)} />
+            <NewInspectionForm 
+              onSubmitSuccess={() => {
+                setShowNewInspection(false);
+                toast({
+                  title: t("success"),
+                  description: t("inspectionCreatedSuccessfully") || "Inspection created successfully",
+                });
+              }} 
+            />
           </div>
         ) : (
           <div className="mb-8">

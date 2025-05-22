@@ -17,9 +17,11 @@ import { DeliveryManagement } from "./DeliveryManagement";
 import { EmergencyContacts } from "./EmergencyContacts";
 import { Card, CardContent } from "@/components/ui/card";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useToast } from "@/hooks/use-toast";
 
 export function InspectionTabs() {
   const { language } = useLanguage();
+  const { toast } = useToast();
 
   return (
     <Tabs defaultValue="inspections" className="w-full">
