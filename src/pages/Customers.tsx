@@ -1,25 +1,30 @@
 
 import { Header } from "@/components/layout/Header";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { CustomersTable } from "@/components/customers/CustomersTable";
-import { CustomerLicensesDialog } from "@/components/customers/CustomerLicensesDialog";
-import { CustomerDialog } from "@/components/customers/CustomerDialog";
+import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
 import { CustomersHeader } from "@/components/customers/CustomersHeader";
+import { CustomersTable } from "@/components/customers/CustomersTable";
+import { CustomerDialog } from "@/components/customers/CustomerDialog";
+import { CustomerLicensesDialog } from "@/components/customers/CustomerLicensesDialog";
 import { useCustomers } from "@/hooks/useCustomers";
-import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Customers() {
-  const { language } = useLanguage();
-  const { 
+  const {
+    // Data state
     searchQuery,
     setSearchQuery,
     customers,
+    isLoading,
+    
+    // Dialog state
     selectedCustomer,
     isLicensesDialogOpen,
     setIsLicensesDialogOpen,
     isCustomerDialogOpen,
     setIsCustomerDialogOpen,
     isEditMode,
+    
+    // Action handlers
     handleEditCustomer,
     handleDeleteCustomer,
     handleViewLicenses,
@@ -32,46 +37,47 @@ export default function Customers() {
     <div className="flex flex-col h-full">
       <Header />
       <main className="flex-1 p-6 overflow-auto">
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-2xl font-bold">Customers</h1>
+          <Button 
+            className="bg-fleet-500"
+            onClick={handleAddNewCustomer}
+          >
+            <Plus className="mr-2" size={16} />
+            Add New Customer
+          </Button>
+        </div>
+
         <CustomersHeader 
           searchQuery={searchQuery}
           onSearchChange={setSearchQuery}
-          onAddNewCustomer={handleAddNewCustomer}
         />
 
-        <Card>
-          <CardHeader>
-            <CardTitle>
-              {language === 'de' ? 'Softwarekunden' : 
-              language === 'th' ? 'ลูกค้าซอฟต์แวร์' : 
-              'Software Customers'}
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="p-0">
-            <CustomersTable 
-              customers={customers}
-              searchQuery={searchQuery}
-              onEditCustomer={handleEditCustomer}
-              onDeleteCustomer={handleDeleteCustomer}
-              onViewLicenses={handleViewLicenses}
-            />
-          </CardContent>
-        </Card>
+        <div className="mt-4">
+          <CustomersTable
+            customers={customers}
+            isLoading={isLoading}
+            searchQuery={searchQuery}
+            onEditCustomer={handleEditCustomer}
+            onDeleteCustomer={handleDeleteCustomer}
+            onViewLicenses={handleViewLicenses}
+          />
+        </div>
       </main>
-
-      {/* Customer Licenses Dialog */}
-      <CustomerLicensesDialog 
-        customer={selectedCustomer}
-        open={isLicensesDialogOpen}
-        onOpenChange={setIsLicensesDialogOpen}
-        onAddLicense={handleAddLicense}
-      />
-
-      {/* Add/Edit Customer Dialog */}
+      
       <CustomerDialog 
-        customer={isEditMode ? selectedCustomer : null}
-        open={isCustomerDialogOpen}
-        onOpenChange={setIsCustomerDialogOpen}
+        open={isCustomerDialogOpen} 
+        onOpenChange={setIsCustomerDialogOpen} 
+        customer={selectedCustomer}
+        isEditMode={isEditMode}
         onSave={handleSaveCustomer}
+      />
+      
+      <CustomerLicensesDialog 
+        open={isLicensesDialogOpen} 
+        onOpenChange={setIsLicensesDialogOpen} 
+        customer={selectedCustomer}
+        onAddLicense={handleAddLicense}
       />
     </div>
   );

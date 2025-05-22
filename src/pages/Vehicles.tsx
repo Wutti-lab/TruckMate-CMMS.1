@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Header } from "@/components/layout/Header";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
@@ -9,100 +9,71 @@ import { VehicleParts } from "@/components/inspections/VehicleParts";
 import { Card } from "@/components/ui/card";
 import { AddVehicleDialog } from "@/components/vehicles/AddVehicleDialog";
 import { useLanguage, extractLanguageText } from "@/contexts/LanguageContext";
-
-// Mock vehicle data
-const initialVehicles = [
-  {
-    id: "B-FR-123",
-    driver: "Max Müller",
-    model: "Tesla Model Y",
-    location: "Bangkok, Silom",
-    status: "Active",
-    fuelLevel: 75,
-    batteryLevel: 80,
-    lastService: "15.03.2023",
-    nextService: "15.09.2023",
-    engineTemp: 84,
-  },
-  {
-    id: "B-FR-234",
-    driver: "Lisa Schmidt",
-    model: "VW ID.4",
-    location: "Bangkok, Sukhumvit",
-    status: "Inactive",
-    fuelLevel: 0,
-    batteryLevel: 45,
-    lastService: "22.02.2023",
-    nextService: "22.08.2023",
-    engineTemp: 78,
-  },
-  {
-    id: "B-FR-345",
-    driver: "Jan Weber",
-    model: "Audi e-tron",
-    location: "Chiang Mai",
-    status: "Maintenance",
-    fuelLevel: 0,
-    batteryLevel: 90,
-    lastService: "05.04.2023",
-    nextService: "05.10.2023",
-    engineTemp: 92,
-  },
-  {
-    id: "B-FR-456",
-    driver: "Anna Becker",
-    model: "BMW i4",
-    location: "Phuket",
-    status: "Active",
-    fuelLevel: 0,
-    batteryLevel: 65,
-    lastService: "10.01.2023",
-    nextService: "10.07.2023",
-    engineTemp: 80,
-  },
-  {
-    id: "B-FR-567",
-    driver: "Thomas Meyer",
-    model: "Mercedes EQC",
-    location: "Pattaya",
-    status: "Active",
-    fuelLevel: 0,
-    batteryLevel: 55,
-    lastService: "28.02.2023",
-    nextService: "28.08.2023",
-    engineTemp: 87,
-  },
-  {
-    id: "B-FR-678",
-    driver: "Sarah Schulz",
-    model: "Hyundai Ioniq 5",
-    location: "Ayutthaya",
-    status: "Active",
-    fuelLevel: 0,
-    batteryLevel: 70,
-    lastService: "12.03.2023",
-    nextService: "12.09.2023",
-    engineTemp: 82,
-  },
-  {
-    id: "B-FR-789",
-    driver: "Markus Fischer",
-    model: "Ford Mustang Mach-E",
-    location: "Hua Hin",
-    status: "Inactive",
-    fuelLevel: 0,
-    batteryLevel: 20,
-    lastService: "08.02.2023",
-    nextService: "08.08.2023",
-    engineTemp: 89,
-  },
-];
+import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
+import { Vehicle } from "@/components/vehicles/types/Vehicle";
 
 export default function Vehicles() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isAddVehicleOpen, setIsAddVehicleOpen] = useState(false);
-  const [vehicles, setVehicles] = useState(initialVehicles);
+  const [vehicles, setVehicles] = useState<Vehicle[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const { language } = useLanguage();
+  const { toast } = useToast();
+  
+  // Fetch vehicles from Supabase
+  useEffect(() => {
+    async function fetchVehicles() {
+      setIsLoading(true);
+      try {
+        const { data, error } = await supabase
+          .from('vehicles')
+          .select('*, vehicle_assignments(driver_id, drivers(*))');
+        
+        if (error) {
+          throw error;
+        }
+        
+        if (data && data.length > 0) {
+          // Transform data to match Vehicle interface
+          const transformedVehicles: Vehicle[] = data.map(vehicle => ({
+            id: vehicle.license_plate,
+            driver: vehicle.vehicle_assignments && 
+                  vehicle.vehicle_assignments[0]?.drivers?.name || "Nicht zugewiesen",
+            model: vehicle.model,
+            location: vehicle.location || "Unbekannt",
+            status: vehicle.status,
+            fuelLevel: vehicle.fuel_level || 0,
+            batteryLevel: vehicle.battery_level || 0,
+            lastService: vehicle.last_service ? new Date(vehicle.last_service).toLocaleDateString() : "",
+            nextService: vehicle.next_service ? new Date(vehicle.next_service).toLocaleDateString() : "",
+            engineTemp: vehicle.engine_temp || 75,
+            coordinates: vehicle.lat && vehicle.lng ? {
+              lat: vehicle.lat,
+              lng: vehicle.lng
+            } : undefined,
+            lastUpdated: vehicle.updated_at ? new Date(vehicle.updated_at).toLocaleTimeString() : undefined
+          }));
+          
+          setVehicles(transformedVehicles);
+        } else {
+          // If no data, set empty array
+          setVehicles([]);
+        }
+      } catch (error) {
+        console.error("Error fetching vehicles:", error);
+        toast({
+          title: extractLanguageText("Error | ข้อผิดพลาด | Fehler", language),
+          description: extractLanguageText("Failed to load vehicles | ไม่สามารถโหลดข้อมูลยานพาหนะ | Fahrzeuge konnten nicht geladen werden", language),
+          variant: "destructive"
+        });
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    
+    fetchVehicles();
+  }, [toast, language]);
   
   // Filter vehicles based on search query
   const filteredVehicles = vehicles.filter((vehicle) => 
@@ -112,8 +83,64 @@ export default function Vehicles() {
     vehicle.location.toLowerCase().includes(searchQuery.toLowerCase())
   );
   
-  const handleAddVehicle = (newVehicle: typeof vehicles[0]) => {
-    setVehicles([newVehicle, ...vehicles]);
+  // Handle adding a new vehicle
+  const handleAddVehicle = async (newVehicle: Vehicle) => {
+    try {
+      // Convert to database format
+      const vehicleData = {
+        license_plate: newVehicle.id,
+        model: newVehicle.model,
+        status: newVehicle.status,
+        location: newVehicle.location,
+        fuel_level: newVehicle.fuelLevel,
+        battery_level: newVehicle.batteryLevel,
+        engine_temp: newVehicle.engineTemp,
+        last_service: newVehicle.lastService ? new Date(newVehicle.lastService) : null,
+        next_service: newVehicle.nextService ? new Date(newVehicle.nextService) : null
+      };
+      
+      // Insert into Supabase
+      const { data, error } = await supabase
+        .from('vehicles')
+        .insert(vehicleData)
+        .select();
+        
+      if (error) {
+        throw error;
+      }
+      
+      // Update UI with new data
+      if (data && data.length > 0) {
+        const insertedVehicle: Vehicle = {
+          id: data[0].license_plate,
+          driver: newVehicle.driver,
+          model: data[0].model,
+          location: data[0].location || "Unbekannt",
+          status: data[0].status,
+          fuelLevel: data[0].fuel_level || 0,
+          batteryLevel: data[0].battery_level || 0,
+          lastService: data[0].last_service ? new Date(data[0].last_service).toLocaleDateString() : "",
+          nextService: data[0].next_service ? new Date(data[0].next_service).toLocaleDateString() : "",
+          engineTemp: data[0].engine_temp || 75
+        };
+        
+        setVehicles([insertedVehicle, ...vehicles]);
+        
+        // If a driver was specified, create a vehicle assignment
+        if (newVehicle.driver && newVehicle.driver !== "Nicht zugewiesen") {
+          // TODO: In a real app, you would select the driver from a dropdown 
+          // and use the driver's ID here
+          console.log("Would assign driver:", newVehicle.driver);
+        }
+      }
+    } catch (error) {
+      console.error("Error adding vehicle:", error);
+      toast({
+        title: extractLanguageText("Error | ข้อผิดพลาด | Fehler", language),
+        description: extractLanguageText("Failed to add vehicle | ไม่สามารถเพิ่มยานพาหนะ | Fahrzeug konnte nicht hinzugefügt werden", language),
+        variant: "destructive"
+      });
+    }
   };
 
   return (
@@ -136,7 +163,13 @@ export default function Vehicles() {
 
         <div className="space-y-6">
           <Card className="p-6">
-            <VehicleTable vehicles={filteredVehicles} />
+            {isLoading ? (
+              <div className="flex justify-center items-center p-8">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-fleet-500"></div>
+              </div>
+            ) : (
+              <VehicleTable vehicles={filteredVehicles} />
+            )}
           </Card>
 
           <Card className="p-6">
