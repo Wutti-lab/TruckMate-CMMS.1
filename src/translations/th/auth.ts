@@ -42,10 +42,16 @@ export const authTranslations = {
   "alreadyHaveAccount": "มีบัญชีอยู่แล้ว?",
   "registrationSuccessful": "การลงทะเบียนสำเร็จ",
   "accountCreatedAndActive": "บัญชีของคุณได้ถูกสร้างและเปิดใช้งานแล้ว",
+  "backToLogin": "กลับไปที่หน้าเข้าสู่ระบบ",
+  "registrationSubmitted": "การลงทะเบียนของคุณได้ถูกส่งแล้ว",
+  "registrationSubmittedDescription": "ขอบคุณสำหรับการลงทะเบียน เรากำลังตรวจสอบข้อมูลของคุณและจะอนุมัติบัญชีของคุณเร็วๆ นี้",
+  "registrationError": "ข้อผิดพลาดในการลงทะเบียน",
+  "couldNotCreateUser": "ไม่สามารถสร้างผู้ใช้ได้",
+  "somethingWentWrong": "มีบางอย่างผิดพลาด",
 
   // Account status
   "accountPendingTitle": "บัญชีอยู่ระหว่างการตรวจสอบ",
-  "accountPendingMessage": "บัญชีของคุณกำลังรอการตรวจสอบและอนุมัติ โปรดรอการติดต่อกลับ",
+  "accountPendingMessage": "บัญชีของคุณกำลังรอการตรวจสอบและอนุมัติ โปรดรอการติดต่อกลับจากเรา",
   "accountRejectedTitle": "บัญชีถูกปฏิเสธ",
   "accountRejectedMessage": "ขออภัย การสมัครบัญชีของคุณถูกปฏิเสธ โปรดติดต่อฝ่ายสนับสนุนสำหรับข้อมูลเพิ่มเติม",
   "accountExpiredTitle": "บัญชีหมดอายุ",
@@ -68,6 +74,9 @@ export const authTranslations = {
   "reject": "ปฏิเสธ",
   "edit": "แก้ไข",
   "delete": "ลบ",
+  "emailSent": "อีเมลถูกส่งแล้ว",
+  "emailSentTo": "อีเมลถูกส่งไปยัง {name} ที่ {email}",
+  "sendEmail": "ส่งอีเมล",
   
   // Payment verification
   "paymentRequired": "จำเป็นต้องชำระเงิน",

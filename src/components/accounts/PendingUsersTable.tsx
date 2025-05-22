@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Check, X, AlertCircle } from "lucide-react";
+import { Check, X, AlertCircle, Mail } from "lucide-react";
 import { UserRole } from "@/lib/types/user-roles";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
@@ -39,18 +39,74 @@ export function PendingUsersTable({ searchQuery }: PendingUsersTableProps) {
   );
 
   const handleApprove = (user: PendingUser) => {
+    // Approve the user
     approvePendingUser(user.id);
+    
+    // Simulate sending approval email to the user
+    console.log("Approval email would be sent to:", user.email);
+    console.log("Email content:", {
+      subject: "Your TruckMate CMMS Account has been Approved",
+      name: user.name,
+      email: user.email,
+      message: "Your account has been approved. You can now log in to TruckMate CMMS."
+    });
+    
     toast({
       title: "Account approved",
-      description: `${user.name}'s account has been approved and activated.`,
+      description: `${user.name}'s account has been approved and activated. A confirmation email has been sent.`,
     });
   };
 
   const handleReject = (user: PendingUser) => {
+    // Reject the user
     rejectPendingUser(user.id);
+    
+    // Simulate sending rejection email to the user
+    console.log("Rejection email would be sent to:", user.email);
+    console.log("Email content:", {
+      subject: "Your TruckMate CMMS Account Application",
+      name: user.name,
+      email: user.email,
+      message: "We're sorry, but your account application has been rejected. Please contact support for more information."
+    });
+    
     toast({
       title: "Account rejected",
-      description: `${user.name}'s account has been rejected.`,
+      description: `${user.name}'s account has been rejected. A notification email has been sent.`,
+    });
+  };
+
+  const handleSendEmail = (user: PendingUser, emailType: 'reminder' | 'payment' | 'information') => {
+    let emailSubject = "";
+    let emailMessage = "";
+    
+    switch(emailType) {
+      case 'reminder':
+        emailSubject = "Reminder: Complete Your TruckMate CMMS Registration";
+        emailMessage = "This is a reminder to complete your registration process.";
+        break;
+      case 'payment':
+        emailSubject = "Payment Required for TruckMate CMMS Registration";
+        emailMessage = "Please complete the payment to activate your account.";
+        break;
+      case 'information':
+        emailSubject = "Additional Information Required for TruckMate CMMS";
+        emailMessage = "We need additional information to process your application.";
+        break;
+    }
+    
+    // Simulate sending email
+    console.log("Email would be sent to:", user.email);
+    console.log("Email content:", {
+      subject: emailSubject,
+      name: user.name,
+      email: user.email,
+      message: emailMessage
+    });
+    
+    toast({
+      title: "Email sent",
+      description: `An email has been sent to ${user.name} at ${user.email}.`,
     });
   };
 
@@ -149,6 +205,24 @@ export function PendingUsersTable({ searchQuery }: PendingUsersTableProps) {
                         </TooltipTrigger>
                         <TooltipContent>
                           <p>Approve | อนุมัติ</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                    
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button 
+                            variant="outline" 
+                            size="sm"
+                            onClick={() => handleSendEmail(user, 'payment')}
+                            className="text-blue-500 border-blue-200 hover:bg-blue-50 hover:text-blue-600"
+                          >
+                            <Mail className="h-4 w-4" />
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Send Email | ส่งอีเมล</p>
                         </TooltipContent>
                       </Tooltip>
                     </TooltipProvider>

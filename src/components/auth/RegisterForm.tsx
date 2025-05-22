@@ -20,6 +20,8 @@ import { toast } from "@/hooks/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
 import { UserRole } from "@/lib/types/user-roles";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { CheckCircle } from "lucide-react";
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -40,9 +42,11 @@ interface FormData extends z.infer<typeof formSchema> {}
 
 export function RegisterForm() {
   const [isLoading, setIsLoading] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submittedEmail, setSubmittedEmail] = useState("");
   const navigate = useNavigate();
   const { createPendingUser } = useAuth();
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -72,19 +76,34 @@ export function RegisterForm() {
           password: data.password,
           role: UserRole.FLEET_MANAGER,
           createdAt: new Date().toISOString(),
-          approvalStatus: 'approved', // Auto-approve
-          paymentStatus: 'paid', // Explicitly type as union type
+          approvalStatus: 'pending', // Set to pending for manual approval
+          paymentStatus: 'unpaid', // Will be updated after payment verification
           // Additional fields to conform to the PendingUser type
           phoneNumber: data.phone || '',
           company: data.company || '',
           jobTitle: data.jobTitle || '',
         });
 
-        toast({
-          title: language === 'de' ? "Konto erstellt" : language === 'th' ? "สร้างบัญชีแล้ว" : "Account Created",
-          description: language === 'de' ? "Ihr Konto wurde erfolgreich erstellt." : language === 'th' ? "บัญชีของคุณถูกสร้างเรียบร้อยแล้ว" : "Your account has been successfully created.",
+        // Show success message instead of redirecting
+        setIsSubmitted(true);
+        setSubmittedEmail(data.email);
+        
+        // Simulate sending email notification to admin
+        console.log("Registration email would be sent to: truckmatecmms@gmail.com");
+        console.log("Email content:", {
+          subject: "New TruckMate CMMS Account Registration",
+          name: data.name,
+          email: data.email,
+          company: data.company,
+          phone: data.phone,
+          jobTitle: data.jobTitle,
+          registrationDate: new Date().toISOString()
         });
-        navigate("/login");
+        
+        toast({
+          title: t("registrationSuccessful"),
+          description: t("accountPendingMessage"),
+        });
       } else {
         console.error("createPendingUser is not a function or is undefined");
         toast({
@@ -103,6 +122,43 @@ export function RegisterForm() {
       setIsLoading(false);
     }
   };
+
+  // If form is submitted, show success message
+  if (isSubmitted) {
+    return (
+      <div className="space-y-6 p-6 bg-white rounded-lg border shadow-sm">
+        <div className="flex flex-col items-center text-center space-y-2">
+          <CheckCircle className="h-12 w-12 text-green-500" />
+          <h2 className="text-2xl font-bold">
+            {language === 'de' ? "Registrierung erfolgreich" : 
+             language === 'th' ? "การลงทะเบียนสำเร็จ" : 
+             "Registration Successful"}
+          </h2>
+        </div>
+        
+        <Alert className="bg-blue-50 border-blue-200">
+          <AlertDescription className="text-center">
+            {language === 'de' 
+              ? `Ihre Registrierung wurde erfolgreich übermittelt. Wir prüfen Ihre Daten und aktivieren Ihr Konto in Kürze. Eine Bestätigungs-E-Mail wird an ${submittedEmail} gesendet, sobald Ihr Konto freigeschaltet ist.` 
+              : language === 'th' 
+              ? `การลงทะเบียนของคุณได้รับการส่งเรียบร้อยแล้ว เรากำลังตรวจสอบข้อมูลของคุณและจะเปิดใช้งานบัญชีของคุณเร็วๆ นี้ อีเมลยืนยันจะถูกส่งไปยัง ${submittedEmail} เมื่อบัญชีของคุณได้รับการอนุมัติแล้ว`
+              : `Your registration has been successfully submitted. We are reviewing your information and will activate your account shortly. A confirmation email will be sent to ${submittedEmail} once your account is approved.`}
+          </AlertDescription>
+        </Alert>
+        
+        <div className="flex justify-center">
+          <Button 
+            onClick={() => navigate("/login")} 
+            className="mt-4"
+          >
+            {language === 'de' ? "Zurück zur Anmeldung" : 
+             language === 'th' ? "กลับไปที่หน้าเข้าสู่ระบบ" : 
+             "Back to Login"}
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <Form {...form}>
