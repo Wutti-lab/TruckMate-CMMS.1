@@ -1,9 +1,8 @@
-
 import { useState } from "react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { MoreHorizontal, Car, Calendar, ClipboardCheck, FileText, Edit, FilePdf, Trash } from "lucide-react";
+import { MoreHorizontal, Car, Calendar, ClipboardCheck, FileText, Edit, FileDown, Trash } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useToast } from "@/hooks/use-toast";
 import {
@@ -198,7 +197,7 @@ export function VehicleInspectionList() {
                       {isThaiLanguage ? "แก้ไข" : "Bearbeiten"}
                     </DropdownMenuItem>
                     <DropdownMenuItem onClick={() => handleExportPDF(inspection)} className="cursor-pointer">
-                      <FilePdf size={16} className="mr-2" />
+                      <FileDown size={16} className="mr-2" />
                       {isThaiLanguage ? "ส่งออก PDF" : "PDF exportieren"}
                     </DropdownMenuItem>
                     <DropdownMenuItem onClick={() => handleDelete(inspection)} className="cursor-pointer text-red-600">
