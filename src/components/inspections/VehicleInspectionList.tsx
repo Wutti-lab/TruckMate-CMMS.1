@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Table, TableBody, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -174,6 +175,7 @@ export function VehicleInspectionList() {
         onClose={() => setIsEditDialogOpen(false)}
         isThaiLanguage={isThaiLanguage}
         onSave={handleSaveEdit}
+        inspection={selectedInspection}
       />
 
       {/* Delete Confirmation Dialog */}
