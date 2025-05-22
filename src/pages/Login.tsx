@@ -14,7 +14,7 @@ export default function Login() {
   const [isLoading, setIsLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   
-  const { login, loginWithPhone, loginWithGoogle } = useAuth();
+  const { login } = useAuth();
   const { toast } = useToast();
   const navigate = useNavigate();
   const { t } = useLanguage();
@@ -24,11 +24,7 @@ export default function Login() {
     setIsLoading(true);
 
     try {
-      if (method === "email") {
-        await login(email, password);
-      } else if (method === "phone") {
-        await loginWithPhone(phoneNumber, password);
-      }
+      await login(email, password);
       
       toast({
         title: t("loginSuccessful"),
@@ -39,27 +35,7 @@ export default function Login() {
       toast({
         variant: "destructive",
         title: t("loginFailed"),
-        description: method === "email" ? t("invalidCredentials") : t("invalidPhoneCredentials"),
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleGoogleLogin = async () => {
-    setIsLoading(true);
-    try {
-      await loginWithGoogle();
-      toast({
-        title: t("loginSuccessful"),
-        description: t("welcomeTo"),
-      });
-      navigate("/dashboard");
-    } catch (error) {
-      toast({
-        variant: "destructive",
-        title: t("loginFailed"),
-        description: t("googleLoginFailed"),
+        description: t("invalidCredentials"),
       });
     } finally {
       setIsLoading(false);
@@ -102,7 +78,7 @@ export default function Login() {
           onPhoneNumberChange={(e) => setPhoneNumber(e.target.value)}
           onRememberMeChange={setRememberMe}
           onSubmit={handleSubmit}
-          onGoogleLogin={handleGoogleLogin}
+          onGoogleLogin={() => {}}
         />
       </div>
     </div>
