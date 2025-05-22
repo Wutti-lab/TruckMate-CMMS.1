@@ -38,7 +38,7 @@ export function PendingUsersTable({ searchQuery }: PendingUsersTableProps) {
     
     toast({
       title: "Account approved",
-      description: `${user.name}'s account has been approved and activated. ${emailSent ? 'A confirmation email has been sent.' : 'Email notification failed.'}`,
+      description: `${user.name}'s account has been approved and activated. ${emailSent ? 'A confirmation email has been sent to admin for manual forwarding.' : 'Email notification failed.'}`,
     });
   };
 
@@ -51,7 +51,7 @@ export function PendingUsersTable({ searchQuery }: PendingUsersTableProps) {
     
     toast({
       title: "Account rejected",
-      description: `${user.name}'s account has been rejected. ${emailSent ? 'A notification email has been sent.' : 'Email notification failed.'}`,
+      description: `${user.name}'s account has been rejected. ${emailSent ? 'A notification email has been sent to admin for manual forwarding.' : 'Email notification failed.'}`,
     });
   };
 
