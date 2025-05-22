@@ -1,28 +1,17 @@
 import { useState } from "react";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { MoreHorizontal, Car, Calendar, ClipboardCheck, FileText, Edit, FileDown, Trash } from "lucide-react";
+import { Table, TableBody, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useToast } from "@/hooks/use-toast";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { 
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-} from "@/components/ui/dialog";
+import { InspectionTableRow } from "./InspectionTableRow";
+import { InspectionDetailsDialog } from "./InspectionDetailsDialog";
+import { InspectionEditDialog } from "./InspectionEditDialog";
+import { InspectionDeleteDialog } from "./InspectionDeleteDialog";
+import { Inspection } from "./types/inspection-types";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 
 // Mock data for inspections with English and Thai translations
-const inspections = [
+const inspections: Inspection[] = [
   {
     id: 1,
     vehicleId: "B-FR-123",
@@ -57,7 +46,7 @@ export function VehicleInspectionList() {
   const isThaiLanguage = language === 'th';
   const { toast } = useToast();
   
-  const [selectedInspection, setSelectedInspection] = useState<typeof inspections[0] | null>(null);
+  const [selectedInspection, setSelectedInspection] = useState<Inspection | null>(null);
   const [isDetailsDialogOpen, setIsDetailsDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
@@ -75,17 +64,17 @@ export function VehicleInspectionList() {
     }
   };
 
-  const handleViewDetails = (inspection: typeof inspections[0]) => {
+  const handleViewDetails = (inspection: Inspection) => {
     setSelectedInspection(inspection);
     setIsDetailsDialogOpen(true);
   };
 
-  const handleEdit = (inspection: typeof inspections[0]) => {
+  const handleEdit = (inspection: Inspection) => {
     setSelectedInspection(inspection);
     setIsEditDialogOpen(true);
   };
 
-  const handleExportPDF = (inspection: typeof inspections[0]) => {
+  const handleExportPDF = (inspection: Inspection) => {
     const doc = new jsPDF();
     const title = isThaiLanguage ? "รายงานการตรวจสอบ" : "Inspektionsbericht";
     
@@ -110,7 +99,7 @@ export function VehicleInspectionList() {
     });
   };
 
-  const handleDelete = (inspection: typeof inspections[0]) => {
+  const handleDelete = (inspection: Inspection) => {
     setSelectedInspection(inspection);
     setIsDeleteDialogOpen(true);
   };
@@ -128,6 +117,16 @@ export function VehicleInspectionList() {
     }
   };
 
+  const handleSaveEdit = () => {
+    setIsEditDialogOpen(false);
+    toast({
+      title: isThaiLanguage ? "บันทึกสำเร็จ" : "Erfolgreich gespeichert",
+      description: isThaiLanguage 
+        ? "บันทึกการเปลี่ยนแปลงสำเร็จ" 
+        : "Änderungen wurden gespeichert",
+    });
+  };
+
   return (
     <>
       <Table>
@@ -143,232 +142,47 @@ export function VehicleInspectionList() {
         </TableHeader>
         <TableBody>
           {inspections.map((inspection) => (
-            <TableRow key={inspection.id}>
-              <TableCell>
-                <div className="flex items-center gap-2">
-                  <Car size={16} className="text-fleet-500" />
-                  {inspection.vehicleId}
-                </div>
-              </TableCell>
-              <TableCell>{isThaiLanguage ? inspection.type.th : inspection.type.en}</TableCell>
-              <TableCell>
-                <Badge
-                  variant="outline"
-                  className={getStatusBadgeClass(isThaiLanguage ? inspection.status.th : inspection.status.en)}
-                >
-                  {isThaiLanguage ? inspection.status.th : inspection.status.en}
-                </Badge>
-              </TableCell>
-              <TableCell>
-                <div className="flex items-center gap-1">
-                  <Calendar size={14} className="text-muted-foreground" />
-                  {inspection.date}
-                </div>
-              </TableCell>
-              <TableCell>
-                <div className="flex items-center gap-2">
-                  <div className="w-32 bg-gray-200 h-1.5 rounded-full">
-                    <div
-                      className="h-1.5 rounded-full bg-fleet-500"
-                      style={{
-                        width: `${(inspection.completedItems / inspection.totalItems) * 100}%`,
-                      }}
-                    ></div>
-                  </div>
-                  <span className="text-sm text-muted-foreground">
-                    {inspection.completedItems}/{inspection.totalItems}
-                  </span>
-                </div>
-              </TableCell>
-              <TableCell>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" size="icon">
-                      <MoreHorizontal size={16} />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="bg-white">
-                    <DropdownMenuItem onClick={() => handleViewDetails(inspection)} className="cursor-pointer">
-                      <FileText size={16} className="mr-2" />
-                      {isThaiLanguage ? "แสดงรายละเอียด" : "Details anzeigen"}
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => handleEdit(inspection)} className="cursor-pointer">
-                      <Edit size={16} className="mr-2" />
-                      {isThaiLanguage ? "แก้ไข" : "Bearbeiten"}
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => handleExportPDF(inspection)} className="cursor-pointer">
-                      <FileDown size={16} className="mr-2" />
-                      {isThaiLanguage ? "ส่งออก PDF" : "PDF exportieren"}
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => handleDelete(inspection)} className="cursor-pointer text-red-600">
-                      <Trash size={16} className="mr-2" />
-                      {isThaiLanguage ? "ลบ" : "Löschen"}
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </TableCell>
-            </TableRow>
+            <InspectionTableRow
+              key={inspection.id}
+              inspection={inspection}
+              isThaiLanguage={isThaiLanguage}
+              onViewDetails={handleViewDetails}
+              onEdit={handleEdit}
+              onExportPDF={handleExportPDF}
+              onDelete={handleDelete}
+            />
           ))}
         </TableBody>
       </Table>
 
       {/* Details Dialog */}
-      <Dialog open={isDetailsDialogOpen} onOpenChange={setIsDetailsDialogOpen}>
-        <DialogContent className="sm:max-w-lg">
-          <DialogHeader>
-            <DialogTitle>
-              {isThaiLanguage ? "รายละเอียดการตรวจสอบ" : "Inspektionsdetails"}
-            </DialogTitle>
-          </DialogHeader>
-          {selectedInspection && (
-            <div className="space-y-4 py-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <p className="text-sm font-medium text-muted-foreground">
-                    {isThaiLanguage ? "ยานพาหนะ" : "Fahrzeug"}
-                  </p>
-                  <p className="font-medium">{selectedInspection.vehicleId}</p>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-muted-foreground">
-                    {isThaiLanguage ? "ประเภท" : "Typ"}
-                  </p>
-                  <p className="font-medium">
-                    {isThaiLanguage ? selectedInspection.type.th : selectedInspection.type.en}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-muted-foreground">
-                    {isThaiLanguage ? "วันที่" : "Datum"}
-                  </p>
-                  <p className="font-medium">{selectedInspection.date}</p>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-muted-foreground">
-                    {isThaiLanguage ? "สถานะ" : "Status"}
-                  </p>
-                  <Badge
-                    variant="outline"
-                    className={getStatusBadgeClass(
-                      isThaiLanguage ? selectedInspection.status.th : selectedInspection.status.en
-                    )}
-                  >
-                    {isThaiLanguage ? selectedInspection.status.th : selectedInspection.status.en}
-                  </Badge>
-                </div>
-                <div className="col-span-2">
-                  <p className="text-sm font-medium text-muted-foreground">
-                    {isThaiLanguage ? "ความคืบหน้า" : "Fortschritt"}
-                  </p>
-                  <div className="flex items-center gap-2 mt-1">
-                    <div className="w-full bg-gray-200 h-2 rounded-full">
-                      <div
-                        className="h-2 rounded-full bg-fleet-500"
-                        style={{
-                          width: `${
-                            (selectedInspection.completedItems / selectedInspection.totalItems) * 100
-                          }%`,
-                        }}
-                      ></div>
-                    </div>
-                    <span className="text-sm">
-                      {selectedInspection.completedItems}/{selectedInspection.totalItems}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-          <DialogFooter>
-            <Button 
-              variant="outline" 
-              onClick={() => setIsDetailsDialogOpen(false)}
-            >
-              {isThaiLanguage ? "ปิด" : "Schließen"}
-            </Button>
-            <Button 
-              onClick={() => {
-                setIsDetailsDialogOpen(false);
-                if (selectedInspection) handleEdit(selectedInspection);
-              }}
-            >
-              {isThaiLanguage ? "แก้ไข" : "Bearbeiten"}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      <InspectionDetailsDialog
+        isOpen={isDetailsDialogOpen}
+        onClose={() => setIsDetailsDialogOpen(false)}
+        inspection={selectedInspection}
+        isThaiLanguage={isThaiLanguage}
+        getStatusBadgeClass={getStatusBadgeClass}
+        onEdit={() => {
+          setIsDetailsDialogOpen(false);
+          if (selectedInspection) handleEdit(selectedInspection);
+        }}
+      />
 
-      {/* Edit Dialog - placeholder for now */}
-      <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
-        <DialogContent className="sm:max-w-lg">
-          <DialogHeader>
-            <DialogTitle>
-              {isThaiLanguage ? "แก้ไขการตรวจสอบ" : "Inspektion bearbeiten"}
-            </DialogTitle>
-          </DialogHeader>
-          <div className="py-4">
-            {/* Form would go here in a real implementation */}
-            <p className="text-center text-muted-foreground">
-              {isThaiLanguage
-                ? "ฟอร์มแก้ไขการตรวจสอบจะแสดงที่นี่"
-                : "Hier würde das Bearbeitungsformular angezeigt werden"}
-            </p>
-          </div>
-          <DialogFooter>
-            <Button 
-              variant="outline" 
-              onClick={() => setIsEditDialogOpen(false)}
-            >
-              {isThaiLanguage ? "ยกเลิก" : "Abbrechen"}
-            </Button>
-            <Button 
-              onClick={() => {
-                setIsEditDialogOpen(false);
-                toast({
-                  title: isThaiLanguage ? "บันทึกสำเร็จ" : "Erfolgreich gespeichert",
-                  description: isThaiLanguage 
-                    ? "บันทึกการเปลี่ยนแปลงสำเร็จ" 
-                    : "Änderungen wurden gespeichert",
-                });
-              }}
-            >
-              {isThaiLanguage ? "บันทึก" : "Speichern"}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      {/* Edit Dialog */}
+      <InspectionEditDialog
+        isOpen={isEditDialogOpen}
+        onClose={() => setIsEditDialogOpen(false)}
+        isThaiLanguage={isThaiLanguage}
+        onSave={handleSaveEdit}
+      />
 
       {/* Delete Confirmation Dialog */}
-      <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle>
-              {isThaiLanguage ? "ยืนยันการลบ" : "Löschen bestätigen"}
-            </DialogTitle>
-          </DialogHeader>
-          <div className="py-4">
-            <p>
-              {isThaiLanguage
-                ? "คุณแน่ใจหรือไม่ว่าต้องการลบการตรวจสอบนี้? การกระทำนี้ไม่สามารถเปลี่ยนกลับได้"
-                : "Sind Sie sicher, dass Sie diese Inspektion löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden."}
-            </p>
-          </div>
-          <DialogFooter>
-            <Button 
-              variant="outline" 
-              onClick={() => setIsDeleteDialogOpen(false)}
-            >
-              {isThaiLanguage ? "ยกเลิก" : "Abbrechen"}
-            </Button>
-            <Button 
-              variant="destructive"
-              onClick={confirmDelete}
-            >
-              {isThaiLanguage ? "ลบ" : "Löschen"}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      <InspectionDeleteDialog
+        isOpen={isDeleteDialogOpen}
+        onClose={() => setIsDeleteDialogOpen(false)}
+        isThaiLanguage={isThaiLanguage}
+        onConfirm={confirmDelete}
+      />
     </>
   );
 }
