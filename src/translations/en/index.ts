@@ -8,6 +8,7 @@ import { driverTranslations } from "./driver";
 import { pricingTranslations } from "./pricing";
 import { inspectionTranslations } from "./inspection";
 import { advertisementTranslations } from "./advertisement";
+import { customerTranslations } from "./customer";
 
 // Combine all translation categories
 export const enTranslations = {
@@ -19,4 +20,5 @@ export const enTranslations = {
   ...pricingTranslations,
   ...inspectionTranslations,
   ...advertisementTranslations,
+  ...customerTranslations,
 };
