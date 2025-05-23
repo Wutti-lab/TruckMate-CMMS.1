@@ -30,39 +30,45 @@ export function VehicleActions({
   onShowHistory
 }: VehicleActionsProps) {
   const { toast } = useToast();
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
   
   const handleViewDetails = () => {
     toast({
-      title: language === 'de' ? "Details anzeigen" : "View Details",
+      title: language === 'de' ? "Details anzeigen" : language === 'th' ? "ดูรายละเอียด" : "View Details",
       description: `${vehicle.id} - ${vehicle.model}`
     });
   };
   
   const handleScheduleService = () => {
     toast({
-      title: language === 'de' ? "Wartung planen" : "Schedule Service",
+      title: language === 'de' ? "Wartung planen" : language === 'th' ? "กำหนดการบำรุงรักษา" : "Schedule Service",
       description: language === 'de' 
         ? `Wartung für ${vehicle.id} wird geplant` 
-        : `Scheduling maintenance for ${vehicle.id}`
+        : language === 'th'
+          ? `กำลังวางแผนการบำรุงรักษาสำหรับ ${vehicle.id}`
+          : `Scheduling maintenance for ${vehicle.id}`
     });
   };
   
   const handleReports = () => {
     toast({
-      title: language === 'de' ? "Berichte" : "Reports",
+      title: language === 'de' ? "Berichte" : language === 'th' ? "รายงาน" : "Reports",
       description: language === 'de' 
         ? `Berichte für ${vehicle.id} werden generiert` 
-        : `Generating reports for ${vehicle.id}`
+        : language === 'th'
+          ? `กำลังสร้างรายงานสำหรับ ${vehicle.id}`
+          : `Generating reports for ${vehicle.id}`
     });
   };
   
   const handleRemove = () => {
     toast({
-      title: language === 'de' ? "Entfernen" : "Remove",
+      title: language === 'de' ? "Entfernen" : language === 'th' ? "ลบ" : "Remove",
       description: language === 'de' 
         ? `${vehicle.id} wird entfernt` 
-        : `Removing ${vehicle.id}`,
+        : language === 'th'
+          ? `กำลังลบ ${vehicle.id}`
+          : `Removing ${vehicle.id}`,
       variant: "destructive"
     });
   };
@@ -118,22 +124,22 @@ export function VehicleActions({
           <DropdownMenuContent align="end" className="bg-white">
             <DropdownMenuItem onClick={handleViewDetails}>
               <Eye size={14} className="mr-2" />
-              View Details | Details anzeigen
+              {language === 'de' ? "Details anzeigen" : language === 'th' ? "ดูรายละเอียด" : "View Details"}
             </DropdownMenuItem>
             
             <DropdownMenuItem onClick={() => window.open(`/map?vehicle=${vehicle.id}`, '_blank')}>
               <Map size={14} className="mr-2" />
-              Show on Map | Auf Karte anzeigen
+              {language === 'de' ? "Auf Karte anzeigen" : language === 'th' ? "แสดงบนแผนที่" : "Show on Map"}
             </DropdownMenuItem>
             
             <DropdownMenuItem onClick={handleScheduleService}>
               <Calendar size={14} className="mr-2" />
-              Schedule Service | Wartung planen
+              {language === 'de' ? "Wartung planen" : language === 'th' ? "กำหนดการบำรุงรักษา" : "Schedule Service"}
             </DropdownMenuItem>
             
             <DropdownMenuItem onClick={handleReports}>
               <FileText size={14} className="mr-2" />
-              Reports | Berichte
+              {language === 'de' ? "Berichte" : language === 'th' ? "รายงาน" : "Reports"}
             </DropdownMenuItem>
             
             <DropdownMenuItem 
@@ -141,7 +147,7 @@ export function VehicleActions({
               className="text-red-600"
             >
               <Trash2 size={14} className="mr-2" />
-              Remove | Entfernen
+              {language === 'de' ? "Entfernen" : language === 'th' ? "ลบ" : "Remove"}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

@@ -28,13 +28,26 @@ export function CustomerActions({
   const { language } = useLanguage();
 
   const handleSendEmail = (email: string) => {
+    if (!email) {
+      toast({
+        title: language === 'de' ? 'E-Mail-Adresse fehlt' : 
+              language === 'th' ? 'ไม่มีที่อยู่อีเมล' :
+              'Email address missing',
+        description: language === 'de' ? 'Dieser Kunde hat keine E-Mail-Adresse' : 
+                   language === 'th' ? 'ลูกค้ารายนี้ไม่มีที่อยู่อีเมล' :
+                   'This customer has no email address',
+        variant: "destructive"
+      });
+      return;
+    }
+    
     toast({
-      title: language === 'de' ? 'Email function' : 
+      title: language === 'de' ? 'E-Mail-Funktion' : 
             language === 'th' ? 'ฟังก์ชันอีเมล' :
             'Email function',
-      description: language === 'de' ? `Email feature will be implemented to send to: ${email}` :
-                   language === 'th' ? `คุณสมบัติอีเมลจะถูกใช้เพื่อส่งไปที่: ${email}` :
-                   `Email feature will be implemented to send to: ${email}`,
+      description: language === 'de' ? `E-Mail wird gesendet an: ${email}` :
+                   language === 'th' ? `อีเมลจะถูกส่งไปที่: ${email}` :
+                   `Email will be sent to: ${email}`,
     });
   };
 
@@ -60,7 +73,7 @@ export function CustomerActions({
           onClick={() => handleSendEmail(customer.email)}
         >
           <Mail className="mr-2 h-4 w-4" />
-          {language === 'de' ? 'Email senden' : 
+          {language === 'de' ? 'E-Mail senden' : 
            language === 'th' ? 'ส่งอีเมล' : 
            'Send Email'}
         </DropdownMenuItem>

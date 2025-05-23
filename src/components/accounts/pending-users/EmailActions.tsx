@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/tooltip";
 import { useToast } from "@/hooks/use-toast";
 import { PendingUser } from "@/contexts/AuthContext";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface EmailActionsProps {
   user: PendingUser;
@@ -17,6 +18,7 @@ interface EmailActionsProps {
 
 export function EmailActions({ user, emailType }: EmailActionsProps) {
   const { toast } = useToast();
+  const { language } = useLanguage();
   
   const handleSendEmail = () => {
     let emailSubject = "";
@@ -24,17 +26,41 @@ export function EmailActions({ user, emailType }: EmailActionsProps) {
     
     switch(emailType) {
       case 'reminder':
-        emailSubject = "Reminder: Complete Your TruckMate CMMS Registration";
-        emailMessage = "This is a reminder to complete your registration process.";
+        emailSubject = language === 'th' 
+          ? "การแจ้งเตือน: กรุณาดำเนินการลงทะเบียน TruckMate CMMS ให้เสร็จสมบูรณ์"
+          : "Reminder: Complete Your TruckMate CMMS Registration";
+        emailMessage = language === 'th'
+          ? "นี่คือการแจ้งเตือนให้คุณดำเนินการลงทะเบียนให้เสร็จสมบูรณ์"
+          : "This is a reminder to complete your registration process.";
         break;
       case 'payment':
-        emailSubject = "Payment Required for TruckMate CMMS Registration";
-        emailMessage = "Please complete the payment to activate your account.";
+        emailSubject = language === 'th'
+          ? "การชำระเงิน: จำเป็นต้องชำระเงินสำหรับการลงทะเบียน TruckMate CMMS"
+          : "Payment Required for TruckMate CMMS Registration";
+        emailMessage = language === 'th'
+          ? "กรุณาชำระเงินเพื่อเปิดใช้งานบัญชีของคุณ"
+          : "Please complete the payment to activate your account.";
         break;
       case 'information':
-        emailSubject = "Additional Information Required for TruckMate CMMS";
-        emailMessage = "We need additional information to process your application.";
+        emailSubject = language === 'th'
+          ? "ข้อมูลเพิ่มเติม: ต้องการข้อมูลเพิ่มเติมสำหรับ TruckMate CMMS"
+          : "Additional Information Required for TruckMate CMMS";
+        emailMessage = language === 'th'
+          ? "เราต้องการข้อมูลเพิ่มเติมเพื่อดำเนินการตามคำขอของคุณ"
+          : "We need additional information to process your application.";
         break;
+    }
+    
+    // Validate email
+    if (!user.email) {
+      toast({
+        title: language === 'th' ? "ไม่พบที่อยู่อีเมล" : "No email address found",
+        description: language === 'th' 
+          ? "ไม่สามารถส่งอีเมลได้เนื่องจากไม่มีที่อยู่อีเมล" 
+          : "Cannot send email due to missing email address",
+        variant: "destructive"
+      });
+      return;
     }
     
     // Simulate sending email
@@ -47,8 +73,10 @@ export function EmailActions({ user, emailType }: EmailActionsProps) {
     });
     
     toast({
-      title: "Email sent",
-      description: `An email has been sent to ${user.name} at ${user.email}.`,
+      title: language === 'th' ? "ส่งอีเมลแล้ว" : "Email sent",
+      description: language === 'th'
+        ? `อีเมลได้ถูกส่งไปที่ ${user.name} ที่ ${user.email}`
+        : `An email has been sent to ${user.name} at ${user.email}.`,
     });
   };
 

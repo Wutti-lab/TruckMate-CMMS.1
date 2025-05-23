@@ -1,7 +1,6 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { LucideIcon } from "lucide-react";
-import { ReactNode } from "react";
 
 interface InfrastructureCardProps {
   icon: LucideIcon;
@@ -10,7 +9,6 @@ interface InfrastructureCardProps {
   details: string[];
   recommendations?: string[];
   saasFeatures?: string[];
-  stepByStep?: string[];
 }
 
 export function InfrastructureCard({ 
