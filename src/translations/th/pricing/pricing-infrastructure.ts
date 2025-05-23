@@ -1,0 +1,97 @@
+
+export const pricingInfrastructureTranslations = {
+  // Detailed package features
+  "starterUsers": "บัญชีผู้ใช้สูงสุด 5 บัญชี",
+  "starterVehicles": "รถยนต์สูงสุด 10 คัน",
+  "starterModules": "โมดูลพื้นฐาน: การจัดการยานพาหนะ, การตรวจสอบพื้นฐาน",
+  "starterStorage": "พื้นที่เก็บข้อมูลบนคลาวด์ 5GB สำหรับเอกสารและรูปภาพ",
+  
+  "standardUsers": "บัญชีผู้ใช้สูงสุด 20 บัญชี",
+  "standardVehicles": "รถยนต์สูงสุด 50 คัน",
+  "standardModules": "โมดูลขั้นสูง: การวางแผนการบำรุงรักษา, รายการตรวจสอบ, การสนับสนุนรหัส QR",
+  "standardStorage": "พื้นที่เก็บข้อมูลบนคลาวด์ 20GB พร้อมการสำรองข้อมูล",
+  
+  "professionalUsers": "บัญชีผู้ใช้ไม่จำกัดพร้อมการจัดการบทบาท",
+  "professionalVehicles": "รถยนต์สูงสุด 200 คัน",
+  "professionalModules": "ทุกโมดูล: การติดตามแบบเรียลไทม์, แดชบอร์ด KPI, รายงานแบบกำหนดเอง",
+  "professionalStorage": "พื้นที่เก็บข้อมูลบนคลาวด์ 50GB พร้อมการสำรองข้อมูลรายวัน",
+  
+  "enterpriseUsers": "ผู้ใช้ไม่จำกัดพร้อมระดับผู้ดูแลระบบหลายระดับ",
+  "enterpriseVehicles": "จำนวนยานพาหนะไม่จำกัด",
+  "enterpriseModules": "ทุกโมดูลบวกการเข้าถึง API และการผสานรวมกับระบบที่มีอยู่",
+  "enterpriseStorage": "ตัวเลือกการจัดเก็บที่ปรับแต่งได้พร้อมการรับประกันความพร้อมใช้งาน",
+  
+  "includedInSubscription": "รวมอยู่ในการสมัครสมาชิก",
+  "webAndMobileApp": "การเข้าถึงแอปบนเว็บและมือถือ (Android/iOS)",
+  "cloudStorage": "พื้นที่เก็บข้อมูลและฐานข้อมูลบนคลาวด์",
+  "technicalSupport": "การสนับสนุนทางเทคนิคและการอัปเดต",
+  "regularBackups": "การสำรองข้อมูลเป็นประจำ",
+  "multiTenantSystem": "ระบบหลายผู้เช่า",
+  "dataManagement": "การจัดการข้อมูล",
+  "newCustomerSetup": "การตั้งค่าลูกค้าใหม่",
+  "ownCompanySettings": "การตั้งค่าบริษัทของตนเอง",
+  "ownUserAccounts": "บัญชีผู้ใช้และบทบาทของตนเอง",
+  "ownMachineData": "ข้อมูลเครื่องจักรและสถานที่ของตนเอง",
+  "ownReports": "รายงานและแผนการบำรุงรักษาของตนเอง",
+  
+  // Complete package translations
+  "completePackageTitle": "แพ็คเกจ TruckMate CMMS แบบครบวงจร",
+  "completePackageStarter": "โซลูชั่นเริ่มต้นแบบครบวงจร",
+  "completePackageStandard": "โซลูชั่นมาตรฐานแบบครบวงจร",
+  "completePackageProfessional": "โซลูชั่นมืออาชีพแบบครบวงจร",
+  "included": "แพ็คเกจรวม",
+  "packageFeatures": "คุณสมบัติหลัก",
+  "starterSubscription": "การสมัครสมาชิกแบบเริ่มต้น",
+  "standardSubscription": "การสมัครสมาชิกแบบมาตรฐาน",
+  "professionalSubscription": "การสมัครสมาชิกแบบมืออาชีพ",
+  "basicHosting": "โฮสติ้งและโครงสร้างพื้นฐานขั้นพื้นฐาน",
+  "advancedHosting": "โฮสติ้งและโครงสร้างพื้นฐานขั้นสูง",
+  "enterpriseHosting": "โฮสติ้งและโครงสร้างพื้นฐานสำหรับองค์กร",
+  "basicCloudHosting": "พื้นที่จัดเก็บข้อมูลบนคลาวด์ 5GB บนเซิร์ฟเวอร์มาตรฐาน",
+  "advancedCloudHosting": "พื้นที่จัดเก็บข้อมูลบนคลาวด์ 20GB พร้อมการสำรองข้อมูลรายวัน",
+  "enterpriseCloudHosting": "พื้นที่จัดเก็บข้อมูลบนคลาวด์ 50GB พร้อมความพร้อมใช้งานสูง",
+  "basicSupport": "สนับสนุนทางอีเมล (ตอบกลับภายใน 48 ชั่วโมง)",
+  "prioritySupport": "สนับสนุนทางอีเมลและโทรศัพท์แบบมีลำดับความสำคัญ (ตอบกลับภายใน 24 ชั่วโมง)",
+  "dedicatedSupport": "ทีมสนับสนุนเฉพาะ (ตอบกลับภายใน 4 ชั่วโมง)",
+
+  // Hosting and infrastructure translations
+  "hostingAndInfrastructure": "โฮสติ้งและโครงสร้างพื้นฐาน",
+  "cloudHosting": "คลาวด์โฮสติ้ง",
+  "cloudHostingPrice": "เริ่มต้นที่ 300 บาท/เดือน",
+  "cloudHostingDetail1": "ใช้ DigitalOcean/Vercel/AWS สำหรับการโฮสติ้งที่เชื่อถือได้",
+  "cloudHostingDetail2": "ปรับขนาดอัตโนมัติตามโหลดของผู้ใช้",
+  "cloudHostingDetail3": "รับประกันเวลาทำงาน 99.9%",
+  
+  "serverInfrastructure": "โครงสร้างพื้นฐานเซิร์ฟเวอร์",
+  "serverInfrastructurePrice": "เริ่มต้นที่ 500 บาท/เดือน",
+  "serverInfrastructureDetail1": "เครื่องเสมือนประสิทธิภาพสูง",
+  "serverInfrastructureDetail2": "การปรับสมดุลโหลดสำหรับลูกค้าองค์กร",
+  "serverInfrastructureDetail3": "รวมการสำรองข้อมูลรายวัน",
+  
+  "databaseCosts": "บริการฐานข้อมูล",
+  "databasePrice": "เริ่มต้นที่ 200 บาท/เดือน",
+  "databaseDetail1": "ฐานข้อมูล PostgreSQL พร้อมการสำรองข้อมูลเป็นประจำ",
+  "databaseDetail2": "ปรับขนาดตามปริมาณข้อมูล",
+  "databaseDetail3": "การเข้ารหัสข้อมูลเมื่อไม่ได้ใช้งานและระหว่างการส่ง",
+  
+  "costBreakdown": "การวิเคราะห์ต้นทุนและกำไร",
+  "costBreakdownDescription": "การแจกแจงต้นทุนและกำไรโดยประมาณสำหรับแต่ละระดับการสมัครสมาชิก",
+  
+  "starterHostingCost": "ต้นทุนโฮสติ้ง: ~1,000 บาท/เดือน",
+  "starterSupportCost": "ต้นทุนการสนับสนุน: ~800 บาท/เดือน",
+  "starterDevelopmentCost": "การบำรุงรักษาการพัฒนา: ~500 บาท/เดือน",
+  "starterTotalCost": "ต้นทุนรวม: ~2,300 บาท/เดือน",
+  "starterProfit": "กำไรที่ 6,000 บาท: ~3,700 บาท/เดือน",
+  
+  "standardHostingCost": "ต้นทุนโฮสติ้ง: ~3,000 บาท/เดือน",
+  "standardSupportCost": "ต้นทุนการสนับสนุน: ~2,000 บาท/เดือน",
+  "standardDevelopmentCost": "การบำรุงรักษาการพัฒนา: ~1,000 บาท/เดือน",
+  "standardTotalCost": "ต้นทุนรวม: ~6,000 บาท/เดือน",
+  "standardProfit": "กำไรที่ 15,000 บาท: ~9,000 บาท/เดือน",
+  
+  "professionalHostingCost": "ต้นทุนโฮสติ้ง: ~7,000 บาท/เดือน",
+  "professionalSupportCost": "ต้นทุนการสนับสนุน: ~4,000 บาท/เดือน",
+  "professionalDevelopmentCost": "การบำรุงรักษาการพัฒนา: ~2,000 บาท/เดือน",
+  "professionalTotalCost": "ต้นทุนรวม: ~13,000 บาท/เดือน",
+  "professionalProfit": "กำไรที่ 30,000 บาท: ~17,000 บาท/เดือน",
+};

@@ -1,0 +1,47 @@
+
+export const pricingPackagesTranslations = {
+  // Feature descriptions
+  "completeVehicleManagement": "การจัดการยานพาหนะอย่างครบวงจร",
+  "vehicleInspections": "การตรวจสอบและรายการตรวจยานพาหนะ",
+  "maintenanceTracking": "การติดตามและกำหนดการซ่อมบำรุง",
+  "qrCodeSupport": "การสร้างและสแกนรหัส QR",
+  "oneUserIncluded": "รวมบัญชีผู้ใช้หนึ่งบัญชี",
+  "individualUserProfile": "โปรไฟล์ผู้ใช้ส่วนบุคคล",
+  "roleBasedAccess": "การควบคุมการเข้าถึงตามบทบาท",
+  "userSpecificDashboards": "แดชบอร์ดเฉพาะผู้ใช้",
+  "activityLogs": "บันทึกกิจกรรมและการตรวจสอบ",
+  "mobileAppAccess": "การเข้าถึงแอปบนมือถือ",
+
+  // Tiered pricing translations
+  "userBasedPricing": "ราคาตามจำนวนผู้ใช้",
+  "vehicleBasedPricing": "ราคาตามจำนวนยานพาหนะ",
+  "smallTeams": "ทีมขนาดเล็ก, สตาร์ทอัพ",
+  "mediumBusinesses": "ธุรกิจขนาดกลาง",
+  "largeBusiness": "บริษัทขนาดใหญ่ / กองยานพาหนะ",
+  "smallFleet": "กองยานพาหนะขนาดเล็ก",
+  "mediumFleet": "กองยานพาหนะขนาดกลาง",
+  "largeFleet": "กองยานพาหนะขนาดใหญ่",
+  "userCount": "จำนวนผู้ใช้",
+  "vehicleCount": "จำนวนยานพาหนะ",
+  "monthlyPrice": "ราคารายเดือน",
+  "yearlyPrice": "ราคารายปี",
+  "description": "คำอธิบาย",
+  "volumeDiscounts": "ส่วนลดตามปริมาณ",
+  "vehicles50Plus": "ตั้งแต่ 50 คันขึ้นไป",
+  "vehicles100Plus": "ตั้งแต่ 100 คันขึ้นไป",
+  "vehicles200Plus": "ตั้งแต่ 200 คันขึ้นไป",
+  "yearlyPayment": "การชำระเงินรายปี",
+  "customPricing": "ราคาที่กำหนดเอง",
+  "detailedPricing": "รายละเอียดระดับราคา",
+
+  // Subscription model translations
+  "subscriptionModel": "รูปแบบการสมัครสมาชิก",
+  "starterPackage": "แพ็คเกจเริ่มต้น",
+  "standardPackage": "แพ็คเกจมาตรฐาน",
+  "professionalPackage": "แพ็คเกจมืออาชีพ",
+  "enterprisePackage": "โซลูชั่นองค์กร",
+  "starterDescription": "สำหรับธุรกิจขนาดเล็กหรือสถานที่เดียว",
+  "standardDescription": "สำหรับองค์กรอุตสาหกรรมขนาดกลาง",
+  "professionalDescription": "สำหรับองค์กรอุตสาหกรรมขนาดใหญ่",
+  "enterpriseDescription": "สามารถเจรจาเป็นรายบุคคลสำหรับองค์กรขนาดใหญ่ที่มีหลายสถานที่",
+};
