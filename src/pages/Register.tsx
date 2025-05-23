@@ -6,7 +6,7 @@ import { RegisterForm } from "@/components/auth/RegisterForm";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { InfoIcon } from "lucide-react";
+import { InfoIcon, ArrowLeft } from "lucide-react";
 
 export default function Register() {
   const { t, language } = useLanguage();
@@ -14,7 +14,17 @@ export default function Register() {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-fleet-50 to-white p-4">
       <div className="w-full max-w-md space-y-8">
-        <div className="text-center">
+        <div className="text-center relative">
+          {/* Back Button */}
+          <Link to="/login" className="absolute left-0 top-0">
+            <Button variant="ghost" size="sm" className="flex items-center gap-1">
+              <ArrowLeft className="h-4 w-4" />
+              {language === 'de' ? "Zurück" : 
+               language === 'th' ? "กลับ" : 
+               "Back"}
+            </Button>
+          </Link>
+          
           {/* Logo */}
           <div className="flex justify-center mb-6">
             <img 
