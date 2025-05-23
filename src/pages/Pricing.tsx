@@ -53,6 +53,12 @@ export default function Pricing() {
     setShowPaymentForm(true);
   };
 
+  // New handler for direct payment from packages
+  const handlePackageDirectPayment = (packageName: string) => {
+    setSelectedPackage(packageName);
+    setShowPaymentForm(true);
+  };
+
   const handlePaymentComplete = (plan: string) => {
     toast({
       title: t("paymentSuccessful"),
@@ -133,6 +139,7 @@ export default function Pricing() {
           <HostingInfrastructureCosts 
             isYearly={isYearly} 
             onSelectPackage={handleSelectPackage}
+            onShowDirectPayment={handlePackageDirectPayment} // New handler for direct payment
           />
           
           {/* Custom Offer Section */}

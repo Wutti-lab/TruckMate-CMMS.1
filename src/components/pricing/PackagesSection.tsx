@@ -6,9 +6,10 @@ import { prices } from "./utils/pricing-utils";
 interface PackagesSectionProps {
   isYearly: boolean;
   onSelectPackage: (packageName: string) => void;
+  onShowDirectPayment: (packageName: string) => void; // Add new prop
 }
 
-export function PackagesSection({ isYearly, onSelectPackage }: PackagesSectionProps) {
+export function PackagesSection({ isYearly, onSelectPackage, onShowDirectPayment }: PackagesSectionProps) {
   const { t } = useLanguage();
   
   return (
@@ -36,7 +37,8 @@ export function PackagesSection({ isYearly, onSelectPackage }: PackagesSectionPr
           thbMonth={isYearly ? t("thbYear") : t("thbMonth")}
           includedText={t("included")}
           featuresText={t("packageFeatures")}
-          onBuy={() => onSelectPackage(t("completePackageStarter"))}
+          // Changed to use the new direct payment function
+          onBuy={() => onShowDirectPayment(t("completePackageStarter"))}
         />
         
         {/* Standard Complete Package */}
@@ -61,7 +63,8 @@ export function PackagesSection({ isYearly, onSelectPackage }: PackagesSectionPr
           includedText={t("included")}
           featuresText={t("packageFeatures")}
           isHighlighted={true}
-          onBuy={() => onSelectPackage(t("completePackageStandard"))}
+          // Changed to use the new direct payment function
+          onBuy={() => onShowDirectPayment(t("completePackageStandard"))}
         />
         
         {/* Professional Complete Package */}
@@ -85,7 +88,8 @@ export function PackagesSection({ isYearly, onSelectPackage }: PackagesSectionPr
           thbMonth={isYearly ? t("thbYear") : t("thbMonth")}
           includedText={t("included")}
           featuresText={t("packageFeatures")}
-          onBuy={() => onSelectPackage(t("completePackageProfessional"))}
+          // Changed to use the new direct payment function
+          onBuy={() => onShowDirectPayment(t("completePackageProfessional"))}
         />
       </div>
     </>
