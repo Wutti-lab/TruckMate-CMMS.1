@@ -115,7 +115,7 @@ export default function Pricing() {
               <div className="flex justify-center">
                 <Button 
                   onClick={handleDirectPaymentUpload}
-                  className="bg-white text-green-700 hover:bg-gray-50 border-green-600 border"
+                  className="bg-green-600 hover:bg-green-700"
                 >
                   {t("uploadPaymentProof")}
                 </Button>
