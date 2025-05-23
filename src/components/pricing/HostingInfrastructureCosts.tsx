@@ -12,11 +12,11 @@ export function HostingInfrastructureCosts({ isYearly }: HostingInfrastructureCo
   
   return (
     <div className="mt-10 mb-8 space-y-12">
-      {/* Infrastructure Information */}
-      <InfrastructureSection />
-      
-      {/* Package Pricing Plans */}
+      {/* Package Pricing Plans (now first) */}
       <PackagesSection isYearly={isYearly} />
+      
+      {/* Infrastructure Information (now second) */}
+      <InfrastructureSection />
     </div>
   );
 }
