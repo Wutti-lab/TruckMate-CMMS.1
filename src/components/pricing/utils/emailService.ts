@@ -1,6 +1,9 @@
 
 import { PaymentFormData } from "../form/PaymentFormSchema";
-import { supabase } from "@/integrations/supabase/client";
+
+// Access the Supabase configuration - these are the published keys available in the client
+const SUPABASE_URL = "https://mnigsoflxmqoitfwwkrt.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1uaWdzb2ZseG1xb2l0Znd3a3J0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDUxNjMxMzQsImV4cCI6MjA2MDczOTEzNH0.060WTA-9P7qt1L_9Y45KclqifQGkCnK0nKYcf6g8Svg";
 
 interface EmailWithAttachmentProps {
   formData: PaymentFormData;
@@ -37,11 +40,11 @@ export async function sendEmailWithAttachment({
     apiFormData.append("to", "truckmatecmms@gmail.com");
     
     // Use the correct URL for the Edge Function
-    const response = await fetch("https://mnigsoflxmqoitfwwkrt.supabase.co/functions/v1/send-payment-proof", {
+    const response = await fetch(`${SUPABASE_URL}/functions/v1/send-payment-proof`, {
       method: "POST",
       headers: {
         // Add the Authorization header with the anon key
-        "Authorization": `Bearer ${supabase.supabaseKey}`
+        "Authorization": `Bearer ${SUPABASE_ANON_KEY}`
       },
       body: apiFormData,
     });
