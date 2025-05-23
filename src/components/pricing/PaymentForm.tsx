@@ -101,27 +101,27 @@ export function PaymentForm({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-md max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-center">
             {t("buyNow")}: {planTitle}
           </DialogTitle>
         </DialogHeader>
         
-        <Alert variant="warning" className="mb-4">
-          <AlertTitle>{t("photoProofRequired")}</AlertTitle>
-          <AlertDescription>
+        <Alert variant="warning" className="mb-2 py-2">
+          <AlertTitle className="text-sm">{t("photoProofRequired")}</AlertTitle>
+          <AlertDescription className="text-xs">
             {t("photoProofInstructions")}
           </AlertDescription>
         </Alert>
         
         {/* Payment Details Section */}
-        <div className="mb-4">
+        <div className="mb-3">
           <ThaiPaymentDetails />
         </div>
         
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
             <PaymentFormFields form={form} />
             
             <PaymentProofUpload 
@@ -129,7 +129,7 @@ export function PaymentForm({
               uploadedFiles={uploadedFiles}
             />
             
-            <div className="pt-4">
+            <div className="pt-2">
               <Button 
                 type="submit"
                 className="w-full"

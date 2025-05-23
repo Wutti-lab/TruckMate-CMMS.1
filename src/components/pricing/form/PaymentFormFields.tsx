@@ -19,12 +19,12 @@ export function PaymentFormFields({ form }: PaymentFormFieldsProps) {
         control={form.control}
         name="name"
         render={({ field }) => (
-          <FormItem>
-            <FormLabel>{t("name")}</FormLabel>
+          <FormItem className="mb-2">
+            <FormLabel className="text-sm mb-1">{t("name")}</FormLabel>
             <FormControl>
-              <Input placeholder={t("fullName")} {...field} />
+              <Input placeholder={t("fullName")} {...field} className="h-8 text-sm" />
             </FormControl>
-            <FormMessage />
+            <FormMessage className="text-xs" />
           </FormItem>
         )}
       />
@@ -33,12 +33,12 @@ export function PaymentFormFields({ form }: PaymentFormFieldsProps) {
         control={form.control}
         name="email"
         render={({ field }) => (
-          <FormItem>
-            <FormLabel>{t("email")}</FormLabel>
+          <FormItem className="mb-2">
+            <FormLabel className="text-sm mb-1">{t("email")}</FormLabel>
             <FormControl>
-              <Input placeholder="email@example.com" type="email" {...field} />
+              <Input placeholder="email@example.com" type="email" {...field} className="h-8 text-sm" />
             </FormControl>
-            <FormMessage />
+            <FormMessage className="text-xs" />
           </FormItem>
         )}
       />
@@ -47,12 +47,12 @@ export function PaymentFormFields({ form }: PaymentFormFieldsProps) {
         control={form.control}
         name="phone"
         render={({ field }) => (
-          <FormItem>
-            <FormLabel>{t("phone")}</FormLabel>
+          <FormItem className="mb-2">
+            <FormLabel className="text-sm mb-1">{t("phone")}</FormLabel>
             <FormControl>
-              <Input placeholder={t("contactNumber")} {...field} />
+              <Input placeholder={t("contactNumber")} {...field} className="h-8 text-sm" />
             </FormControl>
-            <FormMessage />
+            <FormMessage className="text-xs" />
           </FormItem>
         )}
       />
@@ -61,12 +61,12 @@ export function PaymentFormFields({ form }: PaymentFormFieldsProps) {
         control={form.control}
         name="address"
         render={({ field }) => (
-          <FormItem>
-            <FormLabel>{t("address")}</FormLabel>
+          <FormItem className="mb-2">
+            <FormLabel className="text-sm mb-1">{t("address")}</FormLabel>
             <FormControl>
-              <Input placeholder={t("fullAddress")} {...field} />
+              <Input placeholder={t("fullAddress")} {...field} className="h-8 text-sm" />
             </FormControl>
-            <FormMessage />
+            <FormMessage className="text-xs" />
           </FormItem>
         )}
       />
@@ -75,12 +75,12 @@ export function PaymentFormFields({ form }: PaymentFormFieldsProps) {
         control={form.control}
         name="company"
         render={({ field }) => (
-          <FormItem>
-            <FormLabel>{t("company")}</FormLabel>
+          <FormItem className="mb-2">
+            <FormLabel className="text-sm mb-1">{t("company")}</FormLabel>
             <FormControl>
-              <Input placeholder={t("companyName")} {...field} />
+              <Input placeholder={t("companyName")} {...field} className="h-8 text-sm" />
             </FormControl>
-            <FormMessage />
+            <FormMessage className="text-xs" />
           </FormItem>
         )}
       />
