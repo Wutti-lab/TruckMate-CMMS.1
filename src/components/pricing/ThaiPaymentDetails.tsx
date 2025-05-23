@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 
 export function ThaiPaymentDetails() {
   const { t } = useLanguage();
@@ -9,6 +10,13 @@ export function ThaiPaymentDetails() {
   
   return (
     <div className="mt-2 text-center text-xs">
+      <Alert className="mb-4 bg-amber-50 text-amber-800 border-amber-200">
+        <AlertTitle className="text-amber-800 font-medium">{t("paymentProofRequired")}</AlertTitle>
+        <AlertDescription>
+          {t("sendPhotoProof")} <strong>truckmatecmms@gmail.com</strong>
+        </AlertDescription>
+      </Alert>
+      
       <div className="flex justify-center items-start gap-3">
         {/* PromptPay Section */}
         <div className="text-left flex-1">

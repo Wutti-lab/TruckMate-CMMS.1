@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -6,12 +7,13 @@ import { Label } from "@/components/ui/label";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { FileUpload } from "@/components/inspections/FileUpload";
 import { useToast } from "@/hooks/use-toast";
-import { Send, FileText } from "lucide-react";
+import { Send, FileText, Photo } from "lucide-react";
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { ThaiPaymentDetails } from "./ThaiPaymentDetails";
+import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 
 interface PaymentFormProps {
   open: boolean;
@@ -98,6 +100,13 @@ export function PaymentForm({
           </DialogTitle>
         </DialogHeader>
         
+        <Alert variant="warning" className="mb-4">
+          <AlertTitle>{t("photoProofRequired")}</AlertTitle>
+          <AlertDescription>
+            {t("photoProofInstructions")}
+          </AlertDescription>
+        </Alert>
+        
         {/* Payment Details Section */}
         <div className="mb-4">
           <ThaiPaymentDetails />
@@ -180,7 +189,7 @@ export function PaymentForm({
               <FileUpload
                 onFilesSelected={handleFilesSelected}
                 accept=".pdf,.jpg,.jpeg,.png"
-                icon={<FileText className="h-6 w-6 text-muted-foreground" />}
+                icon={<Photo className="h-6 w-6 text-muted-foreground" />}
               />
               
               {uploadedFiles.length > 0 && (

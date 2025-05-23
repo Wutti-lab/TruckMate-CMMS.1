@@ -49,6 +49,12 @@ export const pricingGeneralTranslations = {
   "accountName": "ชื่อบัญชี: Wuttichai Phakchuen",
   "accountNumber": "เลขที่บัญชี: 4320922392",
   "clickToEnlarge": "คลิกเพื่อขยาย",
+  "paymentProofRequired": "ต้องการหลักฐานการชำระเงิน",
+  "sendPhotoProof": "หลังจากชำระเงิน ส่งรูปถ่ายหลักฐานการชำระเงินไปที่:",
+  "photoProofRequired": "ต้องการรูปถ่ายหลักฐาน",
+  "photoProofInstructions": "ถ่ายรูปยืนยันการชำระเงินและแนบมากับแบบฟอร์มนี้หรือส่งโดยตรงไปที่ truckmatecmms@gmail.com",
+  "importantReminder": "การแจ้งเตือนสำคัญ",
+  "sendPaymentProofReminder": "อย่าลืมส่งรูปถ่ายหลักฐานการชำระเงินของคุณไปที่:",
 
   // Payment form translations
   "uploadPaymentProof": "อัปโหลดหลักฐานการชำระเงิน (รูปภาพหรือ PDF)",

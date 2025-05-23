@@ -41,4 +41,20 @@ export const pricingGeneralTranslations = {
   "accountName": "Kontoinhaber: Wuttichai Phakchuen",
   "accountNumber": "Kontonummer: 4320922392",
   "clickToEnlarge": "Klicken zum Vergrößern",
+  "paymentProofRequired": "Zahlungsnachweis erforderlich",
+  "sendPhotoProof": "Senden Sie nach der Zahlung ein Foto des Zahlungsnachweises an:",
+  "photoProofRequired": "Foto-Nachweis erforderlich",
+  "photoProofInstructions": "Machen Sie ein Foto Ihrer Zahlungsbestätigung und fügen Sie es diesem Formular bei oder senden Sie es direkt an truckmatecmms@gmail.com",
+  "importantReminder": "Wichtige Erinnerung",
+  "sendPaymentProofReminder": "Vergessen Sie nicht, ein Foto Ihres Zahlungsnachweises zu senden an:",
+  
+  // Payment form translations
+  "uploadPaymentProof": "Zahlungsnachweis hochladen (Fotos oder PDF)",
+  "fileSelected": "Datei(en) ausgewählt",
+  "sendPaymentProof": "Zahlungsnachweis senden",
+  "sending": "Wird gesendet...",
+  "noFilesSelected": "Keine Dateien ausgewählt",
+  "pleaseSelectProofFile": "Bitte wählen Sie eine Datei als Zahlungsnachweis aus",
+  "proofSent": "Zahlungsnachweis gesendet",
+  "proofSentDescription": "Ihr Zahlungsnachweis wurde an truckmatecmms@gmail.com gesendet",
 };
