@@ -10,8 +10,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useToast } from "@/hooks/use-toast";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { AlertCircle } from "lucide-react";
 
 interface QRCodeDialogProps {
   open: boolean;
@@ -76,13 +74,6 @@ export function QRCodeDialog({ open, onOpenChange, onConfirmPayment }: QRCodeDia
           <div className="py-6 text-center">
             <h3 className="text-xl font-semibold mb-2">{t("thankYou")}</h3>
             <p>{t("teamWillContact")}</p>
-            
-            <Alert variant="warning" className="mt-4">
-              <AlertCircle className="h-4 w-4" />
-              <AlertDescription>
-                {t("paymentProofRequiredDesc")}
-              </AlertDescription>
-            </Alert>
           </div>
         ) : (
           <>
@@ -159,13 +150,6 @@ export function QRCodeDialog({ open, onOpenChange, onConfirmPayment }: QRCodeDia
             </div>
             
             <div className="pt-3 border-t">
-              <Alert variant="warning" className="mb-3">
-                <AlertCircle className="h-4 w-4" />
-                <AlertDescription>
-                  {t("paymentProofRequiredDesc")}
-                </AlertDescription>
-              </Alert>
-              
               <p className="text-xs text-center text-muted-foreground">{t("paymentDetails")}</p>
               <ThaiPaymentDetails />
             </div>

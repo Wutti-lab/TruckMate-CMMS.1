@@ -35,8 +35,6 @@ export const pricingGeneralTranslations = {
   "freeTrialBadge": "3 Months Free Trial",
   "freeTrialDescription": "Try all features for free for 3 months, no credit card required",
   "clickToEnlarge": "Click to enlarge",
-  "paymentProofRequired": "Payment proof required",
-  "paymentProofRequiredDesc": "Please upload payment proof and send to truckmatecmms@gmail.com",
   
   // Billing types
   "monthlyBilling": "Monthly Billing",
