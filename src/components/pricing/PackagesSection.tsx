@@ -32,7 +32,7 @@ export function PackagesSection({ isYearly }: PackagesSectionProps) {
           ]}
           buyText={t("buyNow")}
           isYearly={isYearly}
-          thbMonth={t("thbMonth")}
+          thbMonth={isYearly ? t("thbYear") : t("thbMonth")}
           includedText={t("included")}
           featuresText={t("packageFeatures")}
         />
@@ -55,7 +55,7 @@ export function PackagesSection({ isYearly }: PackagesSectionProps) {
           ]}
           buyText={t("buyNow")}
           isYearly={isYearly}
-          thbMonth={t("thbMonth")}
+          thbMonth={isYearly ? t("thbYear") : t("thbMonth")}
           includedText={t("included")}
           featuresText={t("packageFeatures")}
           isHighlighted={true}
@@ -79,7 +79,7 @@ export function PackagesSection({ isYearly }: PackagesSectionProps) {
           ]}
           buyText={t("buyNow")}
           isYearly={isYearly}
-          thbMonth={t("thbMonth")}
+          thbMonth={isYearly ? t("thbYear") : t("thbMonth")}
           includedText={t("included")}
           featuresText={t("packageFeatures")}
         />

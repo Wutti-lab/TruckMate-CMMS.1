@@ -30,7 +30,7 @@ export function PackageHeader({
       <PackageBadge text={badgeText} variant={badgeVariant} />
       <CardTitle className="text-center">{title}</CardTitle>
       <CardDescription className="text-center text-lg font-bold mt-2">
-        {price} {thbMonth}
+        {price.toLocaleString()} {thbMonth}
       </CardDescription>
     </div>
   );

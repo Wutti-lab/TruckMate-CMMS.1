@@ -1,6 +1,7 @@
 
 export const getYearlyPrice = (monthlyPrice: number): number => {
-  return Math.round(monthlyPrice * 0.9);
+  // Apply 10% discount and multiply by 12 for yearly price
+  return Math.round(monthlyPrice * 0.9 * 12);
 };
 
 export const prices = {

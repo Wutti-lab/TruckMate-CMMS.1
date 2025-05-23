@@ -18,15 +18,22 @@ export function PackagePriceDetails({
   thbMonth,
   includedText
 }: PackagePriceDetailsProps) {
+  // Calculate yearly discount (10%)
+  const yearlyDiscountFactor = 0.9;
+  
   return (
     <div>
       <p className="font-medium mb-1">{includedText}:</p>
       <ul className="space-y-1 list-disc pl-5">
         <li>
-          {subscriptionText}: {isYearly ? Math.round(subscriptionPrice * 0.9) : subscriptionPrice} {thbMonth}
+          {subscriptionText}: {isYearly 
+            ? Math.round(subscriptionPrice * yearlyDiscountFactor) 
+            : subscriptionPrice} {thbMonth}
         </li>
         <li>
-          {hostingText}: {isYearly ? Math.round(hostingPrice * 0.9) : hostingPrice} {thbMonth}
+          {hostingText}: {isYearly 
+            ? Math.round(hostingPrice * yearlyDiscountFactor) 
+            : hostingPrice} {thbMonth}
         </li>
       </ul>
     </div>

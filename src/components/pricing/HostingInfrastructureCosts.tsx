@@ -15,7 +15,7 @@ export function HostingInfrastructureCosts({ isYearly }: HostingInfrastructureCo
       
       <PackagesSection isYearly={isYearly} />
       
-      <CostBreakdown />
+      <CostBreakdown isYearly={isYearly} />
     </div>
   );
 }
