@@ -1,6 +1,6 @@
 
 // @ts-nocheck
-import { EmailData, EmailResult } from "../send-notification/types.ts";
+import { EmailData, EmailResult } from "./types.ts";
 
 // CORS headers for cross-origin requests
 export const corsHeaders = {
