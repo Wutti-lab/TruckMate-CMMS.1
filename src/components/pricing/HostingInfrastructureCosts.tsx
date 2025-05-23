@@ -2,7 +2,6 @@
 import { useLanguage } from "@/contexts/LanguageContext";
 import { InfrastructureSection } from "./InfrastructureSection";
 import { PackagesSection } from "./PackagesSection";
-import { CostBreakdown } from "./CostBreakdown";
 
 interface HostingInfrastructureCostsProps {
   isYearly: boolean;
@@ -14,8 +13,6 @@ export function HostingInfrastructureCosts({ isYearly }: HostingInfrastructureCo
       <InfrastructureSection />
       
       <PackagesSection isYearly={isYearly} />
-      
-      <CostBreakdown isYearly={isYearly} />
     </div>
   );
 }
