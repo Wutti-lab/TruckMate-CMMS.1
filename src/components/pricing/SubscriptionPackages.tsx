@@ -18,28 +18,48 @@ export function SubscriptionPackages({ isYearly, onSelectPackage }: Subscription
       priceMonthly: "6,000",
       priceYearly: "72,000",
       description: t("starterDescription"),
-      features: [t("starterFeatures")]
+      features: [
+        t("starterUsers"), 
+        t("starterVehicles"),
+        t("starterModules"),
+        t("starterStorage")
+      ]
     },
     {
       name: t("standardPackage"),
       priceMonthly: "15,000",
       priceYearly: "180,000",
       description: t("standardDescription"),
-      features: [t("standardFeatures")]
+      features: [
+        t("standardUsers"), 
+        t("standardVehicles"),
+        t("standardModules"),
+        t("standardStorage")
+      ]
     },
     {
       name: t("professionalPackage"),
       priceMonthly: "30,000",
       priceYearly: "360,000",
       description: t("professionalDescription"),
-      features: [t("professionalFeatures")]
+      features: [
+        t("professionalUsers"), 
+        t("professionalVehicles"),
+        t("professionalModules"),
+        t("professionalStorage")
+      ]
     },
     {
       name: t("enterprisePackage"),
       priceMonthly: t("contact"),
       priceYearly: t("contact"),
       description: t("enterpriseDescription"),
-      features: [t("enterpriseFeatures")]
+      features: [
+        t("enterpriseUsers"), 
+        t("enterpriseVehicles"),
+        t("enterpriseModules"),
+        t("enterpriseStorage")
+      ]
     }
   ];
   

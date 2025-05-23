@@ -1,4 +1,3 @@
-
 // Pricing related translations
 export const pricingTranslations = {
   "choosePlan": "Wählen Sie den Plan, der Ihren Anforderungen entspricht",
@@ -94,12 +93,6 @@ export const pricingTranslations = {
   "yearlyPrice": "Jährlicher Preis",
   "description": "Beschreibung",
   "discount": "Rabatt",
-  "volumeDiscounts": "Mengenrabatte",
-  "vehicles50Plus": "Ab 50 Fahrzeugen",
-  "vehicles100Plus": "Ab 100 Fahrzeugen",
-  "vehicles200Plus": "Ab 200 Fahrzeugen",
-  "yearlyPayment": "Jährliche Zahlung",
-  "customPricing": "Individuelle Preisgestaltung",
   "detailedPricing": "Detaillierte Preisstaffeln",
   
   // New subscription model translations
@@ -112,10 +105,28 @@ export const pricingTranslations = {
   "standardDescription": "Für mittlere Industrieunternehmen",
   "professionalDescription": "Für große Industrieunternehmen",
   "enterpriseDescription": "Individuell verhandelbar bei großen Betrieben mit mehreren Standorten",
-  "starterFeatures": "Begrenzt auf eine bestimmte Anzahl Nutzer oder Maschinen",
-  "standardFeatures": "Mehr Module, Benutzer, Assets",
-  "professionalFeatures": "Erweiterte Funktionen, mehrere Benutzerrollen",
-  "enterpriseFeatures": "Vollständig anpassbar nach Kundenwunsch",
+  
+  // Detailed package features
+  "starterUsers": "Bis zu 5 Benutzerkonten",
+  "starterVehicles": "Bis zu 10 Fahrzeuge",
+  "starterModules": "Grundlegende Module: Fahrzeugverwaltung, Grundinspektionen",
+  "starterStorage": "5 GB Cloud-Speicher für Dokumente und Fotos",
+  
+  "standardUsers": "Bis zu 20 Benutzerkonten",
+  "standardVehicles": "Bis zu 50 Fahrzeuge",
+  "standardModules": "Erweiterte Module: Wartungsplanung, Checklisten, QR-Code-Unterstützung",
+  "standardStorage": "20 GB Cloud-Speicher mit Backup",
+  
+  "professionalUsers": "Unbegrenzte Benutzerkonten mit Rollenmanagement",
+  "professionalVehicles": "Bis zu 200 Fahrzeuge",
+  "professionalModules": "Alle Module: Echtzeit-Tracking, KPI-Dashboard, benutzerdefinierte Berichte",
+  "professionalStorage": "50 GB Cloud-Speicher mit täglichem Backup",
+  
+  "enterpriseUsers": "Unbegrenzte Benutzer mit mehreren Administratorebenen",
+  "enterpriseVehicles": "Unbegrenzte Anzahl von Fahrzeugen",
+  "enterpriseModules": "Alle Module plus API-Zugang und Integration mit bestehenden Systemen",
+  "enterpriseStorage": "Anpassbare Speicheroptionen mit garantierter Verfügbarkeit",
+  
   "includedInSubscription": "Im Abo inklusive",
   "webAndMobileApp": "Nutzung der Web- und mobilen App (Android/iOS)",
   "cloudStorage": "Cloud-Speicher & Datenbank",

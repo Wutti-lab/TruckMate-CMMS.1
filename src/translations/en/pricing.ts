@@ -113,10 +113,28 @@ export const pricingTranslations = {
   "standardDescription": "For medium industrial enterprises",
   "professionalDescription": "For large industrial enterprises",
   "enterpriseDescription": "Individually negotiable for large operations with multiple locations",
-  "starterFeatures": "Limited to a certain number of users or machines",
-  "standardFeatures": "More modules, users, assets",
-  "professionalFeatures": "Advanced features, multiple user roles",
-  "enterpriseFeatures": "Fully customizable according to customer needs",
+  
+  // Detailed package features
+  "starterUsers": "Up to 5 user accounts",
+  "starterVehicles": "Up to 10 vehicles",
+  "starterModules": "Basic modules: Vehicle management, basic inspections",
+  "starterStorage": "5GB cloud storage for documents and photos",
+  
+  "standardUsers": "Up to 20 user accounts",
+  "standardVehicles": "Up to 50 vehicles",
+  "standardModules": "Advanced modules: Maintenance scheduling, checklists, QR code support",
+  "standardStorage": "20GB cloud storage with backup",
+  
+  "professionalUsers": "Unlimited user accounts with role management",
+  "professionalVehicles": "Up to 200 vehicles",
+  "professionalModules": "All modules: Real-time tracking, KPI dashboard, custom reports",
+  "professionalStorage": "50GB cloud storage with daily backup",
+  
+  "enterpriseUsers": "Unlimited users with multiple admin levels",
+  "enterpriseVehicles": "Unlimited number of vehicles",
+  "enterpriseModules": "All modules plus API access and integration with existing systems",
+  "enterpriseStorage": "Customizable storage options with guaranteed availability",
+  
   "includedInSubscription": "Included in subscription",
   "webAndMobileApp": "Access to web and mobile app (Android/iOS)",
   "cloudStorage": "Cloud storage & database",

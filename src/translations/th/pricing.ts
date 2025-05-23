@@ -1,4 +1,3 @@
-
 // Payment related translations
 export const pricingTranslations = {
   "choosePlan": "เลือกแผนที่เหมาะกับความต้องการของคุณ",
@@ -112,10 +111,28 @@ export const pricingTranslations = {
   "standardDescription": "สำหรับองค์กรอุตสาหกรรมขนาดกลาง",
   "professionalDescription": "สำหรับองค์กรอุตสาหกรรมขนาดใหญ่",
   "enterpriseDescription": "สามารถเจรจาเป็นรายบุคคลสำหรับองค์กรขนาดใหญ่ที่มีหลายสถานที่",
-  "starterFeatures": "จำกัดจำนวนผู้ใช้หรือเครื่องจักร",
-  "standardFeatures": "โมดูล ผู้ใช้ สินทรัพย์ เพิ่มเติม",
-  "professionalFeatures": "คุณสมบัติขั้นสูง หลายบทบาทผู้ใช้",
-  "enterpriseFeatures": "ปรับแต่งได้ตามความต้องการของลูกค้า",
+  
+  // Detailed package features
+  "starterUsers": "บัญชีผู้ใช้สูงสุด 5 บัญชี",
+  "starterVehicles": "รถยนต์สูงสุด 10 คัน",
+  "starterModules": "โมดูลพื้นฐาน: การจัดการยานพาหนะ, การตรวจสอบพื้นฐาน",
+  "starterStorage": "พื้นที่เก็บข้อมูลบนคลาวด์ 5GB สำหรับเอกสารและรูปภาพ",
+  
+  "standardUsers": "บัญชีผู้ใช้สูงสุด 20 บัญชี",
+  "standardVehicles": "รถยนต์สูงสุด 50 คัน",
+  "standardModules": "โมดูลขั้นสูง: การวางแผนการบำรุงรักษา, รายการตรวจสอบ, การสนับสนุนรหัส QR",
+  "standardStorage": "พื้นที่เก็บข้อมูลบนคลาวด์ 20GB พร้อมการสำรองข้อมูล",
+  
+  "professionalUsers": "บัญชีผู้ใช้ไม่จำกัดพร้อมการจัดการบทบาท",
+  "professionalVehicles": "รถยนต์สูงสุด 200 คัน",
+  "professionalModules": "ทุกโมดูล: การติดตามแบบเรียลไทม์, แดชบอร์ด KPI, รายงานแบบกำหนดเอง",
+  "professionalStorage": "พื้นที่เก็บข้อมูลบนคลาวด์ 50GB พร้อมการสำรองข้อมูลรายวัน",
+  
+  "enterpriseUsers": "ผู้ใช้ไม่จำกัดพร้อมระดับผู้ดูแลระบบหลายระดับ",
+  "enterpriseVehicles": "จำนวนยานพาหนะไม่จำกัด",
+  "enterpriseModules": "ทุกโมดูลบวกการเข้าถึง API และการผสานรวมกับระบบที่มีอยู่",
+  "enterpriseStorage": "ตัวเลือกการจัดเก็บที่ปรับแต่งได้พร้อมการรับประกันความพร้อมใช้งาน",
+  
   "includedInSubscription": "รวมอยู่ในการสมัครสมาชิก",
   "webAndMobileApp": "การเข้าถึงแอปบนเว็บและมือถือ (Android/iOS)",
   "cloudStorage": "พื้นที่เก็บข้อมูลและฐานข้อมูลบนคลาวด์",
