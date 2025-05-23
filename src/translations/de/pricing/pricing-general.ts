@@ -1,3 +1,4 @@
+
 export const pricingGeneralTranslations = {
   "choosePlan": "Wählen Sie den Plan, der Ihren Anforderungen entspricht",
   "buyNow": "Jetzt kaufen",
@@ -36,4 +37,7 @@ export const pricingGeneralTranslations = {
   "phoneNumber": "Telefon: 080-929-9965",
   "afterTransferring": "Nach der Überweisung senden Sie bitte einen Zahlungsnachweis an truckmatecmms@gmail.com",
   "confirmPayment": "Zahlung bestätigen",
+  "bankAccount": "SBC Bankkonto",
+  "accountName": "Kontoinhaber: Wuttichai Phakchen",
+  "accountNumber": "Kontonummer: 4320922392",
 };
