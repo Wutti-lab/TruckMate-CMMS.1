@@ -7,29 +7,9 @@ import {
   Users, 
   DollarSign 
 } from "lucide-react";
-import { 
-  LineChart, 
-  Line, 
-  XAxis, 
-  YAxis, 
-  CartesianGrid, 
-  Tooltip, 
-  Legend, 
-  ResponsiveContainer 
-} from 'recharts';
 
 export function SaasMetrics() {
   const { t } = useLanguage();
-
-  // Sample data for SaaS metrics visualization
-  const mrrData = [
-    { month: 'Jan', value: 3200 },
-    { month: 'Feb', value: 3400 },
-    { month: 'Mar', value: 3600 },
-    { month: 'Apr', value: 4200 },
-    { month: 'May', value: 4800 },
-    { month: 'Jun', value: 5400 },
-  ];
   
   const metrics = [
     {
@@ -91,32 +71,6 @@ export function SaasMetrics() {
           </Card>
         ))}
       </div>
-      
-      {/* MRR Growth Chart */}
-      <Card>
-        <CardContent className="p-4">
-          <h3 className="font-medium mb-4">MRR Growth Trend</h3>
-          <div className="h-64">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={mrrData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="month" />
-                <YAxis />
-                <Tooltip formatter={(value) => [`฿ ${value}`, 'MRR']} />
-                <Legend />
-                <Line 
-                  type="monotone" 
-                  dataKey="value" 
-                  name="Monthly Recurring Revenue"
-                  stroke="#3b82f6" 
-                  strokeWidth={2}
-                  activeDot={{ r: 8 }} 
-                />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-        </CardContent>
-      </Card>
     </div>
   );
 }
