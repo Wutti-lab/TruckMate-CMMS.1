@@ -21,10 +21,12 @@ export function InfrastructureSection() {
             t("cloudHostingDetail2"),
             t("cloudHostingDetail3")
           ]}
-          recommendations={[
-            t("cloudProviderRecommendation"),
-            t("cloudPricingRecommendation"),
-            t("cloudSetupRecommendation")
+          stepByStep={[
+            t("cloudHostingStep1"),
+            t("cloudHostingStep2"),
+            t("cloudHostingStep3"),
+            t("cloudHostingStep4"),
+            t("cloudHostingStep5")
           ]}
         />
         
@@ -38,11 +40,6 @@ export function InfrastructureSection() {
             t("serverInfrastructureDetail2"),
             t("serverInfrastructureDetail3")
           ]}
-          recommendations={[
-            t("serverHostingRecommendation"),
-            t("serverScalingRecommendation"),
-            t("serverAutomationRecommendation")
-          ]}
         />
         
         {/* Database */}
@@ -54,11 +51,6 @@ export function InfrastructureSection() {
             t("databaseDetail1"),
             t("databaseDetail2"),
             t("databaseDetail3")
-          ]}
-          recommendations={[
-            t("databaseProviderRecommendation"),
-            t("userManagementRecommendation"),
-            t("dataStorageRecommendation")
           ]}
         />
       </div>

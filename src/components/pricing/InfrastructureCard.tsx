@@ -10,6 +10,7 @@ interface InfrastructureCardProps {
   details: string[];
   recommendations?: string[];
   saasFeatures?: string[];
+  stepByStep?: string[];
 }
 
 export function InfrastructureCard({ 
@@ -17,7 +18,8 @@ export function InfrastructureCard({
   title, 
   description, 
   details, 
-  saasFeatures
+  saasFeatures,
+  stepByStep
 }: InfrastructureCardProps) {
   return (
     <Card className="flex flex-col h-full">
@@ -41,6 +43,18 @@ export function InfrastructureCard({
             </li>
           ))}
         </ul>
+        
+        {stepByStep && stepByStep.length > 0 && (
+          <>
+            <div className="border-t my-4 border-gray-200"></div>
+            <h4 className="font-medium mb-2 text-fleet-700">Schritt für Schritt Anleitung:</h4>
+            <ol className="space-y-2 text-sm list-decimal pl-5">
+              {stepByStep.map((step, index) => (
+                <li key={`step-${index}`} className="text-gray-700">{step}</li>
+              ))}
+            </ol>
+          </>
+        )}
         
         {saasFeatures && saasFeatures.length > 0 && (
           <>
