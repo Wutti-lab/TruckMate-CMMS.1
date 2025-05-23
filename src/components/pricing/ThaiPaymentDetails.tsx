@@ -1,9 +1,11 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 
 export function ThaiPaymentDetails() {
   const { t } = useLanguage();
+  const [showLargeQR, setShowLargeQR] = useState(false);
   
   return (
     <div className="mt-2 text-center text-xs">
@@ -14,12 +16,14 @@ export function ThaiPaymentDetails() {
           <p>{t("phoneNumber")}</p>
           <div className="mt-4">
             <p className="font-semibold">{t("bankAccount")}</p>
-            <p>SBC Bank</p>
-            <p>{t("accountName")}: Wuttichai Phakchen</p>
+            <p>SCB</p>
             <p>{t("accountNumber")}: 4320922392</p>
           </div>
         </div>
-        <div className="bg-gray-100 p-2 rounded-md">
+        <div 
+          className="bg-gray-100 p-2 rounded-md cursor-pointer" 
+          onClick={() => setShowLargeQR(true)}
+        >
           <img 
             src="/lovable-uploads/1227902a-2033-4df9-a3c7-382e79e5b997.png"
             alt="QR Code"
@@ -30,6 +34,19 @@ export function ThaiPaymentDetails() {
       <p className="mt-2 text-xs text-muted-foreground">
         {t("afterTransferring")}
       </p>
+
+      {/* QR Code Dialog */}
+      <Dialog open={showLargeQR} onOpenChange={setShowLargeQR}>
+        <DialogContent className="sm:max-w-md">
+          <div className="flex justify-center p-4">
+            <img 
+              src="/lovable-uploads/1227902a-2033-4df9-a3c7-382e79e5b997.png"
+              alt="QR Code"
+              className="w-64 h-64 object-contain"
+            />
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

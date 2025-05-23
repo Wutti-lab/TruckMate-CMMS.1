@@ -1,4 +1,3 @@
-
 export const pricingGeneralTranslations = {
   // General pricing page translations
   "backToDashboard": "Back to Dashboard",
@@ -23,7 +22,7 @@ export const pricingGeneralTranslations = {
   "scanQrToTransfer": "Scan QR to transfer to account",
   "promptPay": "PromptPay",
   "bankTransfer": "Bank Transfer",
-  "bankAccount": "SBC Bank Account",
+  "bankAccount": "SCB Bank Account",
   "accountName": "Wuttichai Phakchen",
   "accountNumber": "4320922392",
   "phoneNumber": "Phone: 080-929-9965",
@@ -34,6 +33,7 @@ export const pricingGeneralTranslations = {
   "pleaseVerifyPayment": "Please send payment verification to this email: truckmatecmms@gmail.com",
   "freeTrialBadge": "3 Months Free Trial",
   "freeTrialDescription": "Try all features for free for 3 months, no credit card required",
+  "clickToEnlarge": "Click to enlarge",
   
   // Billing types
   "monthlyBilling": "Monthly Billing",

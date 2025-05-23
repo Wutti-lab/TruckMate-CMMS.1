@@ -37,7 +37,7 @@ export const pricingGeneralTranslations = {
   "phoneNumber": "Telefon: 080-929-9965",
   "afterTransferring": "Nach der Überweisung senden Sie bitte einen Zahlungsnachweis an truckmatecmms@gmail.com",
   "confirmPayment": "Zahlung bestätigen",
-  "bankAccount": "SBC Bankkonto",
-  "accountName": "Kontoinhaber: Wuttichai Phakchen",
+  "bankAccount": "SCB Bankkonto",
   "accountNumber": "Kontonummer: 4320922392",
+  "clickToEnlarge": "Klicken zum Vergrößern",
 };
