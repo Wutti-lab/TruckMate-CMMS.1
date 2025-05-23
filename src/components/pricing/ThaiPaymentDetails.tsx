@@ -2,13 +2,22 @@
 import React, { useState } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { AlertCircle } from "lucide-react";
 
 export function ThaiPaymentDetails() {
   const { t } = useLanguage();
   const [showLargeQR, setShowLargeQR] = useState(false);
   
   return (
-    <div className="mt-2 text-center text-xs">
+    <div className="mt-2 text-xs">
+      <Alert variant="warning" className="mb-3 py-2">
+        <AlertCircle className="h-4 w-4 text-amber-600" />
+        <AlertDescription className="text-amber-600 font-medium">
+          {t("paymentProofRequired")}
+        </AlertDescription>
+      </Alert>
+      
       <div className="flex justify-center items-start gap-3">
         {/* PromptPay Section */}
         <div className="text-left flex-1">
@@ -16,9 +25,8 @@ export function ThaiPaymentDetails() {
           <p>{t("phoneNumber")}</p>
           <div className="mt-4">
             <p className="font-semibold">{t("bankAccount")}</p>
-            <p>SCB</p>
-            <p>{t("accountName")}: Wuttichai Phakchuen</p>
-            <p>{t("accountNumber")}: 4320922392</p>
+            <p>{t("accountName")}</p>
+            <p>{t("accountNumber")}</p>
           </div>
         </div>
         <div 
@@ -32,7 +40,7 @@ export function ThaiPaymentDetails() {
           />
         </div>
       </div>
-      <p className="mt-2 text-xs text-muted-foreground">
+      <p className="mt-2 text-xs text-muted-foreground font-medium">
         {t("afterTransferring")}
       </p>
 

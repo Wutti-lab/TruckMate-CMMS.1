@@ -49,6 +49,8 @@ export const pricingGeneralTranslations = {
   "accountName": "ชื่อบัญชี: Wuttichai Phakchuen",
   "accountNumber": "เลขที่บัญชี: 4320922392",
   "clickToEnlarge": "คลิกเพื่อขยาย",
+  "paymentEmail": "truckmatecmms@gmail.com",
+  "pleaseVerifyPayment": "กรุณาส่งหลักฐานการชำระเงินไปที่อีเมลนี้: truckmatecmms@gmail.com",
 
   // Payment form translations
   "uploadPaymentProof": "อัปโหลดหลักฐานการชำระเงิน (รูปภาพหรือ PDF)",
@@ -59,6 +61,7 @@ export const pricingGeneralTranslations = {
   "pleaseSelectProofFile": "กรุณาเลือกไฟล์เพื่ออัปโหลดเป็นหลักฐานการชำระเงิน",
   "proofSent": "ส่งหลักฐานการชำระเงินแล้ว",
   "proofSentDescription": "หลักฐานการชำระเงินของคุณถูกส่งไปยัง truckmatecmms@gmail.com",
+  "sendPaymentVerification": "ส่งการยืนยันการชำระเงิน:",
   
   // Billing types
   "yearly": "รายปี",
@@ -85,4 +88,6 @@ export const pricingGeneralTranslations = {
   "formError": "เกิดข้อผิดพลาดในการประมวลผลคำขอของคุณ",
   "freeTrialBadge": "ทดลองใช้ฟรี 3 เดือน",
   "freeTrialDescription": "ทดลองใช้ฟีเจอร์ทั้งหมดฟรี 3 เดือน ไม่ต้องใช้บัตรเครดิต",
+  "paymentProofRequired": "จำเป็นต้องมีหลักฐานการชำระเงิน",
+  "paymentProofRequiredDesc": "กรุณาอัปโหลดหลักฐานการชำระเงินและส่งไปที่ truckmatecmms@gmail.com",
 };
