@@ -1,4 +1,3 @@
-
 export const pricingGeneralTranslations = {
   "choosePlan": "Wählen Sie den Plan, der Ihren Anforderungen entspricht",
   "buyNow": "Jetzt kaufen",
@@ -57,4 +56,6 @@ export const pricingGeneralTranslations = {
   "pleaseSelectProofFile": "Bitte wählen Sie eine Datei als Zahlungsnachweis aus",
   "proofSent": "Zahlungsnachweis gesendet",
   "proofSentDescription": "Ihr Zahlungsnachweis wurde an truckmatecmms@gmail.com gesendet",
+  "emailSendingFailed": "E-Mail-Versand fehlgeschlagen",
+  "emailSendingFailedDescription": "Beim Senden Ihres Zahlungsnachweises ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut oder senden Sie Ihren Nachweis direkt an truckmatecmms@gmail.com",
 };

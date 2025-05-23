@@ -1,4 +1,3 @@
-
 export const pricingGeneralTranslations = {
   "choosePlan": "เลือกแผนที่เหมาะกับความต้องการของคุณ",
   "buyNow": "ซื้อเลย",
@@ -65,6 +64,8 @@ export const pricingGeneralTranslations = {
   "pleaseSelectProofFile": "กรุณาเลือกไฟล์เพื่ออัปโหลดเป็นหลักฐานการชำระเงิน",
   "proofSent": "ส่งหลักฐานการชำระเงินแล้ว",
   "proofSentDescription": "หลักฐานการชำระเงินของคุณถูกส่งไปยัง truckmatecmms@gmail.com",
+  "emailSendingFailed": "การส่งอีเมลล้มเหลว",
+  "emailSendingFailedDescription": "เกิดข้อผิดพลาดในการส่งหลักฐานการชำระเงินของคุณ โปรดลองอีกครั้งหรือส่งหลักฐานของคุณโดยตรงไปที่ truckmatecmms@gmail.com",
   
   // Billing types
   "yearly": "รายปี",

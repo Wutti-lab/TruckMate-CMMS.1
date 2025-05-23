@@ -12,6 +12,7 @@ import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { PaymentFormFields } from "./form/PaymentFormFields";
 import { PaymentProofUpload } from "./form/PaymentProofUpload";
 import { paymentFormSchema, PaymentFormData } from "./form/PaymentFormSchema";
+import { sendEmailWithAttachment } from "./utils/emailService";
 
 interface PaymentFormProps {
   open: boolean;
@@ -62,22 +63,40 @@ export function PaymentForm({
     console.log("Form data:", data);
     console.log("Files to be sent:", uploadedFiles);
     
-    // In a real implementation, you would send an email with FormData including the attachments
-    // Simulating email sending - in production, you would use a server endpoint or service
-    setTimeout(() => {
-      setIsSending(false);
-      toast({
-        title: t("proofSent"),
-        description: t("proofSentDescription"),
+    try {
+      // Send email with attachment
+      const emailSent = await sendEmailWithAttachment({
+        formData: data,
+        files: uploadedFiles,
+        planName: planTitle
       });
       
-      // Clear form and uploaded files
-      form.reset();
-      setUploadedFiles([]);
+      setIsSending(false);
       
-      // Call success callback
-      onSuccess();
-    }, 2000);
+      if (emailSent) {
+        toast({
+          title: t("proofSent"),
+          description: t("proofSentDescription"),
+        });
+        
+        // Clear form and uploaded files
+        form.reset();
+        setUploadedFiles([]);
+        
+        // Call success callback
+        onSuccess();
+      } else {
+        throw new Error("Email sending failed");
+      }
+    } catch (error) {
+      setIsSending(false);
+      console.error("Error sending payment proof:", error);
+      toast({
+        title: t("emailSendingFailed"),
+        description: t("emailSendingFailedDescription"),
+        variant: "destructive",
+      });
+    }
   };
 
   return (

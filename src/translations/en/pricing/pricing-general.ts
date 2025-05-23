@@ -1,4 +1,3 @@
-
 export const pricingGeneralTranslations = {
   // General pricing page translations
   "backToDashboard": "Back to Dashboard",
@@ -63,6 +62,8 @@ export const pricingGeneralTranslations = {
   "pleaseSelectProofFile": "Please select a file to upload as payment proof",
   "proofSent": "Payment proof sent",
   "proofSentDescription": "Your payment proof has been sent to truckmatecmms@gmail.com",
+  "emailSendingFailed": "Failed to send email",
+  "emailSendingFailedDescription": "There was an error sending your payment proof. Please try again or send your proof directly to truckmatecmms@gmail.com",
   
   // Export report translations
   "exportReport": "Export Report",
