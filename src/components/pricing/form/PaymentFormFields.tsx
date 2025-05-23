@@ -4,19 +4,10 @@ import { Input } from "@/components/ui/input";
 import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { UseFormReturn } from "react-hook-form";
-import * as z from "zod";
-
-// Form schema defined in the parent component
-type FormSchema = z.infer<typeof z.object({
-  name: z.string().min(2),
-  email: z.string().email(),
-  phone: z.string().min(5),
-  address: z.string().min(5),
-  company: z.string().min(1),
-})>;
+import { PaymentFormData } from "./PaymentFormSchema";
 
 interface PaymentFormFieldsProps {
-  form: UseFormReturn<FormSchema>;
+  form: UseFormReturn<PaymentFormData>;
 }
 
 export function PaymentFormFields({ form }: PaymentFormFieldsProps) {
