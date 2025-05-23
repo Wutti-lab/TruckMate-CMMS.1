@@ -9,7 +9,6 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { QRCodeDialog } from "@/components/pricing/QRCodeDialog";
 import { CustomOfferSection } from "@/components/pricing/CustomOfferSection";
 import { BillingToggle } from "@/components/pricing/BillingToggle";
-import { VolumeDiscounts } from "@/components/pricing/VolumeDiscounts";
 import { SubscriptionPackages } from "@/components/pricing/SubscriptionPackages";
 import { EnterpriseSubscriptionModel } from "@/components/pricing/EnterpriseSubscriptionModel";
 import { UserVehiclePricingTiers } from "@/components/pricing/UserVehiclePricingTiers";
@@ -57,26 +56,6 @@ export default function Pricing() {
     navigate("/dashboard");
   };
 
-  // Volume discounts
-  const volumeDiscounts = [
-    {
-      threshold: t("vehicles50Plus"),
-      discount: "15% " + t("discount"),
-    },
-    {
-      threshold: t("vehicles100Plus"),
-      discount: "20% " + t("discount"),
-    },
-    {
-      threshold: t("yearlyPayment"),
-      discount: "10% " + t("discount"),
-    },
-    {
-      threshold: t("vehicles200Plus"),
-      discount: t("customPricing"),
-    }
-  ];
-
   return (
     <div className="flex flex-col h-full">
       <Header />
@@ -117,9 +96,6 @@ export default function Pricing() {
 
           {/* Enterprise Subscription Model Information */}
           <EnterpriseSubscriptionModel />
-          
-          {/* Volume Discounts */}
-          <VolumeDiscounts discounts={volumeDiscounts} />
           
           {/* QR Code Payment Dialog */}
           <QRCodeDialog
