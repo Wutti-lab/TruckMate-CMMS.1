@@ -1,4 +1,3 @@
-
 // General pricing translations
 export const pricingGeneralTranslations = {
   // General pricing page translations
@@ -23,6 +22,10 @@ export const pricingGeneralTranslations = {
   "scanQrToTransfer": "QR-Code scannen, um auf das Konto zu überweisen",
   "promptPay": "PromptPay",
   "phoneNumber": "Telefon: 080-929-9965",
+  "bankTransfer": "Banküberweisung",
+  "bankAccount": "SBC Bank Konto",
+  "accountName": "Wuttichai Phakchen",
+  "accountNumber": "4320922392",
   "afterTransferring": "Nach der Überweisung senden Sie bitte den Zahlungsnachweis an diese E-Mail: truckmatecmms@gmail.com",
   "confirmPayment": "Zahlung bestätigen",
   "sendPaymentVerification": "Zahlungsnachweis senden:",

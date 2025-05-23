@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -12,6 +11,7 @@ import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { ThaiPaymentDetails } from "./ThaiPaymentDetails";
 
 interface PaymentFormProps {
   open: boolean;
@@ -97,6 +97,11 @@ export function PaymentForm({
             {t("buyNow")}: {planTitle}
           </DialogTitle>
         </DialogHeader>
+        
+        {/* Payment Details Section */}
+        <div className="mb-4">
+          <ThaiPaymentDetails />
+        </div>
         
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -186,10 +191,6 @@ export function PaymentForm({
             </div>
             
             <div className="pt-4">
-              <div className="text-sm text-center text-muted-foreground mb-4">
-                {t("afterTransferring")}
-              </div>
-              
               <Button 
                 type="submit"
                 className="w-full"

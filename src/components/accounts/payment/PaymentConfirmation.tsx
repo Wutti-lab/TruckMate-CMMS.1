@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { FileUpload } from "@/components/inspections/FileUpload";
 import { useToast } from "@/hooks/use-toast";
+import { ThaiPaymentDetails } from "@/components/pricing/ThaiPaymentDetails";
 
 interface PaymentConfirmationProps {
   userEmail: string;
@@ -71,29 +72,7 @@ export function PaymentConfirmation({ userEmail, onBack, onSubmit }: PaymentConf
       <div className="rounded-md border p-4 space-y-2">
         <h3 className="font-medium">Payment Information | ข้อมูลการชำระเงิน</h3>
         
-        <div className="flex flex-col items-center justify-center mt-4 mb-2">
-          <div className="max-w-[200px] mb-4">
-            <img 
-              src="/lovable-uploads/1227902a-2033-4df9-a3c7-382e79e5b997.png" 
-              alt="PromptPay QR Code"
-              className="w-full h-auto"
-            />
-          </div>
-          
-          <div className="text-center">
-            <p className="font-medium">
-              {t("promptPay")}
-            </p>
-            <p className="text-sm">
-              {t("phoneNumber")}
-            </p>
-            <p className="text-sm mt-2">
-              {language === 'th' ? 'อ้างอิง: ' : 
-               language === 'de' ? 'Referenz: ' : 
-               'Reference: '}{userEmail}
-            </p>
-          </div>
-        </div>
+        <ThaiPaymentDetails />
         
         <div className="mt-4 text-center border-t pt-3">
           <p className="font-medium mb-3">
