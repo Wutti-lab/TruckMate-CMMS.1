@@ -32,6 +32,7 @@ export function PaymentForm({
   const { toast } = useToast();
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
   const [isSending, setIsSending] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   
   // Initialize form with react-hook-form and zod validation
   const form = useForm<PaymentFormData>({
@@ -47,6 +48,7 @@ export function PaymentForm({
   
   const handleFilesSelected = (files: File[]) => {
     setUploadedFiles(files);
+    setErrorMessage(null); // Clear any error when files are selected
   };
   
   const onSubmit = async (data: PaymentFormData) => {
@@ -59,6 +61,7 @@ export function PaymentForm({
       return;
     }
     
+    setErrorMessage(null);
     setIsSending(true);
     
     console.log("Form data:", data);
@@ -92,6 +95,9 @@ export function PaymentForm({
     } catch (error) {
       setIsSending(false);
       console.error("Error sending payment proof:", error);
+      
+      setErrorMessage(t("emailSendingFailed"));
+      
       toast({
         title: t("emailSendingFailed"),
         description: t("emailSendingFailedDescription"),
@@ -115,6 +121,15 @@ export function PaymentForm({
             {t("photoProofInstructions")}
           </AlertDescription>
         </Alert>
+        
+        {errorMessage && (
+          <Alert variant="destructive" className="mb-2">
+            <AlertTitle>{t("emailSendingFailed")}</AlertTitle>
+            <AlertDescription className="text-xs">
+              {t("emailSendingFailedDescription")}
+            </AlertDescription>
+          </Alert>
+        )}
         
         {/* Payment Details Section */}
         <div className="mb-3">

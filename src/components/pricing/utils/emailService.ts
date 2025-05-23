@@ -1,5 +1,6 @@
 
 import { PaymentFormData } from "../form/PaymentFormSchema";
+import { supabase } from "@/integrations/supabase/client";
 
 interface EmailWithAttachmentProps {
   formData: PaymentFormData;
@@ -38,6 +39,10 @@ export async function sendEmailWithAttachment({
     // Use the correct URL for the Edge Function
     const response = await fetch("https://mnigsoflxmqoitfwwkrt.supabase.co/functions/v1/send-payment-proof", {
       method: "POST",
+      headers: {
+        // Add the Authorization header with the anon key
+        "Authorization": `Bearer ${supabase.supabaseKey}`
+      },
       body: apiFormData,
     });
     
