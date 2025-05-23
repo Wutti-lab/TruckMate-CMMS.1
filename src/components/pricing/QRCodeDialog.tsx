@@ -71,74 +71,76 @@ export function QRCodeDialog({ open, onOpenChange, onConfirmPayment }: QRCodeDia
         </DialogHeader>
         
         {showThankYou ? (
-          <div className="py-8 text-center">
+          <div className="py-6 text-center">
             <h3 className="text-xl font-semibold mb-2">{t("thankYou")}</h3>
             <p>{t("teamWillContact")}</p>
           </div>
         ) : (
           <>
-            <div className="space-y-4 pt-4">
-              <p className="text-center text-muted-foreground">{t("leaveYourInfo")}</p>
-              
+            <div className="space-y-3">
               <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                  <FormField
-                    control={form.control}
-                    name="name"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>{t("name")}</FormLabel>
-                        <FormControl>
-                          <Input placeholder={t("fullName")} {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
+                  <div className="grid grid-cols-2 gap-3">
+                    <FormField
+                      control={form.control}
+                      name="name"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>{t("name")}</FormLabel>
+                          <FormControl>
+                            <Input placeholder={t("fullName")} {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    
+                    <FormField
+                      control={form.control}
+                      name="phone"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>{t("phone")}</FormLabel>
+                          <FormControl>
+                            <Input placeholder={t("contactNumber")} {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
                   
-                  <FormField
-                    control={form.control}
-                    name="email"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>{t("email")}</FormLabel>
-                        <FormControl>
-                          <Input placeholder="email@example.com" type="email" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                  <div className="grid grid-cols-2 gap-3">
+                    <FormField
+                      control={form.control}
+                      name="email"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>{t("email")}</FormLabel>
+                          <FormControl>
+                            <Input placeholder="email@example.com" type="email" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    
+                    <FormField
+                      control={form.control}
+                      name="company"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>{t("company")}</FormLabel>
+                          <FormControl>
+                            <Input placeholder={t("companyName")} {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
                   
-                  <FormField
-                    control={form.control}
-                    name="phone"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>{t("phone")}</FormLabel>
-                        <FormControl>
-                          <Input placeholder={t("contactNumber")} {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  
-                  <FormField
-                    control={form.control}
-                    name="company"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>{t("company")}</FormLabel>
-                        <FormControl>
-                          <Input placeholder={t("companyName")} {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  
-                  <DialogFooter className="pt-4">
+                  <DialogFooter className="pt-3">
                     <Button type="submit" className="w-full">
                       {t("submit")}
                     </Button>
@@ -147,8 +149,8 @@ export function QRCodeDialog({ open, onOpenChange, onConfirmPayment }: QRCodeDia
               </Form>
             </div>
             
-            <div className="pt-4 border-t">
-              <p className="text-sm text-center text-muted-foreground">{t("paymentDetails")}</p>
+            <div className="pt-3 border-t">
+              <p className="text-xs text-center text-muted-foreground">{t("paymentDetails")}</p>
               <ThaiPaymentDetails />
             </div>
           </>

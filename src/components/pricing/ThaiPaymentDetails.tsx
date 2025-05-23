@@ -1,44 +1,28 @@
 
-import { useLanguage } from "@/contexts/LanguageContext";
+import React from 'react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export function ThaiPaymentDetails() {
   const { t } = useLanguage();
   
   return (
-    <div className="space-y-6 py-4">
-      {/* PromptPay Section */}
-      <div className="flex flex-col items-center justify-center mb-2">
-        <div className="max-w-[200px] mb-4">
+    <div className="mt-2 text-center text-sm">
+      <div className="flex justify-center items-center space-x-3">
+        <div className="text-left flex-1">
+          <p className="font-semibold text-xs">{t("promptPay")}</p>
+          <p className="text-xs">{t("phoneNumber")}</p>
+        </div>
+        <div className="bg-gray-100 p-2 rounded-md">
           <img 
-            src="/lovable-uploads/1227902a-2033-4df9-a3c7-382e79e5b997.png" 
-            alt="PromptPay QR Code"
-            className="w-full h-auto"
+            src="/lovable-uploads/1227902a-2033-4df9-a3c7-382e79e5b997.png"
+            alt="QR Code"
+            className="w-16 h-16 object-contain"
           />
         </div>
-        
-        <div className="text-center">
-          <p className="font-medium">
-            {t("promptPay")}
-          </p>
-          <p className="text-sm">
-            {t("phoneNumber")}
-          </p>
-        </div>
       </div>
-      
-      {/* Bank Account Section */}
-      <div className="border-t pt-4">
-        <h3 className="text-center font-medium mb-2">Bank Transfer</h3>
-        <div className="bg-gray-50 p-4 rounded-md">
-          <p className="font-medium">SBC Bank</p>
-          <p>Account Name: Wuttichai Phakchen</p>
-          <p>Account Number: 4320922392</p>
-        </div>
-      </div>
-      
-      <div className="text-sm text-center mt-4 text-muted-foreground">
+      <p className="mt-2 text-xs text-muted-foreground">
         {t("afterTransferring")}
-      </div>
+      </p>
     </div>
   );
 }
