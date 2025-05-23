@@ -5,7 +5,7 @@ import { navigationTranslations } from "./navigation";
 import { dashboardTranslations } from "./dashboard";
 import { vehicleTranslations } from "./vehicle";
 import { driverTranslations } from "./driver";
-import { pricingTranslations } from "./pricing";
+import { pricingTranslations } from "./pricing";  // This import remains the same
 import { inspectionTranslations } from "./inspection";
 import { advertisementTranslations } from "./advertisement";
 import { customerTranslations } from "./customer";
