@@ -9,8 +9,6 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { QRCodeDialog } from "@/components/pricing/QRCodeDialog";
 import { CustomOfferSection } from "@/components/pricing/CustomOfferSection";
 import { BillingToggle } from "@/components/pricing/BillingToggle";
-import { SubscriptionPackages } from "@/components/pricing/SubscriptionPackages";
-import { EnterpriseSubscriptionModel } from "@/components/pricing/EnterpriseSubscriptionModel";
 import { HostingInfrastructureCosts } from "@/components/pricing/HostingInfrastructureCosts";
 
 export default function Pricing() {
@@ -73,7 +71,7 @@ export default function Pricing() {
           </div>
 
           <div className="mb-8 text-center">
-            <h1 className="text-3xl font-bold mb-2">TruckMate CMMS {t("subscriptionModel")}</h1>
+            <h1 className="text-3xl font-bold mb-2">TruckMate CMMS</h1>
             <p className="text-muted-foreground">
               {t("choosePlan")}
             </p>
@@ -85,20 +83,8 @@ export default function Pricing() {
             onChange={setIsYearly} 
           />
 
-          {/* Hosting and Infrastructure Costs - Now First */}
-          <HostingInfrastructureCosts />
-
-          {/* Subscription Packages */}
-          <div className="mt-16">
-            <h2 className="text-2xl font-bold text-center mb-6">{t("subscriptionModel")}</h2>
-            <SubscriptionPackages 
-              isYearly={isYearly}
-              onSelectPackage={handleSelectPackage}
-            />
-          </div>
-          
-          {/* Enterprise Subscription Model Information */}
-          <EnterpriseSubscriptionModel />
+          {/* Hosting and Infrastructure Costs - Complete Packages */}
+          <HostingInfrastructureCosts isYearly={isYearly} />
           
           {/* QR Code Payment Dialog */}
           <QRCodeDialog

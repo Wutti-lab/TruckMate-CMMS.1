@@ -5,7 +5,11 @@ import { Server, Database, Cloud, Package } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
-export function HostingInfrastructureCosts() {
+interface HostingInfrastructureCostsProps {
+  isYearly: boolean;
+}
+
+export function HostingInfrastructureCosts({ isYearly }: HostingInfrastructureCostsProps) {
   const { t } = useLanguage();
   
   return (
@@ -96,15 +100,15 @@ export function HostingInfrastructureCosts() {
             </Badge>
             <CardTitle className="text-center">{t("completePackageStarter")}</CardTitle>
             <CardDescription className="text-center text-lg font-bold mt-2">
-              7,000 {t("thbMonth")}
+              7,000 {isYearly ? t("thbMonth") : t("thbMonth")}
             </CardDescription>
           </CardHeader>
           <CardContent className="text-sm space-y-4">
             <div>
               <p className="font-medium mb-1">{t("included")}:</p>
               <ul className="space-y-1 list-disc pl-5">
-                <li>{t("starterSubscription")}: 6,000 {t("thbMonth")}</li>
-                <li>{t("basicHosting")}: 1,000 {t("thbMonth")}</li>
+                <li>{t("starterSubscription")}: 6,000 {isYearly ? t("thbMonth") : t("thbMonth")}</li>
+                <li>{t("basicHosting")}: 1,000 {isYearly ? t("thbMonth") : t("thbMonth")}</li>
               </ul>
             </div>
             <div>
@@ -133,15 +137,15 @@ export function HostingInfrastructureCosts() {
             </Badge>
             <CardTitle className="text-center">{t("completePackageStandard")}</CardTitle>
             <CardDescription className="text-center text-lg font-bold mt-2">
-              18,000 {t("thbMonth")}
+              18,000 {isYearly ? t("thbMonth") : t("thbMonth")}
             </CardDescription>
           </CardHeader>
           <CardContent className="text-sm space-y-4">
             <div>
               <p className="font-medium mb-1">{t("included")}:</p>
               <ul className="space-y-1 list-disc pl-5">
-                <li>{t("standardSubscription")}: 15,000 {t("thbMonth")}</li>
-                <li>{t("advancedHosting")}: 3,000 {t("thbMonth")}</li>
+                <li>{t("standardSubscription")}: 15,000 {isYearly ? t("thbMonth") : t("thbMonth")}</li>
+                <li>{t("advancedHosting")}: 3,000 {isYearly ? t("thbMonth") : t("thbMonth")}</li>
               </ul>
             </div>
             <div>
@@ -170,15 +174,15 @@ export function HostingInfrastructureCosts() {
             </Badge>
             <CardTitle className="text-center">{t("completePackageProfessional")}</CardTitle>
             <CardDescription className="text-center text-lg font-bold mt-2">
-              35,000 {t("thbMonth")}
+              35,000 {isYearly ? t("thbMonth") : t("thbMonth")}
             </CardDescription>
           </CardHeader>
           <CardContent className="text-sm space-y-4">
             <div>
               <p className="font-medium mb-1">{t("included")}:</p>
               <ul className="space-y-1 list-disc pl-5">
-                <li>{t("professionalSubscription")}: 30,000 {t("thbMonth")}</li>
-                <li>{t("enterpriseHosting")}: 5,000 {t("thbMonth")}</li>
+                <li>{t("professionalSubscription")}: 30,000 {isYearly ? t("thbMonth") : t("thbMonth")}</li>
+                <li>{t("enterpriseHosting")}: 5,000 {isYearly ? t("thbMonth") : t("thbMonth")}</li>
               </ul>
             </div>
             <div>
