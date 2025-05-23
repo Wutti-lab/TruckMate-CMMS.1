@@ -3,8 +3,12 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { Language, LanguageContextType } from '@/types/language';
 import { getTranslation } from '@/translations';
 
-// Create the language context
-const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
+// Create the language context with a default value to prevent the "must be used within Provider" error
+const LanguageContext = createContext<LanguageContextType>({
+  language: 'en',
+  setLanguage: () => {},
+  t: (key: string) => key,
+});
 
 // Helper function to extract the current language from bilingual text
 export const extractLanguageText = (text: string, language: Language): string => {
@@ -67,5 +71,5 @@ export const useLanguage = (): LanguageContextType => {
   return context;
 };
 
-// Re-export types for convenience - FIX: use 'export type' for re-exporting types
+// Re-export types for convenience
 export type { Language } from '@/types/language';
