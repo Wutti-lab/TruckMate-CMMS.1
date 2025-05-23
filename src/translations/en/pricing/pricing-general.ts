@@ -1,3 +1,4 @@
+
 export const pricingGeneralTranslations = {
   // General pricing page translations
   "backToDashboard": "Back to Dashboard",
@@ -23,7 +24,7 @@ export const pricingGeneralTranslations = {
   "promptPay": "PromptPay",
   "bankTransfer": "Bank Transfer",
   "bankAccount": "SCB Bank Account",
-  "accountName": "Wuttichai Phakchen",
+  "accountName": "Wuttichai Phakchuen",
   "accountNumber": "4320922392",
   "phoneNumber": "Phone: 080-929-9965",
   "afterTransferring": "After transferring, please send proof of payment to this email: truckmatecmms@gmail.com",

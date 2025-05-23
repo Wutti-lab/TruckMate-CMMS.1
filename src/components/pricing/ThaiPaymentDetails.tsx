@@ -17,6 +17,7 @@ export function ThaiPaymentDetails() {
           <div className="mt-4">
             <p className="font-semibold">{t("bankAccount")}</p>
             <p>SCB</p>
+            <p>{t("accountName")}: Wuttichai Phakchuen</p>
             <p>{t("accountNumber")}: 4320922392</p>
           </div>
         </div>

@@ -38,6 +38,7 @@ export const pricingGeneralTranslations = {
   "afterTransferring": "Nach der Überweisung senden Sie bitte einen Zahlungsnachweis an truckmatecmms@gmail.com",
   "confirmPayment": "Zahlung bestätigen",
   "bankAccount": "SCB Bankkonto",
+  "accountName": "Kontoinhaber: Wuttichai Phakchuen",
   "accountNumber": "Kontonummer: 4320922392",
   "clickToEnlarge": "Klicken zum Vergrößern",
 };
