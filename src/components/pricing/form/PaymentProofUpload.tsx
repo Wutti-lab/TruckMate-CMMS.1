@@ -19,7 +19,9 @@ export function PaymentProofUpload({ onFilesSelected, uploadedFiles }: PaymentPr
       <FileUpload
         onFilesSelected={onFilesSelected}
         accept=".pdf,.jpg,.jpeg,.png"
-        icon={<ArrowUp className="h-6 w-6 text-muted-foreground" />}
+        icon={<ArrowUp className="h-6 w-6" />}
+        className="bg-white border-gray-200"
+        iconClassName="text-gray-500"
       />
       
       {uploadedFiles.length > 0 && (

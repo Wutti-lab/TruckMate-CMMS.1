@@ -2,19 +2,24 @@
 import React, { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { FilePlus } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface FileUploadProps {
   onFilesSelected: (files: File[]) => void;
   accept?: string;
   icon?: React.ReactNode;
   required?: boolean;
+  className?: string;
+  iconClassName?: string;
 }
 
 export function FileUpload({ 
   onFilesSelected, 
   accept = ".pdf,.doc,.docx,.xls,.xlsx,.csv", 
   icon,
-  required = false
+  required = false,
+  className = "",
+  iconClassName = ""
 }: FileUploadProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [dragActive, setDragActive] = useState(false);
@@ -109,9 +114,9 @@ export function FileUpload({
 
   return (
     <div 
-      className={`border-2 border-dashed rounded-md p-4 text-center transition-colors ${
+      className={cn(`border-2 border-dashed rounded-md p-4 text-center transition-colors ${
         dragActive ? "border-primary bg-primary/5" : "border-muted-foreground/20"
-      }`}
+      }`, className)}
       onDragEnter={handleDrag}
       onDragOver={handleDrag}
       onDragLeave={handleDrag}
@@ -126,7 +131,11 @@ export function FileUpload({
         required={required}
       />
       <div className="flex flex-col items-center justify-center gap-1">
-        {icon || <FilePlus className="h-8 w-8 text-muted-foreground" />}
+        {icon ? (
+          <div className={iconClassName}>{icon}</div>
+        ) : (
+          <FilePlus className="h-8 w-8 text-muted-foreground" />
+        )}
         <div className="space-y-1">
           <p className="text-xs font-medium">
             {required ? '* ' : ''}Upload photo or PDF | อัปโหลดรูปภาพหรือ PDF
