@@ -1,3 +1,4 @@
+
 // Pricing related translations
 export const pricingTranslations = {
   "choosePlan": "Wählen Sie den Plan, der Ihren Anforderungen entspricht",
@@ -99,6 +100,7 @@ export const pricingTranslations = {
   "vehicles200Plus": "Ab 200 Fahrzeugen",
   "yearlyPayment": "Jährliche Zahlung",
   "customPricing": "Individuelle Preisgestaltung",
+  "detailedPricing": "Detaillierte Preisstaffeln",
   
   // New subscription model translations
   "subscriptionModel": "Abo-Modell",

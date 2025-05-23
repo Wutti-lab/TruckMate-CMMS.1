@@ -1,3 +1,4 @@
+
 export const pricingTranslations = {
   // Pricing Page
   "backToDashboard": "Back to Dashboard",
@@ -100,6 +101,7 @@ export const pricingTranslations = {
   "vehicles200Plus": "200+ vehicles",
   "yearlyPayment": "Yearly payment",
   "customPricing": "Custom pricing",
+  "detailedPricing": "Detailed Pricing Tiers",
   
   // New subscription model translations
   "subscriptionModel": "Subscription Model",

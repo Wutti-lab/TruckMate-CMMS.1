@@ -1,3 +1,4 @@
+
 // Payment related translations
 export const pricingTranslations = {
   "choosePlan": "เลือกแผนที่เหมาะกับความต้องการของคุณ",
@@ -99,6 +100,7 @@ export const pricingTranslations = {
   "vehicles200Plus": "ตั้งแต่ 200 คันขึ้นไป",
   "yearlyPayment": "การชำระเงินรายปี",
   "customPricing": "ราคาที่กำหนดเอง",
+  "detailedPricing": "รายละเอียดระดับราคา",
   
   // New subscription model translations
   "subscriptionModel": "รูปแบบการสมัครสมาชิก",

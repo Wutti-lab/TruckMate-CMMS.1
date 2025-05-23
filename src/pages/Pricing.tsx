@@ -12,6 +12,7 @@ import { BillingToggle } from "@/components/pricing/BillingToggle";
 import { VolumeDiscounts } from "@/components/pricing/VolumeDiscounts";
 import { SubscriptionPackages } from "@/components/pricing/SubscriptionPackages";
 import { EnterpriseSubscriptionModel } from "@/components/pricing/EnterpriseSubscriptionModel";
+import { UserVehiclePricingTiers } from "@/components/pricing/UserVehiclePricingTiers";
 
 export default function Pricing() {
   const { toast } = useToast();
@@ -110,6 +111,9 @@ export default function Pricing() {
             isYearly={isYearly}
             onSelectPackage={handleSelectPackage}
           />
+          
+          {/* Detailed Pricing Tiers */}
+          <UserVehiclePricingTiers isYearly={isYearly} />
 
           {/* Enterprise Subscription Model Information */}
           <EnterpriseSubscriptionModel />
