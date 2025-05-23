@@ -3,13 +3,15 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { Database, Cloud, Layers, Server } from "lucide-react";
 import { InfrastructureCard } from "./InfrastructureCard";
 
-export function InfrastructureSection() {
+interface InfrastructureSectionProps {
+  isYearly: boolean;
+}
+
+export function InfrastructureSection({ isYearly }: InfrastructureSectionProps) {
   const { t } = useLanguage();
   
   return (
     <>
-      <h2 className="text-2xl font-bold text-center mb-6">{t("hostingAndInfrastructure")}</h2>
-      
       <div className="grid md:grid-cols-3 gap-6">
         {/* Cloud Hosting */}
         <InfrastructureCard

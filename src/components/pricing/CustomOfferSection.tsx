@@ -4,10 +4,10 @@ import { QrCode } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 interface CustomOfferSectionProps {
-  onClick: () => void;
+  onCustomOfferClick: () => void;
 }
 
-export function CustomOfferSection({ onClick }: CustomOfferSectionProps) {
+export function CustomOfferSection({ onCustomOfferClick }: CustomOfferSectionProps) {
   const { t } = useLanguage();
   
   return (
@@ -16,7 +16,7 @@ export function CustomOfferSection({ onClick }: CustomOfferSectionProps) {
       <p className="mb-4 max-w-2xl mx-auto">
         {t("contactUsForTailoredSolutions")}
       </p>
-      <Button variant="outline" onClick={onClick}>
+      <Button variant="outline" onClick={onCustomOfferClick}>
         <QrCode className="mr-2 h-4 w-4" />
         {t("contact")}
       </Button>
