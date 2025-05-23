@@ -11,6 +11,7 @@ import { CustomOfferSection } from "@/components/pricing/CustomOfferSection";
 import { BillingToggle } from "@/components/pricing/BillingToggle";
 import { SubscriptionPackages } from "@/components/pricing/SubscriptionPackages";
 import { EnterpriseSubscriptionModel } from "@/components/pricing/EnterpriseSubscriptionModel";
+import { HostingInfrastructureCosts } from "@/components/pricing/HostingInfrastructureCosts";
 
 export default function Pricing() {
   const { toast } = useToast();
@@ -89,6 +90,9 @@ export default function Pricing() {
             isYearly={isYearly}
             onSelectPackage={handleSelectPackage}
           />
+          
+          {/* Hosting and Infrastructure Costs */}
+          <HostingInfrastructureCosts />
           
           {/* Enterprise Subscription Model Information */}
           <EnterpriseSubscriptionModel />

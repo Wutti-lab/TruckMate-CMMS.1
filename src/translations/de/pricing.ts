@@ -143,4 +143,45 @@ export const pricingTranslations = {
   "monthly": "Monatlich",
   "thbYear": "THB/Jahr",
   "thbMonth": "THB/Monat",
+  
+  // Hosting and infrastructure translations
+  "hostingAndInfrastructure": "Hosting & Infrastruktur",
+  "cloudHosting": "Cloud-Hosting",
+  "cloudHostingPrice": "Ab 300 THB/Monat",
+  "cloudHostingDetail1": "Nutzt DigitalOcean/Vercel/AWS für zuverlässiges Hosting",
+  "cloudHostingDetail2": "Automatische Skalierung basierend auf Nutzerlast",
+  "cloudHostingDetail3": "99,9% Betriebszeit-Garantie",
+  
+  "serverInfrastructure": "Server-Infrastruktur",
+  "serverInfrastructurePrice": "Ab 500 THB/Monat",
+  "serverInfrastructureDetail1": "Hochleistungs-virtuelle Maschinen",
+  "serverInfrastructureDetail2": "Lastausgleich für Unternehmenskunden",
+  "serverInfrastructureDetail3": "Tägliche Backups inklusive",
+  
+  "databaseCosts": "Datenbankdienste",
+  "databasePrice": "Ab 200 THB/Monat",
+  "databaseDetail1": "PostgreSQL-Datenbank mit regelmäßigen Backups",
+  "databaseDetail2": "Skaliert mit Datenvolumen",
+  "databaseDetail3": "Datenverschlüsselung im Ruhezustand und bei der Übertragung",
+  
+  "costBreakdown": "Kosten-Gewinn-Analyse",
+  "costBreakdownDescription": "Aufschlüsselung der Kosten und geschätzten Gewinne für jede Abonnementstufe",
+  
+  "starterHostingCost": "Hosting-Kosten: ~1.000 THB/Monat",
+  "starterSupportCost": "Support-Kosten: ~800 THB/Monat",
+  "starterDevelopmentCost": "Entwicklungswartung: ~500 THB/Monat",
+  "starterTotalCost": "Gesamtkosten: ~2.300 THB/Monat",
+  "starterProfit": "Gewinn bei 6.000 THB: ~3.700 THB/Monat",
+  
+  "standardHostingCost": "Hosting-Kosten: ~3.000 THB/Monat",
+  "standardSupportCost": "Support-Kosten: ~2.000 THB/Monat",
+  "standardDevelopmentCost": "Entwicklungswartung: ~1.000 THB/Monat",
+  "standardTotalCost": "Gesamtkosten: ~6.000 THB/Monat",
+  "standardProfit": "Gewinn bei 15.000 THB: ~9.000 THB/Monat",
+  
+  "professionalHostingCost": "Hosting-Kosten: ~7.000 THB/Monat",
+  "professionalSupportCost": "Support-Kosten: ~4.000 THB/Monat",
+  "professionalDevelopmentCost": "Entwicklungswartung: ~2.000 THB/Monat",
+  "professionalTotalCost": "Gesamtkosten: ~13.000 THB/Monat",
+  "professionalProfit": "Gewinn bei 30.000 THB: ~17.000 THB/Monat",
 };

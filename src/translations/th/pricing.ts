@@ -149,4 +149,45 @@ export const pricingTranslations = {
   "monthly": "รายเดือน",
   "thbYear": "บาท/ปี",
   "thbMonth": "บาท/เดือน",
+  
+  // Hosting and infrastructure translations
+  "hostingAndInfrastructure": "โฮสติ้งและโครงสร้างพื้นฐาน",
+  "cloudHosting": "คลาวด์โฮสติ้ง",
+  "cloudHostingPrice": "เริ่มต้นที่ 300 บาท/เดือน",
+  "cloudHostingDetail1": "ใช้ DigitalOcean/Vercel/AWS สำหรับการโฮสติ้งที่เชื่อถือได้",
+  "cloudHostingDetail2": "ปรับขนาดอัตโนมัติตามโหลดของผู้ใช้",
+  "cloudHostingDetail3": "รับประกันเวลาทำงาน 99.9%",
+  
+  "serverInfrastructure": "โครงสร้างพื้นฐานเซิร์ฟเวอร์",
+  "serverInfrastructurePrice": "เริ่มต้นที่ 500 บาท/เดือน",
+  "serverInfrastructureDetail1": "เครื่องเสมือนประสิทธิภาพสูง",
+  "serverInfrastructureDetail2": "การปรับสมดุลโหลดสำหรับลูกค้าองค์กร",
+  "serverInfrastructureDetail3": "รวมการสำรองข้อมูลรายวัน",
+  
+  "databaseCosts": "บริการฐานข้อมูล",
+  "databasePrice": "เริ่มต้นที่ 200 บาท/เดือน",
+  "databaseDetail1": "ฐานข้อมูล PostgreSQL พร้อมการสำรองข้อมูลเป็นประจำ",
+  "databaseDetail2": "ปรับขนาดตามปริมาณข้อมูล",
+  "databaseDetail3": "การเข้ารหัสข้อมูลเมื่อไม่ได้ใช้งานและระหว่างการส่ง",
+  
+  "costBreakdown": "การวิเคราะห์ต้นทุนและกำไร",
+  "costBreakdownDescription": "การแจกแจงต้นทุนและกำไรโดยประมาณสำหรับแต่ละระดับการสมัครสมาชิก",
+  
+  "starterHostingCost": "ต้นทุนโฮสติ้ง: ~1,000 บาท/เดือน",
+  "starterSupportCost": "ต้นทุนการสนับสนุน: ~800 บาท/เดือน",
+  "starterDevelopmentCost": "การบำรุงรักษาการพัฒนา: ~500 บาท/เดือน",
+  "starterTotalCost": "ต้นทุนรวม: ~2,300 บาท/เดือน",
+  "starterProfit": "กำไรที่ 6,000 บาท: ~3,700 บาท/เดือน",
+  
+  "standardHostingCost": "ต้นทุนโฮสติ้ง: ~3,000 บาท/เดือน",
+  "standardSupportCost": "ต้นทุนการสนับสนุน: ~2,000 บาท/เดือน",
+  "standardDevelopmentCost": "การบำรุงรักษาการพัฒนา: ~1,000 บาท/เดือน",
+  "standardTotalCost": "ต้นทุนรวม: ~6,000 บาท/เดือน",
+  "standardProfit": "กำไรที่ 15,000 บาท: ~9,000 บาท/เดือน",
+  
+  "professionalHostingCost": "ต้นทุนโฮสติ้ง: ~7,000 บาท/เดือน",
+  "professionalSupportCost": "ต้นทุนการสนับสนุน: ~4,000 บาท/เดือน",
+  "professionalDevelopmentCost": "การบำรุงรักษาการพัฒนา: ~2,000 บาท/เดือน",
+  "professionalTotalCost": "ต้นทุนรวม: ~13,000 บาท/เดือน",
+  "professionalProfit": "กำไรที่ 30,000 บาท: ~17,000 บาท/เดือน",
 };
