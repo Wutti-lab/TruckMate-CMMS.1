@@ -3,7 +3,7 @@ import React from "react";
 import { Label } from "@/components/ui/label";
 import { FileUpload } from "@/components/inspections/FileUpload";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { ArrowUp } from "lucide-react";
+import { Upload } from "lucide-react";
 
 interface PaymentProofUploadProps {
   onFilesSelected: (files: File[]) => void;
@@ -19,7 +19,9 @@ export function PaymentProofUpload({ onFilesSelected, uploadedFiles }: PaymentPr
       <FileUpload
         onFilesSelected={onFilesSelected}
         accept=".pdf,.jpg,.jpeg,.png"
-        icon={<ArrowUp className="h-6 w-6 text-muted-foreground" />}
+        icon={<Upload className="h-6 w-6 text-muted-foreground" />}
+        className="bg-white border-gray-200 hover:bg-gray-50"
+        iconClassName="text-gray-400"
       />
       
       {uploadedFiles.length > 0 && (
