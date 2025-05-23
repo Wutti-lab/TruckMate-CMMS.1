@@ -35,8 +35,8 @@ export async function sendEmailWithAttachment({
     // Add target email address
     apiFormData.append("to", "truckmatecmms@gmail.com");
     
-    // Use the Supabase Edge Function to send the email
-    const response = await fetch("/api/send-payment-proof", {
+    // Use the correct URL for the Edge Function
+    const response = await fetch("https://mnigsoflxmqoitfwwkrt.supabase.co/functions/v1/send-payment-proof", {
       method: "POST",
       body: apiFormData,
     });

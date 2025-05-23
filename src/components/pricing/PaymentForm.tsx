@@ -13,6 +13,7 @@ import { PaymentFormFields } from "./form/PaymentFormFields";
 import { PaymentProofUpload } from "./form/PaymentProofUpload";
 import { paymentFormSchema, PaymentFormData } from "./form/PaymentFormSchema";
 import { sendEmailWithAttachment } from "./utils/emailService";
+import { Loader2 } from "lucide-react";
 
 interface PaymentFormProps {
   open: boolean;
@@ -121,7 +122,7 @@ export function PaymentForm({
         </div>
         
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
             <PaymentFormFields form={form} />
             
             <PaymentProofUpload 
@@ -135,7 +136,14 @@ export function PaymentForm({
                 className="w-full"
                 disabled={isSending}
               >
-                {isSending ? t("sending") : t("sendPaymentProof")}
+                {isSending ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    {t("sending")}
+                  </>
+                ) : (
+                  t("sendPaymentProof")
+                )}
               </Button>
             </div>
           </form>
