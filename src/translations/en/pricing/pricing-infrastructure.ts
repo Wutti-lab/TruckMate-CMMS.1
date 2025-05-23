@@ -2,6 +2,18 @@
 export const pricingInfrastructureTranslations = {
   // Hosting and infrastructure translations
   "hostingAndInfrastructure": "Hosting & Infrastructure",
+  
+  // SaaS Business Model translations
+  "saasBusinessModel": "SaaS Business Model",
+  "saasModelDescription": "Subscription-based service",
+  "saasModelDetail1": "Recurring revenue model with monthly/yearly billing",
+  "saasModelDetail2": "Multi-tenant architecture with secure data isolation",
+  "saasModelDetail3": "Automatic updates and continuous improvements",
+  "saasFeature1": "Predictable revenue streams and cash flow",
+  "saasFeature2": "Lower customer acquisition costs over time",
+  "saasFeature3": "Scalable customer base without proportional cost increase",
+  
+  // Cloud hosting translations
   "cloudHosting": "Cloud Hosting",
   "cloudHostingPrice": "From 300 THB/month",
   "cloudHostingDetail1": "Uses DigitalOcean/Vercel/AWS for reliable hosting",
@@ -59,4 +71,11 @@ export const pricingInfrastructureTranslations = {
   "ownUserAccounts": "Own user accounts & roles",
   "ownMachineData": "Own machine & location data",
   "ownReports": "Own reports & maintenance plans",
+  
+  // SaaS metrics
+  "keyMetrics": "Key SaaS Metrics",
+  "mrr": "Monthly Recurring Revenue (MRR)",
+  "churnRate": "Churn Rate", 
+  "cac": "Customer Acquisition Cost (CAC)",
+  "ltv": "Customer Lifetime Value (LTV)"
 };

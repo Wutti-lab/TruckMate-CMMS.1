@@ -1,8 +1,7 @@
 
 import { useLanguage } from "@/contexts/LanguageContext";
-import { Server, Database, Cloud } from "lucide-react";
+import { Server, Database, Cloud, Layers } from "lucide-react";
 import { InfrastructureCard } from "./InfrastructureCard";
-import { Card, CardContent } from "@/components/ui/card";
 
 export function InfrastructureSection() {
   const { t } = useLanguage();
@@ -11,7 +10,24 @@ export function InfrastructureSection() {
     <>
       <h2 className="text-2xl font-bold text-center mb-6">{t("hostingAndInfrastructure")}</h2>
       
-      <div className="grid md:grid-cols-3 gap-6">
+      <div className="grid md:grid-cols-4 gap-6">
+        {/* SaaS Business Model */}
+        <InfrastructureCard
+          icon={Layers}
+          title={t("saasBusinessModel")}
+          description={t("saasModelDescription")}
+          details={[
+            t("saasModelDetail1"),
+            t("saasModelDetail2"),
+            t("saasModelDetail3")
+          ]}
+          saasFeatures={[
+            t("saasFeature1"),
+            t("saasFeature2"),
+            t("saasFeature3")
+          ]}
+        />
+      
         {/* Cloud Hosting */}
         <InfrastructureCard
           icon={Cloud}
