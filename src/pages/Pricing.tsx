@@ -33,16 +33,14 @@ export default function Pricing() {
   };
 
   const handleCustomOfferClick = () => {
+    setSelectedPackage("Custom");
     setShowQrCode(true);
   };
 
   const handleSelectPackage = (packageName: string) => {
-    if (packageName === t("enterprisePackage")) {
-      handleCustomOfferClick();
-    } else {
-      setSelectedPackage(packageName);
-      setShowQrCode(true);
-    }
+    console.log("Selected package:", packageName);
+    setSelectedPackage(packageName);
+    setShowQrCode(true);
   };
 
   const handlePaymentComplete = (plan: string) => {
@@ -84,7 +82,13 @@ export default function Pricing() {
           />
 
           {/* Hosting and Infrastructure Costs - Complete Packages */}
-          <HostingInfrastructureCosts isYearly={isYearly} />
+          <HostingInfrastructureCosts 
+            isYearly={isYearly} 
+            onSelectPackage={handleSelectPackage}
+          />
+          
+          {/* Custom Offer Section */}
+          <CustomOfferSection onCustomOfferClick={handleCustomOfferClick} />
           
           {/* QR Code Payment Dialog */}
           <QRCodeDialog

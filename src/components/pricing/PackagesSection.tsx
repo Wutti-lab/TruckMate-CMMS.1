@@ -5,9 +5,10 @@ import { prices } from "./utils/pricing-utils";
 
 interface PackagesSectionProps {
   isYearly: boolean;
+  onSelectPackage: (packageName: string) => void;
 }
 
-export function PackagesSection({ isYearly }: PackagesSectionProps) {
+export function PackagesSection({ isYearly, onSelectPackage }: PackagesSectionProps) {
   const { t } = useLanguage();
   
   return (
@@ -35,6 +36,7 @@ export function PackagesSection({ isYearly }: PackagesSectionProps) {
           thbMonth={isYearly ? t("thbYear") : t("thbMonth")}
           includedText={t("included")}
           featuresText={t("packageFeatures")}
+          onBuy={() => onSelectPackage(t("completePackageStarter"))}
         />
         
         {/* Standard Complete Package */}
@@ -59,6 +61,7 @@ export function PackagesSection({ isYearly }: PackagesSectionProps) {
           includedText={t("included")}
           featuresText={t("packageFeatures")}
           isHighlighted={true}
+          onBuy={() => onSelectPackage(t("completePackageStandard"))}
         />
         
         {/* Professional Complete Package */}
@@ -82,6 +85,7 @@ export function PackagesSection({ isYearly }: PackagesSectionProps) {
           thbMonth={isYearly ? t("thbYear") : t("thbMonth")}
           includedText={t("included")}
           featuresText={t("packageFeatures")}
+          onBuy={() => onSelectPackage(t("completePackageProfessional"))}
         />
       </div>
     </>

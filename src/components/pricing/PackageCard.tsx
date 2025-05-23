@@ -22,6 +22,7 @@ interface PackageCardProps {
   includedText: string;
   featuresText: string;
   isHighlighted?: boolean;
+  onBuy: () => void;
 }
 
 export function PackageCard({
@@ -39,7 +40,8 @@ export function PackageCard({
   thbMonth,
   includedText,
   featuresText,
-  isHighlighted = false
+  isHighlighted = false,
+  onBuy
 }: PackageCardProps) {
   return (
     <Card className={`border-2 ${isHighlighted 
@@ -72,7 +74,12 @@ export function PackageCard({
           featuresText={featuresText}
         />
         
-        <Button className="w-full bg-fleet-600 mt-4">{buyText}</Button>
+        <Button 
+          className="w-full bg-fleet-600 mt-4"
+          onClick={onBuy}
+        >
+          {buyText}
+        </Button>
       </CardContent>
     </Card>
   );
