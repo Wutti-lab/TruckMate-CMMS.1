@@ -58,4 +58,9 @@ export const pricingGeneralTranslations = {
   "proofSentDescription": "Ihr Zahlungsnachweis wurde an truckmatecmms@gmail.com gesendet",
   "emailSendingFailed": "E-Mail-Versand fehlgeschlagen",
   "emailSendingFailedDescription": "Beim Senden Ihres Zahlungsnachweises ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut oder senden Sie Ihren Nachweis direkt an truckmatecmms@gmail.com",
+  
+  // New translations for direct payment
+  "sendPaymentProofDirectly": "Zahlungsnachweis direkt senden",
+  "uploadPaymentProofNow": "Zahlungsnachweis jetzt hochladen",
+  "directPayment": "Direktzahlung",
 };

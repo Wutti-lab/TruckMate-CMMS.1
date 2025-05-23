@@ -96,4 +96,9 @@ export const pricingGeneralTranslations = {
   "requestReceived": "Request Received",
   "teamWillContact": "Our team will contact you as soon as possible",
   "thankYou": "Thank you for your interest!",
+  
+  // New translations for direct payment
+  "sendPaymentProofDirectly": "Send Payment Proof Directly",
+  "uploadPaymentProofNow": "Upload Payment Proof Now",
+  "directPayment": "Direct Payment",
 };

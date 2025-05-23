@@ -10,6 +10,11 @@ import { QRCodeDialog } from "@/components/pricing/QRCodeDialog";
 import { CustomOfferSection } from "@/components/pricing/CustomOfferSection";
 import { BillingToggle } from "@/components/pricing/BillingToggle";
 import { HostingInfrastructureCosts } from "@/components/pricing/HostingInfrastructureCosts";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { PaymentForm } from "@/components/pricing/PaymentForm";
+import { ThaiPaymentDetails } from "@/components/pricing/ThaiPaymentDetails";
+import { AlertCircle } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 export default function Pricing() {
   const { toast } = useToast();
@@ -19,6 +24,7 @@ export default function Pricing() {
   const { t } = useLanguage();
   const [isYearly, setIsYearly] = useState(true);
   const [selectedPackage, setSelectedPackage] = useState<string | null>(null);
+  const [showPaymentForm, setShowPaymentForm] = useState(false);
 
   const handlePayment = (plan: string) => {
     toast({
@@ -42,6 +48,10 @@ export default function Pricing() {
     setSelectedPackage(packageName);
     setShowQrCode(true);
   };
+  
+  const handleDirectPaymentUpload = () => {
+    setShowPaymentForm(true);
+  };
 
   const handlePaymentComplete = (plan: string) => {
     toast({
@@ -50,6 +60,14 @@ export default function Pricing() {
     });
     setShowQrCode(false);
     navigate("/dashboard");
+  };
+  
+  const handlePaymentSuccess = () => {
+    setShowPaymentForm(false);
+    toast({
+      title: t("proofSent"),
+      description: t("proofSentDescription"),
+    });
   };
 
   return (
@@ -75,6 +93,36 @@ export default function Pricing() {
             </p>
           </div>
 
+          {/* Direct Payment Upload Card */}
+          <Card className="mb-8 border-2 border-green-200">
+            <CardHeader className="pb-3">
+              <CardTitle className="text-center text-green-700">{t("sendPaymentProofDirectly")}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="mb-4">
+                <Alert variant="warning">
+                  <AlertCircle className="h-4 w-4" />
+                  <AlertDescription>
+                    {t("photoProofInstructions")}
+                  </AlertDescription>
+                </Alert>
+              </div>
+              
+              <div className="mb-4">
+                <ThaiPaymentDetails />
+              </div>
+              
+              <div className="flex justify-center">
+                <Button 
+                  onClick={handleDirectPaymentUpload}
+                  className="bg-green-600 hover:bg-green-700"
+                >
+                  {t("uploadPaymentProof")}
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+
           {/* Billing toggle */}
           <BillingToggle 
             isYearly={isYearly} 
@@ -95,6 +143,14 @@ export default function Pricing() {
             open={showQrCode}
             onOpenChange={setShowQrCode}
             onConfirmPayment={() => handlePaymentComplete(selectedPackage || "Custom")}
+          />
+          
+          {/* Direct Payment Form Dialog */}
+          <PaymentForm
+            open={showPaymentForm}
+            onOpenChange={setShowPaymentForm}
+            onSuccess={handlePaymentSuccess}
+            planTitle={selectedPackage || t("directPayment")}
           />
         </div>
       </main>

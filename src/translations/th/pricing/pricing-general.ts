@@ -92,4 +92,9 @@ export const pricingGeneralTranslations = {
   "formError": "เกิดข้อผิดพลาดในการประมวลผลคำขอของคุณ",
   "freeTrialBadge": "ทดลองใช้ฟรี 3 เดือน",
   "freeTrialDescription": "ทดลองใช้ฟีเจอร์ทั้งหมดฟรี 3 เดือน ไม่ต้องใช้บัตรเครดิต",
+  
+  // New translations for direct payment
+  "sendPaymentProofDirectly": "ส่งหลักฐานการชำระเงินโดยตรง",
+  "uploadPaymentProofNow": "อัปโหลดหลักฐานการชำระเงินตอนนี้",
+  "directPayment": "การชำระเงินโดยตรง",
 };
