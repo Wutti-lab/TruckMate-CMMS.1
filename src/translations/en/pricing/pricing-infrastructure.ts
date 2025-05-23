@@ -33,27 +33,18 @@ export const pricingInfrastructureTranslations = {
   "prioritySupport": "Priority email & phone support (response within 24h)",
   "dedicatedSupport": "Dedicated support team (response within 4h)",
   
-  // Cost breakdown section
-  "costBreakdown": "Cost-Profit Analysis",
-  "costBreakdownDescription": "Breakdown of costs and estimated profits for each subscription tier",
+  // Infrastructure recommendations
+  "cloudProviderRecommendation": "Use cost-effective cloud providers like Vercel, DigitalOcean, or Linode",
+  "cloudPricingRecommendation": "Start with affordable plans ($5-10/month on DigitalOcean) for small to medium apps",
+  "cloudSetupRecommendation": "Create account, set up server/container, configure domain and SSL (Let's Encrypt)",
   
-  "starterHostingCost": "Hosting costs: ~1,000 THB/month",
-  "starterSupportCost": "Support costs: ~800 THB/month",
-  "starterDevelopmentCost": "Development maintenance: ~500 THB/month",
-  "starterTotalCost": "Total costs: ~2,300 THB/month",
-  "starterProfit": "Profit at 6,000 THB: ~3,700 THB/month",
+  "serverHostingRecommendation": "Use shared hosting or VPS servers to start with",
+  "serverScalingRecommendation": "Set up a PostgreSQL database (e.g. elephantSQL's free tier for starters)",
+  "serverAutomationRecommendation": "Consider Kubernetes for later scaling (single server sufficient initially)",
   
-  "standardHostingCost": "Hosting costs: ~3,000 THB/month",
-  "standardSupportCost": "Support costs: ~2,000 THB/month",
-  "standardDevelopmentCost": "Development maintenance: ~1,000 THB/month",
-  "standardTotalCost": "Total costs: ~6,000 THB/month",
-  "standardProfit": "Profit at 15,000 THB: ~9,000 THB/month",
-  
-  "professionalHostingCost": "Hosting costs: ~7,000 THB/month",
-  "professionalSupportCost": "Support costs: ~4,000 THB/month",
-  "professionalDevelopmentCost": "Development maintenance: ~2,000 THB/month",
-  "professionalTotalCost": "Total costs: ~13,000 THB/month",
-  "professionalProfit": "Profit at 30,000 THB: ~17,000 THB/month",
+  "databaseProviderRecommendation": "Store user data in PostgreSQL or MySQL database",
+  "userManagementRecommendation": "Use Auth0 (free up to 700 users) or Firebase Authentication",
+  "dataStorageRecommendation": "Start with core functions (maintenance, asset management) and add more later",
   
   // Additional infrastructure components
   "includedInSubscription": "Included in subscription",

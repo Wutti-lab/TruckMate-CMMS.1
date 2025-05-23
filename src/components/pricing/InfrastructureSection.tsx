@@ -2,6 +2,7 @@
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Server, Database, Cloud } from "lucide-react";
 import { InfrastructureCard } from "./InfrastructureCard";
+import { Card, CardContent } from "@/components/ui/card";
 
 export function InfrastructureSection() {
   const { t } = useLanguage();
@@ -21,6 +22,11 @@ export function InfrastructureSection() {
             t("cloudHostingDetail2"),
             t("cloudHostingDetail3")
           ]}
+          recommendations={[
+            t("cloudProviderRecommendation"),
+            t("cloudPricingRecommendation"),
+            t("cloudSetupRecommendation")
+          ]}
         />
         
         {/* Server Infrastructure */}
@@ -33,6 +39,11 @@ export function InfrastructureSection() {
             t("serverInfrastructureDetail2"),
             t("serverInfrastructureDetail3")
           ]}
+          recommendations={[
+            t("serverHostingRecommendation"),
+            t("serverScalingRecommendation"),
+            t("serverAutomationRecommendation")
+          ]}
         />
         
         {/* Database */}
@@ -44,6 +55,11 @@ export function InfrastructureSection() {
             t("databaseDetail1"),
             t("databaseDetail2"),
             t("databaseDetail3")
+          ]}
+          recommendations={[
+            t("databaseProviderRecommendation"),
+            t("userManagementRecommendation"),
+            t("dataStorageRecommendation")
           ]}
         />
       </div>

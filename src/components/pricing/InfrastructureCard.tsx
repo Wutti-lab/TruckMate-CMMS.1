@@ -8,9 +8,16 @@ interface InfrastructureCardProps {
   title: string;
   description: string;
   details: string[];
+  recommendations?: string[];
 }
 
-export function InfrastructureCard({ icon: Icon, title, description, details }: InfrastructureCardProps) {
+export function InfrastructureCard({ 
+  icon: Icon, 
+  title, 
+  description, 
+  details, 
+  recommendations 
+}: InfrastructureCardProps) {
   return (
     <Card>
       <CardHeader className="space-y-1">
@@ -30,6 +37,18 @@ export function InfrastructureCard({ icon: Icon, title, description, details }: 
             <li key={index}>{detail}</li>
           ))}
         </ul>
+        
+        {recommendations && recommendations.length > 0 && (
+          <>
+            <div className="border-t my-4 border-gray-200"></div>
+            <h4 className="font-medium mb-2 text-fleet-700">Empfehlungen:</h4>
+            <ul className="space-y-2 text-sm list-disc pl-4">
+              {recommendations.map((recommendation, index) => (
+                <li key={`rec-${index}`} className="text-gray-700">{recommendation}</li>
+              ))}
+            </ul>
+          </>
+        )}
       </CardContent>
     </Card>
   );
