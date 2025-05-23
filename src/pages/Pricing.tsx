@@ -85,14 +85,17 @@ export default function Pricing() {
             onChange={setIsYearly} 
           />
 
-          {/* Subscription Packages */}
-          <SubscriptionPackages 
-            isYearly={isYearly}
-            onSelectPackage={handleSelectPackage}
-          />
-          
-          {/* Hosting and Infrastructure Costs */}
+          {/* Hosting and Infrastructure Costs - Now First */}
           <HostingInfrastructureCosts />
+
+          {/* Subscription Packages */}
+          <div className="mt-16">
+            <h2 className="text-2xl font-bold text-center mb-6">{t("subscriptionModel")}</h2>
+            <SubscriptionPackages 
+              isYearly={isYearly}
+              onSelectPackage={handleSelectPackage}
+            />
+          </div>
           
           {/* Enterprise Subscription Model Information */}
           <EnterpriseSubscriptionModel />

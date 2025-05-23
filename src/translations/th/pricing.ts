@@ -150,6 +150,26 @@ export const pricingTranslations = {
   "thbYear": "บาท/ปี",
   "thbMonth": "บาท/เดือน",
   
+  // Complete package translations
+  "completePackageTitle": "แพ็คเกจ TruckMate CMMS แบบครบวงจร",
+  "completePackageStarter": "โซลูชั่นเริ่มต้นแบบครบวงจร",
+  "completePackageStandard": "โซลูชั่นมาตรฐานแบบครบวงจร",
+  "completePackageProfessional": "โซลูชั่นมืออาชีพแบบครบวงจร",
+  "included": "แพ็คเกจรวม",
+  "packageFeatures": "คุณสมบัติหลัก",
+  "starterSubscription": "การสมัครสมาชิกแบบเริ่มต้น",
+  "standardSubscription": "การสมัครสมาชิกแบบมาตรฐาน",
+  "professionalSubscription": "การสมัครสมาชิกแบบมืออาชีพ",
+  "basicHosting": "โฮสติ้งและโครงสร้างพื้นฐานขั้นพื้นฐาน",
+  "advancedHosting": "โฮสติ้งและโครงสร้างพื้นฐานขั้นสูง",
+  "enterpriseHosting": "โฮสติ้งและโครงสร้างพื้นฐานสำหรับองค์กร",
+  "basicCloudHosting": "พื้นที่จัดเก็บข้อมูลบนคลาวด์ 5GB บนเซิร์ฟเวอร์มาตรฐาน",
+  "advancedCloudHosting": "พื้นที่จัดเก็บข้อมูลบนคลาวด์ 20GB พร้อมการสำรองข้อมูลรายวัน",
+  "enterpriseCloudHosting": "พื้นที่จัดเก็บข้อมูลบนคลาวด์ 50GB พร้อมความพร้อมใช้งานสูง",
+  "basicSupport": "สนับสนุนทางอีเมล (ตอบกลับภายใน 48 ชั่วโมง)",
+  "prioritySupport": "สนับสนุนทางอีเมลและโทรศัพท์แบบมีลำดับความสำคัญ (ตอบกลับภายใน 24 ชั่วโมง)",
+  "dedicatedSupport": "ทีมสนับสนุนเฉพาะ (ตอบกลับภายใน 4 ชั่วโมง)",
+  
   // Hosting and infrastructure translations
   "hostingAndInfrastructure": "โฮสติ้งและโครงสร้างพื้นฐาน",
   "cloudHosting": "คลาวด์โฮสติ้ง",

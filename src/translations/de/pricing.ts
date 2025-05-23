@@ -144,6 +144,26 @@ export const pricingTranslations = {
   "thbYear": "THB/Jahr",
   "thbMonth": "THB/Monat",
   
+  // Complete package translations
+  "completePackageTitle": "Komplette TruckMate CMMS Pakete",
+  "completePackageStarter": "Starter Komplettlösung",
+  "completePackageStandard": "Standard Komplettlösung",
+  "completePackageProfessional": "Profi Komplettlösung",
+  "included": "Paket enthält",
+  "packageFeatures": "Hauptmerkmale",
+  "starterSubscription": "Starter-Abonnement",
+  "standardSubscription": "Standard-Abonnement",
+  "professionalSubscription": "Profi-Abonnement",
+  "basicHosting": "Basis-Hosting & Infrastruktur",
+  "advancedHosting": "Erweitertes Hosting & Infrastruktur",
+  "enterpriseHosting": "Enterprise-Hosting & Infrastruktur",
+  "basicCloudHosting": "5GB Cloud-Speicher auf Standard-Servern",
+  "advancedCloudHosting": "20GB Cloud-Speicher mit täglichen Backups",
+  "enterpriseCloudHosting": "50GB Cloud-Speicher mit hoher Verfügbarkeit",
+  "basicSupport": "E-Mail-Support (Antwort innerhalb von 48h)",
+  "prioritySupport": "Prioritäts-E-Mail- & Telefonsupport (Antwort innerhalb von 24h)",
+  "dedicatedSupport": "Dediziertes Support-Team (Antwort innerhalb von 4h)",
+  
   // Hosting and infrastructure translations
   "hostingAndInfrastructure": "Hosting & Infrastruktur",
   "cloudHosting": "Cloud-Hosting",
