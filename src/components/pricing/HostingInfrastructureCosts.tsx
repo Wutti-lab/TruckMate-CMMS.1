@@ -12,6 +12,27 @@ interface HostingInfrastructureCostsProps {
 export function HostingInfrastructureCosts({ isYearly }: HostingInfrastructureCostsProps) {
   const { t } = useLanguage();
   
+  // Calculate yearly discount (10% off monthly price)
+  const getYearlyPrice = (monthlyPrice: number) => {
+    return Math.round(monthlyPrice * 0.9);
+  };
+  
+  // Price configuration
+  const prices = {
+    starter: {
+      monthly: 7000,
+      yearly: getYearlyPrice(7000)
+    },
+    standard: {
+      monthly: 18000,
+      yearly: getYearlyPrice(18000)
+    },
+    professional: {
+      monthly: 35000,
+      yearly: getYearlyPrice(35000)
+    }
+  };
+  
   return (
     <div className="mt-10 mb-8">
       <h2 className="text-2xl font-bold text-center mb-6">{t("hostingAndInfrastructure")}</h2>
@@ -100,15 +121,19 @@ export function HostingInfrastructureCosts({ isYearly }: HostingInfrastructureCo
             </Badge>
             <CardTitle className="text-center">{t("completePackageStarter")}</CardTitle>
             <CardDescription className="text-center text-lg font-bold mt-2">
-              7,000 {isYearly ? t("thbMonth") : t("thbMonth")}
+              {isYearly ? prices.starter.yearly : prices.starter.monthly} {isYearly ? t("thbMonth") : t("thbMonth")}
             </CardDescription>
           </CardHeader>
           <CardContent className="text-sm space-y-4">
             <div>
               <p className="font-medium mb-1">{t("included")}:</p>
               <ul className="space-y-1 list-disc pl-5">
-                <li>{t("starterSubscription")}: 6,000 {isYearly ? t("thbMonth") : t("thbMonth")}</li>
-                <li>{t("basicHosting")}: 1,000 {isYearly ? t("thbMonth") : t("thbMonth")}</li>
+                <li>
+                  {t("starterSubscription")}: {isYearly ? Math.round(6000 * 0.9) : 6000} {isYearly ? t("thbMonth") : t("thbMonth")}
+                </li>
+                <li>
+                  {t("basicHosting")}: {isYearly ? Math.round(1000 * 0.9) : 1000} {isYearly ? t("thbMonth") : t("thbMonth")}
+                </li>
               </ul>
             </div>
             <div>
@@ -137,15 +162,19 @@ export function HostingInfrastructureCosts({ isYearly }: HostingInfrastructureCo
             </Badge>
             <CardTitle className="text-center">{t("completePackageStandard")}</CardTitle>
             <CardDescription className="text-center text-lg font-bold mt-2">
-              18,000 {isYearly ? t("thbMonth") : t("thbMonth")}
+              {isYearly ? prices.standard.yearly : prices.standard.monthly} {isYearly ? t("thbMonth") : t("thbMonth")}
             </CardDescription>
           </CardHeader>
           <CardContent className="text-sm space-y-4">
             <div>
               <p className="font-medium mb-1">{t("included")}:</p>
               <ul className="space-y-1 list-disc pl-5">
-                <li>{t("standardSubscription")}: 15,000 {isYearly ? t("thbMonth") : t("thbMonth")}</li>
-                <li>{t("advancedHosting")}: 3,000 {isYearly ? t("thbMonth") : t("thbMonth")}</li>
+                <li>
+                  {t("standardSubscription")}: {isYearly ? Math.round(15000 * 0.9) : 15000} {isYearly ? t("thbMonth") : t("thbMonth")}
+                </li>
+                <li>
+                  {t("advancedHosting")}: {isYearly ? Math.round(3000 * 0.9) : 3000} {isYearly ? t("thbMonth") : t("thbMonth")}
+                </li>
               </ul>
             </div>
             <div>
@@ -174,15 +203,19 @@ export function HostingInfrastructureCosts({ isYearly }: HostingInfrastructureCo
             </Badge>
             <CardTitle className="text-center">{t("completePackageProfessional")}</CardTitle>
             <CardDescription className="text-center text-lg font-bold mt-2">
-              35,000 {isYearly ? t("thbMonth") : t("thbMonth")}
+              {isYearly ? prices.professional.yearly : prices.professional.monthly} {isYearly ? t("thbMonth") : t("thbMonth")}
             </CardDescription>
           </CardHeader>
           <CardContent className="text-sm space-y-4">
             <div>
               <p className="font-medium mb-1">{t("included")}:</p>
               <ul className="space-y-1 list-disc pl-5">
-                <li>{t("professionalSubscription")}: 30,000 {isYearly ? t("thbMonth") : t("thbMonth")}</li>
-                <li>{t("enterpriseHosting")}: 5,000 {isYearly ? t("thbMonth") : t("thbMonth")}</li>
+                <li>
+                  {t("professionalSubscription")}: {isYearly ? Math.round(30000 * 0.9) : 30000} {isYearly ? t("thbMonth") : t("thbMonth")}
+                </li>
+                <li>
+                  {t("enterpriseHosting")}: {isYearly ? Math.round(5000 * 0.9) : 5000} {isYearly ? t("thbMonth") : t("thbMonth")}
+                </li>
               </ul>
             </div>
             <div>
