@@ -17,7 +17,6 @@ export function InfrastructureCard({
   title, 
   description, 
   details, 
-  recommendations,
   saasFeatures
 }: InfrastructureCardProps) {
   return (
@@ -50,18 +49,6 @@ export function InfrastructureCard({
             <ul className="space-y-2 text-sm list-disc pl-4">
               {saasFeatures.map((feature, index) => (
                 <li key={`saas-${index}`} className="text-gray-700">{feature}</li>
-              ))}
-            </ul>
-          </>
-        )}
-        
-        {recommendations && recommendations.length > 0 && (
-          <>
-            <div className="border-t my-4 border-gray-200"></div>
-            <h4 className="font-medium mb-2 text-fleet-700">Empfehlungen:</h4>
-            <ul className="space-y-2 text-sm list-disc pl-4">
-              {recommendations.map((recommendation, index) => (
-                <li key={`rec-${index}`} className="text-gray-700">{recommendation}</li>
               ))}
             </ul>
           </>
