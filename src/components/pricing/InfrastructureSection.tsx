@@ -21,13 +21,6 @@ export function InfrastructureSection() {
             t("cloudHostingDetail2"),
             t("cloudHostingDetail3")
           ]}
-          stepByStep={[
-            t("cloudHostingStep1"),
-            t("cloudHostingStep2"),
-            t("cloudHostingStep3"),
-            t("cloudHostingStep4"),
-            t("cloudHostingStep5")
-          ]}
         />
         
         {/* Server Infrastructure */}

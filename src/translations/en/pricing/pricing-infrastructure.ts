@@ -9,13 +9,6 @@ export const pricingInfrastructureTranslations = {
   "cloudHostingDetail2": "Auto-scaling based on user load",
   "cloudHostingDetail3": "99.9% uptime guarantee",
   
-  // Cloud-Hosting step-by-step guide
-  "cloudHostingStep1": "Create an account with a cloud provider (e.g., DigitalOcean, Vercel, or AWS)",
-  "cloudHostingStep2": "Choose a server location and appropriate server configuration",
-  "cloudHostingStep3": "Upload TruckMate CMMS to the server via SSH or Git",
-  "cloudHostingStep4": "Configure database and necessary environment variables",
-  "cloudHostingStep5": "Set up SSL certificates and connect your domain",
-  
   "serverInfrastructure": "Server Infrastructure",
   "serverInfrastructurePrice": "From 500 THB/month",
   "serverInfrastructureDetail1": "High-performance virtual machines",
