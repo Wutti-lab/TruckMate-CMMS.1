@@ -1,3 +1,4 @@
+
 // General pricing translations
 export const pricingGeneralTranslations = {
   // General pricing page translations
@@ -79,4 +80,12 @@ export const pricingGeneralTranslations = {
   "thbYear": "THB/Jahr",
   "thbMonth": "THB/Monat",
   "discount": "Rabatt",
+  
+  // Contact form translations
+  "contactInformation": "Kontaktinformationen",
+  "leaveYourInfo": "Bitte hinterlassen Sie Ihre Informationen und unser Team wird Sie so schnell wie möglich kontaktieren",
+  "submit": "Absenden",
+  "requestReceived": "Anfrage erhalten",
+  "teamWillContact": "Unser Team wird Sie so schnell wie möglich kontaktieren",
+  "thankYou": "Vielen Dank für Ihr Interesse!",
 };

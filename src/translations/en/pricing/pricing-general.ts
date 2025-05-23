@@ -1,3 +1,4 @@
+
 export const pricingGeneralTranslations = {
   // General pricing page translations
   "backToDashboard": "Back to Dashboard",
@@ -79,4 +80,12 @@ export const pricingGeneralTranslations = {
   "formProcessing": "Processing your request...",
   "formSubmitted": "Form submitted successfully",
   "formError": "There was an error processing your request",
+  
+  // Contact form translations
+  "contactInformation": "Contact Information",
+  "leaveYourInfo": "Please leave your information and our team will contact you as soon as possible",
+  "submit": "Submit",
+  "requestReceived": "Request Received",
+  "teamWillContact": "Our team will contact you as soon as possible",
+  "thankYou": "Thank you for your interest!",
 };
