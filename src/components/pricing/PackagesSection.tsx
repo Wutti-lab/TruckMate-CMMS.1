@@ -6,7 +6,7 @@ import { prices } from "./utils/pricing-utils";
 interface PackagesSectionProps {
   isYearly: boolean;
   onSelectPackage: (packageName: string) => void;
-  onShowDirectPayment: (packageName: string) => void; // Add new prop
+  onShowDirectPayment: (packageName: string) => void;
 }
 
 export function PackagesSection({ isYearly, onSelectPackage, onShowDirectPayment }: PackagesSectionProps) {
@@ -37,7 +37,7 @@ export function PackagesSection({ isYearly, onSelectPackage, onShowDirectPayment
           thbMonth={isYearly ? t("thbYear") : t("thbMonth")}
           includedText={t("included")}
           featuresText={t("packageFeatures")}
-          // Changed to use the new direct payment function
+          // Use Stripe payment for automatic processing
           onBuy={() => onShowDirectPayment(t("completePackageStarter"))}
         />
         
@@ -63,7 +63,7 @@ export function PackagesSection({ isYearly, onSelectPackage, onShowDirectPayment
           includedText={t("included")}
           featuresText={t("packageFeatures")}
           isHighlighted={true}
-          // Changed to use the new direct payment function
+          // Use Stripe payment for automatic processing
           onBuy={() => onShowDirectPayment(t("completePackageStandard"))}
         />
         
@@ -88,7 +88,7 @@ export function PackagesSection({ isYearly, onSelectPackage, onShowDirectPayment
           thbMonth={isYearly ? t("thbYear") : t("thbMonth")}
           includedText={t("included")}
           featuresText={t("packageFeatures")}
-          // Changed to use the new direct payment function
+          // Use Stripe payment for automatic processing
           onBuy={() => onShowDirectPayment(t("completePackageProfessional"))}
         />
       </div>

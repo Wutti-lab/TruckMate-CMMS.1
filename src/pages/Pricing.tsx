@@ -1,10 +1,10 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Header } from "@/components/layout/Header";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, CheckCircle, XCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { QRCodeDialog } from "@/components/pricing/QRCodeDialog";
 import { CustomOfferSection } from "@/components/pricing/CustomOfferSection";
@@ -15,16 +15,44 @@ import { PaymentForm } from "@/components/pricing/PaymentForm";
 import { ThaiPaymentDetails } from "@/components/pricing/ThaiPaymentDetails";
 import { AlertCircle } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { useStripe } from "@/hooks/useStripe";
 
 export default function Pricing() {
   const { toast } = useToast();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [isProcessing, setIsProcessing] = useState(false);
   const [showQrCode, setShowQrCode] = useState(false);
   const { t } = useLanguage();
   const [isYearly, setIsYearly] = useState(true);
   const [selectedPackage, setSelectedPackage] = useState<string | null>(null);
   const [showPaymentForm, setShowPaymentForm] = useState(false);
+  const { createCheckoutSession, isLoading } = useStripe();
+
+  // Handle Stripe payment results
+  useEffect(() => {
+    const success = searchParams.get('success');
+    const canceled = searchParams.get('canceled');
+    const sessionId = searchParams.get('session_id');
+
+    if (success === 'true' && sessionId) {
+      toast({
+        title: "Zahlung erfolgreich!",
+        description: "Ihr Paket wurde erfolgreich gekauft. Sie werden zur Dashboard weitergeleitet.",
+        duration: 5000,
+      });
+      // Redirect to dashboard after successful payment
+      setTimeout(() => {
+        navigate("/dashboard");
+      }, 2000);
+    } else if (canceled === 'true') {
+      toast({
+        variant: "destructive",
+        title: "Zahlung abgebrochen",
+        description: "Die Zahlung wurde abgebrochen. Sie können es jederzeit erneut versuchen.",
+      });
+    }
+  }, [searchParams, toast, navigate]);
 
   const handlePayment = (plan: string) => {
     toast({
@@ -53,7 +81,15 @@ export default function Pricing() {
     setShowPaymentForm(true);
   };
 
-  // New handler for direct payment from packages
+  // New handler for Stripe payment from packages
+  const handleStripePayment = async (packageName: string) => {
+    await createCheckoutSession({
+      packageName: packageName,
+      currency: "eur"
+    });
+  };
+
+  // Old handler for direct payment from packages (manual payment proof)
   const handlePackageDirectPayment = (packageName: string) => {
     setSelectedPackage(packageName);
     setShowPaymentForm(true);
@@ -99,6 +135,25 @@ export default function Pricing() {
             </p>
           </div>
 
+          {/* Success/Cancel Messages */}
+          {searchParams.get('success') === 'true' && (
+            <Alert className="mb-6 border-green-200 bg-green-50">
+              <CheckCircle className="h-4 w-4 text-green-600" />
+              <AlertDescription className="text-green-700">
+                Zahlung erfolgreich abgeschlossen! Ihr Paket wird aktiviert.
+              </AlertDescription>
+            </Alert>
+          )}
+
+          {searchParams.get('canceled') === 'true' && (
+            <Alert className="mb-6 border-red-200 bg-red-50">
+              <XCircle className="h-4 w-4 text-red-600" />
+              <AlertDescription className="text-red-700">
+                Zahlung wurde abgebrochen. Sie können es erneut versuchen.
+              </AlertDescription>
+            </Alert>
+          )}
+
           {/* Direct Payment Upload Card */}
           <Card className="mb-8 border-2 border-green-200">
             <CardHeader className="pb-3">
@@ -139,7 +194,7 @@ export default function Pricing() {
           <HostingInfrastructureCosts 
             isYearly={isYearly} 
             onSelectPackage={handleSelectPackage}
-            onShowDirectPayment={handlePackageDirectPayment} // New handler for direct payment
+            onShowDirectPayment={handleStripePayment} // Use Stripe payment now
           />
           
           {/* Custom Offer Section */}
