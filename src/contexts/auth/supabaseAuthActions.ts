@@ -44,7 +44,7 @@ export const supabaseAuthActions = (
     company?: string;
     job_title?: string;
     role?: string;
-  }): Promise<void> => {
+  }): Promise<any> => {
     const { data, error } = await supabase.auth.signUp({
       email,
       password,

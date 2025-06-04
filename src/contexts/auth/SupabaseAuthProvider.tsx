@@ -64,7 +64,7 @@ export const SupabaseAuthProvider: React.FC<{ children: ReactNode }> = ({ childr
         // Setup auth listener first
         const { data: { subscription } } = auth.setupAuthListener();
 
-        // Get initial session
+        // THEN check for existing session
         const session = await auth.getCurrentSession();
         if (mounted && session) {
           setSession(session);
@@ -114,7 +114,12 @@ export const SupabaseAuthProvider: React.FC<{ children: ReactNode }> = ({ childr
   const refreshProfiles = async () => {
     try {
       const profiles = await userManager.fetchAllProfiles();
-      setAllProfiles(profiles);
+      // Map the database profiles to our Profile type
+      const typedProfiles: Profile[] = profiles.map(p => ({
+        ...p,
+        role: p.role as UserRole
+      }));
+      setAllProfiles(typedProfiles);
     } catch (error) {
       console.error('Error fetching profiles:', error);
     }

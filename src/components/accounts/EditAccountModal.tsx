@@ -7,14 +7,14 @@ import {
   DialogHeader,
   DialogTitle
 } from "@/components/ui/dialog";
-import { User } from "@/lib/types/user-roles";
 import { useAuth } from "@/contexts/AuthContext";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { EditAccountForm } from "./forms/EditAccountForm";
 import { EditAccountFormValues } from "./forms/EditAccountFormSchema";
+import { useToast } from "@/hooks/use-toast";
 
 interface EditAccountModalProps {
-  user: User & { status?: string };
+  user: any;
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
@@ -26,25 +26,31 @@ export function EditAccountModal({
 }: EditAccountModalProps) {
   const [isLoading, setIsLoading] = useState(false);
   const { language } = useLanguage();
-  const { updateUserList } = useAuth();
+  const { updateProfile, refreshProfiles } = useAuth();
+  const { toast } = useToast();
   
   const handleSubmit = async (data: EditAccountFormValues) => {
     setIsLoading(true);
     try {
-      const updatedUser = {
-        ...user,
+      await updateProfile(user.id, {
         name: data.name,
-        email: data.email,
-        role: data.role,
-        status: data.status
-      };
+        role: data.role
+      });
       
-      if (data.password && data.password.trim() !== "") {
-        (updatedUser as any).password = data.password;
-      }
+      await refreshProfiles();
       
-      updateUserList(updatedUser);
+      toast({
+        title: "Success",
+        description: "Account updated successfully."
+      });
+      
       onOpenChange(false);
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Failed to update account."
+      });
     } finally {
       setIsLoading(false);
     }

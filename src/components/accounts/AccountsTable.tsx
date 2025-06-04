@@ -8,7 +8,7 @@ import {
   TableHeader, 
   TableRow 
 } from "@/components/ui/table";
-import { User, UserRole } from "@/lib/types/user-roles";
+import { UserRole } from "@/lib/types/user-roles";
 import { useAuth } from "@/contexts/AuthContext";
 import { EditAccountModal } from "./EditAccountModal";
 import { useToast } from "@/hooks/use-toast";
@@ -22,30 +22,37 @@ interface AccountsTableProps {
 }
 
 export function AccountsTable({ searchQuery }: AccountsTableProps) {
-  const { mockUsers, deleteUser, hasRole } = useAuth();
+  const { allProfiles, deleteProfile, hasRole } = useAuth();
   const { toast } = useToast();
-  const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const [selectedUser, setSelectedUser] = useState<any | null>(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   // Filter users based on search query
-  const filteredUsers = mockUsers.filter(user => 
+  const filteredUsers = allProfiles.filter(user => 
     user.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-    user.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
     user.role.toLowerCase().includes(searchQuery.toLowerCase())
   );
   
   // Check if current user can edit/delete accounts
   const canEditAccounts = hasRole([UserRole.ADMIN, UserRole.DEV_ADMIN]);
 
-  const handleDeleteUser = (id: string, name: string) => {
-    deleteUser(id);
-    toast({
-      title: "Account deleted",
-      description: `${name}'s account has been deleted.`
-    });
+  const handleDeleteUser = async (id: string, name: string) => {
+    try {
+      await deleteProfile(id);
+      toast({
+        title: "Account deleted",
+        description: `${name}'s account has been deleted.`
+      });
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Failed to delete account."
+      });
+    }
   };
 
-  const handleEditUser = (user: User) => {
+  const handleEditUser = (user: any) => {
     setSelectedUser(user);
     setIsEditModalOpen(true);
   };
@@ -56,7 +63,6 @@ export function AccountsTable({ searchQuery }: AccountsTableProps) {
         <TableHeader>
           <TableRow>
             <TableHead>Name</TableHead>
-            <TableHead>Email</TableHead>
             <TableHead>Role</TableHead>
             <TableHead>Activated</TableHead>
             <TableHead>Expires</TableHead>
@@ -68,15 +74,14 @@ export function AccountsTable({ searchQuery }: AccountsTableProps) {
             filteredUsers.map((user) => (
               <TableRow key={user.id}>
                 <TableCell className="font-medium">{user.name}</TableCell>
-                <TableCell>{user.email}</TableCell>
                 <TableCell>
-                  <UserRoleBadge role={user.role} />
+                  <UserRoleBadge role={user.role as UserRole} />
                 </TableCell>
                 <TableCell>
-                  <ActivationDateCell activationDate={user.activationDate} />
+                  <ActivationDateCell activationDate={user.activation_date} />
                 </TableCell>
                 <TableCell>
-                  <AccountExpiryCell expiryDate={user.expiryDate} />
+                  <AccountExpiryCell expiryDate={user.expiry_date} />
                 </TableCell>
                 <TableCell className="text-right">
                   <AccountActionButtons 
@@ -90,7 +95,7 @@ export function AccountsTable({ searchQuery }: AccountsTableProps) {
             ))
           ) : (
             <TableRow>
-              <TableCell colSpan={6} className="h-24 text-center">
+              <TableCell colSpan={5} className="h-24 text-center">
                 No accounts found.
               </TableCell>
             </TableRow>

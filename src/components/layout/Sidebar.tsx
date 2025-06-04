@@ -31,7 +31,7 @@ import {
 } from "@/components/ui/sidebar";
 
 export function Sidebar() {
-  const { user, logout, hasRole } = useAuth();
+  const { profile, logout, hasRole } = useAuth();
   const { openMobile, setOpenMobile } = useSidebar();
   const { t, language } = useLanguage();
 
@@ -126,15 +126,17 @@ export function Sidebar() {
           <p className="text-sm text-sky-200">{t("easyVehicleManagement")}</p>
         </div>
 
-        <div className="mt-4 flex items-center space-x-2">
-          <div className="w-8 h-8 rounded-full bg-fleet-500 flex items-center justify-center">
-            <span className="font-bold text-sky-100">{user?.name.charAt(0)}</span>
+        {profile && (
+          <div className="mt-4 flex items-center space-x-2">
+            <div className="w-8 h-8 rounded-full bg-fleet-500 flex items-center justify-center">
+              <span className="font-bold text-sky-100">{profile.name.charAt(0)}</span>
+            </div>
+            <div>
+              <p className="text-sm font-medium text-sky-100">{profile.name}</p>
+              <p className="text-xs text-sky-200">{profile.role}</p>
+            </div>
           </div>
-          <div>
-            <p className="text-sm font-medium text-sky-100">{user?.name}</p>
-            <p className="text-xs text-sky-200">{user?.role}</p>
-          </div>
-        </div>
+        )}
       </SidebarHeader>
 
       <SidebarContent>
