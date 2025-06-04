@@ -47,7 +47,10 @@ export function EditAccountModal({
     try {
       await updateProfile(user.id, {
         name: data.name,
-        role: data.role
+        role: data.role,
+        phone_number: data.phone_number,
+        company: data.company,
+        job_title: data.job_title
       });
       
       await refreshProfiles();

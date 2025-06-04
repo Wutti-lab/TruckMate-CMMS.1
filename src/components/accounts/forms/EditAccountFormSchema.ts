@@ -2,15 +2,11 @@
 import { z } from "zod";
 import { UserRole } from "@/lib/types/user-roles";
 
-// Form schema for account editing
+// Form schema for account editing - updated to match Profile type
 export const editAccountFormSchema = z.object({
   name: z.string().min(2, {
     message: "Name must be at least 2 characters.",
   }),
-  email: z.string().email({
-    message: "Please enter a valid email address.",
-  }),
-  password: z.string().optional(),
   role: z.enum([
     UserRole.ADMIN,
     UserRole.DEV_ADMIN,
@@ -19,7 +15,9 @@ export const editAccountFormSchema = z.object({
     UserRole.MECHANIC,
     UserRole.DISPATCHER
   ]),
-  status: z.enum(['active', 'inactive'])
+  phone_number: z.string().optional(),
+  company: z.string().optional(),
+  job_title: z.string().optional(),
 });
 
 export type EditAccountFormValues = z.infer<typeof editAccountFormSchema>;
