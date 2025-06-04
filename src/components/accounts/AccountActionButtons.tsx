@@ -1,5 +1,4 @@
 
-import { User } from "@/lib/types/user-roles";
 import { 
   DropdownMenu,
   DropdownMenuContent,
@@ -9,10 +8,23 @@ import {
 import { Button } from "@/components/ui/button";
 import { MoreHorizontal, Pencil, Trash2 } from "lucide-react";
 
+interface Profile {
+  id: string;
+  name: string;
+  role: string;
+  phone_number?: string;
+  company?: string;
+  job_title?: string;
+  activation_date?: string;
+  expiry_date?: string;
+  created_at: string;
+  updated_at: string;
+}
+
 interface AccountActionButtonsProps {
-  user: User;
+  user: Profile;
   canEdit: boolean;
-  onEdit: (user: User) => void;
+  onEdit: (user: Profile) => void;
   onDelete: (id: string, name: string) => void;
 }
 

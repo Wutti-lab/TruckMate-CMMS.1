@@ -17,6 +17,19 @@ import { AccountExpiryCell } from "./AccountExpiryCell";
 import { AccountActionButtons } from "./AccountActionButtons";
 import { UserRoleBadge } from "./UserRoleBadge";
 
+interface Profile {
+  id: string;
+  name: string;
+  role: UserRole;
+  phone_number?: string;
+  company?: string;
+  job_title?: string;
+  activation_date?: string;
+  expiry_date?: string;
+  created_at: string;
+  updated_at: string;
+}
+
 interface AccountsTableProps {
   searchQuery: string;
 }
@@ -24,7 +37,7 @@ interface AccountsTableProps {
 export function AccountsTable({ searchQuery }: AccountsTableProps) {
   const { allProfiles, deleteProfile, hasRole } = useAuth();
   const { toast } = useToast();
-  const [selectedUser, setSelectedUser] = useState<any | null>(null);
+  const [selectedUser, setSelectedUser] = useState<Profile | null>(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   // Filter users based on search query
@@ -52,7 +65,7 @@ export function AccountsTable({ searchQuery }: AccountsTableProps) {
     }
   };
 
-  const handleEditUser = (user: any) => {
+  const handleEditUser = (user: Profile) => {
     setSelectedUser(user);
     setIsEditModalOpen(true);
   };

@@ -13,8 +13,21 @@ import { EditAccountForm } from "./forms/EditAccountForm";
 import { EditAccountFormValues } from "./forms/EditAccountFormSchema";
 import { useToast } from "@/hooks/use-toast";
 
+interface Profile {
+  id: string;
+  name: string;
+  role: string;
+  phone_number?: string;
+  company?: string;
+  job_title?: string;
+  activation_date?: string;
+  expiry_date?: string;
+  created_at: string;
+  updated_at: string;
+}
+
 interface EditAccountModalProps {
-  user: any;
+  user: Profile;
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
