@@ -2,7 +2,7 @@
 import React from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { LanguageSelector } from "@/components/language/LanguageSelector";
-import { RegisterForm } from "@/components/auth/RegisterForm";
+import { SupabaseRegisterForm } from "@/components/auth/SupabaseRegisterForm";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -55,14 +55,14 @@ export default function Register() {
           </AlertTitle>
           <AlertDescription>
             {language === 'de' 
-              ? "Nach der Registrierung wird Ihr Konto manuell überprüft. Sie erhalten eine E-Mail, sobald Ihr Konto freigeschaltet ist." 
+              ? "Nach der Registrierung erhalten Sie eine E-Mail zur Bestätigung Ihres Kontos." 
               : language === 'th' 
-              ? "หลังจากลงทะเบียน บัญชีของคุณจะได้รับการตรวจสอบด้วยตนเอง คุณจะได้รับอีเมลเมื่อบัญชีของคุณได้รับการอนุมัติ" 
-              : "After registration, your account will be manually reviewed. You will receive an email once your account is approved."}
+              ? "หลังจากลงทะเบียน คุณจะได้รับอีเมลเพื่อยืนยันบัญชีของคุณ" 
+              : "After registration, you will receive an email to confirm your account."}
           </AlertDescription>
         </Alert>
 
-        <RegisterForm />
+        <SupabaseRegisterForm />
         
         <div className="text-center mt-4">
           <p className="text-sm text-gray-600">

@@ -182,6 +182,87 @@ export type Database = {
           },
         ]
       }
+      pending_users: {
+        Row: {
+          approval_status: string
+          company: string | null
+          created_at: string
+          email: string
+          id: string
+          job_title: string | null
+          name: string
+          password_hash: string
+          payment_status: string
+          phone_number: string | null
+          role: string
+        }
+        Insert: {
+          approval_status?: string
+          company?: string | null
+          created_at?: string
+          email: string
+          id?: string
+          job_title?: string | null
+          name: string
+          password_hash: string
+          payment_status?: string
+          phone_number?: string | null
+          role?: string
+        }
+        Update: {
+          approval_status?: string
+          company?: string | null
+          created_at?: string
+          email?: string
+          id?: string
+          job_title?: string | null
+          name?: string
+          password_hash?: string
+          payment_status?: string
+          phone_number?: string | null
+          role?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          activation_date: string | null
+          company: string | null
+          created_at: string
+          expiry_date: string | null
+          id: string
+          job_title: string | null
+          name: string
+          phone_number: string | null
+          role: string
+          updated_at: string
+        }
+        Insert: {
+          activation_date?: string | null
+          company?: string | null
+          created_at?: string
+          expiry_date?: string | null
+          id: string
+          job_title?: string | null
+          name: string
+          phone_number?: string | null
+          role?: string
+          updated_at?: string
+        }
+        Update: {
+          activation_date?: string | null
+          company?: string | null
+          created_at?: string
+          expiry_date?: string | null
+          id?: string
+          job_title?: string | null
+          name?: string
+          phone_number?: string | null
+          role?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       vehicle_assignments: {
         Row: {
           active: boolean | null

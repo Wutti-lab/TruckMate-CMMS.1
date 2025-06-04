@@ -13,19 +13,23 @@ import {
 import { Button } from "@/components/ui/button";
 
 export function HeaderProfile() {
-  const { user, logout } = useAuth();
+  const { profile, logout } = useAuth();
   const navigate = useNavigate();
   const { language } = useLanguage();
   
-  const handleLogout = () => {
-    logout();
-    navigate('/login');
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigate('/login');
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
   };
 
   return (
     <div className="flex items-center gap-3">
       <span className="text-sm text-gray-600">
-        Logged in as: <strong>{user?.name}</strong> ({user?.role})
+        Logged in as: <strong>{profile?.name}</strong> ({profile?.role})
       </span>
       
       <DropdownMenu>
