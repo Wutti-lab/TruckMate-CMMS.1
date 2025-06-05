@@ -8,10 +8,14 @@ export default function Index() {
   const { isAuthenticated, isLoading } = useAuth();
 
   useEffect(() => {
+    console.log('Index: Auth state check', { isAuthenticated, isLoading });
+    
     if (!isLoading) {
       if (isAuthenticated) {
+        console.log('Index: User is authenticated, redirecting to functions');
         navigate("/functions");
       } else {
+        console.log('Index: User is not authenticated, redirecting to login');
         navigate("/login");
       }
     }
@@ -19,10 +23,13 @@ export default function Index() {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-fleet-50 to-white">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-fleet-600 mx-auto"></div>
-          <p className="mt-2 text-gray-600">Loading...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-4 border-fleet-600 border-t-transparent mx-auto"></div>
+          <p className="mt-4 text-lg text-gray-600">
+            {/* Multi-language loading text */}
+            TruckMate CMMS wird geladen...
+          </p>
         </div>
       </div>
     );

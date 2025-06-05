@@ -1,7 +1,7 @@
 
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Chrome } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -31,7 +31,7 @@ export function SupabaseLoginForm({
   onSubmit,
   onGoogleLogin
 }: SupabaseLoginFormProps) {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [showPassword, setShowPassword] = useState(false);
 
   const toggleShowPassword = () => {
@@ -39,10 +39,12 @@ export function SupabaseLoginForm({
   };
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>{t("login")}</CardTitle>
-        <CardDescription>
+    <Card className="shadow-lg border border-gray-200">
+      <CardHeader className="space-y-1">
+        <CardTitle className="text-2xl font-bold text-center">
+          {t("login")}
+        </CardTitle>
+        <CardDescription className="text-center">
           {t("enterCredentials")}
         </CardDescription>
       </CardHeader>
@@ -53,10 +55,13 @@ export function SupabaseLoginForm({
             <Input
               id="email"
               type="email"
-              placeholder="name@example.com"
+              placeholder={language === 'de' ? "ihre.email@beispiel.de" : 
+                         language === 'th' ? "อีเมลของคุณ@ตัวอย่าง.com" : 
+                         "your.email@example.com"}
               value={email}
               onChange={onEmailChange}
               required
+              className="w-full"
             />
           </div>
           
@@ -69,12 +74,13 @@ export function SupabaseLoginForm({
                 value={password}
                 onChange={onPasswordChange}
                 required
+                className="w-full pr-10"
               />
               <Button
                 type="button"
                 variant="ghost"
                 size="sm"
-                className="absolute right-0 top-0 h-full px-3"
+                className="absolute right-0 top-0 h-full px-3 hover:bg-transparent"
                 onClick={toggleShowPassword}
               >
                 {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
@@ -87,11 +93,11 @@ export function SupabaseLoginForm({
               <input
                 type="checkbox"
                 id="remember-me"
-                className="h-4 w-4 rounded border-gray-300"
+                className="h-4 w-4 rounded border-gray-300 text-fleet-600 focus:ring-fleet-500"
                 checked={rememberMe}
                 onChange={(e) => onRememberMeChange(e.target.checked)}
               />
-              <Label htmlFor="remember-me" className="text-sm">
+              <Label htmlFor="remember-me" className="text-sm text-gray-600">
                 {t("rememberMe")}
               </Label>
             </div>
@@ -100,20 +106,20 @@ export function SupabaseLoginForm({
             </a>
           </div>
 
-          <div className="bg-gray-50 p-3 rounded-md border border-gray-200 text-center">
-            <p className="text-sm">{t("noAccount")}</p>
+          <div className="bg-gray-50 p-4 rounded-lg border border-gray-200 text-center">
+            <p className="text-sm text-gray-600 mb-2">{t("noAccount")}</p>
             <Link 
               to="/register" 
-              className="text-fleet-600 hover:underline text-sm font-medium block mt-1"
+              className="text-fleet-600 hover:underline text-sm font-medium"
             >
               {t("register")}
             </Link>
           </div>
         </CardContent>
-        <CardFooter className="flex-col space-y-4">
+        <CardFooter className="flex-col space-y-3">
           <Button
             type="submit"
-            className="w-full bg-fleet-600 hover:bg-fleet-700"
+            className="w-full bg-fleet-600 hover:bg-fleet-700 text-white font-medium py-2"
             disabled={isLoading}
           >
             {isLoading ? t("loggingIn") : t("loginButton")}
@@ -122,14 +128,15 @@ export function SupabaseLoginForm({
           <Button
             type="button"
             variant="outline"
-            className="w-full"
+            className="w-full border-gray-300 hover:bg-gray-50"
             onClick={onGoogleLogin}
             disabled={isLoading}
           >
+            <Chrome className="w-4 h-4 mr-2" />
             {t("googleLogin")}
           </Button>
           
-          <div className="text-center w-full">
+          <div className="text-center pt-2">
             <Link 
               to="/pricing" 
               className="text-fleet-600 hover:underline text-sm font-medium"

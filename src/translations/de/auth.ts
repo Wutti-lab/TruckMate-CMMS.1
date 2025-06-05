@@ -1,9 +1,8 @@
 
-// Authentication related translations
 export const authTranslations = {
   // Login Page
   "login": "Anmelden",
-  "enterCredentials": "Geben Sie unten Ihre Anmeldedaten ein, um auf Ihr Konto zuzugreifen",
+  "enterCredentials": "Geben Sie Ihre Zugangsdaten ein, um auf Ihr Konto zuzugreifen",
   "email": "E-Mail",
   "password": "Passwort",
   "rememberMe": "Angemeldet bleiben",
@@ -15,14 +14,14 @@ export const authTranslations = {
   "loginFailed": "Anmeldung fehlgeschlagen",
   "invalidCredentials": "Ungültige E-Mail oder Passwort",
   "invalidPhoneCredentials": "Ungültige Telefonnummer oder Passwort",
-  "googleLoginFailed": "Anmeldung mit Google fehlgeschlagen",
+  "googleLoginFailed": "Google-Anmeldung fehlgeschlagen",
   "easyVehicleManagement": "Einfaches Fahrzeugmanagementsystem",
   "noAccount": "Noch kein Konto?",
   "register": "Registrieren",
   "viewPricingPlans": "Preispläne ansehen",
   "phoneNumber": "Telefonnummer",
-  "loginWithGoogle": "Melden Sie sich mit Ihrem Google-Konto an",
-  "googleLogin": "Google Anmeldung",
+  "loginWithGoogle": "Mit Ihrem Google-Konto anmelden",
+  "googleLogin": "Mit Google anmelden",
   
   // Registration Page
   "createAccountDescription": "Erstellen Sie Ihr Konto, um mit TruckMate CMMS zu beginnen",
@@ -31,10 +30,10 @@ export const authTranslations = {
   "emailPlaceholder": "ihre@email.de",
   "phoneNumberPlaceholder": "+491234567890",
   "company": "Unternehmen (Optional)",
-  "companyPlaceholder": "Ihr Unternehmen",
+  "companyPlaceholder": "Ihr Unternehmensname",
   "jobTitle": "Berufsbezeichnung (Optional)",
-  "jobTitlePlaceholder": "Fuhrparkmanager",
+  "jobTitlePlaceholder": "Flottenmanager",
   "confirmPassword": "Passwort bestätigen",
   "createAccountButton": "Konto erstellen",
-  "alreadyHaveAccount": "Haben Sie bereits ein Konto?",
+  "alreadyHaveAccount": "Bereits ein Konto?",
 };
