@@ -1,7 +1,7 @@
 
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Eye, EyeOff, Chrome } from "lucide-react";
+import { Eye, EyeOff } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -17,7 +17,6 @@ interface SupabaseLoginFormProps {
   onPasswordChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onRememberMeChange: (checked: boolean) => void;
   onSubmit: (e: React.FormEvent) => void;
-  onGoogleLogin: () => void;
 }
 
 export function SupabaseLoginForm({
@@ -28,8 +27,7 @@ export function SupabaseLoginForm({
   onEmailChange,
   onPasswordChange,
   onRememberMeChange,
-  onSubmit,
-  onGoogleLogin
+  onSubmit
 }: SupabaseLoginFormProps) {
   const { t, language } = useLanguage();
   const [showPassword, setShowPassword] = useState(false);
@@ -123,17 +121,6 @@ export function SupabaseLoginForm({
             disabled={isLoading}
           >
             {isLoading ? t("loggingIn") : t("loginButton")}
-          </Button>
-          
-          <Button
-            type="button"
-            variant="outline"
-            className="w-full border-gray-300 hover:bg-gray-50"
-            onClick={onGoogleLogin}
-            disabled={isLoading}
-          >
-            <Chrome className="w-4 h-4 mr-2" />
-            {t("googleLogin")}
           </Button>
           
           <div className="text-center pt-2">

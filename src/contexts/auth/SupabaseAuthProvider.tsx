@@ -26,7 +26,6 @@ interface AuthContextType {
   isLoading: boolean;
   login: (email: string, password: string) => Promise<void>;
   register: (email: string, password: string, userData: any) => Promise<void>;
-  loginWithGoogle: () => Promise<void>;
   logout: () => Promise<void>;
   hasRole: (roles: UserRole | UserRole[]) => boolean;
   // User management functions
@@ -170,7 +169,6 @@ export const SupabaseAuthProvider: React.FC<{ children: ReactNode }> = ({ childr
         isLoading,
         login: auth.login,
         register: auth.register,
-        loginWithGoogle: auth.loginWithGoogle,
         logout: auth.logout,
         hasRole,
         // User management

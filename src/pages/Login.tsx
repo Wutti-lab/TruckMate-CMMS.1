@@ -13,7 +13,7 @@ export default function Login() {
   const [isLoading, setIsLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   
-  const { login, loginWithGoogle } = useAuth();
+  const { login } = useAuth();
   const { toast } = useToast();
   const navigate = useNavigate();
   const { t } = useLanguage();
@@ -35,21 +35,6 @@ export default function Login() {
         variant: "destructive",
         title: t("loginFailed"),
         description: error.message || t("invalidCredentials"),
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleGoogleLogin = async () => {
-    setIsLoading(true);
-    try {
-      await loginWithGoogle();
-    } catch (error: any) {
-      toast({
-        variant: "destructive",
-        title: t("loginFailed"),
-        description: error.message || t("googleLoginFailed"),
       });
     } finally {
       setIsLoading(false);
@@ -90,7 +75,6 @@ export default function Login() {
           onPasswordChange={(e) => setPassword(e.target.value)}
           onRememberMeChange={setRememberMe}
           onSubmit={handleSubmit}
-          onGoogleLogin={handleGoogleLogin}
         />
       </div>
     </div>

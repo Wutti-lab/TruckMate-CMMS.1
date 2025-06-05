@@ -61,20 +61,6 @@ export const supabaseAuthActions = (
     return data;
   };
 
-  // Login with Google
-  const loginWithGoogle = async (): Promise<void> => {
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: {
-        redirectTo: `${window.location.origin}/dashboard`
-      }
-    });
-
-    if (error) {
-      throw new Error(error.message);
-    }
-  };
-
   // Logout
   const logout = async (): Promise<void> => {
     const { error } = await supabase.auth.signOut();
@@ -119,7 +105,6 @@ export const supabaseAuthActions = (
   return {
     login,
     register,
-    loginWithGoogle,
     logout,
     getCurrentSession,
     setupAuthListener
