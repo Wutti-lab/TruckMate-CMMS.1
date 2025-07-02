@@ -1,7 +1,8 @@
+
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { QueryClient, QueryClientProvider } from 'react-query';
-import { Toaster } from 'react-hot-toast';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Toaster } from 'sonner';
 import { AuthProvider } from './contexts/AuthContext';
 import { LanguageProvider } from './contexts/LanguageContext';
 import { LocationProvider } from './contexts/LocationContext';
@@ -11,7 +12,7 @@ import Dashboard from './pages/Dashboard';
 import Vehicles from './pages/Vehicles';
 import Drivers from './pages/Drivers';
 import Inspections from './pages/Inspections';
-import ProtectedRoute from './components/ProtectedRoute';
+import { ProtectedRoute } from './components/auth/ProtectedRoute';
 import ResetPassword from './pages/ResetPassword';
 import SetNewPassword from './pages/SetNewPassword';
 import NotFound from './pages/NotFound';
@@ -72,7 +73,6 @@ function App() {
                       </ProtectedRoute>
                     }
                   />
-                  <Route path="*" element={<NotFound />} />
                   <Route
                     path="/reports"
                     element={
@@ -81,6 +81,7 @@ function App() {
                       </ProtectedRoute>
                     }
                   />
+                  <Route path="*" element={<NotFound />} />
                 </Routes>
               </Router>
             </QueryClientProvider>

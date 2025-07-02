@@ -2,7 +2,7 @@
 import React from "react";
 import { MobileNavbar } from "./MobileNavbar";
 import { SidebarProvider } from "@/components/ui/sidebar";
-import { Sidebar } from "./Sidebar";
+import Sidebar from "./Sidebar";
 import { AdBanner } from "@/components/ads/AdBanner";
 import { useLanguage } from "@/contexts/LanguageContext";
 
