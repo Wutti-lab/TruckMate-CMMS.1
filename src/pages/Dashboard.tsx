@@ -32,12 +32,20 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { useDashboardData } from "@/hooks/useDashboardData";
 import { DashboardKPIs } from "@/components/dashboard/DashboardKPIs";
 import { RecentActivities } from "@/components/dashboard/RecentActivities";
+import { NotificationCenter } from "@/components/notifications/NotificationCenter";
+import { CriticalAlertDialog } from "@/components/notifications/CriticalAlertDialog";
+import { useRealtimeNotifications } from "@/hooks/useRealtimeNotifications";
+import { useNotifications } from "@/contexts/NotificationContext";
 
 export default function Dashboard() {
   const { profile, hasRole } = useAuth();
   const { t } = useLanguage();
   const [currentTime, setCurrentTime] = useState(new Date());
   const { stats, loading, refetch } = useDashboardData();
+  const { criticalAlerts, dismissCriticalAlert, dismissAllCriticalAlerts } = useNotifications();
+
+  // Initialize real-time notifications
+  useRealtimeNotifications();
 
   // Sample data for charts (can be made dynamic later)
   const fuelData = [
@@ -235,6 +243,14 @@ export default function Dashboard() {
           </Card>
         </div>
       </main>
+
+      {/* Notification Components */}
+      <NotificationCenter />
+      <CriticalAlertDialog
+        alerts={criticalAlerts}
+        onDismiss={dismissCriticalAlert}
+        onDismissAll={dismissAllCriticalAlerts}
+      />
     </div>
   );
 }
