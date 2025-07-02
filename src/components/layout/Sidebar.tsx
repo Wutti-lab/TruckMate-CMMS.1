@@ -1,177 +1,121 @@
-
-import { Link } from "react-router-dom";
-import { 
-  LayoutDashboard, 
-  Truck, 
-  Map, 
-  FileText, 
-  Users, 
-  QrCode, 
-  LogOut,
-  UserCog,
-  CreditCard,
-  Image
-} from "lucide-react";
-
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { useAuth } from "@/contexts/AuthContext";
-import { UserRole } from "@/lib/types/user-roles";
-import { useLanguage, extractLanguageText } from "@/contexts/LanguageContext";
-
+import React, { useState } from 'react';
 import {
-  Sidebar as ShadcnSidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarHeader,
-  SidebarMenu,
-  SidebarMenuItem,
-  SidebarMenuButton,
-  useSidebar
-} from "@/components/ui/sidebar";
+  Home,
+  LayoutDashboard,
+  Settings,
+  Truck,
+  FileText,
+  AlertCircle,
+  Calendar,
+  LucideIcon
+} from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
+import { useAuth } from '@/contexts/AuthContext';
+import { useLanguage } from '@/contexts/LanguageContext';
 
-export function Sidebar() {
-  const { profile, logout, hasRole } = useAuth();
-  const { openMobile, setOpenMobile } = useSidebar();
-  const { t, language } = useLanguage();
+interface MenuItem {
+  icon: LucideIcon;
+  label: string;
+  path: string;
+}
 
-  const menuItems = [
+const Sidebar = () => {
+  const location = useLocation();
+  const { profile, logout } = useAuth();
+  const { language } = useLanguage();
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const toggleSidebar = () => {
+    setIsExpanded(!isExpanded);
+  };
+
+  const isActive = (path: string) => {
+    return location.pathname === path;
+  };
+
+  const menuItems: MenuItem[] = [
     {
-      title: t("dashboard"),
-      icon: <LayoutDashboard size={20} />,
-      href: "/dashboard",
-      roles: [UserRole.ADMIN, UserRole.DEV_ADMIN, UserRole.FLEET_MANAGER, UserRole.DRIVER, UserRole.MECHANIC, UserRole.DISPATCHER],
+      icon: Home,
+      label: language === 'de' ? 'Startseite' : language === 'th' ? 'หน้าหลัก' : 'Home',
+      path: '/'
     },
     {
-      title: t("qrScanner"),
-      icon: <QrCode size={20} />,
-      href: "/qr-scanner",
-      roles: [UserRole.ADMIN, UserRole.DEV_ADMIN, UserRole.DRIVER, UserRole.FLEET_MANAGER],
+      icon: LayoutDashboard,
+      label: language === 'de' ? 'Dashboard' : language === 'th' ? 'แดชบอร์ด' : 'Dashboard',
+      path: '/dashboard'
     },
     {
-      title: t("vehicles"),
-      icon: <Truck size={20} />,
-      href: "/vehicles",
-      roles: [UserRole.ADMIN, UserRole.DEV_ADMIN, UserRole.FLEET_MANAGER],
+      icon: Truck,
+      label: language === 'de' ? 'Fahrzeuge' : language === 'th' ? 'ยานพาหนะ' : 'Vehicles',
+      path: '/vehicles'
     },
     {
-      title: t("map"),
-      icon: <Map size={20} />,
-      href: "/map",
-      roles: [UserRole.ADMIN, UserRole.DEV_ADMIN, UserRole.DISPATCHER, UserRole.FLEET_MANAGER],
+      icon: AlertCircle,
+      label: language === 'de' ? 'Inspektionen' : language === 'th' ? 'การตรวจสอบ' : 'Inspections',
+      path: '/inspections'
     },
     {
-      title: t("inspections"),
-      icon: <FileText size={20} />,
-      href: "/inspections",
-      roles: [UserRole.ADMIN, UserRole.DEV_ADMIN, UserRole.MECHANIC, UserRole.FLEET_MANAGER, UserRole.DRIVER],
+      icon: Calendar,
+      label: language === 'de' ? 'Wartung' : language === 'th' ? 'การบำรุงรักษา' : 'Maintenance',
+      path: '/maintenance'
     },
     {
-      title: t("drivers"),
-      icon: <Users size={20} />,
-      href: "/drivers",
-      roles: [UserRole.ADMIN, UserRole.DEV_ADMIN, UserRole.FLEET_MANAGER],
+      icon: FileText,
+      label: language === 'de' ? 'Berichte' : language === 'th' ? 'รายงาน' : 'Reports',
+      path: '/reports'
     },
     {
-      title: t("accountManagement"),
-      icon: <UserCog size={20} />,
-      href: "/accounts",
-      roles: [UserRole.ADMIN, UserRole.DEV_ADMIN],
-    },
-    {
-      title: t("advertisements"),
-      icon: <Image size={20} />,
-      href: "/advertisements",
-      roles: [UserRole.ADMIN, UserRole.DEV_ADMIN],
-    },
-    {
-      title: t("pricing"),
-      icon: <CreditCard size={20} />,
-      href: "/pricing",
-      roles: [UserRole.ADMIN, UserRole.DEV_ADMIN, UserRole.FLEET_MANAGER, UserRole.DRIVER, UserRole.MECHANIC, UserRole.DISPATCHER],
-    },
-    {
-      title: t("customers"),
-      icon: <Users size={20} />,
-      href: "/customers",
-      roles: [UserRole.ADMIN, UserRole.DEV_ADMIN, UserRole.FLEET_MANAGER],
-    },
+      icon: Settings,
+      label: language === 'de' ? 'Einstellungen' : language === 'th' ? 'การตั้งค่า' : 'Settings',
+      path: '/settings'
+    }
   ];
 
-  const handleLogout = () => {
-    logout();
-    window.location.href = '/login';
-  };
-
-  const handleNavigate = () => {
-    // Close the mobile sidebar when navigating
-    setOpenMobile(false);
-  };
-
   return (
-    <ShadcnSidebar 
-      collapsible="offcanvas"
-      variant="sidebar"
+    <div
+      className={`flex flex-col h-full bg-gray-50 border-r border-gray-200 ${
+        isExpanded ? 'w-64' : 'w-20'
+      } transition-width duration-300`}
     >
-      <SidebarHeader className="p-4 border-b border-sidebar-border">
-        <div className="flex flex-col space-y-1">
-          <div className="flex items-center mb-2">
-            <img 
-              src="/lovable-uploads/1275ea89-d888-449c-bc6c-295e38039de9.png" 
-              alt="TruckMate CMMS Logo" 
-              className="h-10 mr-2"
-            />
-            <h2 className="text-xl font-bold text-sky-100">TruckMate CMMS</h2>
-          </div>
-          <p className="text-sm text-sky-200">{t("easyVehicleManagement")}</p>
-        </div>
-
-        {profile && (
-          <div className="mt-4 flex items-center space-x-2">
-            <div className="w-8 h-8 rounded-full bg-fleet-500 flex items-center justify-center">
-              <span className="font-bold text-sky-100">{profile.name.charAt(0)}</span>
-            </div>
-            <div>
-              <p className="text-sm font-medium text-sky-100">{profile.name}</p>
-              <p className="text-xs text-sky-200">{profile.role}</p>
-            </div>
-          </div>
+      <div className="p-4">
+        <h1 className="text-2xl font-bold text-gray-800">
+          {isExpanded ? 'TruckMate CMMS' : 'TM'}
+        </h1>
+        {profile && isExpanded && (
+          <p className="text-sm text-gray-500 mt-1">
+            {language === 'de' ? 'Angemeldet als' : language === 'th' ? 'ลงชื่อเข้าใช้ในชื่อ' : 'Logged in as'}: {profile.name}
+          </p>
         )}
-      </SidebarHeader>
-
-      <SidebarContent>
-        <SidebarMenu>
-          {menuItems
-            .filter(item => hasRole(item.roles))
-            .map((item) => (
-              <SidebarMenuItem key={item.href}>
-                <SidebarMenuButton 
-                  asChild
-                  className={cn(
-                    "w-full text-sky-100 hover:bg-sidebar-accent hover:text-sky-50 rounded-md",
-                    window.location.pathname === item.href && "bg-sidebar-accent text-sky-50"
-                  )}
-                >
-                  <Link to={item.href} onClick={handleNavigate}>
-                    {item.icon}
-                    <span>{item.title}</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            ))}
-        </SidebarMenu>
-      </SidebarContent>
-
-      <SidebarFooter className="p-4 border-t border-sidebar-border">
-        <Button 
-          variant="ghost" 
-          className="w-full justify-start text-sky-100 hover:text-sky-50 hover:bg-red-900/20"
-          onClick={handleLogout}
-        >
-          <LogOut size={20} className="mr-2" />
-          {t("logout")}
-        </Button>
-      </SidebarFooter>
-    </ShadcnSidebar>
+      </div>
+      <nav className="flex-1 p-2">
+        <ul>
+          {menuItems.map((item) => (
+            <li key={item.path} className="mb-1">
+              <Link
+                to={item.path}
+                className={`flex items-center p-2 rounded-md text-gray-700 hover:bg-gray-200 ${
+                  isActive(item.path) ? 'bg-gray-200 font-semibold' : ''
+                }`}
+              >
+                <item.icon className="mr-2 h-4 w-4" />
+                {isExpanded && <span>{item.label}</span>}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </nav>
+      <div className="p-4">
+        {isExpanded && (
+          <button
+            onClick={logout}
+            className="w-full py-2 px-4 bg-red-500 text-white rounded-md hover:bg-red-700 transition-colors duration-200"
+          >
+            {language === 'de' ? 'Abmelden' : language === 'th' ? 'ออกจากระบบ' : 'Logout'}
+          </button>
+        )}
+      </div>
+    </div>
   );
-}
+};
+
+export default Sidebar;

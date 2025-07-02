@@ -1,162 +1,93 @@
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { Toaster } from 'react-hot-toast';
+import { AuthProvider } from './contexts/AuthContext';
+import { LanguageProvider } from './contexts/LanguageContext';
+import { LocationProvider } from './contexts/LocationContext';
+import { NotificationProvider } from './contexts/NotificationContext';
+import Login from './pages/Login';
+import Dashboard from './pages/Dashboard';
+import Vehicles from './pages/Vehicles';
+import Drivers from './pages/Drivers';
+import Inspections from './pages/Inspections';
+import ProtectedRoute from './components/ProtectedRoute';
+import ResetPassword from './pages/ResetPassword';
+import SetNewPassword from './pages/SetNewPassword';
+import NotFound from './pages/NotFound';
+import Reports from "./pages/Reports";
 
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
-import { Toaster } from "@/components/ui/toaster";
-import Login from "@/pages/Login";
-import Register from "@/pages/Register";
-import Dashboard from "@/pages/Dashboard";
-import Vehicles from "@/pages/Vehicles";
-import Drivers from "@/pages/Drivers";
-import Map from "@/pages/Map";
-import QRScanner from "@/pages/QRScanner";
-import Inspections from "@/pages/Inspections";
-import Accounts from "@/pages/Accounts";
-import Customers from "@/pages/Customers";
-import NotFound from "@/pages/NotFound";
-import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
-import { AppLayout } from "@/components/layout/AppLayout";
-import { AuthProvider } from "@/contexts/AuthContext";
-import { UserRole } from "@/lib/types/user-roles";
-import Index from "@/pages/Index";
-import Pricing from "@/pages/Pricing";
-import AdvertisementManager from "@/pages/AdvertisementManager";
-import FunctionListPage from "@/pages/FunctionList";
-import { LocationProvider } from "@/contexts/LocationContext";
-import { NotificationProvider } from "@/contexts/NotificationContext";
-import { LanguageProvider } from "@/contexts/LanguageContext";
+const queryClient = new QueryClient();
 
 function App() {
   return (
-    <BrowserRouter>
+    <LanguageProvider>
       <AuthProvider>
-        <LanguageProvider>
-          <LocationProvider>
-            <NotificationProvider>
-              <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/pricing" element={<Pricing />} />
-                
-                {/* New Function List Route */}
-                <Route
-                  path="/functions"
-                  element={
-                    <ProtectedRoute allowedRoles={[UserRole.ADMIN, UserRole.DEV_ADMIN, UserRole.FLEET_MANAGER, UserRole.DRIVER, UserRole.MECHANIC, UserRole.DISPATCHER]}>
-                      <AppLayout>
-                        <FunctionListPage />
-                      </AppLayout>
-                    </ProtectedRoute>
-                  }
-                />
-                
-                {/* Protected Routes that require authentication */}
-                <Route
-                  path="/dashboard"
-                  element={
-                    <ProtectedRoute allowedRoles={[UserRole.ADMIN, UserRole.DEV_ADMIN, UserRole.FLEET_MANAGER, UserRole.DRIVER, UserRole.MECHANIC, UserRole.DISPATCHER]}>
-                      <AppLayout>
-                        <Dashboard />
-                      </AppLayout>
-                    </ProtectedRoute>
-                  }
-                />
-                
-                <Route
-                  path="/vehicles"
-                  element={
-                    <ProtectedRoute allowedRoles={[UserRole.ADMIN, UserRole.DEV_ADMIN, UserRole.FLEET_MANAGER]}>
-                      <AppLayout>
-                        <Vehicles />
-                      </AppLayout>
-                    </ProtectedRoute>
-                  }
-                />
-                
-                <Route
-                  path="/drivers"
-                  element={
-                    <ProtectedRoute allowedRoles={[UserRole.ADMIN, UserRole.DEV_ADMIN, UserRole.FLEET_MANAGER]}>
-                      <AppLayout>
-                        <Drivers />
-                      </AppLayout>
-                    </ProtectedRoute>
-                  }
-                />
-                
-                <Route
-                  path="/map"
-                  element={
-                    <ProtectedRoute allowedRoles={[UserRole.ADMIN, UserRole.DEV_ADMIN, UserRole.FLEET_MANAGER, UserRole.DISPATCHER]}>
-                      <AppLayout>
-                        <Map />
-                      </AppLayout>
-                    </ProtectedRoute>
-                  }
-                />
-                
-                <Route
-                  path="/inspections"
-                  element={
-                    <ProtectedRoute allowedRoles={[UserRole.ADMIN, UserRole.DEV_ADMIN, UserRole.FLEET_MANAGER, UserRole.MECHANIC, UserRole.DRIVER]}>
-                      <AppLayout>
-                        <Inspections />
-                      </AppLayout>
-                    </ProtectedRoute>
-                  }
-                />
-                
-                <Route
-                  path="/qr-scanner"
-                  element={
-                    <ProtectedRoute allowedRoles={[UserRole.ADMIN, UserRole.DEV_ADMIN, UserRole.DRIVER, UserRole.FLEET_MANAGER]}>
-                      <AppLayout>
-                        <QRScanner />
-                      </AppLayout>
-                    </ProtectedRoute>
-                  }
-                />
-                
-                <Route
-                  path="/accounts"
-                  element={
-                    <ProtectedRoute allowedRoles={[UserRole.ADMIN, UserRole.DEV_ADMIN]}>
-                      <AppLayout>
-                        <Accounts />
-                      </AppLayout>
-                    </ProtectedRoute>
-                  }
-                />
-                
-                <Route
-                  path="/customers"
-                  element={
-                    <ProtectedRoute allowedRoles={[UserRole.ADMIN, UserRole.DEV_ADMIN, UserRole.FLEET_MANAGER]}>
-                      <AppLayout>
-                        <Customers />
-                      </AppLayout>
-                    </ProtectedRoute>
-                  }
-                />
-                
-                <Route
-                  path="/advertisements"
-                  element={
-                    <ProtectedRoute allowedRoles={[UserRole.ADMIN, UserRole.DEV_ADMIN]}>
-                      <AppLayout>
-                        <AdvertisementManager />
-                      </AppLayout>
-                    </ProtectedRoute>
-                  }
-                />
-                
-                <Route path="*" element={<NotFound />} />
-              </Routes>
+        <LocationProvider>
+          <NotificationProvider>
+            <QueryClientProvider client={queryClient}>
               <Toaster />
-            </NotificationProvider>
-          </LocationProvider>
-        </LanguageProvider>
+              <Router>
+                <Routes>
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/reset-password" element={<ResetPassword />} />
+                  <Route path="/set-new-password" element={<SetNewPassword />} />
+                  <Route
+                    path="/"
+                    element={
+                      <ProtectedRoute>
+                        <Dashboard />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/dashboard"
+                    element={
+                      <ProtectedRoute>
+                        <Dashboard />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/vehicles"
+                    element={
+                      <ProtectedRoute>
+                        <Vehicles />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/drivers"
+                    element={
+                      <ProtectedRoute>
+                        <Drivers />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/inspections"
+                    element={
+                      <ProtectedRoute>
+                        <Inspections />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route path="*" element={<NotFound />} />
+                  <Route
+                    path="/reports"
+                    element={
+                      <ProtectedRoute>
+                        <Reports />
+                      </ProtectedRoute>
+                    }
+                  />
+                </Routes>
+              </Router>
+            </QueryClientProvider>
+          </NotificationProvider>
+        </LocationProvider>
       </AuthProvider>
-    </BrowserRouter>
+    </LanguageProvider>
   );
 }
 
