@@ -1,6 +1,6 @@
 
 import { useAuth } from '@/contexts/AuthContext';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { useTranslation } from '@/hooks/useTranslation';
 
 interface SidebarHeaderProps {
   isExpanded: boolean;
@@ -8,16 +8,16 @@ interface SidebarHeaderProps {
 
 export function SidebarHeader({ isExpanded }: SidebarHeaderProps) {
   const { profile } = useAuth();
-  const { language } = useLanguage();
+  const { tWithFallback } = useTranslation();
 
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold text-gray-800">
+    <div className="p-4 border-b border-gray-200">
+      <h1 className="text-2xl font-bold text-gray-800 truncate">
         {isExpanded ? 'TruckMate CMMS' : 'TM'}
       </h1>
       {profile && isExpanded && (
-        <p className="text-sm text-gray-500 mt-1">
-          {language === 'de' ? 'Angemeldet als' : language === 'th' ? 'ลงชื่อเข้าใช้ในชื่อ' : 'Logged in as'}: {profile.name}
+        <p className="text-sm text-gray-500 mt-1 truncate">
+          {tWithFallback('Logged in as | ลงชื่อเข้าใช้ในชื่อ | Angemeldet als')}: {profile.name}
         </p>
       )}
     </div>

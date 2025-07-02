@@ -11,17 +11,17 @@ import {
   Calendar,
   LucideIcon
 } from 'lucide-react';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { useTranslation } from '@/hooks/useTranslation';
 
 interface MenuItem {
   icon: LucideIcon;
-  label: string;
+  labelKey: string;
   path: string;
 }
 
 export function SidebarMenu() {
   const location = useLocation();
-  const { language } = useLanguage();
+  const { tWithFallback } = useTranslation();
 
   const isActive = (path: string) => {
     return location.pathname === path;
@@ -30,37 +30,37 @@ export function SidebarMenu() {
   const menuItems: MenuItem[] = [
     {
       icon: Home,
-      label: language === 'de' ? 'Startseite' : language === 'th' ? 'หน้าหลัก' : 'Home',
+      labelKey: 'Home | หน้าหลัก | Startseite',
       path: '/'
     },
     {
       icon: LayoutDashboard,
-      label: language === 'de' ? 'Dashboard' : language === 'th' ? 'แดชบอร์ด' : 'Dashboard',
+      labelKey: 'Dashboard | แดชบอร์ด | Dashboard',
       path: '/dashboard'
     },
     {
       icon: Truck,
-      label: language === 'de' ? 'Fahrzeuge' : language === 'th' ? 'ยานพาหนะ' : 'Vehicles',
+      labelKey: 'Vehicles | ยานพาหนะ | Fahrzeuge',
       path: '/vehicles'
     },
     {
       icon: AlertCircle,
-      label: language === 'de' ? 'Inspektionen' : language === 'th' ? 'การตรวจสอบ' : 'Inspections',
+      labelKey: 'Inspections | การตรวจสอบ | Inspektionen',
       path: '/inspections'
     },
     {
       icon: Calendar,
-      label: language === 'de' ? 'Wartung' : language === 'th' ? 'การบำรุงรักษา' : 'Maintenance',
+      labelKey: 'Maintenance | การบำรุงรักษา | Wartung',
       path: '/maintenance'
     },
     {
       icon: FileText,
-      label: language === 'de' ? 'Berichte' : language === 'th' ? 'รายงาน' : 'Reports',
+      labelKey: 'Reports | รายงาน | Berichte',
       path: '/reports'
     },
     {
       icon: Settings,
-      label: language === 'de' ? 'Einstellungen' : language === 'th' ? 'การตั้งค่า' : 'Settings',
+      labelKey: 'Settings | การตั้งค่า | Einstellungen',
       path: '/settings'
     }
   ];
@@ -72,12 +72,14 @@ export function SidebarMenu() {
           <li key={item.path} className="mb-1">
             <Link
               to={item.path}
-              className={`flex items-center p-2 rounded-md text-gray-700 hover:bg-gray-200 ${
+              className={`flex items-center p-2 rounded-md text-gray-700 hover:bg-gray-200 transition-colors ${
                 isActive(item.path) ? 'bg-gray-200 font-semibold' : ''
               }`}
             >
-              <item.icon className="mr-2 h-4 w-4" />
-              <span>{item.label}</span>
+              <item.icon className="mr-2 h-4 w-4 flex-shrink-0" />
+              <span className="truncate">
+                {tWithFallback(item.labelKey)}
+              </span>
             </Link>
           </li>
         ))}

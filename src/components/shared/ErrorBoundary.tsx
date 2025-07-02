@@ -1,11 +1,11 @@
 
 import React, { Component, ErrorInfo, ReactNode } from 'react';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { AlertTriangle } from 'lucide-react';
+import { ErrorFallback } from './ErrorFallback';
 
 interface Props {
   children: ReactNode;
   fallback?: ReactNode;
+  onError?: (error: Error, errorInfo: ErrorInfo) => void;
 }
 
 interface State {
@@ -25,22 +25,24 @@ export class ErrorBoundary extends Component<Props, State> {
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     console.error('Error caught by boundary:', error, errorInfo);
+    
+    // Call custom error handler if provided
+    if (this.props.onError) {
+      this.props.onError(error, errorInfo);
+    }
   }
 
   render() {
-    if (this.state.hasError) {
+    if (this.state.hasError && this.state.error) {
       if (this.props.fallback) {
         return this.props.fallback;
       }
 
       return (
-        <Alert variant="destructive" className="m-4">
-          <AlertTriangle className="h-4 w-4" />
-          <AlertTitle>Etwas ist schiefgelaufen</AlertTitle>
-          <AlertDescription>
-            Ein unerwarteter Fehler ist aufgetreten. Bitte laden Sie die Seite neu.
-          </AlertDescription>
-        </Alert>
+        <ErrorFallback 
+          error={this.state.error}
+          resetError={() => this.setState({ hasError: false, error: undefined })}
+        />
       );
     }
 

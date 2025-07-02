@@ -1,6 +1,8 @@
 
 import { useAuth } from '@/contexts/AuthContext';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { useTranslation } from '@/hooks/useTranslation';
+import { Button } from '@/components/ui/button';
+import { LogOut } from 'lucide-react';
 
 interface SidebarFooterProps {
   isExpanded: boolean;
@@ -8,17 +10,30 @@ interface SidebarFooterProps {
 
 export function SidebarFooter({ isExpanded }: SidebarFooterProps) {
   const { logout } = useAuth();
-  const { language } = useLanguage();
+  const { tWithFallback } = useTranslation();
 
   return (
-    <div className="p-4">
-      {isExpanded && (
-        <button
+    <div className="p-4 border-t border-gray-200">
+      {isExpanded ? (
+        <Button
           onClick={logout}
-          className="w-full py-2 px-4 bg-red-500 text-white rounded-md hover:bg-red-700 transition-colors duration-200"
+          variant="destructive"
+          className="w-full"
+          size="sm"
         >
-          {language === 'de' ? 'Abmelden' : language === 'th' ? 'ออกจากระบบ' : 'Logout'}
-        </button>
+          <LogOut className="h-4 w-4 mr-2" />
+          {tWithFallback('Logout | ออกจากระบบ | Abmelden')}
+        </Button>
+      ) : (
+        <Button
+          onClick={logout}
+          variant="destructive"
+          size="icon"
+          className="w-full"
+          title={tWithFallback('Logout | ออกจากระบบ | Abmelden')}
+        >
+          <LogOut className="h-4 w-4" />
+        </Button>
       )}
     </div>
   );
