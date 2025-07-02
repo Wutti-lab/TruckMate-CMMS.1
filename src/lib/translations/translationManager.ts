@@ -29,10 +29,17 @@ export class TranslationManager {
     const languageTranslations = translations[this.currentLanguage];
     if (!languageTranslations) {
       console.warn(`Translation not found for language: ${this.currentLanguage}`);
-      return translations.en[key] || key;
+      const fallbackValue = translations.en[key];
+      return typeof fallbackValue === 'string' ? fallbackValue : String(key);
     }
 
-    return languageTranslations[key] || translations.en[key] || key;
+    const translatedValue = languageTranslations[key];
+    if (translatedValue) {
+      return typeof translatedValue === 'string' ? translatedValue : String(translatedValue);
+    }
+    
+    const fallbackValue = translations.en[key];
+    return typeof fallbackValue === 'string' ? fallbackValue : String(key);
   }
 
   public translateWithFallback(text: string, language?: Language): string {
