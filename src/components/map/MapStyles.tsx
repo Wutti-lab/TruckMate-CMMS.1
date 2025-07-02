@@ -7,9 +7,9 @@ interface MapStylesProps {
   mapStyle: string;
   setMapStyle: (style: string) => void;
   showTraffic: boolean;
-  setShowTraffic: () => void;
+  setShowTraffic: (show: boolean) => void;
   showPOIs: boolean;
-  setShowPOIs: () => void;
+  setShowPOIs: (show: boolean) => void;
 }
 
 export function MapStyles({
