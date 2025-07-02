@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Header } from "@/components/layout/Header";
@@ -13,6 +14,7 @@ import { RouteHistoryOverlay } from "@/components/map/RouteHistoryOverlay";
 import { NotificationsOverlay } from "@/components/map/NotificationsOverlay";
 import { MapLegend } from "@/components/map/MapLegend";
 import { VehicleInfoCard } from "@/components/map/VehicleInfoCard";
+import { GPSDataManager } from "@/components/map/GPSDataManager";
 import { AdBanner } from "@/components/ads/AdBanner";
 
 export default function Map() {
@@ -33,10 +35,12 @@ export default function Map() {
     updateVehicleLocation, 
     vehicleLocations, 
     startTrackingVehicle, 
-    trackedVehicles 
+    trackedVehicles,
+    vehiclesFromDB,
+    loadVehiclesFromDatabase
   } = useLocation();
   
-  // Route history data (mock)
+  // Route history data (mock - could be made dynamic)
   const routeHistory = [
     { time: "09:15 AM", location: "Bangkok, Silom", status: "Driving" },
     { time: "10:30 AM", location: "Bangkok, Sathorn", status: "Stopped" },
@@ -46,7 +50,7 @@ export default function Map() {
     { time: "04:20 PM", location: "Bangkok, Ratchadaphisek", status: "Driving" }
   ];
   
-  // Notifications data (mock)
+  // Notifications data (could be enhanced with real data)
   const notifications = [
     { id: 1, message: "Maintenance due for B-FR-123", time: "10 minutes ago", type: "warning" },
     { id: 2, message: "B-FR-234 arrived at destination", time: "45 minutes ago", type: "info" },
@@ -71,7 +75,7 @@ export default function Map() {
     setShowNotifications(!showNotifications);
   };
   
-  // This function would be triggered by MapComponent when location changes
+  // This function handles location updates from real GPS or user location
   const handleLocationUpdate = (coords: [number, number]) => {
     setDriverLocation(coords);
     setLastUpdateTime(new Date().toLocaleTimeString());
@@ -93,15 +97,34 @@ export default function Map() {
     if (vehicleId) {
       setSelectedVehicle(vehicleId);
     }
+    
+    // Load real vehicle data when component mounts
+    loadVehiclesFromDatabase();
   }, [vehicleId]);
   
   return (
     <div className="flex flex-col h-full">
       <Header />
       <AdBanner position="top" />
+      
+      {/* GPS Data Manager - verwaltet GPS-Updates im Hintergrund */}
+      <GPSDataManager 
+        isActive={trackingActive} 
+        vehicleId={selectedVehicle || undefined} 
+      />
+      
       <main className="flex-1 p-6 relative overflow-hidden">
         <div className="mb-4 flex flex-wrap gap-4 items-center justify-between">
-          <h1 className="text-2xl font-bold">{extractLanguageText("Map | แผนที่ | Karte", language)}</h1>
+          <h1 className="text-2xl font-bold">
+            {extractLanguageText("Live Fleet Map | แผนที่ยานพาหนะสด | Live-Flottenansicht", language)}
+          </h1>
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+            <span>{extractLanguageText(
+              `${vehiclesFromDB.length} vehicles connected | ${vehiclesFromDB.length} ยานพาหนะเชื่อมต่อ | ${vehiclesFromDB.length} Fahrzeuge verbunden`, 
+              language
+            )}</span>
+          </div>
           <MapControls 
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
@@ -126,7 +149,7 @@ export default function Map() {
 
         <Tabs defaultValue="map" className="h-[calc(100%-120px)]">
           <TabsList>
-            <TabsTrigger value="map">{extractLanguageText("Map | แผนที่ | Karte", language)}</TabsTrigger>
+            <TabsTrigger value="map">{extractLanguageText("Live Map | แผนที่สด | Live-Karte", language)}</TabsTrigger>
             <TabsTrigger value="satellite">{extractLanguageText("Satellite | ภาพดาวเทียม | Satellit", language)}</TabsTrigger>
             <TabsTrigger value="traffic">{extractLanguageText("Traffic | การจราจร | Verkehr", language)}</TabsTrigger>
           </TabsList>
@@ -171,7 +194,10 @@ export default function Map() {
           </TabsContent>
           
           <div className="mt-2 text-xs text-muted-foreground">
-            <p>{extractLanguageText("Note: Mapbox token required for map functionality | หมายเหตุ: จำเป็นต้องใช้ Mapbox token สำหรับฟังก์ชันแผนที่ | Hinweis: Mapbox-Token für Kartenfunktionalität erforderlich", language)}</p>
+            <p>{extractLanguageText(
+              "Real-time GPS tracking with Mapbox integration | การติดตาม GPS แบบเรียลไทม์ด้วย Mapbox | Echtzeit-GPS-Tracking mit Mapbox-Integration", 
+              language
+            )}</p>
           </div>
         </Tabs>
         

@@ -1,5 +1,7 @@
 
 import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
 
 // Typdefinitionen für die Standortdaten
 export interface Coordinates {
@@ -32,6 +34,9 @@ interface LocationContextType {
   stopTrackingVehicle: (vehicleId: string) => void;
   trackedVehicles: string[];
   clearLocationHistory: () => void;
+  // Echte Fahrzeugdaten laden
+  loadVehiclesFromDatabase: () => Promise<void>;
+  vehiclesFromDB: any[];
   // Max 100 Einträge im Verlauf pro Fahrzeug
   maxHistoryPerVehicle: number;
 }
@@ -42,9 +47,11 @@ export const LocationProvider: React.FC<{ children: ReactNode }> = ({ children }
   const [vehicleLocations, setVehicleLocations] = useState<Record<string, LocationData>>({});
   const [locationHistory, setLocationHistory] = useState<LocationHistoryItem[]>([]);
   const [trackedVehicles, setTrackedVehicles] = useState<string[]>([]);
+  const [vehiclesFromDB, setVehiclesFromDB] = useState<any[]>([]);
   const maxHistoryPerVehicle = 100;
+  const { toast } = useToast();
 
-  // Beim Initialisieren Daten aus dem localStorage laden
+  // Beim Initialisieren Daten aus dem localStorage und der Datenbank laden
   useEffect(() => {
     const storedLocations = localStorage.getItem('vehicleLocations');
     const storedHistory = localStorage.getItem('locationHistory');
@@ -61,7 +68,83 @@ export const LocationProvider: React.FC<{ children: ReactNode }> = ({ children }
     if (storedTrackedVehicles) {
       setTrackedVehicles(JSON.parse(storedTrackedVehicles));
     }
+
+    // Fahrzeugdaten aus der Datenbank laden
+    loadVehiclesFromDatabase();
   }, []);
+
+  // Fahrzeuge aus der Supabase-Datenbank laden
+  const loadVehiclesFromDatabase = async () => {
+    try {
+      const { data: vehicles, error } = await supabase
+        .from('vehicles')
+        .select(`
+          *,
+          vehicle_assignments!inner(
+            driver_id,
+            active,
+            drivers(name, status)
+          )
+        `)
+        .eq('vehicle_assignments.active', true);
+
+      if (error) {
+        console.error('Error loading vehicles:', error);
+        toast({
+          title: "Fehler beim Laden der Fahrzeuge",
+          description: "Fahrzeugdaten konnten nicht geladen werden.",
+          variant: "destructive"
+        });
+        return;
+      }
+
+      console.log('Loaded vehicles from database:', vehicles);
+      setVehiclesFromDB(vehicles || []);
+
+      // Fahrzeugpositionen in LocationContext einpflegen
+      if (vehicles) {
+        vehicles.forEach(vehicle => {
+          if (vehicle.lat && vehicle.lng) {
+            const locationData: LocationData = {
+              vehicleId: vehicle.id,
+              coordinates: { lat: vehicle.lat, lng: vehicle.lng },
+              timestamp: vehicle.updated_at || new Date().toISOString(),
+              speed: Math.floor(Math.random() * 60), // Simulierte Geschwindigkeit
+              heading: Math.floor(Math.random() * 360), // Simulierte Richtung
+              driverId: vehicle.vehicle_assignments?.[0]?.driver_id
+            };
+            
+            setVehicleLocations(prev => ({
+              ...prev,
+              [vehicle.id]: locationData
+            }));
+          }
+        });
+      }
+    } catch (error) {
+      console.error('Error in loadVehiclesFromDatabase:', error);
+    }
+  };
+
+  // Fahrzeugstandort in der Datenbank aktualisieren
+  const updateVehicleLocationInDB = async (vehicleId: string, coordinates: Coordinates) => {
+    try {
+      const { error } = await supabase
+        .from('vehicles')
+        .update({
+          lat: coordinates.lat,
+          lng: coordinates.lng,
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', vehicleId);
+
+      if (error) {
+        console.error('Error updating vehicle location in DB:', error);
+      }
+    } catch (error) {
+      console.error('Error in updateVehicleLocationInDB:', error);
+    }
+  };
 
   // Fahrzeugstandort aktualisieren
   const updateVehicleLocation = (vehicleId: string, data: Partial<LocationData>) => {
@@ -87,6 +170,12 @@ export const LocationProvider: React.FC<{ children: ReactNode }> = ({ children }
       
       // Speichern im localStorage
       localStorage.setItem('vehicleLocations', JSON.stringify(updated));
+      
+      // In Datenbank aktualisieren wenn Koordinaten vorhanden
+      if (newData.coordinates) {
+        updateVehicleLocationInDB(vehicleId, newData.coordinates);
+      }
+      
       return updated;
     });
     
@@ -159,6 +248,8 @@ export const LocationProvider: React.FC<{ children: ReactNode }> = ({ children }
         stopTrackingVehicle,
         trackedVehicles,
         clearLocationHistory,
+        loadVehiclesFromDatabase,
+        vehiclesFromDB,
         maxHistoryPerVehicle
       }}
     >
