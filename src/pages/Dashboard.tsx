@@ -13,9 +13,21 @@ import { AlertsManager } from "@/components/notifications/AlertsManager";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AdBanner } from "@/components/ads/AdBanner";
 import { useTranslation } from "@/hooks/useTranslation";
+import { useDashboardData } from "@/hooks/useDashboardData";
+import { useState, useEffect } from "react";
 
 export default function Dashboard() {
   const { t } = useTranslation();
+  const { stats, loading } = useDashboardData();
+  const [currentTime, setCurrentTime] = useState(new Date());
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 60000); // Update every minute
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className="flex flex-col h-full">
@@ -23,7 +35,7 @@ export default function Dashboard() {
       <AdBanner position="top" />
       
       <main className="flex-1 overflow-auto p-6">
-        <WelcomeSection />
+        <WelcomeSection currentTime={currentTime} />
         
         <Tabs defaultValue="overview" className="space-y-6">
           <TabsList className="grid w-full grid-cols-4">
@@ -35,14 +47,21 @@ export default function Dashboard() {
           
           <TabsContent value="overview" className="space-y-6">
             <RealtimeMetrics />
-            <DashboardKPIs />
+            <DashboardKPIs
+              totalVehicles={stats.totalVehicles}
+              activeVehicles={stats.activeVehicles}
+              driversOnDuty={stats.driversOnDuty}
+              pendingIssues={stats.pendingIssues}
+              upcomingServices={stats.upcomingServices}
+              loading={loading}
+            />
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <div className="space-y-6">
-                <ChartsSection />
+                <ChartsSection fleetStatusData={stats.fleetStatusData} />
                 <MaintenanceAndActions />
               </div>
               <div className="space-y-6">
-                <RecentActivities />
+                <RecentActivities activities={stats.recentActivities} loading={loading} />
                 <UpcomingServices />
               </div>
             </div>
