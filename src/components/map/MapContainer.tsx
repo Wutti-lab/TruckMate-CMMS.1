@@ -1,18 +1,17 @@
 
-import { useEffect, useRef, useState } from "react";
-import mapboxgl from "mapbox-gl";
+import { useEffect, useRef } from "react";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { useToast } from "@/hooks/use-toast";
 import { useLocation } from "@/contexts/LocationContext";
 import { MapTokenInput } from "./MapTokenInput";
-import { MapStyles } from "./MapStyles";
-import { MapControls } from "./MapControls";
-import { MapErrors } from "./MapErrors";
+import { MapLoadingState } from "./components/MapLoadingState";
+import { MapControlsSection } from "./components/MapControlsSection";
 import { useMapInitialization } from "./hooks/useMapInitialization";
 import { useLocationTracking } from "./hooks/useLocationTracking";
 import { useVehicleMarkers } from "./hooks/useVehicleMarkers";
 import { useMapToken } from "./hooks/useMapToken";
+import { useMapState } from "./hooks/useMapState";
+import { useMapHandlers } from "./hooks/useMapHandlers";
 
 interface MapContainerProps {
   className?: string;
@@ -27,17 +26,9 @@ export function MapContainer({
   onLocationUpdate, 
   vehicleId 
 }: MapContainerProps) {
-  const mapContainer = useRef<HTMLDivElement>(null);
-  const map = useRef<mapboxgl.Map | null>(null);
-  const [mapLoaded, setMapLoaded] = useState(false);
-  const userMarker = useRef<mapboxgl.Marker | null>(null);
   const isMobile = useIsMobile();
-  const { toast } = useToast();
-  const [mapStyle, setMapStyle] = useState('streets-v11');
-  const [showTraffic, setShowTraffic] = useState(false);
-  const [showPOIs, setShowPOIs] = useState(true);
   
-  // Location Context für echte Fahrzeugdaten
+  // Location Context for real vehicle data
   const { 
     vehicleLocations, 
     vehiclesFromDB, 
@@ -47,6 +38,20 @@ export function MapContainer({
   } = useLocation();
 
   // Custom hooks
+  const {
+    mapContainer,
+    map,
+    mapLoaded,
+    setMapLoaded,
+    userMarker,
+    mapStyle,
+    setMapStyle,
+    showTraffic,
+    setShowTraffic,
+    showPOIs,
+    setShowPOIs,
+  } = useMapState();
+
   const {
     mapboxToken,
     setMapboxToken,
@@ -73,59 +78,14 @@ export function MapContainer({
     simulateVehicleMovement
   } = useVehicleMarkers();
 
-  const getUserLocation = () => {
-    getUserLocationHook((coords) => {
-      if (onLocationUpdate) {
-        onLocationUpdate(coords);
-      }
-      
-      if (map.current) {
-        map.current.flyTo({
-          center: coords,
-          zoom: 15,
-          essential: true
-        });
-
-        if (userMarker.current) {
-          userMarker.current.setLngLat(coords);
-        } else {
-          userMarker.current = new mapboxgl.Marker({ 
-            color: '#FF0000',
-            draggable: false
-          })
-          .setLngLat(coords)
-          .addTo(map.current);
-        }
-      }
-      
-      if (tracking) {
-        startLocationTracking((coords) => {
-          if (onLocationUpdate) {
-            onLocationUpdate(coords);
-          }
-          
-          if (userMarker.current) {
-            userMarker.current.setLngLat(coords);
-          } else if (map.current) {
-            userMarker.current = new mapboxgl.Marker({ 
-              color: '#FF0000',
-              draggable: false
-            })
-            .setLngLat(coords)
-            .addTo(map.current);
-          }
-          
-          if (tracking && map.current) {
-            map.current.flyTo({
-              center: coords,
-              zoom: 15,
-              essential: true
-            });
-          }
-        });
-      }
-    });
-  };
+  const { getUserLocation } = useMapHandlers({
+    map,
+    userMarker,
+    tracking,
+    onLocationUpdate,
+    getUserLocationHook,
+    startLocationTracking
+  });
 
   const { 
     initializeMap,
@@ -140,7 +100,7 @@ export function MapContainer({
     mapStyle,
     showTraffic,
     setTokenError,
-    toast,
+    toast: { toast: () => {} }, // Simple placeholder
     getUserLocation
   });
 
@@ -237,33 +197,19 @@ export function MapContainer({
         <>
           <div ref={mapContainer} className="h-full w-full" />
           
-          {!mapLoaded && (
-            <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
-              <div className="text-center p-4">
-                <p className="text-lg text-fleet-500 font-medium mb-2">Real-Time Fleet Map | Live-Flottenansicht</p>
-                <p className="text-sm text-gray-500">Loading real vehicle data... | Lade echte Fahrzeugdaten...</p>
-              </div>
-            </div>
-          )}
+          <MapLoadingState mapLoaded={mapLoaded} />
 
-          <MapErrors
+          <MapControlsSection
             tokenError={tokenError}
             locationError={locationError}
             resetToken={resetToken}
-          />
-          
-          <MapStyles 
             mapStyle={mapStyle}
             setMapStyle={updateMapStyle}
             showTraffic={showTraffic}
             setShowTraffic={toggleTraffic}
             showPOIs={showPOIs}
             setShowPOIs={togglePOIs}
-          />
-          
-          <MapControls
             getUserLocation={getUserLocation}
-            resetToken={resetToken}
           />
         </>
       )}
