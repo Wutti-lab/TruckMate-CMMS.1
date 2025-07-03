@@ -14,6 +14,8 @@ import { useTranslation } from "@/hooks/useTranslation";
 import { useDashboardData } from "@/hooks/useDashboardData";
 import { ErrorBoundary } from "@/components/shared/ErrorBoundary";
 import { LoadingSpinner } from "@/components/shared/LoadingSpinner";
+import { MobileOptimized } from "@/components/shared/mobile/MobileOptimized";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 // Lazy load heavy components
 const LiveActivityFeed = React.lazy(() => 
@@ -35,6 +37,7 @@ export default function Dashboard() {
   const { t } = useTranslation();
   const { stats, loading } = useDashboardData();
   const [currentTime, setCurrentTime] = useState(new Date());
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -46,20 +49,21 @@ export default function Dashboard() {
 
   return (
     <ErrorBoundary>
-      <div className="flex flex-col h-full">
-        <Header />
-        <AdBanner position="top" />
-        
-        <main className="flex-1 overflow-auto p-6">
-          <WelcomeSection currentTime={currentTime} />
+      <MobileOptimized enableSwipe={isMobile}>
+        <div className="flex flex-col h-full">
+          <Header />
+          <AdBanner position="top" />
           
-          <Tabs defaultValue="overview" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-4">
-              <TabsTrigger value="overview">{t('overview') || 'Overview'}</TabsTrigger>
-              <TabsTrigger value="analytics">{t('analytics') || 'Analytics'}</TabsTrigger>
-              <TabsTrigger value="alerts">{t('alerts') || 'Alerts'}</TabsTrigger>
-              <TabsTrigger value="activity">{t('activity') || 'Activity'}</TabsTrigger>
-            </TabsList>
+          <main className="flex-1 overflow-auto p-6">
+            <WelcomeSection currentTime={currentTime} />
+            
+            <Tabs defaultValue="overview" className="space-y-6">
+              <TabsList className={`grid w-full ${isMobile ? 'grid-cols-2 gap-2' : 'grid-cols-4'}`}>
+                <TabsTrigger value="overview">{t('overview') || 'Overview'}</TabsTrigger>
+                <TabsTrigger value="analytics">{t('analytics') || 'Analytics'}</TabsTrigger>
+                {!isMobile && <TabsTrigger value="alerts">{t('alerts') || 'Alerts'}</TabsTrigger>}
+                {!isMobile && <TabsTrigger value="activity">{t('activity') || 'Activity'}</TabsTrigger>}
+              </TabsList>
             
             <TabsContent value="overview" className="space-y-6">
               <ErrorBoundary>
@@ -77,7 +81,7 @@ export default function Dashboard() {
                 />
               </ErrorBoundary>
               
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div className={`grid gap-6 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 lg:grid-cols-2'}`}>
                 <div className="space-y-6">
                   <ErrorBoundary>
                     <MemoizedChartsSection fleetStatusData={stats.fleetStatusData} />
@@ -120,9 +124,30 @@ export default function Dashboard() {
                 </Suspense>
               </ErrorBoundary>
             </TabsContent>
+            
+            {isMobile && (
+              <>
+                <TabsContent value="alerts">
+                  <ErrorBoundary>
+                    <Suspense fallback={<LoadingSpinner size="lg" className="mx-auto" />}>
+                      <AlertsManager />
+                    </Suspense>
+                  </ErrorBoundary>
+                </TabsContent>
+                
+                <TabsContent value="activity">
+                  <ErrorBoundary>
+                    <Suspense fallback={<LoadingSpinner size="lg" className="mx-auto" />}>
+                      <LiveActivityFeed />
+                    </Suspense>
+                  </ErrorBoundary>
+                </TabsContent>
+              </>
+            )}
           </Tabs>
         </main>
-      </div>
+        </div>
+      </MobileOptimized>
     </ErrorBoundary>
   );
 }

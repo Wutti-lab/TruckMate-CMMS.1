@@ -2,10 +2,14 @@
 import { Table, TableBody, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { Edit, Trash2 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Skeleton } from "@/components/ui/skeleton";
 import { VehicleRow } from "./table/VehicleRow";
+import { MobileOptimized } from "@/components/shared/mobile/MobileOptimized";
+import { AccessibleCard } from "@/components/shared/accessibility/AccessibleCard";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface Vehicle {
   id: string;
@@ -36,10 +40,21 @@ export function VehiclesTable({
   onDeleteVehicle 
 }: VehiclesTableProps) {
   const { language } = useLanguage();
+  const isMobile = useIsMobile();
   
   // Function to get the correct header text based on language
   const getHeaderText = (en: string, de: string): string => {
     return language === 'de' ? de : en;
+  };
+
+  // Get status variant for badges
+  const getStatusVariant = (status: string) => {
+    switch (status) {
+      case 'active': return 'default';
+      case 'maintenance': return 'destructive';
+      case 'inactive': return 'secondary';
+      default: return 'outline';
+    }
   };
 
   // Filter vehicles based on search query
@@ -58,36 +73,113 @@ export function VehiclesTable({
   // Display loading state
   if (isLoading) {
     return (
-      <Card>
-        <CardContent className="p-4">
+      <MobileOptimized>
+        <AccessibleCard title={getHeaderText("Loading Vehicles", "Fahrzeuge werden geladen")} ariaLabel="Loading vehicles data">
           <div className="space-y-2">
             {[...Array(5)].map((_, i) => (
-              <Skeleton key={i} className="h-12 w-full" />
+              <Skeleton key={i} className="h-12 w-full animate-pulse" />
             ))}
           </div>
-        </CardContent>
-      </Card>
+        </AccessibleCard>
+      </MobileOptimized>
     );
   }
 
   // Display empty state
   if (filteredVehicles.length === 0) {
     return (
-      <Card>
-        <CardContent className="p-6 text-center">
-          <p className="text-muted-foreground">
+      <MobileOptimized>
+        <AccessibleCard 
+          title={getHeaderText("No Vehicles", "Keine Fahrzeuge")} 
+          ariaLabel="No vehicles found message"
+        >
+          <p className="text-muted-foreground text-center">
             {searchQuery
               ? getHeaderText("No vehicles match your search query", "Keine Fahrzeuge entsprechen Ihrer Suchanfrage")
               : getHeaderText("No vehicles found", "Keine Fahrzeuge gefunden")}
           </p>
-        </CardContent>
-      </Card>
+        </AccessibleCard>
+      </MobileOptimized>
     );
   }
 
+  // Mobile card view
+  if (isMobile) {
+    return (
+      <MobileOptimized enableSwipe>
+        <div className="space-y-4">
+          {filteredVehicles.map((vehicle) => (
+            <AccessibleCard 
+              key={vehicle.id}
+              title={vehicle.license_plate}
+              ariaLabel={`Vehicle ${vehicle.license_plate} details`}
+              className="hover-scale"
+            >
+              <div className="space-y-3">
+                <div className="flex justify-between items-center">
+                  <span className="text-sm font-medium">{vehicle.model}</span>
+                  <Badge variant={getStatusVariant(vehicle.status)}>
+                    {vehicle.status}
+                  </Badge>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-2 text-sm">
+                  <div>
+                    <span className="text-muted-foreground">{getHeaderText("Location", "Standort")}:</span>
+                    <p className="font-medium">{vehicle.location}</p>
+                  </div>
+                  <div>
+                    <span className="text-muted-foreground">{getHeaderText("Fuel", "Kraftstoff")}:</span>
+                    <p className="font-medium">{vehicle.fuel_level}%</p>
+                  </div>
+                  <div>
+                    <span className="text-muted-foreground">{getHeaderText("Battery", "Batterie")}:</span>
+                    <p className="font-medium">{vehicle.battery_level}%</p>
+                  </div>
+                  <div>
+                    <span className="text-muted-foreground">{getHeaderText("Temp", "Temperatur")}:</span>
+                    <p className="font-medium">{vehicle.engine_temp}°C</p>
+                  </div>
+                </div>
+
+                <div className="flex justify-between items-center pt-2 border-t">
+                  <span className="text-xs text-muted-foreground">
+                    {getHeaderText("Next Service", "Nächste Wartung")}: {new Date(vehicle.next_service).toLocaleDateString()}
+                  </span>
+                  <div className="flex gap-2">
+                    <Button 
+                      variant="ghost" 
+                      size="sm" 
+                      onClick={() => onEditVehicle(vehicle)}
+                      aria-label={`Edit vehicle ${vehicle.license_plate}`}
+                    >
+                      <Edit className="h-4 w-4" />
+                    </Button>
+                    <Button 
+                      variant="ghost" 
+                      size="sm" 
+                      onClick={() => onDeleteVehicle(vehicle.id)}
+                      aria-label={`Delete vehicle ${vehicle.license_plate}`}
+                    >
+                      <Trash2 className="h-4 w-4 text-destructive" />
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </AccessibleCard>
+          ))}
+        </div>
+      </MobileOptimized>
+    );
+  }
+
+  // Desktop table view
   return (
-    <Card>
-      <CardContent className="p-0">
+    <MobileOptimized>
+      <AccessibleCard 
+        title={getHeaderText("Vehicles Overview", "Fahrzeugübersicht")}
+        ariaLabel="Vehicles data table"
+      >
         <Table>
           <TableHeader>
             <TableRow>
@@ -104,22 +196,42 @@ export function VehiclesTable({
           </TableHeader>
           <TableBody>
             {filteredVehicles.map((vehicle) => (
-              <TableRow key={vehicle.id}>
+              <TableRow key={vehicle.id} className="hover:bg-muted/50 transition-colors">
                 <td className="font-medium">{vehicle.license_plate}</td>
                 <td>{vehicle.model}</td>
                 <td>
-                  <span className={`px-2 py-1 rounded-full text-xs ${
-                    vehicle.status === 'active' ? 'bg-green-100 text-green-800' :
-                    vehicle.status === 'maintenance' ? 'bg-amber-100 text-amber-800' :
-                    'bg-gray-100 text-gray-800'
-                  }`}>
+                  <Badge variant={getStatusVariant(vehicle.status)}>
                     {vehicle.status}
-                  </span>
+                  </Badge>
                 </td>
                 <td>{vehicle.location}</td>
-                <td>{vehicle.fuel_level}%</td>
-                <td>{vehicle.battery_level}%</td>
-                <td>{vehicle.engine_temp}°C</td>
+                <td>
+                  <div className="flex items-center gap-2">
+                    <span>{vehicle.fuel_level}%</span>
+                    <div className="w-16 h-2 bg-muted rounded-full overflow-hidden">
+                      <div 
+                        className="h-full bg-primary transition-all duration-300"
+                        style={{ width: `${vehicle.fuel_level}%` }}
+                      />
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div className="flex items-center gap-2">
+                    <span>{vehicle.battery_level}%</span>
+                    <div className="w-16 h-2 bg-muted rounded-full overflow-hidden">
+                      <div 
+                        className="h-full bg-accent transition-all duration-300"
+                        style={{ width: `${vehicle.battery_level}%` }}
+                      />
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <span className={vehicle.engine_temp > 90 ? 'text-destructive font-medium' : ''}>
+                    {vehicle.engine_temp}°C
+                  </span>
+                </td>
                 <td>{new Date(vehicle.next_service).toLocaleDateString()}</td>
                 <td className="text-right">
                   <div className="flex justify-end gap-2">
@@ -127,6 +239,8 @@ export function VehiclesTable({
                       variant="ghost" 
                       size="sm" 
                       onClick={() => onEditVehicle(vehicle)}
+                      aria-label={`Edit vehicle ${vehicle.license_plate}`}
+                      className="hover-scale"
                     >
                       <Edit className="h-4 w-4" />
                     </Button>
@@ -134,8 +248,10 @@ export function VehiclesTable({
                       variant="ghost" 
                       size="sm" 
                       onClick={() => onDeleteVehicle(vehicle.id)}
+                      aria-label={`Delete vehicle ${vehicle.license_plate}`}
+                      className="hover-scale"
                     >
-                      <Trash2 className="h-4 w-4 text-red-500" />
+                      <Trash2 className="h-4 w-4 text-destructive" />
                     </Button>
                   </div>
                 </td>
@@ -143,7 +259,7 @@ export function VehiclesTable({
             ))}
           </TableBody>
         </Table>
-      </CardContent>
-    </Card>
+      </AccessibleCard>
+    </MobileOptimized>
   );
 }

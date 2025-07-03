@@ -32,4 +32,21 @@ export const dashboardTranslations = {
   "poor": "Poor",
   "critical": "Critical",
   "lastUpdated": "Last updated",
+  
+  // Real-time additions
+  "overview": "Overview",
+  "analytics": "Analytics", 
+  "alerts": "Alerts",
+  "activity": "Activity",
+  "realtimeFleetStatus": "Real-time Fleet Status",
+  "liveTracking": "Live Tracking",
+  "autoRefresh": "Auto Refresh",
+  "vehicleStatus": "Vehicle Status",
+  "driverStatus": "Driver Status",
+  "criticalAlerts": "Critical Alerts",
+  "inspections": "Inspections",
+  "utilization": "utilization",
+  "healthScore": "Health Score",
+  "liveActivityFeed": "Live Activity Feed",
+  "noActivitiesFound": "No activities found"
 };

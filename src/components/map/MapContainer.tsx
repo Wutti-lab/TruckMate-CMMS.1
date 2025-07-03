@@ -11,6 +11,8 @@ import { useMapEffects } from "./hooks/useMapEffects";
 import { ErrorBoundary } from "@/components/shared/ErrorBoundary";
 import { MapTokenManager } from "./components/MapTokenManager";
 import { MapContent } from "./components/MapContent";
+import { MobileOptimized } from "@/components/shared/mobile/MobileOptimized";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface MapContainerProps {
   className?: string;
@@ -25,6 +27,8 @@ export function MapContainer({
   onLocationUpdate, 
   vehicleId 
 }: MapContainerProps) {
+  const isMobile = useIsMobile();
+  
   // Location Context for real vehicle data
   const { 
     vehiclesFromDB, 
@@ -138,7 +142,10 @@ export function MapContainer({
 
   return (
     <ErrorBoundary>
-      <div className={`relative h-full w-full rounded-md overflow-hidden ${className}`}>
+      <MobileOptimized 
+        enableSwipe={isMobile}
+        className={`relative h-full w-full rounded-md overflow-hidden ${className}`}
+      >
         {isSettingToken ? (
           <MapTokenManager
             mapboxToken={mapboxToken}
@@ -162,7 +169,7 @@ export function MapContainer({
             getUserLocation={getUserLocation}
           />
         )}
-      </div>
+      </MobileOptimized>
     </ErrorBoundary>
   );
 }
