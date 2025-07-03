@@ -17,6 +17,14 @@ import ResetPassword from './pages/ResetPassword';
 import SetNewPassword from './pages/SetNewPassword';
 import NotFound from './pages/NotFound';
 import Reports from "./pages/Reports";
+import FunctionList from "./pages/FunctionList";
+import Map from "./pages/Map";
+import QRScanner from "./pages/QRScanner";
+import Accounts from "./pages/Accounts";
+import Customers from "./pages/Customers";
+import Pricing from "./pages/Pricing";
+import AdvertisementManager from "./pages/AdvertisementManager";
+import AdminSetup from "./pages/AdminSetup";
 
 const queryClient = new QueryClient();
 
@@ -33,6 +41,7 @@ function App() {
                   <Route path="/login" element={<Login />} />
                   <Route path="/reset-password" element={<ResetPassword />} />
                   <Route path="/set-new-password" element={<SetNewPassword />} />
+                  <Route path="/admin-setup" element={<AdminSetup />} />
                   <Route
                     path="/"
                     element={
@@ -78,6 +87,62 @@ function App() {
                     element={
                       <ProtectedRoute>
                         <Reports />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/functions"
+                    element={
+                      <ProtectedRoute>
+                        <FunctionList />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/map"
+                    element={
+                      <ProtectedRoute>
+                        <Map />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/qr-scanner"
+                    element={
+                      <ProtectedRoute>
+                        <QRScanner />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/accounts"
+                    element={
+                      <ProtectedRoute>
+                        <Accounts />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/customers"
+                    element={
+                      <ProtectedRoute>
+                        <Customers />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/pricing"
+                    element={
+                      <ProtectedRoute>
+                        <Pricing />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/advertisements"
+                    element={
+                      <ProtectedRoute>
+                        <AdvertisementManager />
                       </ProtectedRoute>
                     }
                   />
