@@ -25,6 +25,7 @@ import Customers from "./pages/Customers";
 import Pricing from "./pages/Pricing";
 import AdvertisementManager from "./pages/AdvertisementManager";
 import AdminSetup from "./pages/AdminSetup";
+import Register from "./pages/Register";
 
 const queryClient = new QueryClient();
 
@@ -39,6 +40,7 @@ function App() {
               <Router>
                 <Routes>
                   <Route path="/login" element={<Login />} />
+                  <Route path="/register" element={<Register />} />
                   <Route path="/reset-password" element={<ResetPassword />} />
                   <Route path="/set-new-password" element={<SetNewPassword />} />
                   <Route path="/admin-setup" element={<AdminSetup />} />
