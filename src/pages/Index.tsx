@@ -23,11 +23,10 @@ export default function Index() {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-fleet-50 to-white">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-4 border-fleet-600 border-t-transparent mx-auto"></div>
-          <p className="mt-4 text-lg text-gray-600">
-            {/* Multi-language loading text */}
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-background to-muted">
+        <div className="text-center animate-fade-in">
+          <div className="animate-spin rounded-full h-12 w-12 border-4 border-primary border-t-transparent mx-auto"></div>
+          <p className="mt-4 text-lg text-foreground">
             TruckMate CMMS wird geladen...
           </p>
         </div>

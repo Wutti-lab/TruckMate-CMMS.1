@@ -8,6 +8,7 @@ import { RecentActivities } from "@/components/dashboard/RecentActivities";
 import { MaintenanceAndActions } from "@/components/dashboard/MaintenanceAndActions";
 import { UpcomingServices } from "@/components/dashboard/UpcomingServices";
 import { RealtimeMetrics } from "@/components/dashboard/RealtimeMetrics";
+import { EnhancedRealtimePanel } from "@/components/dashboard/EnhancedRealtimePanel";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AdBanner } from "@/components/ads/AdBanner";
 import { useTranslation } from "@/hooks/useTranslation";
@@ -68,6 +69,10 @@ export default function Dashboard() {
             <TabsContent value="overview" className="space-y-6">
               <ErrorBoundary>
                 <RealtimeMetrics />
+              </ErrorBoundary>
+              
+              <ErrorBoundary>
+                <EnhancedRealtimePanel />
               </ErrorBoundary>
               
               <ErrorBoundary>
