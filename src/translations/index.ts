@@ -1,4 +1,3 @@
-
 import { Language, Translations } from "../types/language";
 import { enTranslations } from "./en/index";
 import { thTranslations } from "./th"; 

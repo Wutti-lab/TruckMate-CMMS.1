@@ -1,4 +1,3 @@
-
 import { useEffect, useRef } from "react";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -12,6 +11,7 @@ import { useVehicleMarkers } from "./hooks/useVehicleMarkers";
 import { useMapToken } from "./hooks/useMapToken";
 import { useMapState } from "./hooks/useMapState";
 import { useMapHandlers } from "./hooks/useMapHandlers";
+import { ErrorBoundary } from "@/components/shared/ErrorBoundary";
 
 interface MapContainerProps {
   className?: string;
@@ -185,34 +185,36 @@ export function MapContainer({
   }, [mapLoaded, vehiclesFromDB, vehicleId]);
 
   return (
-    <div className={`relative h-full w-full rounded-md overflow-hidden ${className}`}>
-      {isSettingToken ? (
-        <MapTokenInput 
-          mapboxToken={mapboxToken}
-          setMapboxToken={setMapboxToken}
-          handleTokenSubmit={handleTokenSubmit}
-          tokenError={tokenError}
-        />
-      ) : (
-        <>
-          <div ref={mapContainer} className="h-full w-full" />
-          
-          <MapLoadingState mapLoaded={mapLoaded} />
-
-          <MapControlsSection
+    <ErrorBoundary>
+      <div className={`relative h-full w-full rounded-md overflow-hidden ${className}`}>
+        {isSettingToken ? (
+          <MapTokenInput 
+            mapboxToken={mapboxToken}
+            setMapboxToken={setMapboxToken}
+            handleTokenSubmit={handleTokenSubmit}
             tokenError={tokenError}
-            locationError={locationError}
-            resetToken={resetToken}
-            mapStyle={mapStyle}
-            setMapStyle={updateMapStyle}
-            showTraffic={showTraffic}
-            setShowTraffic={toggleTraffic}
-            showPOIs={showPOIs}
-            setShowPOIs={togglePOIs}
-            getUserLocation={getUserLocation}
           />
-        </>
-      )}
-    </div>
+        ) : (
+          <>
+            <div ref={mapContainer} className="h-full w-full" />
+            
+            <MapLoadingState mapLoaded={mapLoaded} />
+
+            <MapControlsSection
+              tokenError={tokenError}
+              locationError={locationError}
+              resetToken={resetToken}
+              mapStyle={mapStyle}
+              setMapStyle={updateMapStyle}
+              showTraffic={showTraffic}
+              setShowTraffic={toggleTraffic}
+              showPOIs={showPOIs}
+              setShowPOIs={togglePOIs}
+              getUserLocation={getUserLocation}
+            />
+          </>
+        )}
+      </div>
+    </ErrorBoundary>
   );
 }

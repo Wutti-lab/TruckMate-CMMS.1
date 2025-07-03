@@ -1,4 +1,5 @@
 
+import React, { useState, useEffect, memo, Suspense } from "react";
 import { Header } from "@/components/layout/Header";
 import { WelcomeSection } from "@/components/dashboard/WelcomeSection";
 import { DashboardKPIs } from "@/components/dashboard/DashboardKPIs";
@@ -7,14 +8,28 @@ import { RecentActivities } from "@/components/dashboard/RecentActivities";
 import { MaintenanceAndActions } from "@/components/dashboard/MaintenanceAndActions";
 import { UpcomingServices } from "@/components/dashboard/UpcomingServices";
 import { RealtimeMetrics } from "@/components/dashboard/RealtimeMetrics";
-import { LiveActivityFeed } from "@/components/dashboard/LiveActivityFeed";
-import { FleetAnalytics } from "@/components/analytics/FleetAnalytics";
-import { AlertsManager } from "@/components/notifications/AlertsManager";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AdBanner } from "@/components/ads/AdBanner";
 import { useTranslation } from "@/hooks/useTranslation";
 import { useDashboardData } from "@/hooks/useDashboardData";
-import { useState, useEffect } from "react";
+import { ErrorBoundary } from "@/components/shared/ErrorBoundary";
+import { LoadingSpinner } from "@/components/shared/LoadingSpinner";
+
+// Lazy load heavy components
+const LiveActivityFeed = React.lazy(() => 
+  import("@/components/dashboard/LiveActivityFeed").then(module => ({ default: module.LiveActivityFeed }))
+);
+const FleetAnalytics = React.lazy(() => 
+  import("@/components/analytics/FleetAnalytics").then(module => ({ default: module.FleetAnalytics }))
+);
+const AlertsManager = React.lazy(() => 
+  import("@/components/notifications/AlertsManager").then(module => ({ default: module.AlertsManager }))
+);
+
+// Memoized components for performance
+const MemoizedDashboardKPIs = memo(DashboardKPIs);
+const MemoizedChartsSection = memo(ChartsSection);
+const MemoizedRecentActivities = memo(RecentActivities);
 
 export default function Dashboard() {
   const { t } = useTranslation();
@@ -30,56 +45,84 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <div className="flex flex-col h-full">
-      <Header />
-      <AdBanner position="top" />
-      
-      <main className="flex-1 overflow-auto p-6">
-        <WelcomeSection currentTime={currentTime} />
+    <ErrorBoundary>
+      <div className="flex flex-col h-full">
+        <Header />
+        <AdBanner position="top" />
         
-        <Tabs defaultValue="overview" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="analytics">Analytics</TabsTrigger>
-            <TabsTrigger value="alerts">Alerts</TabsTrigger>
-            <TabsTrigger value="activity">Activity</TabsTrigger>
-          </TabsList>
+        <main className="flex-1 overflow-auto p-6">
+          <WelcomeSection currentTime={currentTime} />
           
-          <TabsContent value="overview" className="space-y-6">
-            <RealtimeMetrics />
-            <DashboardKPIs
-              totalVehicles={stats.totalVehicles}
-              activeVehicles={stats.activeVehicles}
-              driversOnDuty={stats.driversOnDuty}
-              pendingIssues={stats.pendingIssues}
-              upcomingServices={stats.upcomingServices}
-              loading={loading}
-            />
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <div className="space-y-6">
-                <ChartsSection fleetStatusData={stats.fleetStatusData} />
-                <MaintenanceAndActions />
+          <Tabs defaultValue="overview" className="space-y-6">
+            <TabsList className="grid w-full grid-cols-4">
+              <TabsTrigger value="overview">{t('overview') || 'Overview'}</TabsTrigger>
+              <TabsTrigger value="analytics">{t('analytics') || 'Analytics'}</TabsTrigger>
+              <TabsTrigger value="alerts">{t('alerts') || 'Alerts'}</TabsTrigger>
+              <TabsTrigger value="activity">{t('activity') || 'Activity'}</TabsTrigger>
+            </TabsList>
+            
+            <TabsContent value="overview" className="space-y-6">
+              <ErrorBoundary>
+                <RealtimeMetrics />
+              </ErrorBoundary>
+              
+              <ErrorBoundary>
+                <MemoizedDashboardKPIs
+                  totalVehicles={stats.totalVehicles}
+                  activeVehicles={stats.activeVehicles}
+                  driversOnDuty={stats.driversOnDuty}
+                  pendingIssues={stats.pendingIssues}
+                  upcomingServices={stats.upcomingServices}
+                  loading={loading}
+                />
+              </ErrorBoundary>
+              
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div className="space-y-6">
+                  <ErrorBoundary>
+                    <MemoizedChartsSection fleetStatusData={stats.fleetStatusData} />
+                  </ErrorBoundary>
+                  <ErrorBoundary>
+                    <MaintenanceAndActions />
+                  </ErrorBoundary>
+                </div>
+                <div className="space-y-6">
+                  <ErrorBoundary>
+                    <MemoizedRecentActivities activities={stats.recentActivities} loading={loading} />
+                  </ErrorBoundary>
+                  <ErrorBoundary>
+                    <UpcomingServices />
+                  </ErrorBoundary>
+                </div>
               </div>
-              <div className="space-y-6">
-                <RecentActivities activities={stats.recentActivities} loading={loading} />
-                <UpcomingServices />
-              </div>
-            </div>
-          </TabsContent>
-          
-          <TabsContent value="analytics">
-            <FleetAnalytics />
-          </TabsContent>
-          
-          <TabsContent value="alerts">
-            <AlertsManager />
-          </TabsContent>
-          
-          <TabsContent value="activity">
-            <LiveActivityFeed />
-          </TabsContent>
-        </Tabs>
-      </main>
-    </div>
+            </TabsContent>
+            
+            <TabsContent value="analytics">
+              <ErrorBoundary>
+                <Suspense fallback={<LoadingSpinner size="lg" className="mx-auto" />}>
+                  <FleetAnalytics />
+                </Suspense>
+              </ErrorBoundary>
+            </TabsContent>
+            
+            <TabsContent value="alerts">
+              <ErrorBoundary>
+                <Suspense fallback={<LoadingSpinner size="lg" className="mx-auto" />}>
+                  <AlertsManager />
+                </Suspense>
+              </ErrorBoundary>
+            </TabsContent>
+            
+            <TabsContent value="activity">
+              <ErrorBoundary>
+                <Suspense fallback={<LoadingSpinner size="lg" className="mx-auto" />}>
+                  <LiveActivityFeed />
+                </Suspense>
+              </ErrorBoundary>
+            </TabsContent>
+          </Tabs>
+        </main>
+      </div>
+    </ErrorBoundary>
   );
 }

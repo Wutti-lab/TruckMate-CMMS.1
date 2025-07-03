@@ -5,10 +5,34 @@ import { navigationTranslations } from "./navigation";
 import { dashboardTranslations } from "./dashboard";
 import { vehicleTranslations } from "./vehicle";
 import { driverTranslations } from "./driver";
-import { pricingTranslations } from "./pricing";  // This import remains the same
+import { pricingTranslations } from "./pricing";
 import { inspectionTranslations } from "./inspection";
 import { advertisementTranslations } from "./advertisement";
 import { customerTranslations } from "./customer";
+
+// Common translations for new components
+const commonTranslations = {
+  // Real-time components
+  "realTimeTracking": "Real-time Tracking",
+  "activeVehicles": "Active Vehicles",
+  "realtimeMetrics": "Real-time Metrics", 
+  "liveActivityFeed": "Live Activity Feed",
+  "fleetAnalytics": "Fleet Analytics",
+  "alertsManager": "Alerts & Notifications",
+  "criticalAlerts": "Critical Alerts",
+  "fuelEfficiency": "Fuel Efficiency",
+  "vehicleUtilization": "Vehicle Utilization",
+  
+  // Error messages
+  "somethingWentWrong": "Something went wrong",
+  "tryAgain": "Try again",
+  "errorOccurred": "An unexpected error occurred. Please try again.",
+  
+  // Loading states
+  "loading": "Loading...",
+  "noDataAvailable": "No data available",
+  "noActivitiesFound": "No activities found"
+};
 
 // Combine all translation categories
 export const enTranslations = {
@@ -21,4 +45,5 @@ export const enTranslations = {
   ...inspectionTranslations,
   ...advertisementTranslations,
   ...customerTranslations,
+  ...commonTranslations,
 };
