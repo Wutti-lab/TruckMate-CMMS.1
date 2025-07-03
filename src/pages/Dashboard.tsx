@@ -10,6 +10,7 @@ import { UpcomingServices } from "@/components/dashboard/UpcomingServices";
 import { RealtimeMetrics } from "@/components/dashboard/RealtimeMetrics";
 import { EnhancedRealtimePanel } from "@/components/dashboard/EnhancedRealtimePanel";
 import { QuickMapAccess } from "@/components/dashboard/QuickMapAccess";
+import { MaintenanceAlertsManager } from "@/components/notifications/MaintenanceAlertsManager";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AdBanner } from "@/components/ads/AdBanner";
 import { useTranslation } from "@/hooks/useTranslation";
@@ -107,6 +108,9 @@ export default function Dashboard() {
                 <div className="space-y-6">
                   <ErrorBoundary>
                     <QuickMapAccess />
+                  </ErrorBoundary>
+                  <ErrorBoundary>
+                    <MaintenanceAlertsManager />
                   </ErrorBoundary>
                 </div>
               </div>
