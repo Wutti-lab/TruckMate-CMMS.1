@@ -1,11 +1,14 @@
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, memo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { formatDistanceToNow } from 'date-fns';
 import { useTranslation } from '@/hooks/useTranslation';
+import { supabase } from '@/integrations/supabase/client';
+import { LoadingSpinner } from '@/components/shared/LoadingSpinner';
+import { AccessibleCard } from '@/components/shared/accessibility/AccessibleCard';
 
 interface ActivityItem {
   id: string;
@@ -19,55 +22,91 @@ interface ActivityItem {
 
 export function LiveActivityFeed() {
   const { t } = useTranslation();
-  const [activities, setActivities] = useState<ActivityItem[]>([
-    {
-      id: '1',
-      type: 'inspection',
-      message: 'Daily inspection completed for B-FR-123',
-      timestamp: new Date(Date.now() - 300000),
-      vehicleId: 'B-FR-123'
-    },
-    {
-      id: '2',
-      type: 'alert',
-      message: 'Low fuel warning for B-FR-234',
-      timestamp: new Date(Date.now() - 600000),
-      vehicleId: 'B-FR-234',
-      severity: 'medium'
-    },
-    {
-      id: '3',
-      type: 'driver',
-      message: 'Driver John Smith started shift',
-      timestamp: new Date(Date.now() - 900000),
-      driverId: 'john-smith'
-    },
-    {
-      id: '4',
-      type: 'maintenance',
-      message: 'Scheduled maintenance due for B-FR-345',
-      timestamp: new Date(Date.now() - 1200000),
-      vehicleId: 'B-FR-345',
-      severity: 'high'
+  const [activities, setActivities] = useState<ActivityItem[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const fetchRecentActivities = useCallback(async () => {
+    try {
+      const [vehiclesResult, driversResult, inspectionsResult] = await Promise.all([
+        supabase.from('vehicles').select('*').order('updated_at', { ascending: false }).limit(5),
+        supabase.from('drivers').select('*').order('updated_at', { ascending: false }).limit(5),
+        supabase.from('inspections').select('*').order('inspection_date', { ascending: false }).limit(5)
+      ]);
+
+      const recentActivities: ActivityItem[] = [];
+
+      // Add vehicle updates
+      vehiclesResult.data?.forEach(vehicle => {
+        recentActivities.push({
+          id: `vehicle-${vehicle.id}`,
+          type: 'vehicle',
+          message: `Vehicle ${vehicle.license_plate} status: ${vehicle.status}`,
+          timestamp: new Date(vehicle.updated_at),
+          vehicleId: vehicle.license_plate
+        });
+      });
+
+      // Add driver updates
+      driversResult.data?.forEach(driver => {
+        recentActivities.push({
+          id: `driver-${driver.id}`,
+          type: 'driver',
+          message: `Driver ${driver.name} status: ${driver.status}`,
+          timestamp: new Date(driver.updated_at),
+          driverId: driver.id
+        });
+      });
+
+      // Add inspection updates
+      inspectionsResult.data?.forEach(inspection => {
+        recentActivities.push({
+          id: `inspection-${inspection.id}`,
+          type: 'inspection',
+          message: `${inspection.type} inspection: ${inspection.status}`,
+          timestamp: new Date(inspection.inspection_date),
+          vehicleId: inspection.vehicle_id,
+          severity: inspection.status === 'failed' ? 'high' : 'low'
+        });
+      });
+
+      // Sort by timestamp and limit to 10 most recent
+      const sortedActivities = recentActivities
+        .sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime())
+        .slice(0, 10);
+
+      setActivities(sortedActivities);
+    } catch (error) {
+      console.error('Error fetching activities:', error);
+    } finally {
+      setLoading(false);
     }
-  ]);
+  }, []);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      const newActivity: ActivityItem = {
-        id: Date.now().toString(),
-        type: ['inspection', 'maintenance', 'alert', 'driver', 'vehicle'][Math.floor(Math.random() * 5)] as ActivityItem['type'],
-        message: `New activity at ${new Date().toLocaleTimeString()}`,
-        timestamp: new Date(),
-        vehicleId: `B-FR-${Math.floor(Math.random() * 999).toString().padStart(3, '0')}`,
-        severity: ['low', 'medium', 'high'][Math.floor(Math.random() * 3)] as ActivityItem['severity']
-      };
+    fetchRecentActivities();
 
-      setActivities(prev => [newActivity, ...prev.slice(0, 9)]);
-    }, 15000);
+    // Set up real-time subscriptions for live updates
+    const vehicleChannel = supabase
+      .channel('vehicle-activity')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'vehicles' }, fetchRecentActivities)
+      .subscribe();
 
-    return () => clearInterval(interval);
-  }, []);
+    const driverChannel = supabase
+      .channel('driver-activity')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'drivers' }, fetchRecentActivities)
+      .subscribe();
+
+    const inspectionChannel = supabase
+      .channel('inspection-activity')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'inspections' }, fetchRecentActivities)
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(vehicleChannel);
+      supabase.removeChannel(driverChannel);
+      supabase.removeChannel(inspectionChannel);
+    };
+  }, [fetchRecentActivities]);
 
   const getActivityIcon = (type: ActivityItem['type']) => {
     switch (type) {
@@ -90,40 +129,53 @@ export function LiveActivityFeed() {
   };
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="text-lg font-semibold">Live Activity Feed</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <ScrollArea className="h-[400px]">
-          <div className="space-y-4">
-            {activities.map((activity) => (
-              <div key={activity.id} className="flex items-start space-x-3 p-3 rounded-lg border">
-                <Avatar className="h-8 w-8">
-                  <AvatarFallback className="text-xs">
-                    {getActivityIcon(activity.type)}
-                  </AvatarFallback>
-                </Avatar>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-gray-900 truncate">
-                    {activity.message}
-                  </p>
-                  <div className="flex items-center justify-between mt-1">
-                    <p className="text-xs text-gray-500">
-                      {formatDistanceToNow(activity.timestamp, { addSuffix: true })}
-                    </p>
-                    {activity.severity && (
-                      <Badge variant={getBadgeVariant(activity.severity)} className="text-xs">
-                        {activity.severity}
-                      </Badge>
-                    )}
-                  </div>
-                </div>
-              </div>
-            ))}
+    <AccessibleCard 
+      title={t('liveActivityFeed') || 'Live Activity Feed'}
+      className="animate-fade-in"
+      ariaLabel="Live activity feed showing recent fleet activities"
+    >
+        {loading ? (
+          <div className="flex items-center justify-center h-[400px]">
+            <LoadingSpinner size="lg" />
           </div>
-        </ScrollArea>
-      </CardContent>
-    </Card>
+        ) : (
+          <ScrollArea className="h-[400px]">
+            <div className="space-y-4">
+              {activities.length === 0 ? (
+                <div className="text-center py-8 text-muted-foreground">
+                  {t('noActivitiesFound') || 'No activities found'}
+                </div>
+              ) : (
+                activities.map((activity) => (
+                  <div key={activity.id} className="flex items-start space-x-3 p-3 rounded-lg border hover-scale transition-all duration-200">
+                    <Avatar className="h-8 w-8">
+                      <AvatarFallback className="text-xs">
+                        {getActivityIcon(activity.type)}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-foreground truncate">
+                        {activity.message}
+                      </p>
+                      <div className="flex items-center justify-between mt-1">
+                        <p className="text-xs text-muted-foreground">
+                          {formatDistanceToNow(activity.timestamp, { addSuffix: true })}
+                        </p>
+                        {activity.severity && (
+                          <Badge variant={getBadgeVariant(activity.severity)} className="text-xs">
+                            {activity.severity}
+                          </Badge>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+          </ScrollArea>
+        )}
+    </AccessibleCard>
   );
 }
+
+export const MemoizedLiveActivityFeed = memo(LiveActivityFeed);
