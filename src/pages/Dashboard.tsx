@@ -9,6 +9,7 @@ import { MaintenanceAndActions } from "@/components/dashboard/MaintenanceAndActi
 import { UpcomingServices } from "@/components/dashboard/UpcomingServices";
 import { RealtimeMetrics } from "@/components/dashboard/RealtimeMetrics";
 import { EnhancedRealtimePanel } from "@/components/dashboard/EnhancedRealtimePanel";
+import { QuickMapAccess } from "@/components/dashboard/QuickMapAccess";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AdBanner } from "@/components/ads/AdBanner";
 import { useTranslation } from "@/hooks/useTranslation";
@@ -86,7 +87,7 @@ export default function Dashboard() {
                 />
               </ErrorBoundary>
               
-              <div className={`grid gap-6 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 lg:grid-cols-2'}`}>
+              <div className={`grid gap-6 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 lg:grid-cols-3'}`}>
                 <div className="space-y-6">
                   <ErrorBoundary>
                     <MemoizedChartsSection fleetStatusData={stats.fleetStatusData} />
@@ -101,6 +102,11 @@ export default function Dashboard() {
                   </ErrorBoundary>
                   <ErrorBoundary>
                     <UpcomingServices />
+                  </ErrorBoundary>
+                </div>
+                <div className="space-y-6">
+                  <ErrorBoundary>
+                    <QuickMapAccess />
                   </ErrorBoundary>
                 </div>
               </div>

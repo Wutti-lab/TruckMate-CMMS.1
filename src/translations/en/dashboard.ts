@@ -48,5 +48,27 @@ export const dashboardTranslations = {
   "utilization": "utilization",
   "healthScore": "Health Score",
   "liveActivityFeed": "Live Activity Feed",
-  "noActivitiesFound": "No activities found"
+  "noActivitiesFound": "No activities found",
+  
+  // Map and Tracking
+  "track": "Track",
+  "showLess": "Show Less",
+  "hidden": "hidden",
+  "showAll": "Show All",
+  "more": "more",
+  "clickToTrack": "Click vehicle to track on map",
+  "active": "Active",
+  "trackingPaused": "Tracking Paused",
+  "errorLoadingData": "Error loading real-time data",
+  "recentUpdates": "Recent Updates",
+  "activeDrivers": "Active Drivers",
+  "noCriticalAlerts": "No critical alerts",
+  "lowFuel": "Low fuel",
+  "lowBattery": "Low battery",
+  "highTemperature": "High temperature",
+  "quickMapAccess": "Quick Map Access",
+  "fleetMap": "Fleet Map",
+  "tracking": "Tracking",
+  "openFullMap": "Open Full Map",
+  "clickToViewOnMap": "Click vehicles to view location on map"
 };

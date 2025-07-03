@@ -16,13 +16,18 @@ import { MapLegend } from "@/components/map/MapLegend";
 import { VehicleInfoCard } from "@/components/map/VehicleInfoCard";
 import { GPSDataManager } from "@/components/map/GPSDataManager";
 import { AdBanner } from "@/components/ads/AdBanner";
+import { useRealtimeTracking } from "@/components/map/hooks/useRealtimeTracking";
+import { useRealtimeData } from "@/components/dashboard/hooks/useRealtimeData";
+import { MobileOptimized } from "@/components/shared/mobile/MobileOptimized";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { RealtimeVehiclePanel } from "@/components/map/RealtimeVehiclePanel";
 
 export default function Map() {
   const [searchParams] = useSearchParams();
   const vehicleId = searchParams.get('vehicle');
   const [selectedVehicle, setSelectedVehicle] = useState<string | null>(vehicleId);
   const [showEmergencyContacts, setShowEmergencyContacts] = useState(false);
-  const [trackingActive, setTrackingActive] = useState(false);
+  const [trackingActive, setTrackingActive] = useState(true); // Auto-start tracking
   const [driverLocation, setDriverLocation] = useState<[number, number] | null>(null);
   const [lastUpdateTime, setLastUpdateTime] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
@@ -31,6 +36,7 @@ export default function Map() {
   
   const { toast } = useToast();
   const { language } = useLanguage();
+  const isMobile = useIsMobile();
   const { 
     updateVehicleLocation, 
     vehicleLocations, 
@@ -39,6 +45,15 @@ export default function Map() {
     vehiclesFromDB,
     loadVehiclesFromDatabase
   } = useLocation();
+  
+  // Get real-time data from dashboard
+  const { data: realtimeData } = useRealtimeData();
+  const { 
+    trackingData, 
+    isTracking, 
+    startRealtimeTracking, 
+    stopRealtimeTracking 
+  } = useRealtimeTracking();
   
   // Route history data (mock - could be made dynamic)
   const routeHistory = [
@@ -100,43 +115,74 @@ export default function Map() {
     
     // Load real vehicle data when component mounts
     loadVehiclesFromDatabase();
+    
+    // Start real-time tracking
+    if (trackingActive) {
+      startRealtimeTracking();
+    }
+    
+    return () => {
+      stopRealtimeTracking();
+    };
   }, [vehicleId]);
+
+  // Auto-start tracking when tracking becomes active
+  useEffect(() => {
+    if (trackingActive) {
+      startRealtimeTracking();
+    } else {
+      stopRealtimeTracking();
+    }
+  }, [trackingActive]);
   
   return (
-    <div className="flex flex-col h-full">
-      <Header />
-      <AdBanner position="top" />
-      
-      {/* GPS Data Manager - verwaltet GPS-Updates im Hintergrund */}
-      <GPSDataManager 
-        isActive={trackingActive} 
-        vehicleId={selectedVehicle || undefined} 
-      />
-      
-      <main className="flex-1 p-6 relative overflow-hidden">
-        <div className="mb-4 flex flex-wrap gap-4 items-center justify-between">
-          <h1 className="text-2xl font-bold">
-            {extractLanguageText("Live Fleet Map | แผนที่ยานพาหนะสด | Live-Flottenansicht", language)}
-          </h1>
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-            <span>{extractLanguageText(
-              `${vehiclesFromDB.length} vehicles connected | ${vehiclesFromDB.length} ยานพาหนะเชื่อมต่อ | ${vehiclesFromDB.length} Fahrzeuge verbunden`, 
-              language
-            )}</span>
+    <MobileOptimized enableSwipe={isMobile}>
+      <div className="flex flex-col h-full">
+        <Header />
+        <AdBanner position="top" />
+        
+        {/* GPS Data Manager - verwaltet GPS-Updates im Hintergrund */}
+        <GPSDataManager 
+          isActive={trackingActive} 
+          vehicleId={selectedVehicle || undefined} 
+        />
+        
+        <main className="flex-1 p-6 relative overflow-hidden">
+          <div className={`mb-4 flex ${isMobile ? 'flex-col gap-2' : 'flex-wrap gap-4'} items-center justify-between`}>
+            <h1 className={`${isMobile ? 'text-xl' : 'text-2xl'} font-bold`}>
+              {extractLanguageText("Live Fleet Map | แผนที่ยานพาหนะสด | Live-Flottenansicht", language)}
+            </h1>
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <div className={`w-2 h-2 ${isTracking ? 'bg-green-500 animate-pulse' : 'bg-gray-400'} rounded-full`}></div>
+              <span>{extractLanguageText(
+                `${realtimeData.vehicles.length} vehicles tracking | ${realtimeData.vehicles.length} ยานพาหนะติดตาม | ${realtimeData.vehicles.length} Fahrzeuge verfolgt`, 
+                language
+              )}</span>
+            </div>
+            {!isMobile && (
+              <MapControls 
+                searchQuery={searchQuery}
+                setSearchQuery={setSearchQuery}
+                setShowEmergencyContacts={setShowEmergencyContacts}
+                showEmergencyContacts={showEmergencyContacts}
+                toggleRouteHistory={toggleRouteHistory}
+                showRouteHistory={showRouteHistory}
+                toggleNotifications={toggleNotifications}
+                showNotifications={showNotifications}
+                notifications={notifications}
+              />
+            )}
           </div>
-          <MapControls 
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-            setShowEmergencyContacts={setShowEmergencyContacts}
-            showEmergencyContacts={showEmergencyContacts}
-            toggleRouteHistory={toggleRouteHistory}
-            showRouteHistory={showRouteHistory}
-            toggleNotifications={toggleNotifications}
-            showNotifications={showNotifications}
-            notifications={notifications}
-          />
-        </div>
+
+          {/* Real-time Vehicle Tracking Panel */}
+          <div className="absolute top-4 left-4 z-40">
+            <RealtimeVehiclePanel
+              trackingData={trackingData}
+              vehicles={realtimeData.vehicles}
+              onSelectVehicle={setSelectedVehicle}
+              selectedVehicle={selectedVehicle}
+            />
+          </div>
 
         <DriverLocationCard
           trackingActive={trackingActive}
@@ -148,9 +194,9 @@ export default function Map() {
         />
 
         <Tabs defaultValue="map" className="h-[calc(100%-120px)]">
-          <TabsList>
+          <TabsList className={`${isMobile ? 'grid-cols-2' : 'grid-cols-3'} grid w-full`}>
             <TabsTrigger value="map">{extractLanguageText("Live Map | แผนที่สด | Live-Karte", language)}</TabsTrigger>
-            <TabsTrigger value="satellite">{extractLanguageText("Satellite | ภาพดาวเทียม | Satellit", language)}</TabsTrigger>
+            {!isMobile && <TabsTrigger value="satellite">{extractLanguageText("Satellite | ภาพดาวเทียม | Satellit", language)}</TabsTrigger>}
             <TabsTrigger value="traffic">{extractLanguageText("Traffic | การจราจร | Verkehr", language)}</TabsTrigger>
           </TabsList>
           <TabsContent value="map" className="h-full">
@@ -195,7 +241,7 @@ export default function Map() {
           
           <div className="mt-2 text-xs text-muted-foreground">
             <p>{extractLanguageText(
-              "Real-time GPS tracking with Mapbox integration | การติดตาม GPS แบบเรียลไทม์ด้วย Mapbox | Echtzeit-GPS-Tracking mit Mapbox-Integration", 
+              `Real-time tracking: ${trackingData.length} vehicles active | การติดตาม: ${trackingData.length} ยานพาหนะ | Echtzeit: ${trackingData.length} Fahrzeuge aktiv`, 
               language
             )}</p>
           </div>
@@ -208,7 +254,25 @@ export default function Map() {
           setTrackingActive={setTrackingActive}
           startTrackingVehicle={startTrackingVehicle}
         />
+
+        {/* Mobile Controls */}
+        {isMobile && (
+          <div className="fixed bottom-4 right-4 z-50">
+            <MapControls 
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
+              setShowEmergencyContacts={setShowEmergencyContacts}
+              showEmergencyContacts={showEmergencyContacts}
+              toggleRouteHistory={toggleRouteHistory}
+              showRouteHistory={showRouteHistory}
+              toggleNotifications={toggleNotifications}
+              showNotifications={showNotifications}
+              notifications={notifications}
+            />
+          </div>
+        )}
       </main>
     </div>
+    </MobileOptimized>
   );
 }
