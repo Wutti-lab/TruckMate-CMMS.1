@@ -1,5 +1,4 @@
 
-import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import {
   Home,
@@ -12,6 +11,7 @@ import {
   LucideIcon
 } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useSidebar, SidebarMenu, SidebarMenuItem, SidebarMenuButton } from '@/components/ui/sidebar';
 
 interface MenuItem {
   icon: LucideIcon;
@@ -19,12 +19,18 @@ interface MenuItem {
   path: string;
 }
 
-export function SidebarMenu() {
+export function AppSidebarMenu() {
   const location = useLocation();
   const { t } = useLanguage();
+  const { setOpenMobile } = useSidebar();
 
   const isActive = (path: string) => {
     return location.pathname === path;
+  };
+
+  const handleLinkClick = () => {
+    // Close sidebar on mobile when link is clicked
+    setOpenMobile(false);
   };
 
   const menuItems: MenuItem[] = [
@@ -66,24 +72,24 @@ export function SidebarMenu() {
   ];
 
   return (
-    <nav className="flex-1 p-2">
-      <ul>
-        {menuItems.map((item) => (
-          <li key={item.path} className="mb-1">
-            <Link
-              to={item.path}
-              className={`flex items-center p-2 rounded-md text-gray-700 hover:bg-gray-200 transition-colors ${
-                isActive(item.path) ? 'bg-gray-200 font-semibold' : ''
-              }`}
-            >
-              <item.icon className="mr-2 h-4 w-4 flex-shrink-0" />
-              <span className="truncate">
+    <SidebarMenu>
+      {menuItems.map((item) => (
+        <SidebarMenuItem key={item.path}>
+          <SidebarMenuButton 
+            asChild 
+            isActive={isActive(item.path)}
+            size="lg"
+            className="touch-manipulation min-h-[48px] w-full justify-start gap-3 text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+          >
+            <Link to={item.path} onClick={handleLinkClick}>
+              <item.icon className="h-5 w-5 flex-shrink-0" />
+              <span className="truncate font-medium">
                 {t(item.labelKey)}
               </span>
             </Link>
-          </li>
-        ))}
-      </ul>
-    </nav>
+          </SidebarMenuButton>
+        </SidebarMenuItem>
+      ))}
+    </SidebarMenu>
   );
 }
