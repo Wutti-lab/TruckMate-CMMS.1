@@ -12,7 +12,7 @@
     --card: 210 50% 98%; /* Light blue card background */
     --card-foreground: 222.2 84% 4.9%;
 
-    --popover: 210 50% 98%; /* Light blue popover background */
+    --popover: 0 0% 100%; /* Pure white popover background for proper contrast */
     --popover-foreground: 222.2 84% 4.9%;
 
     --primary: 217 69% 34%; /* Fleet blue */
@@ -54,7 +54,7 @@
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 50% 98%; /* Light blue text in dark mode */
 
-    --popover: 222.2 84% 4.9%;
+    --popover: 0 0% 3.9%; /* Dark background for dark mode popovers */
     --popover-foreground: 210 50% 98%; /* Light blue text in dark mode */
 
     --primary: 210 50% 98%; /* Light blue primary in dark mode */
