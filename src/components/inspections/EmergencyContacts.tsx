@@ -4,22 +4,22 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
 export function EmergencyContacts() {
   const emergencyNumbers = [
-    { number: "191", title: "แจ้งเหตุฉุกเฉิน", icon: Siren },
-    { number: "199", title: "เหตุฉุกเฉินหลายประเภท", icon: AlertTriangle },
-    { number: "199", title: "ดับเพลิง", icon: FireExtinguisher },
-    { number: "1193", title: "ตำรวจทางหลวง", icon: Car },
-    { number: "1195", title: "สำนักงานอำนวยการ", icon: Building2 },
-    { number: "1586", title: "สายด่วน", icon: Phone },
-    { number: "1197", title: "กรมทางหลวง", icon: Map },
-    { number: "1543", title: "ศูนย์สั่งการและควบคุม", icon: Building2 },
-    { number: "1192", title: "แจ้งรถหาย/ถูกขโมย", icon: MessageSquareWarning },
-    { number: "1669", title: "หน่วยแพทย์ฉุกเฉิน", icon: Hospital },
+    { id: "emer-191", number: "191", title: "แจ้งเหตุฉุกเฉิน", icon: Siren },
+    { id: "emer-199-1", number: "199", title: "เหตุฉุกเฉินหลายประเภท", icon: AlertTriangle },
+    { id: "fire-199", number: "199", title: "ดับเพลิง", icon: FireExtinguisher },
+    { id: "police-1193", number: "1193", title: "ตำรวจทางหลวง", icon: Car },
+    { id: "office-1195", number: "1195", title: "สำนักงานอำนวยการ", icon: Building2 },
+    { id: "hotline-1586", number: "1586", title: "สายด่วน", icon: Phone },
+    { id: "highway-1197", number: "1197", title: "กรมทางหลวง", icon: Map },
+    { id: "control-1543", number: "1543", title: "ศูนย์สั่งการและควบคุม", icon: Building2 },
+    { id: "theft-1192", number: "1192", title: "แจ้งรถหาย/ถูกขโมย", icon: MessageSquareWarning },
+    { id: "medical-1669", number: "1669", title: "หน่วยแพทย์ฉุกเฉิน", icon: Hospital },
   ];
 
   const insuranceContacts = [
-    { company: "HDI Fleet Premium", phone: "+49 30 1234567", icon: ShieldCheck },
-    { company: "Allianz MobilSchutz", phone: "+49 30 2345678", icon: ShieldCheck },
-    { company: "HUK24 Komfort", phone: "+49 30 3456789", icon: ShieldCheck },
+    { id: "ins-hdi", company: "HDI Fleet Premium", phone: "+49 30 1234567", icon: ShieldCheck },
+    { id: "ins-allianz", company: "Allianz MobilSchutz", phone: "+49 30 2345678", icon: ShieldCheck },
+    { id: "ins-huk24", company: "HUK24 Komfort", phone: "+49 30 3456789", icon: ShieldCheck },
   ];
 
   return (
@@ -30,7 +30,7 @@ export function EmergencyContacts() {
           {emergencyNumbers.map((contact) => {
             const Icon = contact.icon;
             return (
-              <Card key={contact.number} className="hover:shadow-md transition-shadow">
+              <Card key={contact.id} className="hover:shadow-md transition-shadow">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-sm font-medium">
                     {contact.title}
@@ -54,7 +54,7 @@ export function EmergencyContacts() {
           {insuranceContacts.map((insurance) => {
             const Icon = insurance.icon;
             return (
-              <Card key={insurance.company} className="hover:shadow-md transition-shadow">
+              <Card key={insurance.id} className="hover:shadow-md transition-shadow">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-sm font-medium">
                     {insurance.company}

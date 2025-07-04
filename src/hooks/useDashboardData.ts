@@ -134,8 +134,8 @@ export function useDashboardData() {
   useEffect(() => {
     fetchDashboardData();
     
-    // Refresh data every 5 minutes
-    const interval = setInterval(fetchDashboardData, 5 * 60 * 1000);
+    // Reduced refresh interval to 10 minutes for better performance
+    const interval = setInterval(fetchDashboardData, 10 * 60 * 1000);
     
     return () => clearInterval(interval);
   }, []);

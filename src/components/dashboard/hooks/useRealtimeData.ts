@@ -48,32 +48,22 @@ export function useRealtimeData() {
   useEffect(() => {
     fetchData();
 
-    // Set up real-time subscriptions
-    const channels = [
-      supabase
-        .channel('vehicles-realtime')
-        .on('postgres_changes', { event: '*', schema: 'public', table: 'vehicles' }, () => {
-          fetchData();
-        })
-        .subscribe(),
-      
-      supabase
-        .channel('drivers-realtime')
-        .on('postgres_changes', { event: '*', schema: 'public', table: 'drivers' }, () => {
-          fetchData();
-        })
-        .subscribe(),
-      
-      supabase
-        .channel('inspections-realtime')
-        .on('postgres_changes', { event: '*', schema: 'public', table: 'inspections' }, () => {
-          fetchData();
-        })
-        .subscribe()
-    ];
+    // Single optimized real-time subscription
+    const channel = supabase
+      .channel('dashboard-realtime')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'vehicles' }, () => {
+        setTimeout(fetchData, 500); // Debounce updates
+      })
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'drivers' }, () => {
+        setTimeout(fetchData, 500);
+      })
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'inspections' }, () => {
+        setTimeout(fetchData, 500);
+      })
+      .subscribe();
 
     return () => {
-      channels.forEach(channel => supabase.removeChannel(channel));
+      supabase.removeChannel(channel);
     };
   }, [fetchData]);
 
