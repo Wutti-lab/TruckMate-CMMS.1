@@ -15,5 +15,26 @@ export const getTranslation = (language: Language, key: string): string => {
   if (!translations[language]) {
     return key; // Fallback if language is not available
   }
-  return translations[language][key] || translations.en[key] || key;
+  
+  const keys = key.split('.');
+  let value: any = translations[language];
+  
+  for (const k of keys) {
+    if (value && typeof value === 'object' && k in value) {
+      value = value[k];
+    } else {
+      // Fallback to English if key not found in current language
+      value = translations.en;
+      for (const fallbackKey of keys) {
+        if (value && typeof value === 'object' && fallbackKey in value) {
+          value = value[fallbackKey];
+        } else {
+          return key; // Return key if not found in any language
+        }
+      }
+      break;
+    }
+  }
+  
+  return typeof value === 'string' ? value : key;
 };

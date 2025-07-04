@@ -3,6 +3,7 @@ import React from "react";
 import { SidebarProvider, SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
 import Sidebar from "./Sidebar";
 import { AdBanner } from "@/components/ads/AdBanner";
+import { AppBreadcrumb } from "./Breadcrumb";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 interface AppLayoutProps {
@@ -37,6 +38,7 @@ export function AppLayout({ children }: AppLayoutProps) {
           {/* Main content with touch-optimized padding */}
           <main className="flex-1 overflow-auto p-4 md:p-6 touch-manipulation">
             <div className="mx-auto max-w-screen-2xl">
+              <AppBreadcrumb />
               {children}
             </div>
           </main>

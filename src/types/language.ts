@@ -5,7 +5,7 @@ export type Language = 'en' | 'th' | 'de';
 // Translation object type
 export type Translations = {
   [key: string]: {
-    [key: string]: string;
+    [key: string]: string | { [key: string]: string };
   };
 };
 
