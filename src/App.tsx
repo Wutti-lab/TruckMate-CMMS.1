@@ -3,7 +3,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from 'sonner';
-import { AuthProvider } from './contexts/AuthContext';
+import { SupabaseAuthProvider } from './contexts/auth/SupabaseAuthProvider';
 import { LanguageProvider } from './contexts/LanguageContext';
 import { LocationProvider } from './contexts/LocationContext';
 import { NotificationProvider } from './contexts/NotificationContext';
@@ -35,7 +35,7 @@ function App() {
   return (
     <GlobalErrorBoundary>
       <LanguageProvider>
-        <AuthProvider>
+        <SupabaseAuthProvider>
           <LocationProvider>
             <NotificationProvider>
               <QueryClientProvider client={queryClient}>
@@ -150,7 +150,7 @@ function App() {
             </QueryClientProvider>
           </NotificationProvider>
         </LocationProvider>
-      </AuthProvider>
+      </SupabaseAuthProvider>
     </LanguageProvider>
     </GlobalErrorBoundary>
   );
