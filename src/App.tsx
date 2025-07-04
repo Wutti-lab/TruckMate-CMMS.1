@@ -26,6 +26,7 @@ import Pricing from "./pages/Pricing";
 import AdvertisementManager from "./pages/AdvertisementManager";
 import AdminSetup from "./pages/AdminSetup";
 import Register from "./pages/Register";
+import Index from "./pages/Index";
 
 const queryClient = new QueryClient();
 
@@ -44,14 +45,7 @@ function App() {
                   <Route path="/reset-password" element={<ResetPassword />} />
                   <Route path="/set-new-password" element={<SetNewPassword />} />
                   <Route path="/admin-setup" element={<AdminSetup />} />
-                  <Route
-                    path="/"
-                    element={
-                      <ProtectedRoute>
-                        <Dashboard />
-                      </ProtectedRoute>
-                    }
-                  />
+                  <Route path="/" element={<Index />} />
                   <Route
                     path="/dashboard"
                     element={

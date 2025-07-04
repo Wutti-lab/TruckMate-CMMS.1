@@ -1,4 +1,3 @@
-
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
@@ -12,8 +11,8 @@ export default function Index() {
     
     if (!isLoading) {
       if (isAuthenticated) {
-        console.log('Index: User is authenticated, redirecting to functions');
-        navigate("/functions");
+        console.log('Index: User is authenticated, redirecting to dashboard');
+        navigate("/dashboard");
       } else {
         console.log('Index: User is not authenticated, redirecting to login');
         navigate("/login");
