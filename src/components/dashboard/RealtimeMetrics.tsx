@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
 import { Truck, Users, AlertTriangle, CheckCircle } from 'lucide-react';
-import { useTranslation } from '@/hooks/useTranslation';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { supabase } from '@/integrations/supabase/client';
 
 interface MetricData {
@@ -19,7 +19,7 @@ interface MetricData {
 }
 
 export function RealtimeMetrics() {
-  const { t } = useTranslation();
+  const { t } = useLanguage();
   const [metrics, setMetrics] = useState<MetricData>({
     activeVehicles: 0,
     totalVehicles: 0,

@@ -1,14 +1,14 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { AlertTriangle, CheckCircle } from 'lucide-react';
-import { useTranslation } from '@/hooks/useTranslation';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface CriticalAlertsViewProps {
   criticalVehicles: any[];
 }
 
 export function CriticalAlertsView({ criticalVehicles }: CriticalAlertsViewProps) {
-  const { t } = useTranslation();
+  const { t } = useLanguage();
 
   if (criticalVehicles.length === 0) {
     return (

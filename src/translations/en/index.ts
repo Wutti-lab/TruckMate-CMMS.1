@@ -31,7 +31,8 @@ const commonTranslations = {
   // Loading states
   "loading": "Loading...",
   "noDataAvailable": "No data available",
-  "noActivitiesFound": "No activities found"
+  "noActivitiesFound": "No activities found",
+  "loggedInAs": "Logged in as"
 };
 
 // Combine all translation categories

@@ -45,7 +45,8 @@ const commonTranslations = {
   "import": "นำเข้า",
   "settings": "การตั้งค่า",
   "help": "ช่วยเหลือ",
-  "logout": "ออกจากระบบ"
+  "logout": "ออกจากระบบ",
+  "loggedInAs": "ลงชื่อเข้าใช้ในชื่อ"
 };
 
 // Combine all translation categories

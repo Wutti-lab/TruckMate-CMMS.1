@@ -11,7 +11,7 @@ import {
   Calendar,
   LucideIcon
 } from 'lucide-react';
-import { useTranslation } from '@/hooks/useTranslation';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface MenuItem {
   icon: LucideIcon;
@@ -21,7 +21,7 @@ interface MenuItem {
 
 export function SidebarMenu() {
   const location = useLocation();
-  const { tWithFallback } = useTranslation();
+  const { t } = useLanguage();
 
   const isActive = (path: string) => {
     return location.pathname === path;
@@ -78,7 +78,7 @@ export function SidebarMenu() {
             >
               <item.icon className="mr-2 h-4 w-4 flex-shrink-0" />
               <span className="truncate">
-                {tWithFallback(item.labelKey)}
+                {t(item.labelKey)}
               </span>
             </Link>
           </li>

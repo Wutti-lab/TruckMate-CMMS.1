@@ -4,12 +4,12 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { MapPin, Navigation, Eye, Zap } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { useTranslation } from '@/hooks/useTranslation';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { useRealtimeData } from './hooks/useRealtimeData';
 import { AccessibleCard } from '@/components/shared/accessibility/AccessibleCard';
 
 export function QuickMapAccess() {
-  const { t } = useTranslation();
+  const { t } = useLanguage();
   const navigate = useNavigate();
   const { data } = useRealtimeData();
   const [hoveredVehicle, setHoveredVehicle] = useState<string | null>(null);

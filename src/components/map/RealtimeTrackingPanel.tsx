@@ -6,10 +6,10 @@ import { Switch } from '@/components/ui/switch';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Play, Pause, MapPin, Gauge, Navigation } from 'lucide-react';
 import { useRealtimeTracking } from './hooks/useRealtimeTracking';
-import { useTranslation } from '@/hooks/useTranslation';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export function RealtimeTrackingPanel() {
-  const { t } = useTranslation();
+  const { t } = useLanguage();
   const { 
     trackingData, 
     isTracking, 

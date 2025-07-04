@@ -13,7 +13,7 @@ import { QuickMapAccess } from "@/components/dashboard/QuickMapAccess";
 import { MaintenanceAlertsManager } from "@/components/notifications/MaintenanceAlertsManager";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AdBanner } from "@/components/ads/AdBanner";
-import { useTranslation } from "@/hooks/useTranslation";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { useDashboardData } from "@/hooks/useDashboardData";
 import { ErrorBoundary } from "@/components/shared/ErrorBoundary";
 import { LoadingSpinner } from "@/components/shared/LoadingSpinner";
@@ -37,7 +37,7 @@ const MemoizedChartsSection = memo(ChartsSection);
 const MemoizedRecentActivities = memo(RecentActivities);
 
 export default function Dashboard() {
-  const { t } = useTranslation();
+  const { t } = useLanguage();
   const { stats, loading } = useDashboardData();
   const [currentTime, setCurrentTime] = useState(new Date());
   const isMobile = useIsMobile();

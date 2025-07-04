@@ -1,7 +1,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, PieChart, Pie, Cell } from 'recharts';
-import { useTranslation } from '@/hooks/useTranslation';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const fuelData = [
   { month: 'Jan', consumption: 2400, efficiency: 78 },
@@ -27,7 +27,7 @@ const vehicleStatusData = [
 ];
 
 export function FleetAnalytics() {
-  const { t } = useTranslation();
+  const { t } = useLanguage();
 
   return (
     <div className="space-y-6">

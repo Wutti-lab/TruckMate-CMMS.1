@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { AlertTriangle } from 'lucide-react';
-import { useTranslation } from '@/hooks/useTranslation';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { useRealtimeTracking } from '@/components/map/hooks/useRealtimeTracking';
 import { useRealtimeData } from './hooks/useRealtimeData';
 import { AccessibleCard } from '@/components/shared/accessibility/AccessibleCard';
@@ -27,7 +27,7 @@ interface VehicleStatus {
 }
 
 export function EnhancedRealtimePanel() {
-  const { t } = useTranslation();
+  const { t } = useLanguage();
   const isMobile = useIsMobile();
   const [autoRefresh, setAutoRefresh] = useState(true);
   const [selectedVehicle, setSelectedVehicle] = useState<string | null>(null);

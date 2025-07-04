@@ -45,7 +45,8 @@ const commonTranslations = {
   "import": "Importieren",
   "settings": "Einstellungen",
   "help": "Hilfe",
-  "logout": "Abmelden"
+  "logout": "Abmelden",
+  "loggedInAs": "Angemeldet als"
 };
 
 // Combine all translation categories

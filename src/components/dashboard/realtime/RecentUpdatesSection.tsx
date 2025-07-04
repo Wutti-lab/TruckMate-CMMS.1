@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Activity } from 'lucide-react';
-import { useTranslation } from '@/hooks/useTranslation';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface RecentUpdatesSectionProps {
   trackingData: any[];
@@ -16,7 +16,7 @@ export function RecentUpdatesSection({
   getStatusColor, 
   getStatusBadgeVariant 
 }: RecentUpdatesSectionProps) {
-  const { t } = useTranslation();
+  const { t } = useLanguage();
 
   return (
     <Card>

@@ -14,7 +14,7 @@ import {
   Navigation,
   Clock
 } from 'lucide-react';
-import { useTranslation } from '@/hooks/useTranslation';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { formatDistanceToNow } from 'date-fns';
 import { AccessibleCard } from '@/components/shared/accessibility/AccessibleCard';
 
@@ -33,7 +33,7 @@ export function RealtimeVehiclePanel({
   selectedVehicle,
   className 
 }: RealtimeVehiclePanelProps) {
-  const { t } = useTranslation();
+  const { t } = useLanguage();
   const [showAll, setShowAll] = useState(false);
 
   const getStatusColor = (status: string) => {

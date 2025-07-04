@@ -1,6 +1,6 @@
 
 import { useAuth } from '@/contexts/AuthContext';
-import { useTranslation } from '@/hooks/useTranslation';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import { LogOut } from 'lucide-react';
 
@@ -10,7 +10,7 @@ interface SidebarFooterProps {
 
 export function SidebarFooter({ isExpanded }: SidebarFooterProps) {
   const { logout } = useAuth();
-  const { tWithFallback } = useTranslation();
+  const { t } = useLanguage();
 
   return (
     <div className="p-4 border-t border-gray-200">
@@ -22,7 +22,7 @@ export function SidebarFooter({ isExpanded }: SidebarFooterProps) {
           size="sm"
         >
           <LogOut className="h-4 w-4 mr-2" />
-          {tWithFallback('Logout | ออกจากระบบ | Abmelden')}
+          {t('logout')}
         </Button>
       ) : (
         <Button
@@ -30,7 +30,7 @@ export function SidebarFooter({ isExpanded }: SidebarFooterProps) {
           variant="destructive"
           size="icon"
           className="w-full"
-          title={tWithFallback('Logout | ออกจากระบบ | Abmelden')}
+          title={t('logout')}
         >
           <LogOut className="h-4 w-4" />
         </Button>

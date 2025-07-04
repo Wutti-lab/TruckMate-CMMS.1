@@ -2,7 +2,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Fuel, Zap, Thermometer, MapPin } from 'lucide-react';
-import { useTranslation } from '@/hooks/useTranslation';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { formatDistanceToNow } from 'date-fns';
 
 interface VehicleDetailsViewProps {
@@ -18,7 +18,7 @@ export function VehicleDetailsView({
   getStatusBadgeVariant, 
   getHealthScore 
 }: VehicleDetailsViewProps) {
-  const { t } = useTranslation();
+  const { t } = useLanguage();
 
   return (
     <div className="space-y-4">

@@ -1,7 +1,7 @@
 import { Badge } from '@/components/ui/badge';
 import { Switch } from '@/components/ui/switch';
 import { Activity } from 'lucide-react';
-import { useTranslation } from '@/hooks/useTranslation';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface RealtimeControlsProps {
   isTracking: boolean;
@@ -16,7 +16,7 @@ export function RealtimeControls({
   setAutoRefresh, 
   criticalVehiclesCount 
 }: RealtimeControlsProps) {
-  const { t } = useTranslation();
+  const { t } = useLanguage();
 
   return (
     <div className="flex justify-between items-center mb-6">

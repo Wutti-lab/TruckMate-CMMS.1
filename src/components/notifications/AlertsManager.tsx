@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Bell, AlertTriangle, Info, CheckCircle, X } from 'lucide-react';
-import { useTranslation } from '@/hooks/useTranslation';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { useToast } from '@/hooks/use-toast';
 
 interface Alert {
@@ -19,7 +19,7 @@ interface Alert {
 }
 
 export function AlertsManager() {
-  const { t } = useTranslation();
+  const { t } = useLanguage();
   const { toast } = useToast();
   const [alerts, setAlerts] = useState<Alert[]>([
     {

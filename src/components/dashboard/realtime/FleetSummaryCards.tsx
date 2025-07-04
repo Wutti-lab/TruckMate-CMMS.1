@@ -1,6 +1,6 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Truck, Users, CheckCircle } from 'lucide-react';
-import { useTranslation } from '@/hooks/useTranslation';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface FleetSummaryCardsProps {
   vehiclesCount: number;
@@ -13,7 +13,7 @@ export function FleetSummaryCards({
   driversCount, 
   activeVehiclesCount 
 }: FleetSummaryCardsProps) {
-  const { t } = useTranslation();
+  const { t } = useLanguage();
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
