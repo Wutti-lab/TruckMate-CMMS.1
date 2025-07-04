@@ -17,7 +17,7 @@ import ResetPassword from './pages/ResetPassword';
 import SetNewPassword from './pages/SetNewPassword';
 import NotFound from './pages/NotFound';
 import Reports from "./pages/Reports";
-import FunctionList from "./pages/FunctionList";
+import FunctionListPage from "./pages/FunctionList";
 import Map from "./pages/Map";
 import QRScanner from "./pages/QRScanner";
 import Accounts from "./pages/Accounts";
@@ -90,7 +90,7 @@ function App() {
                     path="/functions"
                     element={
                       <ProtectedRoute>
-                        <FunctionList />
+                        <FunctionListPage />
                       </ProtectedRoute>
                     }
                   />
