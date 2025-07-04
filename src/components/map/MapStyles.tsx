@@ -31,7 +31,7 @@ export function MapStyles({
   return (
     <div className="absolute top-4 right-4 z-10 flex flex-col gap-2">
       <Select value={mapStyle} onValueChange={setMapStyle}>
-        <SelectTrigger className="w-36 bg-white">
+        <SelectTrigger className="w-36 bg-background">
           <SelectValue placeholder="Map Style" />
         </SelectTrigger>
         <SelectContent>
@@ -47,7 +47,7 @@ export function MapStyles({
         <Toggle
           pressed={showTraffic}
           onPressedChange={setShowTraffic}
-          className="flex-1 bg-white shadow-lg hover:bg-gray-100 data-[state=on]:bg-fleet-100 data-[state=on]:text-fleet-700"
+          className="flex-1 bg-background shadow-lg hover:bg-accent data-[state=on]:bg-accent data-[state=on]:text-accent-foreground"
           title="Toggle Traffic"
         >
           <Route className="h-4 w-4 mr-1" />
@@ -57,7 +57,7 @@ export function MapStyles({
         <Toggle
           pressed={showPOIs}
           onPressedChange={setShowPOIs}
-          className="flex-1 bg-white shadow-lg hover:bg-gray-100 data-[state=on]:bg-fleet-100 data-[state=on]:text-fleet-700"
+          className="flex-1 bg-background shadow-lg hover:bg-accent data-[state=on]:bg-accent data-[state=on]:text-accent-foreground"
           title="Toggle POIs"
         >
           <Layers className="h-4 w-4 mr-1" />

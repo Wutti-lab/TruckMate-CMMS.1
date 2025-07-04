@@ -59,7 +59,7 @@ export function ChecklistTemplates() {
                   <MoreHorizontal size={16} />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="bg-white">
+              <DropdownMenuContent align="end" className="bg-popover">
                 <DropdownMenuItem>{isThaiLanguage ? "แก้ไข" : "Bearbeiten"}</DropdownMenuItem>
                 <DropdownMenuItem>{isThaiLanguage ? "ทำสำเนา" : "Duplizieren"}</DropdownMenuItem>
                 <DropdownMenuItem className="text-red-600">{isThaiLanguage ? "ลบ" : "Löschen"}</DropdownMenuItem>

@@ -19,7 +19,7 @@ export function MapTokenInput({
 }: MapTokenInputProps) {
   return (
     <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-100 p-4 z-20">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+      <div className="bg-background p-6 rounded-lg shadow-lg w-full max-w-md">
         <div className="flex items-center gap-2 mb-4">
           <Map className="h-6 w-6 text-fleet-500" />
           <h2 className="text-xl font-bold text-fleet-500">Mapbox Token Required</h2>

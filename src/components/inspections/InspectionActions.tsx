@@ -33,7 +33,7 @@ export function InspectionActions({
           <MoreHorizontal size={16} />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="bg-white">
+      <DropdownMenuContent align="end" className="bg-popover">
         <DropdownMenuItem onClick={() => onViewDetails(inspection)} className="cursor-pointer">
           <FileText size={16} className="mr-2" />
           {isThaiLanguage ? "แสดงรายละเอียด" : "Details anzeigen"}

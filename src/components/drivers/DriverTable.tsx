@@ -180,7 +180,7 @@ export function DriverTable({ drivers: initialDrivers }: DriverTableProps) {
                           <MoreHorizontal size={16} />
                         </Button>
                       </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end" className="bg-white">
+                      <DropdownMenuContent align="end" className="bg-popover">
                         <DropdownMenuItem onClick={() => handleViewDetails(driver)}>
                           {extractLanguageText("View Details | ดูรายละเอียด", language)}
                         </DropdownMenuItem>

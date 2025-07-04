@@ -117,7 +117,7 @@ export function SupabaseLoginForm({
         <CardFooter className="flex-col space-y-3">
           <Button
             type="submit"
-            className="w-full bg-fleet-600 hover:bg-fleet-700 text-white font-medium py-2"
+            className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-medium py-2"
             disabled={isLoading}
           >
             {isLoading ? t("loggingIn") : t("loginButton")}

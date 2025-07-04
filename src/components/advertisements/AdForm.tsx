@@ -121,7 +121,7 @@ const AdForm: React.FC<AdFormProps> = ({ newAd, setNewAd, onAddAd }) => {
               <div className="relative mt-2 border rounded p-2">
                 <button 
                   onClick={removeImage}
-                  className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1"
+                  className="absolute top-1 right-1 bg-destructive text-destructive-foreground rounded-full p-1"
                   type="button"
                 >
                   <X size={14} />

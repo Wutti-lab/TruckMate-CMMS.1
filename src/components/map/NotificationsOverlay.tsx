@@ -27,7 +27,7 @@ export function NotificationsOverlay({
   }
 
   return (
-    <div className="absolute right-4 top-16 w-[350px] max-h-[80vh] overflow-y-auto bg-white rounded-lg shadow-lg p-4 z-20">
+    <div className="absolute right-4 top-16 w-[350px] max-h-[80vh] overflow-y-auto bg-background rounded-lg shadow-lg p-4 z-20">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-lg font-semibold">
           {extractLanguageText("Notifications | การแจ้งเตือน | Benachrichtigungen", language)}

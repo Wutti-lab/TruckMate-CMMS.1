@@ -19,7 +19,7 @@ export function EmergencyContactsOverlay({
   }
 
   return (
-    <div className="absolute left-4 top-4 w-[350px] max-h-[80vh] overflow-y-auto bg-white rounded-lg shadow-lg p-4 z-20">
+    <div className="absolute left-4 top-4 w-[350px] max-h-[80vh] overflow-y-auto bg-background rounded-lg shadow-lg p-4 z-20">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-lg font-semibold">
           {extractLanguageText("Emergency Contacts | รายชื่อติดต่อฉุกเฉิน | Notfallkontakte", language)}

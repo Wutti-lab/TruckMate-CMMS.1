@@ -37,7 +37,7 @@ export function DriverStats({ title, value, icon, variant }: DriverStatsProps) {
             <p className="text-sm font-medium text-muted-foreground mb-1">{title}</p>
             <p className="text-3xl font-bold">{value}</p>
           </div>
-          <div className="h-12 w-12 rounded-full bg-white flex items-center justify-center shadow-sm">
+          <div className="h-12 w-12 rounded-full bg-background flex items-center justify-center shadow-sm">
             {getIcon()}
           </div>
         </div>

@@ -241,7 +241,7 @@ export function DeliveryManagement() {
                       <MoreHorizontal size={16} />
                     </Button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="bg-white">
+                  <DropdownMenuContent align="end" className="bg-popover">
                     <DropdownMenuItem>{menuItems.viewDetails}</DropdownMenuItem>
                     <DropdownMenuItem>{menuItems.edit}</DropdownMenuItem>
                     <DropdownMenuItem className="text-red-600">{menuItems.delete}</DropdownMenuItem>

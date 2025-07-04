@@ -110,7 +110,7 @@ export function AlertsManager() {
               <div 
                 key={alert.id} 
                 className={`p-4 rounded-lg border ${
-                  alert.acknowledged ? 'bg-gray-50 opacity-75' : 'bg-white'
+                  alert.acknowledged ? 'bg-muted opacity-75' : 'bg-card'
                 }`}
               >
                 <div className="flex items-start justify-between">

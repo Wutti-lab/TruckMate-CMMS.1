@@ -37,7 +37,7 @@ export function MapControls({
         <Button
           variant="secondary"
           size="icon"
-          className="bg-white shadow-lg hover:bg-gray-100"
+          className="bg-background shadow-lg hover:bg-accent"
           onClick={getUserLocation}
           title="Get Location | รับตำแหน่ง"
         >
@@ -47,7 +47,7 @@ export function MapControls({
         <Button
           variant="secondary"
           size="icon"
-          className="bg-white shadow-lg hover:bg-gray-100"
+          className="bg-background shadow-lg hover:bg-accent"
           onClick={resetToken}
           title="Change Mapbox Token | เปลี่ยน Mapbox Token"
         >
@@ -110,7 +110,7 @@ export function MapControls({
             <Bell className="h-4 w-4 mr-2" />
             Notifications | การแจ้งเตือน
             {notifications && notifications.length > 0 && (
-              <span className="ml-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-red-600 rounded-full">
+              <span className="ml-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-destructive-foreground bg-destructive rounded-full">
                 {notifications.length}
               </span>
             )}

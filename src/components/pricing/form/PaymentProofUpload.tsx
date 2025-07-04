@@ -20,7 +20,7 @@ export function PaymentProofUpload({ onFilesSelected, uploadedFiles }: PaymentPr
         onFilesSelected={onFilesSelected}
         accept=".pdf,.jpg,.jpeg,.png"
         icon={<ArrowUp className="h-5 w-5" />}
-        className="bg-white border-gray-200 p-3"
+        className="bg-background border-border p-3"
         iconClassName="text-gray-500"
       />
       

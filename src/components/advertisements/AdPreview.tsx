@@ -18,7 +18,7 @@ const AdPreview: React.FC<AdPreviewProps> = ({ ad }) => {
         <CardDescription>{t("adPreviewDescription")}</CardDescription>
       </CardHeader>
       <CardContent>
-        <div className={`${ad.bgColor} w-full text-white p-3 rounded-md shadow-md`}>
+        <div className={`${ad.bgColor} w-full text-primary-foreground p-3 rounded-md shadow-md`}>
           <div className="flex flex-col items-center text-center px-6 py-2">
             {ad.image && (
               <div className="mb-2">
@@ -33,7 +33,7 @@ const AdPreview: React.FC<AdPreviewProps> = ({ ad }) => {
             <p className="text-xs mt-1">{ad.description || t("adDescription")}</p>
             <a 
               href={ad.link || "#"} 
-              className="mt-2 text-xs bg-white/20 hover:bg-white/30 transition-colors px-3 py-1 rounded-full"
+              className="mt-2 text-xs bg-secondary/20 hover:bg-secondary/30 transition-colors px-3 py-1 rounded-full"
             >
               {t("learnMore")}
             </a>

@@ -48,7 +48,7 @@ export function NotificationCenter() {
         >
           <Bell className="h-6 w-6" />
           {unreadCount > 0 && (
-            <Badge className="absolute -top-2 -right-2 px-2 py-1 text-xs bg-red-500 text-white rounded-full min-w-[1.5rem] h-6 flex items-center justify-center">
+            <Badge className="absolute -top-2 -right-2 px-2 py-1 text-xs bg-destructive text-destructive-foreground rounded-full min-w-[1.5rem] h-6 flex items-center justify-center">
               {unreadCount > 99 ? '99+' : unreadCount}
             </Badge>
           )}
@@ -60,14 +60,14 @@ export function NotificationCenter() {
   return (
     <div className="fixed bottom-6 right-6 z-50 w-96 max-h-[80vh] flex flex-col">
       <Card className="shadow-2xl border-0">
-        <CardHeader className="flex flex-row items-center justify-between p-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-t-lg">
+        <CardHeader className="flex flex-row items-center justify-between p-4 bg-gradient-to-r from-primary to-primary/90 text-primary-foreground rounded-t-lg">
           <div className="flex items-center gap-2">
             <Bell className="h-5 w-5" />
             <h3 className="font-semibold">
               {extractLanguageText("Benachrichtigungen | Notifications", language)}
             </h3>
             {unreadCount > 0 && (
-              <Badge className="bg-red-500 text-white px-2 py-1 text-xs">
+              <Badge className="bg-destructive text-destructive-foreground px-2 py-1 text-xs">
                 {unreadCount}
               </Badge>
             )}
@@ -76,7 +76,7 @@ export function NotificationCenter() {
             variant="ghost"
             size="sm"
             onClick={() => setIsOpen(false)}
-            className="text-white hover:bg-blue-600 p-1 h-auto"
+            className="text-primary-foreground hover:bg-primary/80 p-1 h-auto"
           >
             <X className="h-4 w-4" />
           </Button>

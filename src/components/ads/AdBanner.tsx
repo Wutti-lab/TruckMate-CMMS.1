@@ -110,7 +110,7 @@ export function AdBanner({ position = 'top' }: AdBannerProps) {
   const ad = currentLanguageAds[currentAd];
 
   return (
-    <div className={`relative w-full ${ad.bgColor} text-white p-3 shadow-md ${position === 'top' ? 'border-b' : 'border-t'} border-slate-700`}>
+    <div className={`relative w-full ${ad.bgColor} text-primary-foreground p-3 shadow-md ${position === 'top' ? 'border-b' : 'border-t'} border-border`}>
       <div className="flex flex-col items-center text-center px-6">
         {ad.image && (
           <div className="mb-2">
@@ -125,7 +125,7 @@ export function AdBanner({ position = 'top' }: AdBannerProps) {
         <p className="text-xs mt-1">{ad.description}</p>
         <a 
           href={ad.link} 
-          className="mt-2 text-xs bg-white/20 hover:bg-white/30 transition-colors px-3 py-1 rounded-full"
+          className="mt-2 text-xs bg-secondary/20 hover:bg-secondary/30 transition-colors px-3 py-1 rounded-full"
         >
           {ad.buttonText}
         </a>
