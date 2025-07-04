@@ -27,11 +27,14 @@ const commonTranslations = {
   "somethingWentWrong": "Etwas ist schiefgelaufen",
   "tryAgain": "Erneut versuchen",
   "errorOccurred": "Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
+  "refreshPage": "Seite aktualisieren",
+  "applicationError": "Die Anwendung ist auf einen unerwarteten Fehler gestoßen. Bitte aktualisieren Sie die Seite oder versuchen Sie es später erneut.",
   
   // Loading states
   "loading": "Lädt...",
   "noDataAvailable": "Keine Daten verfügbar",
   "noActivitiesFound": "Keine Aktivitäten gefunden",
+  "errorLoadingData": "Fehler beim Laden der Daten",
   
   // General UI
   "save": "Speichern",

@@ -27,11 +27,14 @@ const commonTranslations = {
   "somethingWentWrong": "มีบางอย่างผิดพลาด",
   "tryAgain": "ลองอีกครั้ง",
   "errorOccurred": "เกิดข้อผิดพลาดที่ไม่คาดคิด โปรดลองอีกครั้ง",
+  "refreshPage": "รีเฟรชหน้า",
+  "applicationError": "แอปพลิเคชันพบข้อผิดพลาดที่ไม่คาดคิด กรุณารีเฟรชหน้าหรือลองใหม่ในภายหลัง",
   
   // Loading states
   "loading": "กำลังโหลด...",
   "noDataAvailable": "ไม่มีข้อมูล",
   "noActivitiesFound": "ไม่พบกิจกรรม",
+  "errorLoadingData": "เกิดข้อผิดพลาดในการโหลดข้อมูล",
   
   // General UI
   "save": "บันทึก",

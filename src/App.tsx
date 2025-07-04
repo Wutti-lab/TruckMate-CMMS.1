@@ -7,6 +7,7 @@ import { AuthProvider } from './contexts/AuthContext';
 import { LanguageProvider } from './contexts/LanguageContext';
 import { LocationProvider } from './contexts/LocationContext';
 import { NotificationProvider } from './contexts/NotificationContext';
+import { GlobalErrorBoundary } from './components/shared/GlobalErrorBoundary';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Vehicles from './pages/Vehicles';
@@ -32,13 +33,14 @@ const queryClient = new QueryClient();
 
 function App() {
   return (
-    <LanguageProvider>
-      <AuthProvider>
-        <LocationProvider>
-          <NotificationProvider>
-            <QueryClientProvider client={queryClient}>
-              <Toaster />
-              <Router>
+    <GlobalErrorBoundary>
+      <LanguageProvider>
+        <AuthProvider>
+          <LocationProvider>
+            <NotificationProvider>
+              <QueryClientProvider client={queryClient}>
+                <Toaster />
+                <Router>
                 <Routes>
                   <Route path="/login" element={<Login />} />
                   <Route path="/register" element={<Register />} />
@@ -150,6 +152,7 @@ function App() {
         </LocationProvider>
       </AuthProvider>
     </LanguageProvider>
+    </GlobalErrorBoundary>
   );
 }
 

@@ -3,6 +3,8 @@ import { CustomerFormValues } from "@/components/customers/forms/CustomerForm";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
+import { useOptimistic } from "@/components/shared/OptimisticState";
+import { useLoadingState } from "@/hooks/useLoadingState";
 
 export function useCustomerOperations(
   customers: Customer[], 
@@ -12,6 +14,26 @@ export function useCustomerOperations(
   const [isCustomerDialogOpen, setIsCustomerDialogOpen] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
   const { toast } = useToast();
+  
+  const optimisticCustomers = useOptimistic(customers, {
+    onError: (error) => {
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive"
+      });
+    }
+  });
+
+  const { isLoading, executeAsync } = useLoadingState({
+    onError: (error) => {
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive"
+      });
+    }
+  });
 
   // Handle editing a customer
   const handleEditCustomer = (customer: Customer) => {
@@ -20,32 +42,34 @@ export function useCustomerOperations(
     setIsCustomerDialogOpen(true);
   };
 
-  // Handle deleting a customer
+  // Handle deleting a customer with optimistic updates
   const handleDeleteCustomer = async (id: string) => {
-    try {
-      const { error } = await supabase
-        .from('customers')
-        .delete()
-        .eq('id', id);
-      
-      if (error) {
-        throw error;
-      }
-      
-      setCustomers(customers.filter(customer => customer.id !== id));
-      
-      toast({
-        title: "Success",
-        description: "Customer deleted successfully",
-      });
-    } catch (error) {
-      console.error("Error deleting customer:", error);
-      toast({
-        title: "Error",
-        description: "Failed to delete customer",
-        variant: "destructive"
-      });
+    if (!window.confirm("Are you sure you want to delete this customer?")) {
+      return;
     }
+
+    const optimisticData = customers.filter(customer => customer.id !== id);
+    
+    optimisticCustomers.updateOptimistic(
+      optimisticData,
+      async () => {
+        const { error } = await supabase
+          .from('customers')
+          .delete()
+          .eq('id', id);
+
+        if (error) throw error;
+        
+        toast({
+          title: "Success",
+          description: "Customer deleted successfully",
+        });
+        
+        return optimisticData;
+      }
+    );
+    
+    setCustomers(optimisticData);
   };
 
   // Handle adding a new customer
@@ -55,9 +79,9 @@ export function useCustomerOperations(
     setIsCustomerDialogOpen(true);
   };
 
-  // Handle saving a customer
+  // Handle saving a customer with loading state
   const handleSaveCustomer = async (formData: CustomerFormValues) => {
-    try {
+    await executeAsync(async () => {
       // Convert to database format
       const customerData = {
         name: formData.name,
@@ -146,14 +170,7 @@ export function useCustomerOperations(
       }
       
       setIsCustomerDialogOpen(false);
-    } catch (error) {
-      console.error("Error saving customer:", error);
-      toast({
-        title: "Error",
-        description: "Failed to save customer",
-        variant: "destructive"
-      });
-    }
+    });
   };
 
   return {
@@ -162,6 +179,8 @@ export function useCustomerOperations(
     isCustomerDialogOpen,
     setIsCustomerDialogOpen,
     isEditMode,
+    isLoading,
+    optimisticState: optimisticCustomers,
     handleEditCustomer,
     handleDeleteCustomer,
     handleAddNewCustomer,

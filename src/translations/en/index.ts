@@ -27,11 +27,14 @@ const commonTranslations = {
   "somethingWentWrong": "Something went wrong",
   "tryAgain": "Try again",
   "errorOccurred": "An unexpected error occurred. Please try again.",
+  "refreshPage": "Refresh page",
+  "applicationError": "The application encountered an unexpected error. Please refresh the page or try again later.",
   
   // Loading states
   "loading": "Loading...",
   "noDataAvailable": "No data available",
   "noActivitiesFound": "No activities found",
+  "errorLoadingData": "Error loading data",
   "loggedInAs": "Logged in as"
 };
 
