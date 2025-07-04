@@ -33,4 +33,29 @@ export const advertisementTranslations = {
   "enterDescription": "Enter advertisement description",
   "enterLink": "Enter advertisement link",
   "publishAd": "Publish Advertisement",
+  
+  // Additional form-specific translations
+  "addNewAdToShow": "Add a new advertisement to show to users",
+  "adTitlePlaceholder": "Enter a catchy title for your ad",
+  "shortDescriptionPlaceholder": "Brief description of your advertisement",
+  "adUrlPlaceholder": "https://example.com",
+  "optionalImage": "Optional Image",
+  "backgroundColor": "Background Color",
+  "addAdvertisement": "Add Advertisement",
+  "imageRecommendations": "Recommended: 300x200px, max 2MB",
+  "imageTooLarge": "Image Too Large",
+  "imageMaxSize": "Image must be smaller than 2MB",
+  "imageRecommendedSize": "For best results, use images around 300x200px",
+  
+  // Auth-specific
+  "testAccounts": "Test Accounts",
+  "passwordForAll": "Password for all: 123456",
+  
+  // General UI
+  "active": "Active",
+  "inactive": "Inactive", 
+  "activate": "Activate",
+  "deactivate": "Deactivate",
+  "actions": "Actions",
+  "status": "Status",
 };

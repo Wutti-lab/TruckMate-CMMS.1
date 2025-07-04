@@ -33,4 +33,29 @@ export const advertisementTranslations = {
   "enterDescription": "ใส่คำอธิบายโฆษณา",
   "enterLink": "ใส่ลิงก์โฆษณา",
   "publishAd": "เผยแพร่โฆษณา",
+  
+  // Additional form-specific translations
+  "addNewAdToShow": "เพิ่มโฆษณาใหม่เพื่อแสดงให้ผู้ใช้เห็น",
+  "adTitlePlaceholder": "ใส่ชื่อที่น่าสนใจสำหรับโฆษณาของคุณ",
+  "shortDescriptionPlaceholder": "คำอธิบายโดยย่อของโฆษณาของคุณ",
+  "adUrlPlaceholder": "https://example.com",
+  "optionalImage": "รูปภาพเสริม",
+  "backgroundColor": "สีพื้นหลัง",
+  "addAdvertisement": "เพิ่มโฆษณา",
+  "imageRecommendations": "แนะนำ: 300x200px, สูงสุด 2MB",
+  "imageTooLarge": "รูปภาพใหญ่เกินไป",
+  "imageMaxSize": "รูปภาพต้องมีขนาดน้อยกว่า 2MB",
+  "imageRecommendedSize": "สำหรับผลลัพธ์ที่ดีที่สุด ใช้รูปภาพขนาดประมาณ 300x200px",
+  
+  // Auth-specific
+  "testAccounts": "บัญชีทดสอบ",
+  "passwordForAll": "รหัสผ่านสำหรับทั้งหมด: 123456",
+  
+  // General UI
+  "active": "เปิดใช้งาน",
+  "inactive": "ปิดใช้งาน", 
+  "activate": "เปิดใช้งาน",
+  "deactivate": "ปิดใช้งาน",
+  "actions": "การดำเนินการ",
+  "status": "สถานะ",
 };

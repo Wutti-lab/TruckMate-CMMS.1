@@ -33,4 +33,29 @@ export const advertisementTranslations = {
   "enterDescription": "Werbebeschreibung eingeben",
   "enterLink": "Werbelink eingeben",
   "publishAd": "Werbeanzeige veröffentlichen",
+  
+  // Additional form-specific translations
+  "addNewAdToShow": "Neue Werbeanzeige hinzufügen, um sie Benutzern zu zeigen",
+  "adTitlePlaceholder": "Geben Sie einen einprägsamen Titel für Ihre Anzeige ein",
+  "shortDescriptionPlaceholder": "Kurze Beschreibung Ihrer Werbeanzeige",
+  "adUrlPlaceholder": "https://beispiel.de",
+  "optionalImage": "Optionales Bild",
+  "backgroundColor": "Hintergrundfarbe",
+  "addAdvertisement": "Werbeanzeige hinzufügen",
+  "imageRecommendations": "Empfohlen: 300x200px, max 2MB",
+  "imageTooLarge": "Bild zu groß",
+  "imageMaxSize": "Bild muss kleiner als 2MB sein",
+  "imageRecommendedSize": "Für beste Ergebnisse verwenden Sie Bilder um 300x200px",
+  
+  // Auth-specific
+  "testAccounts": "Test-Konten",
+  "passwordForAll": "Passwort für alle: 123456",
+  
+  // General UI
+  "active": "Aktiv",
+  "inactive": "Inaktiv", 
+  "activate": "Aktivieren",
+  "deactivate": "Deaktivieren",
+  "actions": "Aktionen",
+  "status": "Status",
 };
