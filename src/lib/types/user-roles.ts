@@ -13,7 +13,7 @@ export interface Profile {
   email: string;
   full_name: string | null;
   phone: string | null;
-  role: string;
+  role: UserRole;
   company_id: string | null;
   language: string | null;
   avatar_url: string | null;

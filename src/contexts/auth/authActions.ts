@@ -37,7 +37,7 @@ export const authActions = (
     const newActivity: LoginActivity = {
       id: Date.now().toString(),
       userId: foundUser.id,
-      userName: foundUser.name,
+      userName: foundUser.full_name || foundUser.email,
       timestamp: new Date(),
       userRole: foundUser.role
     };

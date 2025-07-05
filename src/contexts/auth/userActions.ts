@@ -79,7 +79,7 @@ export const userActions = (
       // Add to regular users with activation date and expiry date
       const newUser: UserWithPassword = {
         id: pendingUser.id,
-        name: pendingUser.name,
+        full_name: pendingUser.full_name,
         email: pendingUser.email,
         role: pendingUser.role,
         password: pendingUser.password,

@@ -18,6 +18,30 @@ export const supabaseUserActions = () => {
     return data || [];
   };
 
+  // Fetch pending users (placeholder - implement with actual pending users table if needed)
+  const fetchPendingUsers = async () => {
+    // This would be a separate pending_users table in a real implementation
+    return [];
+  };
+
+  // Create pending user (placeholder)
+  const createPendingUser = async (userData: any) => {
+    // This would insert into pending_users table in a real implementation
+    return userData;
+  };
+
+  // Approve pending user (placeholder)
+  const approvePendingUser = async (pendingUserId: string) => {
+    // This would move user from pending_users to profiles/auth in a real implementation
+    return { id: pendingUserId };
+  };
+
+  // Reject pending user (placeholder)
+  const rejectPendingUser = async (pendingUserId: string) => {
+    // This would update pending_users table in a real implementation
+    return { id: pendingUserId };
+  };
+
   // Update user profile
   const updateProfile = async (userId: string, updates: any) => {
     const { data, error } = await supabase
@@ -46,7 +70,11 @@ export const supabaseUserActions = () => {
 
   return {
     fetchAllProfiles,
+    fetchPendingUsers,
     updateProfile,
-    deleteProfile
+    deleteProfile,
+    createPendingUser,
+    approvePendingUser,
+    rejectPendingUser
   };
 };

@@ -12,7 +12,7 @@ export interface LoginActivity {
 
 export interface PendingUser {
   id: string;
-  name: string;
+  full_name: string;
   email: string;
   phoneNumber?: string;
   role: UserRole;
