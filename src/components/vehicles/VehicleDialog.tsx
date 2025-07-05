@@ -29,8 +29,13 @@ export function VehicleDialog({
     make: "",
     model: "",
     year: new Date().getFullYear(),
+    vin: "",
+    vehicle_type: "truck",
     status: "active",
     location: "",
+    mileage: 0,
+    fuel_type: "",
+    engine_size: "",
     next_service: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
   });
 
@@ -42,8 +47,13 @@ export function VehicleDialog({
         make: vehicle.make || "",
         model: vehicle.model || "",
         year: vehicle.year || new Date().getFullYear(),
+        vin: vehicle.vin || "",
+        vehicle_type: vehicle.vehicle_type || "truck",
         status: vehicle.status,
         location: vehicle.location || "",
+        mileage: vehicle.mileage || 0,
+        fuel_type: vehicle.fuel_type || "",
+        engine_size: vehicle.engine_size || "",
         next_service: vehicle.next_service ? new Date(vehicle.next_service).toISOString().split('T')[0] : new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
       });
     } else {
@@ -53,8 +63,13 @@ export function VehicleDialog({
         make: "",
         model: "",
         year: new Date().getFullYear(),
+        vin: "",
+        vehicle_type: "truck",
         status: "active",
         location: "",
+        mileage: 0,
+        fuel_type: "",
+        engine_size: "",
         next_service: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
       });
     }
@@ -85,7 +100,6 @@ export function VehicleDialog({
     
     const parsedFormData = {
       ...formData,
-      last_service: new Date(formData.last_service),
       next_service: new Date(formData.next_service)
     };
     
@@ -158,70 +172,104 @@ export function VehicleDialog({
             </div>
           </div>
           
-          <div className="space-y-2">
-            <Label htmlFor="fuel_level">{getText("Fuel Level (%)", "Kraftstoffstand (%)")}</Label>
-            <Input
-              id="fuel_level"
-              name="fuel_level"
-              type="number"
-              min="0"
-              max="100"
-              value={formData.fuel_level}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-          
-          <div className="space-y-2">
-            <Label htmlFor="battery_level">{getText("Battery Level (%)", "Batteriestand (%)")}</Label>
-            <Input
-              id="battery_level"
-              name="battery_level"
-              type="number"
-              min="0"
-              max="100"
-              value={formData.battery_level}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-          
-          <div className="space-y-2">
-            <Label htmlFor="engine_temp">{getText("Engine Temperature (°C)", "Motortemperatur (°C)")}</Label>
-            <Input
-              id="engine_temp"
-              name="engine_temp"
-              type="number"
-              value={formData.engine_temp}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-          
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="last_service">{getText("Last Service", "Letzte Wartung")}</Label>
+              <Label htmlFor="make">{getText("Make", "Marke")}</Label>
               <Input
-                id="last_service"
-                name="last_service"
-                type="date"
-                value={formData.last_service}
+                id="make"
+                name="make"
+                value={formData.make}
                 onChange={handleInputChange}
-                required
               />
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="next_service">{getText("Next Service", "Nächste Wartung")}</Label>
+              <Label htmlFor="year">{getText("Year", "Jahr")}</Label>
               <Input
-                id="next_service"
-                name="next_service"
-                type="date"
-                value={formData.next_service}
+                id="year"
+                name="year"
+                type="number"
+                min="1900"
+                max="2030"
+                value={formData.year}
                 onChange={handleInputChange}
-                required
               />
             </div>
+          </div>
+          
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="vin">{getText("VIN", "Fahrgestellnummer")}</Label>
+              <Input
+                id="vin"
+                name="vin"
+                value={formData.vin}
+                onChange={handleInputChange}
+              />
+            </div>
+            
+            <div className="space-y-2">
+              <Label htmlFor="vehicle_type">{getText("Vehicle Type", "Fahrzeugtyp")}</Label>
+              <Select 
+                value={formData.vehicle_type} 
+                onValueChange={(value) => handleSelectChange(value, "vehicle_type")}
+              >
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="truck">{getText("Truck", "LKW")}</SelectItem>
+                  <SelectItem value="van">{getText("Van", "Lieferwagen")}</SelectItem>
+                  <SelectItem value="car">{getText("Car", "PKW")}</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="mileage">{getText("Mileage", "Kilometerstand")}</Label>
+              <Input
+                id="mileage"
+                name="mileage"
+                type="number"
+                min="0"
+                value={formData.mileage}
+                onChange={handleInputChange}
+              />
+            </div>
+            
+            <div className="space-y-2">
+              <Label htmlFor="fuel_type">{getText("Fuel Type", "Kraftstoffart")}</Label>
+              <Input
+                id="fuel_type"
+                name="fuel_type"
+                value={formData.fuel_type}
+                onChange={handleInputChange}
+              />
+            </div>
+          </div>
+          
+          <div className="space-y-2">
+            <Label htmlFor="engine_size">{getText("Engine Size", "Motorengröße")}</Label>
+            <Input
+              id="engine_size"
+              name="engine_size"
+              value={formData.engine_size}
+              onChange={handleInputChange}
+            />
+          </div>
+          
+          <div className="space-y-2">
+            <Label htmlFor="next_service">{getText("Next Service", "Nächste Wartung")}</Label>
+            <Input
+              id="next_service"
+              name="next_service"
+              type="date"
+              value={formData.next_service}
+              onChange={handleInputChange}
+              required
+            />
           </div>
           
           <DialogFooter>
