@@ -1,22 +1,9 @@
 
 import React, { createContext, useState, ReactNode, useEffect } from 'react';
 import { User, Session } from '@supabase/supabase-js';
-import { UserRole } from '@/lib/types/user-roles';
+import { UserRole, Profile } from '@/lib/types/user-roles';
 import { supabaseAuthActions } from './supabaseAuthActions';
 import { supabaseUserActions } from './supabaseUserActions';
-
-interface Profile {
-  id: string;
-  name: string;
-  role: UserRole;
-  phone_number?: string;
-  company?: string;
-  job_title?: string;
-  activation_date?: string;
-  expiry_date?: string;
-  created_at: string;
-  updated_at: string;
-}
 
 interface AuthContextType {
   user: User | null;
@@ -115,8 +102,16 @@ export const SupabaseAuthProvider: React.FC<{ children: ReactNode }> = ({ childr
       const profiles = await userManager.fetchAllProfiles();
       // Map the database profiles to our Profile type
       const typedProfiles: Profile[] = profiles.map(p => ({
-        ...p,
-        role: p.role as UserRole
+        id: p.id,
+        email: p.email,
+        full_name: p.full_name,
+        phone: p.phone,
+        role: p.role as UserRole,
+        company_id: p.company_id,
+        language: p.language,
+        avatar_url: p.avatar_url,
+        created_at: p.created_at,
+        updated_at: p.updated_at
       }));
       setAllProfiles(typedProfiles);
     } catch (error) {

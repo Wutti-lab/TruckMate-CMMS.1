@@ -39,6 +39,59 @@ export type Database = {
         }
         Relationships: []
       }
+      customers: {
+        Row: {
+          company: string | null
+          company_id: string | null
+          country: string | null
+          created_at: string | null
+          email: string | null
+          id: string
+          name: string
+          phone: string | null
+          registration_date: string | null
+          status: string | null
+          total_spent: number | null
+          updated_at: string | null
+        }
+        Insert: {
+          company?: string | null
+          company_id?: string | null
+          country?: string | null
+          created_at?: string | null
+          email?: string | null
+          id?: string
+          name: string
+          phone?: string | null
+          registration_date?: string | null
+          status?: string | null
+          total_spent?: number | null
+          updated_at?: string | null
+        }
+        Update: {
+          company?: string | null
+          company_id?: string | null
+          country?: string | null
+          created_at?: string | null
+          email?: string | null
+          id?: string
+          name?: string
+          phone?: string | null
+          registration_date?: string | null
+          status?: string | null
+          total_spent?: number | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "customers_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       drivers: {
         Row: {
           company_id: string | null
@@ -168,6 +221,50 @@ export type Database = {
             columns: ["vehicle_id"]
             isOneToOne: false
             referencedRelation: "vehicles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      licenses: {
+        Row: {
+          created_at: string | null
+          customer_id: string | null
+          expiry_date: string | null
+          id: string
+          issue_date: string | null
+          license_number: string
+          license_type: string | null
+          status: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          customer_id?: string | null
+          expiry_date?: string | null
+          id?: string
+          issue_date?: string | null
+          license_number: string
+          license_type?: string | null
+          status?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          customer_id?: string | null
+          expiry_date?: string | null
+          id?: string
+          issue_date?: string | null
+          license_number?: string
+          license_type?: string | null
+          status?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "licenses_customer_id_fkey"
+            columns: ["customer_id"]
+            isOneToOne: false
+            referencedRelation: "customers"
             referencedColumns: ["id"]
           },
         ]

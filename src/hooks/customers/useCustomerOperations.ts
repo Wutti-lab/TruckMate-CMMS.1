@@ -53,10 +53,8 @@ export function useCustomerOperations(
     optimisticCustomers.updateOptimistic(
       optimisticData,
       async () => {
-        // Since we don't have a customers table, we'll use companies table
-        // This is a placeholder - in real implementation you'd need to create a customers table
         const { error } = await supabase
-          .from('companies')
+          .from('customers')
           .delete()
           .eq('id', id);
 
@@ -84,18 +82,19 @@ export function useCustomerOperations(
   // Handle saving a customer with loading state
   const handleSaveCustomer = async (formData: CustomerFormValues) => {
     await executeAsync(async () => {
-      // Convert to database format - using companies table as placeholder
+      // Convert to database format
       const customerData = {
         name: formData.name,
+        company: formData.company || "",
         email: formData.email || "",
         phone: formData.phone || "",
-        address: formData.country || "", // Using address field for country
+        country: formData.country || "",
       };
       
       if (isEditMode && selectedCustomer) {
         // Update
         const { error } = await supabase
-          .from('companies')
+          .from('customers')
           .update(customerData)
           .eq('id', selectedCustomer.id);
           
@@ -126,10 +125,17 @@ export function useCustomerOperations(
           description: "Customer updated successfully",
         });
       } else {
-        // Insert - using companies table as placeholder
+        // Insert - we need to provide default values for the fields not in the form
+        const dbData = {
+          ...customerData,
+          status: 'active',
+          registration_date: new Date().toISOString().split('T')[0],
+          total_spent: 0
+        };
+
         const { data, error } = await supabase
-          .from('companies')
-          .insert(customerData)
+          .from('customers')
+          .insert(dbData)
           .select();
           
         if (error) {
@@ -140,14 +146,16 @@ export function useCustomerOperations(
           const newCustomer: Customer = {
             id: data[0].id,
             name: data[0].name,
-            company: formData.company || "",
+            company: data[0].company || "",
             email: data[0].email || "",
             phone: data[0].phone || "",
-            country: data[0].address || "", // Using address field for country
-            registrationDate: new Date().toISOString().split('T')[0],
+            country: data[0].country || "",
+            registrationDate: data[0].registration_date 
+              ? new Date(data[0].registration_date).toISOString().split('T')[0]
+              : "",
             licenses: [],
-            totalSpent: 0,
-            status: "active" as const
+            totalSpent: Number(data[0].total_spent) || 0,
+            status: data[0].status as "active" | "inactive"
           };
           
           setCustomers([newCustomer, ...customers]);

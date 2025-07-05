@@ -67,7 +67,7 @@ export function EmailActions({ user, emailType }: EmailActionsProps) {
     console.log("Email would be sent to:", user.email);
     console.log("Email content:", {
       subject: emailSubject,
-      name: user.name,
+      name: user.full_name,
       email: user.email,
       message: emailMessage
     });
@@ -75,8 +75,8 @@ export function EmailActions({ user, emailType }: EmailActionsProps) {
     toast({
       title: language === 'th' ? "ส่งอีเมลแล้ว" : "Email sent",
       description: language === 'th'
-        ? `อีเมลได้ถูกส่งไปที่ ${user.name} ที่ ${user.email}`
-        : `An email has been sent to ${user.name} at ${user.email}.`,
+        ? `อีเมลได้ถูกส่งไปที่ ${user.full_name} ที่ ${user.email}`
+        : `An email has been sent to ${user.full_name} at ${user.email}.`,
     });
   };
 

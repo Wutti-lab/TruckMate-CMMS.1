@@ -8,7 +8,7 @@ export async function sendNotification(user: PendingUser, type: 'approval' | 're
       body: {
         type: type,
         userData: {
-          name: user.name,
+          name: user.full_name,
           email: user.email,
           company: user.company,
           phoneNumber: user.phoneNumber,

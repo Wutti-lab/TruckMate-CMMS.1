@@ -16,7 +16,7 @@ interface PendingUserRowProps {
 export function PendingUserRow({ user, onApprove, onReject }: PendingUserRowProps) {
   return (
     <TableRow>
-      <TableCell className="font-medium">{user.name}</TableCell>
+      <TableCell className="font-medium">{user.full_name}</TableCell>
       <TableCell>{user.email}</TableCell>
       <TableCell>
         <Badge variant="outline" className="capitalize">
