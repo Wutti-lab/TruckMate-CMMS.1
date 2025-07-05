@@ -45,15 +45,15 @@ export function VehicleMobileView({
                 </div>
                 <div>
                   <span className="text-muted-foreground">{getHeaderText("Fuel", "Kraftstoff")}:</span>
-                  <p className="font-medium">{vehicle.fuel_level}%</p>
+                  <p className="font-medium">N/A</p>
                 </div>
                 <div>
                   <span className="text-muted-foreground">{getHeaderText("Battery", "Batterie")}:</span>
-                  <p className="font-medium">{vehicle.battery_level}%</p>
+                  <p className="font-medium">N/A</p>
                 </div>
                 <div>
                   <span className="text-muted-foreground">{getHeaderText("Temp", "Temperatur")}:</span>
-                  <p className="font-medium">{vehicle.engine_temp}°C</p>
+                  <p className="font-medium">N/A</p>
                 </div>
               </div>
 

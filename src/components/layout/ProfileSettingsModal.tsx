@@ -84,7 +84,13 @@ export function ProfileSettingsModal({
         </DialogHeader>
         
         <EditAccountForm 
-          user={profile} 
+          user={{
+            ...profile,
+            name: profile.full_name || '',
+            phone_number: profile.phone || '',
+            company: '',
+            job_title: ''
+          }} 
           isLoading={isLoading} 
           onSubmit={handleSubmit} 
           onCancel={() => onOpenChange(false)} 

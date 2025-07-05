@@ -28,30 +28,28 @@ export function VehicleTableRow({
       <td>{vehicle.location}</td>
       <td>
         <div className="flex items-center gap-2">
-          <span>{vehicle.fuel_level}%</span>
+          <span>N/A</span>
           <div className="w-16 h-2 bg-muted rounded-full overflow-hidden">
             <div 
               className="h-full bg-primary transition-all duration-300"
-              style={{ width: `${vehicle.fuel_level}%` }}
+              style={{ width: "0%" }}
             />
           </div>
         </div>
       </td>
       <td>
         <div className="flex items-center gap-2">
-          <span>{vehicle.battery_level}%</span>
+          <span>N/A</span>
           <div className="w-16 h-2 bg-muted rounded-full overflow-hidden">
             <div 
               className="h-full bg-accent transition-all duration-300"
-              style={{ width: `${vehicle.battery_level}%` }}
+              style={{ width: "0%" }}
             />
           </div>
         </div>
       </td>
       <td>
-        <span className={vehicle.engine_temp > 90 ? 'text-destructive font-medium' : ''}>
-          {vehicle.engine_temp}°C
-        </span>
+        <span>N/A</span>
       </td>
       <td>{new Date(vehicle.next_service).toLocaleDateString()}</td>
       <td className="text-right">

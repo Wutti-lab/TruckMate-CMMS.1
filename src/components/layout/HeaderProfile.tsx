@@ -39,7 +39,7 @@ export function HeaderProfile() {
         <span className="text-sm text-gray-600">
           {language === 'de' ? 'Angemeldet als:' : 
            language === 'th' ? 'เข้าสู่ระบบในฐานะ:' : 
-           'Logged in as:'} <strong>{profile?.name}</strong> ({profile?.role})
+           'Logged in as:'} <strong>{profile?.full_name}</strong> ({profile?.role})
         </span>
         
         <DropdownMenu>

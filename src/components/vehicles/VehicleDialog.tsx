@@ -6,19 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Label } from "@/components/ui/label";
 import { useState, useEffect } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
-
-interface Vehicle {
-  id: string;
-  license_plate: string;
-  model: string;
-  status: string;
-  location: string;
-  fuel_level: number;
-  battery_level: number;
-  engine_temp: number;
-  last_service: string;
-  next_service: string;
-}
+import { Vehicle } from "./types/VehicleTable";
 
 interface VehicleDialogProps {
   open: boolean;
@@ -38,13 +26,11 @@ export function VehicleDialog({
   const { language } = useLanguage();
   const [formData, setFormData] = useState({
     license_plate: "",
+    make: "",
     model: "",
+    year: new Date().getFullYear(),
     status: "active",
     location: "",
-    fuel_level: 100,
-    battery_level: 100,
-    engine_temp: 80,
-    last_service: new Date().toISOString().split('T')[0],
     next_service: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
   });
 
@@ -53,26 +39,22 @@ export function VehicleDialog({
     if (vehicle && isEditMode) {
       setFormData({
         license_plate: vehicle.license_plate,
-        model: vehicle.model,
+        make: vehicle.make || "",
+        model: vehicle.model || "",
+        year: vehicle.year || new Date().getFullYear(),
         status: vehicle.status,
-        location: vehicle.location,
-        fuel_level: vehicle.fuel_level,
-        battery_level: vehicle.battery_level,
-        engine_temp: vehicle.engine_temp,
-        last_service: vehicle.last_service ? new Date(vehicle.last_service).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
+        location: vehicle.location || "",
         next_service: vehicle.next_service ? new Date(vehicle.next_service).toISOString().split('T')[0] : new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
       });
     } else {
       // Reset form when adding a new vehicle
       setFormData({
         license_plate: "",
+        make: "",
         model: "",
+        year: new Date().getFullYear(),
         status: "active",
         location: "",
-        fuel_level: 100,
-        battery_level: 100,
-        engine_temp: 80,
-        last_service: new Date().toISOString().split('T')[0],
         next_service: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
       });
     }

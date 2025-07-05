@@ -39,17 +39,17 @@ export function useCustomersFetch() {
               : "",
             licenses: customer.licenses ? customer.licenses.map(license => ({
               id: license.id,
-              productName: license.product_name,
-              licenseKey: license.license_key,
-              purchaseDate: license.purchase_date 
-                ? new Date(license.purchase_date).toISOString().split('T')[0]
+              productName: license.license_type || 'Unknown',
+              licenseKey: license.license_number,
+              purchaseDate: license.issue_date 
+                ? new Date(license.issue_date).toISOString().split('T')[0]
                 : "",
               expiryDate: license.expiry_date 
                 ? new Date(license.expiry_date).toISOString().split('T')[0]
                 : "",
               status: license.status as "active" | "expired" | "revoked",
-              price: license.price,
-              role: license.role
+              price: 0, // Not stored in current schema
+              role: undefined // Not stored in current schema
             })) : [],
             totalSpent: Number(customer.total_spent) || 0,
             status: customer.status as "active" | "inactive"

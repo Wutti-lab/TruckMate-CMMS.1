@@ -208,28 +208,22 @@ export function useRealtimeNotifications() {
       if (error) throw error;
 
       vehicles?.forEach(vehicle => {
-        // Battery level alerts
-        if (vehicle.battery_level && vehicle.battery_level < 20) {
-          addNotification({
-            title: "Niedrige Batterie | Low Battery",
-            message: `Fahrzeug ${vehicle.license_plate}: ${vehicle.battery_level}% Batterie | Vehicle ${vehicle.license_plate}: ${vehicle.battery_level}% battery`,
-            type: 'warning'
-          });
-        }
-
-        // Critical engine temperature (above 95°C)
-        if (vehicle.engine_temp && vehicle.engine_temp > 95) {
-          addNotification({
-            title: "KRITISCH: Motorüberhitzung | CRITICAL: Engine Overheating",
-            message: `Fahrzeug ${vehicle.license_plate}: ${vehicle.engine_temp}°C - SOFORT ANHALTEN! | Vehicle ${vehicle.license_plate}: ${vehicle.engine_temp}°C - STOP IMMEDIATELY!`,
-            type: 'error'
-          });
+        // Skip battery and engine temperature checks as these fields don't exist in schema
+        
+        // Check for maintenance due soon (next_service within 7 days)
+        if (vehicle.next_service) {
+          const nextServiceDate = new Date(vehicle.next_service);
+          const today = new Date();
+          const diffTime = nextServiceDate.getTime() - today.getTime();
+          const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
           
-          toast({
-            title: "🚨 KRITISCHE WARNUNG",
-            description: `Fahrzeug ${vehicle.license_plate} überhitzt! Sofort anhalten!`,
-            variant: "destructive"
-          });
+          if (diffDays <= 7 && diffDays >= 0) {
+            addNotification({
+              title: "Wartung fällig | Maintenance Due",
+              message: `Fahrzeug ${vehicle.license_plate}: Wartung in ${diffDays} Tagen | Vehicle ${vehicle.license_plate}: Maintenance in ${diffDays} days`,
+              type: 'warning'
+            });
+          }
         }
       });
     } catch (error) {

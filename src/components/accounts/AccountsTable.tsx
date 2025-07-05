@@ -8,7 +8,7 @@ import {
   TableHeader, 
   TableRow 
 } from "@/components/ui/table";
-import { UserRole } from "@/lib/types/user-roles";
+import { UserRole, Profile } from "@/lib/types/user-roles";
 import { useAuth } from "@/contexts/AuthContext";
 import { EditAccountModal } from "./EditAccountModal";
 import { useToast } from "@/hooks/use-toast";
@@ -16,19 +16,6 @@ import { ActivationDateCell } from "./ActivationDateCell";
 import { AccountExpiryCell } from "./AccountExpiryCell";
 import { AccountActionButtons } from "./AccountActionButtons";
 import { UserRoleBadge } from "./UserRoleBadge";
-
-interface Profile {
-  id: string;
-  name: string;
-  role: UserRole;
-  phone_number?: string;
-  company?: string;
-  job_title?: string;
-  activation_date?: string;
-  expiry_date?: string;
-  created_at: string;
-  updated_at: string;
-}
 
 interface AccountsTableProps {
   searchQuery: string;
@@ -42,19 +29,19 @@ export function AccountsTable({ searchQuery }: AccountsTableProps) {
 
   // Filter users based on search query
   const filteredUsers = allProfiles.filter(user => 
-    user.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+    (user.full_name || '').toLowerCase().includes(searchQuery.toLowerCase()) || 
     user.role.toLowerCase().includes(searchQuery.toLowerCase())
   );
   
   // Check if current user can edit/delete accounts
   const canEditAccounts = hasRole([UserRole.ADMIN, UserRole.DEV_ADMIN]);
 
-  const handleDeleteUser = async (id: string, name: string) => {
+  const handleDeleteUser = async (id: string, full_name: string | null) => {
     try {
       await deleteProfile(id);
       toast({
         title: "Account deleted",
-        description: `${name}'s account has been deleted.`
+        description: `${full_name || 'User'}'s account has been deleted.`
       });
     } catch (error) {
       toast({
@@ -86,15 +73,15 @@ export function AccountsTable({ searchQuery }: AccountsTableProps) {
           {filteredUsers.length > 0 ? (
             filteredUsers.map((user) => (
               <TableRow key={user.id}>
-                <TableCell className="font-medium">{user.name}</TableCell>
+                <TableCell className="font-medium">{user.full_name}</TableCell>
                 <TableCell>
                   <UserRoleBadge role={user.role as UserRole} />
                 </TableCell>
                 <TableCell>
-                  <ActivationDateCell activationDate={user.activation_date} />
+                  <ActivationDateCell activationDate={user.created_at} />
                 </TableCell>
                 <TableCell>
-                  <AccountExpiryCell expiryDate={user.expiry_date} />
+                  <AccountExpiryCell expiryDate={undefined} />
                 </TableCell>
                 <TableCell className="text-right">
                   <AccountActionButtons 
@@ -118,7 +105,13 @@ export function AccountsTable({ searchQuery }: AccountsTableProps) {
       
       {selectedUser && (
         <EditAccountModal
-          user={selectedUser}
+          user={{
+            ...selectedUser,
+            name: selectedUser.full_name || '',
+            phone_number: selectedUser.phone || '',
+            company: '',
+            job_title: ''
+          }}
           open={isEditModalOpen}
           onOpenChange={setIsEditModalOpen}
         />

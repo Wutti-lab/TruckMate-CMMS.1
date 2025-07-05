@@ -23,7 +23,7 @@ export function SidebarHeader() {
             </p>
             {profile && (
               <p className="text-xs text-sidebar-foreground/60 mt-1 truncate">
-                {profile.name}
+                {profile.full_name}
               </p>
             )}
           </div>

@@ -13,7 +13,7 @@ export function WelcomeSection({ currentTime }: WelcomeSectionProps) {
   return (
     <div className="mb-8">
       <h1 className="text-3xl font-bold text-gray-900 mb-2">
-        {t("welcomeBack")}, {profile?.name || "User"}!
+        {t("welcomeBack")}, {profile?.full_name || "User"}!
       </h1>
       <p className="text-gray-600">
         {t("lastUpdated")}: {currentTime.toLocaleString()}
