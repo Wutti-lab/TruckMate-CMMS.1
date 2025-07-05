@@ -9,6 +9,7 @@ import { pricingTranslations } from "./pricing";
 import { inspectionTranslations } from "./inspection";
 import { advertisementTranslations } from "./advertisement";
 import { customerTranslations } from "./customer";
+import { workOrderTranslations } from "./workorder";
 
 // Common translations for new components
 const commonTranslations = {
@@ -63,5 +64,6 @@ export const thTranslations = {
   ...inspectionTranslations,
   ...advertisementTranslations,
   ...customerTranslations,
+  ...workOrderTranslations,
   ...commonTranslations,
 };
