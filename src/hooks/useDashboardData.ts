@@ -74,7 +74,7 @@ export function useDashboardData() {
       const thirtyDaysFromNow = new Date();
       thirtyDaysFromNow.setDate(thirtyDaysFromNow.getDate() + 30);
       const upcomingServices = vehicles?.filter(v => 
-        v.next_service && new Date(v.next_service) <= thirtyDaysFromNow
+        v.next_service && new Date(v.next_service) <= thirtyDaysFromNow && new Date(v.next_service) >= new Date()
       ).length || 0;
 
       // Calculate fleet status distribution
