@@ -156,6 +156,7 @@ export function VehicleQRModal({ vehicle }: VehicleQRModalProps) {
           <QRCode
             value={serializedData}
             size={256}
+            title="Vehicle QR Code"
             style={{ height: "auto", maxWidth: "100%", width: "100%" }}
             viewBox="0 0 256 256"
           />

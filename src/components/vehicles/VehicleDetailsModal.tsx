@@ -122,15 +122,15 @@ export function VehicleDetailsModal({
           <div className="flex gap-2">
             <Button variant="outline" size="sm" onClick={() => onEdit(vehicle)}>
               <Edit className="h-4 w-4 mr-1" />
-              {extractLanguageText("Edit", "Bearbeiten")}
+              {extractLanguageText("Edit | Bearbeiten", language)}
             </Button>
             <Button variant="outline" size="sm">
               <QrCode className="h-4 w-4 mr-1" />
-              {extractLanguageText("QR Code", "QR-Code")}
+              {extractLanguageText("QR Code | QR-Code", language)}
             </Button>
             <Button variant="destructive" size="sm" onClick={() => onDelete(vehicle.id)}>
               <Trash2 className="h-4 w-4 mr-1" />
-              {extractLanguageText("Delete", "Löschen")}
+              {extractLanguageText("Delete | Löschen", language)}
             </Button>
           </div>
         </DialogHeader>
@@ -320,13 +320,13 @@ export function VehicleDetailsModal({
                         <div>
                           <div className="font-medium">{doc.name}</div>
                           <div className="text-sm text-muted-foreground">
-                            {extractLanguageText("Uploaded", "Hochgeladen")}: {doc.uploadDate}
+                            {extractLanguageText("Uploaded | Hochgeladen", language)}: {doc.uploadDate}
                           </div>
                         </div>
                       </div>
                       <Button variant="outline" size="sm">
                         <Download className="h-4 w-4 mr-1" />
-                        {extractLanguageText("Download", "Herunterladen")}
+                        {extractLanguageText("Download | Herunterladen", language)}
                       </Button>
                     </div>
                   ))}
@@ -342,7 +342,7 @@ export function VehicleDetailsModal({
               </CardHeader>
               <CardContent>
                 <div className="text-center py-8 text-muted-foreground">
-                  {extractLanguageText("Activity history will be implemented", "Aktivitätsverlauf wird implementiert")}
+                  {extractLanguageText("Activity history will be implemented | Aktivitätsverlauf wird implementiert", language)}
                 </div>
               </CardContent>
             </Card>

@@ -86,7 +86,7 @@ export function VehicleQRGenerator({ vehicle, open, onOpenChange }: VehicleQRGen
 
     toast({
       title: extractLanguageText("QR Code Downloaded | QR-Code heruntergeladen", language),
-      description: extractLanguageText("QR code saved to downloads", "QR-Code in Downloads gespeichert")
+      description: extractLanguageText("QR code saved to downloads | QR-Code in Downloads gespeichert", language)
     });
   };
 
@@ -94,10 +94,10 @@ export function VehicleQRGenerator({ vehicle, open, onOpenChange }: VehicleQRGen
     try {
       if (navigator.share) {
         await navigator.share({
-          title: `${extractLanguageText("Vehicle QR Code", "Fahrzeug QR-Code")} - ${vehicle.license_plate}`,
+          title: `${extractLanguageText("Vehicle QR Code | Fahrzeug QR-Code", language)} - ${vehicle.license_plate}`,
           text: extractLanguageText(
-            "Scan this QR code to access vehicle information",
-            "QR-Code scannen für Fahrzeuginformationen"
+            "Scan this QR code to access vehicle information | QR-Code scannen für Fahrzeuginformationen",
+            language
           ),
           url: window.location.href
         });
@@ -106,14 +106,14 @@ export function VehicleQRGenerator({ vehicle, open, onOpenChange }: VehicleQRGen
         await navigator.clipboard.writeText(qrCodeString);
         toast({
           title: extractLanguageText("Copied to Clipboard | In Zwischenablage kopiert", language),
-          description: extractLanguageText("QR code data copied", "QR-Code Daten kopiert")
+          description: extractLanguageText("QR code data copied | QR-Code Daten kopiert", language)
         });
       }
     } catch (error) {
       console.error('Error sharing:', error);
       toast({
         title: extractLanguageText("Share Failed | Teilen fehlgeschlagen", language),
-        description: extractLanguageText("Could not share QR code", "QR-Code konnte nicht geteilt werden"),
+        description: extractLanguageText("Could not share QR code | QR-Code konnte nicht geteilt werden", language),
         variant: "destructive"
       });
     }
@@ -138,7 +138,7 @@ export function VehicleQRGenerator({ vehicle, open, onOpenChange }: VehicleQRGen
                   value={qrCodeString}
                   size={200}
                   level="M"
-                  includeMargin={true}
+                  title="Vehicle QR Code"
                 />
               </div>
               
@@ -164,8 +164,8 @@ export function VehicleQRGenerator({ vehicle, open, onOpenChange }: VehicleQRGen
 
           <div className="text-xs text-muted-foreground text-center">
             {extractLanguageText(
-              "This QR code contains vehicle information and can be scanned with the TruckMate mobile app",
-              "Dieser QR-Code enthält Fahrzeuginformationen und kann mit der TruckMate Mobile App gescannt werden"
+              "This QR code contains vehicle information and can be scanned with the TruckMate mobile app | Dieser QR-Code enthält Fahrzeuginformationen und kann mit der TruckMate Mobile App gescannt werden",
+              language
             )}
           </div>
         </div>

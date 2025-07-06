@@ -97,7 +97,7 @@ export function VehicleBulkActions({
         <Checkbox
           checked={false}
           onCheckedChange={handleSelectAll}
-          aria-label={extractLanguageText("Select all vehicles", "Alle Fahrzeuge auswählen")}
+          aria-label={extractLanguageText("Select all vehicles | Alle Fahrzeuge auswählen", language)}
         />
         <span className="text-sm text-muted-foreground">
           {extractLanguageText("Select vehicles for bulk actions | Fahrzeuge für Massenaktionen auswählen", language)}
@@ -112,13 +112,12 @@ export function VehicleBulkActions({
         <div className="flex items-center gap-3">
           <Checkbox
             checked={selectedVehicles.length === totalVehicles}
-            indeterminate={selectedVehicles.length > 0 && selectedVehicles.length < totalVehicles}
             onCheckedChange={handleSelectAll}
-            aria-label={extractLanguageText("Toggle all vehicles selection", "Alle Fahrzeuge auswählen/abwählen")}
+            aria-label={extractLanguageText("Toggle all vehicles selection | Alle Fahrzeuge auswählen/abwählen", language)}
           />
           <Badge variant="secondary" className="gap-1">
             <CheckSquare className="h-3 w-3" />
-            {selectedVehicles.length} {extractLanguageText("selected", "ausgewählt")}
+            {selectedVehicles.length} {extractLanguageText("selected | ausgewählt", language)}
           </Badge>
         </div>
 
@@ -128,22 +127,22 @@ export function VehicleBulkActions({
             <DropdownMenuTrigger asChild>
               <Button variant="outline" size="sm" className="gap-2">
                 <Wrench className="h-4 w-4" />
-                {extractLanguageText("Change Status", "Status ändern")}
+                {extractLanguageText("Change Status | Status ändern", language)}
                 <ChevronDown className="h-4 w-4" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               <DropdownMenuItem onClick={() => handleBulkStatusChange("active")}>
                 <div className="w-2 h-2 rounded-full bg-green-500 mr-2" />
-                {extractLanguageText("Set Active", "Auf Aktiv setzen")}
+                {extractLanguageText("Set Active | Auf Aktiv setzen", language)}
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => handleBulkStatusChange("maintenance")}>
                 <div className="w-2 h-2 rounded-full bg-amber-500 mr-2" />
-                {extractLanguageText("Set Maintenance", "Auf Wartung setzen")}
+                {extractLanguageText("Set Maintenance | Auf Wartung setzen", language)}
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => handleBulkStatusChange("inactive")}>
                 <div className="w-2 h-2 rounded-full bg-red-500 mr-2" />
-                {extractLanguageText("Set Inactive", "Auf Inaktiv setzen")}
+                {extractLanguageText("Set Inactive | Auf Inaktiv setzen", language)}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -153,22 +152,22 @@ export function VehicleBulkActions({
             <DropdownMenuTrigger asChild>
               <Button variant="outline" size="sm" className="gap-2">
                 <Edit3 className="h-4 w-4" />
-                {extractLanguageText("Actions", "Aktionen")}
+                {extractLanguageText("Actions | Aktionen", language)}
                 <ChevronDown className="h-4 w-4" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               <DropdownMenuItem onClick={handleBulkExport}>
                 <FileDown className="h-4 w-4 mr-2" />
-                {extractLanguageText("Export Selected", "Ausgewählte exportieren")}
+                {extractLanguageText("Export Selected | Ausgewählte exportieren", language)}
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <QrCode className="h-4 w-4 mr-2" />
-                {extractLanguageText("Generate QR Codes", "QR-Codes generieren")}
+                {extractLanguageText("Generate QR Codes | QR-Codes generieren", language)}
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <MapPin className="h-4 w-4 mr-2" />
-                {extractLanguageText("View on Map", "Auf Karte anzeigen")}
+                {extractLanguageText("View on Map | Auf Karte anzeigen", language)}
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem 
@@ -176,7 +175,7 @@ export function VehicleBulkActions({
                 className="text-red-600 focus:text-red-600"
               >
                 <Trash2 className="h-4 w-4 mr-2" />
-                {extractLanguageText("Delete Selected", "Ausgewählte löschen")}
+                {extractLanguageText("Delete Selected | Ausgewählte löschen", language)}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -188,24 +187,24 @@ export function VehicleBulkActions({
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>
-              {extractLanguageText("Delete Vehicles", "Fahrzeuge löschen")}
+              {extractLanguageText("Delete Vehicles | Fahrzeuge löschen", language)}
             </AlertDialogTitle>
             <AlertDialogDescription>
               {extractLanguageText(
-                `Are you sure you want to delete ${selectedVehicles.length} vehicles? This action cannot be undone.`,
-                `Sind Sie sicher, dass Sie ${selectedVehicles.length} Fahrzeuge löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.`
+                `Are you sure you want to delete ${selectedVehicles.length} vehicles? This action cannot be undone. | Sind Sie sicher, dass Sie ${selectedVehicles.length} Fahrzeuge löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.`,
+                language
               )}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>
-              {extractLanguageText("Cancel", "Abbrechen")}
+              {extractLanguageText("Cancel | Abbrechen", language)}
             </AlertDialogCancel>
             <AlertDialogAction 
               onClick={handleBulkDelete}
               className="bg-red-600 hover:bg-red-700"
             >
-              {extractLanguageText("Delete", "Löschen")}
+              {extractLanguageText("Delete | Löschen", language)}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
