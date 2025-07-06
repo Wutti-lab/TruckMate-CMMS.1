@@ -8,6 +8,9 @@ import { ScanQrCode, StopCircle, SwitchCamera } from "lucide-react";
 import QrScanner from "react-qr-scanner";
 import { useToast } from "@/hooks/use-toast";
 import { useLanguage, extractLanguageText } from "@/contexts/LanguageContext";
+import { ManualInputDialog } from "@/components/qr/ManualInputDialog";
+import { ScanHistoryDialog } from "@/components/qr/ScanHistoryDialog";
+import { VehicleQuickActions } from "@/components/qr/VehicleQuickActions";
 
 export default function QRScanner() {
   const [scanning, setScanning] = useState(false);
@@ -77,6 +80,12 @@ export default function QRScanner() {
         console.log("Parsed QR data:", parsedData);
         setScannedData(parsedData);
         setScanning(false);
+        
+        // Save to history
+        if ((window as any).saveScanToHistory) {
+          (window as any).saveScanToHistory(parsedData);
+        }
+        
         toast({
           title: extractLanguageText("QR Code Scanned | สแกน QR โค้ดแล้ว", language),
           description: extractLanguageText("Vehicle and driver information loaded successfully | โหลดข้อมูลยานพาหนะและคนขับสำเร็จ", language),
@@ -170,6 +179,12 @@ export default function QRScanner() {
       ]
     };
     setScannedData(mockScanData);
+    
+    // Save to history
+    if ((window as any).saveScanToHistory) {
+      (window as any).saveScanToHistory(mockScanData);
+    }
+    
     toast({
       title: extractLanguageText("Test QR Code Scanned | ทดสอบการสแกน QR โค้ด", language),
       description: extractLanguageText("Mock data loaded | โหลดข้อมูลจำลองแล้ว", language),
@@ -183,78 +198,93 @@ export default function QRScanner() {
         <BackToDashboard />
         <div className="flex items-center justify-between mb-6">
           <h1 className="text-2xl font-bold">{extractLanguageText("QR Scanner | สแกนคิวอาร์โค้ด", language)}</h1>
+          <div className="flex gap-2">
+            <ManualInputDialog onVehicleFound={setScannedData} />
+            <ScanHistoryDialog onSelectScan={setScannedData} />
+          </div>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2">
-          <Card>
-            <CardHeader>
-              <CardTitle>{extractLanguageText("Scan QR Code | สแกนคิวอาร์โค้ด", language)}</CardTitle>
-            </CardHeader>
-            <CardContent className="flex flex-col items-center gap-4">
-              <div className="w-full aspect-square bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
-                {scanning ? (
-                  <div className="relative w-full h-full">
-                    <QrScanner
-                      delay={300}
-                      onError={handleError}
-                      onScan={handleScan}
-                      style={{ width: "100%" }}
-                      className="w-full h-full object-cover"
-                      constraints={{
-                        video: {
-                          deviceId: cameraId ? { exact: cameraId } : undefined,
-                          facingMode: !cameraId ? "environment" : undefined,
-                          width: { ideal: 1280 },
-                          height: { ideal: 720 }
-                        }
-                      }}
-                      key={cameraId} // Force re-render when camera changes
-                    />
-                    <div className="absolute inset-0 pointer-events-none border-2 border-red-500 animate-pulse z-10"></div>
-                  </div>
-                ) : (
-                  <div className="flex flex-col items-center gap-4 p-6">
-                    <p className="text-center text-gray-500">
-                      {extractLanguageText("Click the button below to start scanning a QR code | คลิกปุ่มด้านล่างเพื่อเริ่มสแกน QR โค้ด", language)}
-                    </p>
-                    <Button onClick={toggleScanning} size="lg" className="gap-2">
-                      <ScanQrCode className="w-6 h-6" />
-                      {extractLanguageText("Start Scanning | เริ่มสแกน", language)}
+        <div className="grid gap-6 lg:grid-cols-3">
+          <div className="lg:col-span-2">
+            <Card>
+              <CardHeader>
+                <CardTitle>{extractLanguageText("Scan QR Code | สแกนคิวอาร์โค้ด", language)}</CardTitle>
+              </CardHeader>
+              <CardContent className="flex flex-col items-center gap-4">
+                <div className="w-full aspect-square bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
+                  {scanning ? (
+                    <div className="relative w-full h-full">
+                      <QrScanner
+                        delay={300}
+                        onError={handleError}
+                        onScan={handleScan}
+                        style={{ width: "100%" }}
+                        className="w-full h-full object-cover"
+                        constraints={{
+                          video: {
+                            deviceId: cameraId ? { exact: cameraId } : undefined,
+                            facingMode: !cameraId ? "environment" : undefined,
+                            width: { ideal: 1280 },
+                            height: { ideal: 720 }
+                          }
+                        }}
+                        key={cameraId} // Force re-render when camera changes
+                      />
+                      <div className="absolute inset-0 pointer-events-none border-2 border-red-500 animate-pulse z-10"></div>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col items-center gap-4 p-6">
+                      <p className="text-center text-gray-500">
+                        {extractLanguageText("Click the button below to start scanning a QR code | คลิกปุ่มด้านล่างเพื่อเริ่มสแกน QR โค้ด", language)}
+                      </p>
+                      <Button onClick={toggleScanning} size="lg" className="gap-2">
+                        <ScanQrCode className="w-6 h-6" />
+                        {extractLanguageText("Start Scanning | เริ่มสแกน", language)}
+                      </Button>
+                      <Button onClick={renderMockScan} variant="outline" size="sm" className="mt-2">
+                        {extractLanguageText("Test with Mock Data | ทดสอบด้วยข้อมูลจำลอง", language)}
+                      </Button>
+                    </div>
+                  )}
+                </div>
+                
+                {scanning && (
+                  <div className="flex gap-2">
+                    <Button onClick={toggleScanning} variant="destructive" className="gap-2">
+                      <StopCircle className="w-5 h-5" />
+                      {extractLanguageText("Stop Scanning | หยุดสแกน", language)}
                     </Button>
-                    <Button onClick={renderMockScan} variant="outline" size="sm" className="mt-2">
-                      {extractLanguageText("Test with Mock Data | ทดสอบด้วยข้อมูลจำลอง", language)}
+                    <Button 
+                      onClick={switchCamera} 
+                      variant="outline" 
+                      className="gap-2"
+                      disabled={availableCameras.length <= 1}
+                    >
+                      <SwitchCamera className="w-5 h-5" />
+                      {extractLanguageText("Switch Camera | สลับกล้อง", language)}
+                      {availableCameras.length > 0 && (
+                        <span className="text-xs ml-1">
+                          ({currentCameraIndex + 1}/{availableCameras.length})
+                        </span>
+                      )}
                     </Button>
                   </div>
                 )}
-              </div>
-              
-              {scanning && (
-                <div className="flex gap-2">
-                  <Button onClick={toggleScanning} variant="destructive" className="gap-2">
-                    <StopCircle className="w-5 h-5" />
-                    {extractLanguageText("Stop Scanning | หยุดสแกน", language)}
-                  </Button>
-                  <Button 
-                    onClick={switchCamera} 
-                    variant="outline" 
-                    className="gap-2"
-                    disabled={availableCameras.length <= 1}
-                  >
-                    <SwitchCamera className="w-5 h-5" />
-                    {extractLanguageText("Switch Camera | สลับกล้อง", language)}
-                    {availableCameras.length > 0 && (
-                      <span className="text-xs ml-1">
-                        ({currentCameraIndex + 1}/{availableCameras.length})
-                      </span>
-                    )}
-                  </Button>
-                </div>
-              )}
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+          </div>
 
+          {/* Vehicle Information and Quick Actions */}
           {scannedData && (
             <div className="space-y-4">
+              <VehicleQuickActions vehicleData={scannedData} />
+            </div>
+          )}
+        </div>
+
+        {/* Detailed Vehicle Information */}
+        {scannedData && (
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 mt-6">
               {/* Vehicle Information Card */}
               <Card>
                 <CardHeader>
@@ -323,7 +353,6 @@ export default function QRScanner() {
               </Card>
             </div>
           )}
-        </div>
       </main>
     </div>
   );
