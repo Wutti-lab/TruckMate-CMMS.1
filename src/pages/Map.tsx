@@ -22,6 +22,7 @@ import { useRealtimeData } from "@/components/dashboard/hooks/useRealtimeData";
 import { MobileOptimized } from "@/components/shared/mobile/MobileOptimized";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { RealtimeVehiclePanel } from "@/components/map/RealtimeVehiclePanel";
+import { LiveTrackingDashboard } from "@/components/map/tracking/LiveTrackingDashboard";
 
 export default function Map() {
   const [searchParams] = useSearchParams();
@@ -196,8 +197,9 @@ export default function Map() {
         />
 
         <Tabs defaultValue="map" className="h-[calc(100%-120px)]">
-          <TabsList className={`${isMobile ? 'grid-cols-2' : 'grid-cols-3'} grid w-full`}>
+          <TabsList className={`${isMobile ? 'grid-cols-3' : 'grid-cols-4'} grid w-full`}>
             <TabsTrigger value="map">{extractLanguageText("Live Map | แผนที่สด | Live-Karte", language)}</TabsTrigger>
+            <TabsTrigger value="tracking">{extractLanguageText("Live Tracking | Live-Tracking", language)}</TabsTrigger>
             {!isMobile && <TabsTrigger value="satellite">{extractLanguageText("Satellite | ภาพดาวเทียม | Satellit", language)}</TabsTrigger>}
             <TabsTrigger value="traffic">{extractLanguageText("Traffic | การจราจร | Verkehr", language)}</TabsTrigger>
           </TabsList>
@@ -229,6 +231,9 @@ export default function Map() {
                 notifications={notifications}
               />
             </div>
+          </TabsContent>
+          <TabsContent value="tracking" className="h-full overflow-auto p-4">
+            <LiveTrackingDashboard />
           </TabsContent>
           <TabsContent value="satellite" className="h-full">
             <div className="relative rounded-md h-full border overflow-hidden">
