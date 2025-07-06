@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Header } from "@/components/layout/Header";
+import { BackToDashboard } from "@/components/layout/BackToDashboard";
 import { VehiclesHeader } from "@/components/vehicles/VehiclesHeader";
 import { VehiclesTable } from "@/components/vehicles/VehiclesTable";
 import { VehicleDialog } from "@/components/vehicles/VehicleDialog";
@@ -184,7 +185,8 @@ export default function Vehicles() {
     <div className="flex flex-col h-full">
       <Header />
       <main className="flex-1 p-6 overflow-auto">
-        <VehiclesHeader 
+        <BackToDashboard />
+        <VehiclesHeader
           searchQuery={searchQuery}
           onSearchChange={setSearchQuery}
           onAddNewVehicle={handleAddNewVehicle}

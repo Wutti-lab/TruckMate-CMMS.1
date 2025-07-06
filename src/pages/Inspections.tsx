@@ -1,6 +1,7 @@
 
 import { useState } from "react";
 import { Header } from "@/components/layout/Header";
+import { BackToDashboard } from "@/components/layout/BackToDashboard";
 import { InspectionHeader } from "@/components/inspections/InspectionHeader";
 import { InspectionKPIs } from "@/components/inspections/InspectionKPIs";
 import { InspectionTabs } from "@/components/inspections/InspectionTabs";
@@ -19,6 +20,7 @@ export default function Inspections() {
     <div className="flex flex-col h-full">
       <Header />
       <main className="flex-1 p-6 overflow-auto">
+        <BackToDashboard />
         <InspectionHeader />
         <div className="mb-8">
           <InspectionKPIs />

@@ -1,6 +1,7 @@
 
 import { useState, useEffect } from "react";
 import { Header } from "@/components/layout/Header";
+import { BackToDashboard } from "@/components/layout/BackToDashboard";
 import { UserRole } from "@/lib/types/user-roles";
 import { AccountsTable } from "@/components/accounts/AccountsTable";
 import { CreateAccountModal } from "@/components/accounts/CreateAccountModal";
@@ -30,6 +31,7 @@ export default function Accounts() {
     <div className="flex flex-col h-full">
       <Header />
       <main className="flex-1 p-6 overflow-auto">
+        <BackToDashboard />
         <div className="mb-6 flex flex-wrap gap-4 items-center justify-between">
           <h1 className="text-2xl font-bold">
             {language === 'en' 

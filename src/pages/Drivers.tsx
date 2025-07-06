@@ -1,6 +1,7 @@
 
 import { useState } from "react";
 import { Header } from "@/components/layout/Header";
+import { BackToDashboard } from "@/components/layout/BackToDashboard";
 import { Button } from "@/components/ui/button";
 import { Plus, Filter, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
@@ -114,6 +115,7 @@ export default function Drivers() {
     <div className="flex flex-col h-full">
       <Header />
       <main className="flex-1 p-4 md:p-6 overflow-auto space-y-6">
+        <BackToDashboard />
         <div className="mb-6 space-y-4">
           <div className="flex items-center justify-between">
             <h1 className="text-xl md:text-2xl font-bold">{extractLanguageText("Drivers | พนักงานขับรถ", language)}</h1>

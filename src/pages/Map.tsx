@@ -1,10 +1,9 @@
 
 import { useState, useEffect } from "react";
-import { useSearchParams, Link } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { Header } from "@/components/layout/Header";
+import { BackToDashboard } from "@/components/layout/BackToDashboard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
 import { MapComponent } from "@/components/MapComponent";
 import { useToast } from "@/hooks/use-toast";
 import { useLocation } from "@/contexts/LocationContext";
@@ -150,23 +149,11 @@ export default function Map() {
         />
         
         <main className="flex-1 p-6 relative overflow-hidden">
+          <BackToDashboard />
           <div className={`mb-4 flex ${isMobile ? 'flex-col gap-2' : 'flex-wrap gap-4'} items-center justify-between`}>
-            <div className="flex items-center gap-4">
-              <Button 
-                variant="ghost" 
-                size="sm" 
-                asChild
-                className="flex items-center gap-2"
-              >
-                <Link to="/">
-                  <ArrowLeft className="h-4 w-4" />
-                  {extractLanguageText("Zurück zum Dashboard | Back to Dashboard | กลับไปแดชบอร์ด", language)}
-                </Link>
-              </Button>
-              <h1 className={`${isMobile ? 'text-xl' : 'text-2xl'} font-bold`}>
-                {extractLanguageText("Live Fleet Map | แผนที่ยานพาหนะสด | Live-Flottenansicht", language)}
-              </h1>
-            </div>
+            <h1 className={`${isMobile ? 'text-xl' : 'text-2xl'} font-bold`}>
+              {extractLanguageText("Live Fleet Map | แผนที่ยานพาหนะสด | Live-Flottenansicht", language)}
+            </h1>
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <div className={`w-2 h-2 ${isTracking ? 'bg-green-500 animate-pulse' : 'bg-gray-400'} rounded-full`}></div>
               <span>{extractLanguageText(

@@ -1,6 +1,7 @@
 
 import { useState, useEffect } from "react";
 import { Header } from "@/components/layout/Header";
+import { BackToDashboard } from "@/components/layout/BackToDashboard";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ScanQrCode, StopCircle, SwitchCamera } from "lucide-react";
@@ -179,6 +180,7 @@ export default function QRScanner() {
     <div className="flex flex-col h-full">
       <Header />
       <main className="flex-1 p-4 md:p-6 space-y-6">
+        <BackToDashboard />
         <div className="flex items-center justify-between mb-6">
           <h1 className="text-2xl font-bold">{extractLanguageText("QR Scanner | สแกนคิวอาร์โค้ด", language)}</h1>
         </div>

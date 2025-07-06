@@ -1,5 +1,7 @@
 
 import React, { useState } from 'react';
+import { Header } from "@/components/layout/Header";
+import { BackToDashboard } from "@/components/layout/BackToDashboard";
 import { toast } from "@/hooks/use-toast";
 import AdForm from '@/components/advertisements/AdForm';
 import AdPreview from '@/components/advertisements/AdPreview';
@@ -91,25 +93,31 @@ export default function AdvertisementManager() {
   };
   
   return (
-    <div className="container mx-auto py-6 space-y-6">
-      <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold">{t("advertisementManager")}</h1>
-      </div>
-      
-      <div className="grid gap-6 md:grid-cols-2">
-        <AdForm 
-          newAd={newAd}
-          setNewAd={setNewAd}
-          onAddAd={handleAddNewAd}
-        />
-        <AdPreview ad={newAd} />
-      </div>
-      
-      <AdTable 
-        advertisements={advertisements}
-        onToggleStatus={toggleAdStatus}
-        onDelete={deleteAd}
-      />
+    <div className="flex flex-col h-full">
+      <Header />
+      <main className="flex-1 p-6 overflow-auto">
+        <BackToDashboard />
+        <div className="container mx-auto space-y-6">
+          <div className="flex justify-between items-center">
+            <h1 className="text-3xl font-bold">{t("advertisementManager")}</h1>
+          </div>
+          
+          <div className="grid gap-6 md:grid-cols-2">
+            <AdForm 
+              newAd={newAd}
+              setNewAd={setNewAd}
+              onAddAd={handleAddNewAd}
+            />
+            <AdPreview ad={newAd} />
+          </div>
+          
+          <AdTable 
+            advertisements={advertisements}
+            onToggleStatus={toggleAdStatus}
+            onDelete={deleteAd}
+          />
+        </div>
+      </main>
     </div>
   );
 }

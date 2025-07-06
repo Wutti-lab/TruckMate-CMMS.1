@@ -1,5 +1,6 @@
 
 import { Header } from "@/components/layout/Header";
+import { BackToDashboard } from "@/components/layout/BackToDashboard";
 import { CustomersHeader } from "@/components/customers/CustomersHeader";
 import { CustomersTable } from "@/components/customers/CustomersTable";
 import { CustomerDialog } from "@/components/customers/CustomerDialog";
@@ -34,7 +35,8 @@ export default function Customers() {
     <div className="flex flex-col h-full">
       <Header />
       <main className="flex-1 p-6 overflow-auto">
-        <CustomersHeader 
+        <BackToDashboard />
+        <CustomersHeader
           searchQuery={searchQuery}
           onSearchChange={setSearchQuery}
           onAddNewCustomer={handleAddNewCustomer}

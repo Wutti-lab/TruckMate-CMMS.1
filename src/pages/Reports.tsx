@@ -1,6 +1,7 @@
 
 import { useState } from "react";
 import { Header } from "@/components/layout/Header";
+import { BackToDashboard } from "@/components/layout/BackToDashboard";
 import { ReportsHeader } from "@/components/reports/ReportsHeader";
 import { ReportsTabs } from "@/components/reports/ReportsTabs";
 import { FuelConsumptionReport } from "@/components/reports/FuelConsumptionReport";
@@ -32,6 +33,7 @@ export default function Reports() {
     <div className="flex flex-col h-full">
       <Header />
       <main className="flex-1 p-6 overflow-auto bg-gray-50">
+        <BackToDashboard />
         <ReportsHeader />
         <ReportsTabs activeTab={activeTab} onTabChange={setActiveTab} />
         <div className="mt-6">
