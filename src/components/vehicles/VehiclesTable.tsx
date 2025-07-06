@@ -13,6 +13,10 @@ interface VehiclesTableProps {
   searchQuery: string;
   onEditVehicle: (vehicle: Vehicle) => void;
   onDeleteVehicle: (id: string) => void;
+  onViewDetails?: (vehicle: Vehicle) => void;
+  onGenerateQR?: (vehicle: Vehicle) => void;
+  selectedVehicles?: string[];
+  onVehicleSelect?: (vehicleId: string, selected: boolean) => void;
 }
 
 export function VehiclesTable({ 
