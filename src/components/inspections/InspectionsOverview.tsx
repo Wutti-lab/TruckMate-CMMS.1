@@ -36,10 +36,10 @@ interface Inspection {
     license_plate: string;
     make: string;
     model: string;
-  };
-  profiles?: {
-    full_name: string;
-  };
+  } | null;
+  drivers?: {
+    name: string;
+  } | null;
 }
 
 interface InspectionsOverviewProps {
@@ -81,8 +81,8 @@ export function InspectionsOverview({
             make,
             model
           ),
-          profiles (
-            full_name
+          drivers (
+            name
           )
         `)
         .order('inspection_date', { ascending: false });
@@ -109,7 +109,7 @@ export function InspectionsOverview({
       filtered = filtered.filter(inspection =>
         inspection.vehicles?.license_plate?.toLowerCase().includes(searchQuery.toLowerCase()) ||
         inspection.type.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        inspection.profiles?.full_name?.toLowerCase().includes(searchQuery.toLowerCase())
+        inspection.drivers?.name?.toLowerCase().includes(searchQuery.toLowerCase())
       );
     }
 
@@ -163,7 +163,7 @@ export function InspectionsOverview({
     const csvContent = "data:text/csv;charset=utf-8," 
       + "Date,Vehicle,Type,Status,Inspector,Notes\n"
       + filteredInspections.map(inspection => 
-          `${format(new Date(inspection.inspection_date), 'yyyy-MM-dd')},${inspection.vehicles?.license_plate},${getTypeLabel(inspection.type)},${inspection.status},${inspection.profiles?.full_name},"${inspection.notes || ''}"`
+          `${format(new Date(inspection.inspection_date), 'yyyy-MM-dd')},${inspection.vehicles?.license_plate},${getTypeLabel(inspection.type)},${inspection.status},${inspection.drivers?.name},"${inspection.notes || ''}"`
         ).join("\n");
     
     const encodedUri = encodeURI(csvContent);
@@ -322,9 +322,9 @@ export function InspectionsOverview({
                     <FileText className="h-4 w-4 text-muted-foreground" />
                     {getTypeLabel(inspection.type)}
                   </div>
-                  {inspection.profiles?.full_name && (
+                  {inspection.drivers?.name && (
                     <div className="text-sm text-muted-foreground">
-                      {extractLanguageText("Inspector | Prüfer", language)}: {inspection.profiles.full_name}
+                      {extractLanguageText("Inspector | Prüfer", language)}: {inspection.drivers.name}
                     </div>
                   )}
                 </div>
