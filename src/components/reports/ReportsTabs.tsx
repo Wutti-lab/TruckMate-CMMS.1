@@ -1,6 +1,6 @@
 
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Fuel, Users, DollarSign, Wrench } from "lucide-react";
+import { BarChart3, TrendingUp, Fuel, Users, DollarSign, Wrench } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 interface ReportsTabsProps {
@@ -13,7 +13,15 @@ export function ReportsTabs({ activeTab, onTabChange }: ReportsTabsProps) {
 
   return (
     <Tabs value={activeTab} onValueChange={onTabChange}>
-      <TabsList className="grid w-full grid-cols-4">
+      <TabsList className="grid w-full grid-cols-6">
+        <TabsTrigger value="overview" className="flex items-center gap-2">
+          <BarChart3 className="h-4 w-4" />
+          {language === 'de' ? 'Übersicht' : language === 'th' ? 'ภาพรวม' : 'Overview'}
+        </TabsTrigger>
+        <TabsTrigger value="advanced" className="flex items-center gap-2">
+          <TrendingUp className="h-4 w-4" />
+          {language === 'de' ? 'Erweitert' : language === 'th' ? 'ขั้นสูง' : 'Advanced'}
+        </TabsTrigger>
         <TabsTrigger value="fuel" className="flex items-center gap-2">
           <Fuel className="h-4 w-4" />
           {language === 'de' ? 'Kraftstoff' : language === 'th' ? 'เชื้อเพลิง' : 'Fuel'}

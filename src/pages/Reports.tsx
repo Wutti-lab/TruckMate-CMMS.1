@@ -8,14 +8,20 @@ import { FuelConsumptionReport } from "@/components/reports/FuelConsumptionRepor
 import { DriverPerformanceReport } from "@/components/reports/DriverPerformanceReport";
 import { CostAnalysisReport } from "@/components/reports/CostAnalysisReport";
 import { MaintenanceHistoryReport } from "@/components/reports/MaintenanceHistoryReport";
+import { AnalyticsOverview } from "@/components/analytics/AnalyticsOverview";
+import { AdvancedCharts } from "@/components/analytics/AdvancedCharts";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Reports() {
-  const [activeTab, setActiveTab] = useState("fuel");
+  const [activeTab, setActiveTab] = useState("overview");
   const { t } = useLanguage();
 
   const renderContent = () => {
     switch (activeTab) {
+      case "overview":
+        return <AnalyticsOverview />;
+      case "advanced":
+        return <AdvancedCharts />;
       case "fuel":
         return <FuelConsumptionReport />;
       case "driver":
@@ -25,7 +31,7 @@ export default function Reports() {
       case "maintenance":
         return <MaintenanceHistoryReport />;
       default:
-        return <FuelConsumptionReport />;
+        return <AnalyticsOverview />;
     }
   };
 
