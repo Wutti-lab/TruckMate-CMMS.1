@@ -13,6 +13,7 @@ interface DashboardStats {
     name: string;
     value: number;
     color: string;
+    count: number;
   }>;
   recentActivities: Array<{
     id: string;
@@ -86,17 +87,20 @@ export function useDashboardData() {
         { 
           name: 'Operational', 
           value: Math.round(((statusCounts.active || 0) / totalVehicles) * 100) || 0, 
-          color: '#10b981' 
+          color: '#10b981',
+          count: statusCounts.active || 0
         },
         { 
           name: 'Maintenance', 
           value: Math.round(((statusCounts.maintenance || 0) / totalVehicles) * 100) || 0, 
-          color: '#f59e0b' 
+          color: '#f59e0b',
+          count: statusCounts.maintenance || 0
         },
         { 
           name: 'Out of Service', 
           value: Math.round(((statusCounts.inactive || 0) / totalVehicles) * 100) || 0, 
-          color: '#ef4444' 
+          color: '#ef4444',
+          count: statusCounts.inactive || 0
         }
       ].filter(item => item.value > 0);
 
