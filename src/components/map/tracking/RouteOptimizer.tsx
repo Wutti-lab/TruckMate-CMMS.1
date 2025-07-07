@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { useLanguage, extractLanguageText } from '@/contexts/LanguageContext';
 import { useToast } from '@/hooks/use-toast';
+import { WaypointManager } from './WaypointManager';
 
 interface RouteWaypoint {
   id: string;
@@ -27,6 +28,8 @@ interface RouteWaypoint {
     end: string;
   };
   serviceTime: number; // minutes
+  notes?: string;
+  isCompleted?: boolean;
 }
 
 interface OptimizedRoute {
@@ -95,6 +98,15 @@ export function RouteOptimizer({ vehicles, onRouteOptimized }: RouteOptimizerPro
       toast({
         title: extractLanguageText("Error | Fehler", language),
         description: extractLanguageText("Please select a vehicle | Bitte wählen Sie ein Fahrzeug", language),
+        variant: "destructive"
+      });
+      return;
+    }
+
+    if (waypoints.length === 0) {
+      toast({
+        title: extractLanguageText("Error | Fehler", language),
+        description: extractLanguageText("Please add at least one waypoint | Bitte fügen Sie mindestens einen Wegpunkt hinzu", language),
         variant: "destructive"
       });
       return;
@@ -231,28 +243,11 @@ export function RouteOptimizer({ vehicles, onRouteOptimized }: RouteOptimizerPro
           </Select>
         </div>
 
-        {/* Waypoints List */}
-        <div className="space-y-2">
-          <label className="text-sm font-medium">
-            {extractLanguageText("Waypoints | Wegpunkte", language)} ({waypoints.length})
-          </label>
-          <div className="space-y-2 max-h-40 overflow-y-auto">
-            {waypoints.map((waypoint, index) => (
-              <div key={waypoint.id} className="flex items-center justify-between p-2 bg-muted rounded">
-                <div className="flex items-center gap-2">
-                  <Badge variant={waypoint.priority === 'high' ? 'destructive' : waypoint.priority === 'medium' ? 'default' : 'secondary'}>
-                    {waypoint.priority}
-                  </Badge>
-                  <MapPin className="h-4 w-4 text-muted-foreground" />
-                  <span className="text-sm">{waypoint.address}</span>
-                </div>
-                <span className="text-xs text-muted-foreground">
-                  {waypoint.serviceTime}min
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
+        {/* Waypoint Management */}
+        <WaypointManager 
+          waypoints={waypoints}
+          onWaypointsChange={setWaypoints}
+        />
 
         {/* Optimization Progress */}
         {isOptimizing && (
